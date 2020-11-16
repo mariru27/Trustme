@@ -32,14 +32,19 @@
             </div>
             <div class="form-group">
                 <label asp-for="password" class="control-label"></label>
-                <input asp-for="password" class="form-control" value=""/>
+                <input asp-for="password" class="form-control" value="" />
                 <span asp-validation-for="password" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label for="rpassword" class="control-label"></label>
-                <input for="rpassword" name ="rpassword" class="form-control" />
-                <span for="password" class="text-danger"></span>
+                <label asp-for="confirmPassword" class="control-label"></label>
+                <input asp-for="confirmPassword" class="form-control" value="" />
+                <span asp-validation-for="confirmPassword" class="text-danger"></span>
             </div>
+            @*<div class="form-group">
+            <label asp-for="confirmPassword" class="control-label"></label>
+            <input asp-for="confirmPassword" class="form-control" value="" />
+            <span asp-validation-for="confirmPassword" class="text-danger"></span>
+        </div>*@
             <div class="form-group">
                 <input type="submit" value="Register" class="btn btn-primary" />
             </div>

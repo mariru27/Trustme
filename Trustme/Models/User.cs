@@ -16,23 +16,34 @@ namespace Trustme.Models
         
         [Required]
         [RegularExpression(@"^[a-zA-Z\s]+$", ErrorMessage ="Name must contain just letters")]
+        [Display(Name = "First Name")]
+
         public string firstName { set; get; }
 
         [Required]
         [RegularExpression(@"^[a-zA-Z\s]+$", ErrorMessage = "Name must contain just letters")]
+        [Display(Name = "Second Name")]
         public string secondName { set; get; }
     
         [Required]
         [RegularExpression(@"^[^@\s]+@[^@\s]+\.[^@\s]+$", ErrorMessage= "This is not a valid mail")]
+        [Display(Name = "Mail")]
         public string mail { set; get; }
         
         [Required]
         [RegularExpression("^(?!.{26})[a-zA-Z0-9]+?$", ErrorMessage = "In username field is allowing just letters or numbers")]
+        [Display(Name = "Username")]
         public string username { set; get; }
 
         [Required]
         [StringLength(50, ErrorMessage = "{0} length must be between {2} and {1}.", MinimumLength = 6)]
-        public string password { set; get; }
+        [Display(Name = "Password")]
+        public string password { get; set; }
+
+        [Required]
+        [Compare("password", ErrorMessage = "Confirm password doesn't match, Type again !")]
+        [Display(Name = "Confirm Password")]
+        public string confirmPassword { get; set; }
         public virtual Key Key {set; get;}
     }
 }

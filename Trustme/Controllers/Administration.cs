@@ -32,10 +32,10 @@ namespace Trustme.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
 
-        public async Task<IActionResult> Register([Bind("UserId,firstName,secondName,mail,username,password")] User user)
+        public async Task<IActionResult> Register([Bind("UserId,firstName,secondName,mail,username,password,confirmPassword")] User user)
         {
-            var rpassword = Request.Form["rpassword"].ToString();
-            if(ModelState.IsValid && user.password == rpassword)
+            //var rpassword = Request.Form["rpassword"].ToString();
+            if(ModelState.IsValid && user.password == user.confirmPassword)
             {
 
                 _context.Add(user);
