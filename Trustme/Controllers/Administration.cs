@@ -1,9 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using Trustme.Data;
 using Trustme.Models;
 using AppContext = Trustme.Data.AppContext;
@@ -34,36 +39,88 @@ namespace Trustme.Controllers
 
         public async Task<IActionResult> Register([Bind("UserId,firstName,secondName,mail,username,password,confirmPassword")] User user)
         {
-            //var rpassword = Request.Form["rpassword"].ToString();
             if(ModelState.IsValid && user.password == user.confirmPassword)
             {
 
                 _context.Add(user);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(LogIn));
             }
             return View(user);
             
         }
 
-        public async Task<IActionResult> Registertest(string rpassword)
+        [HttpGet]
+        public IActionResult LogIn()
         {
-            var user = new User();
-            //var rpassword = Request.Form["rpassword"].ToString();
-            //user.mail = Request.Form["mail"].ToString();
-            //user.secondName = Request.Form["secondName"].ToString();
-            //user.password = Request.Form["password"].ToString();
-            user.firstName = rpassword;
-            _context.Add(user);
-                await _context.SaveChangesAsync();
-            //if(user.password == rpassword)
-            //{
-            //    //return RedirectToAction(nameof(Index));
-            //}
-            //return View(user);
+            return View();
+        }
+
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+
+        //public string LogIn(string username, string password)
+        //{
+
+        //    User user = _context.User.Where(a => a.username == username).SingleOrDefault();
+        //    if (user != null && password == user.password)
+        //    {
+        //        HttpContext.Session.SetString("name",
+        //            JsonConvert.SerializeObject(user));
+        //        return "You are login";
+        //    }
+        //    return "Your password or name is incorrect";
+
+        //}
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+
+        public IActionResult LogIn(string username, string password)
+        {
+            User user = _context.User.Where(a => a.username == username).SingleOrDefault();
+            if (user != null && password == user.password)
+            {
+                var userClaim = new List<Claim>()
+                {
+                    new Claim(ClaimTypes.Name, username),
+                };
+
+                //var licenceClame = new List<Claim>()
+                //{
+                //    new Claim(ClaimTypes.Name, username),
+                //    new Claim("LicenceClame", "Is just a test"),
+                //};
+
+                var userIdentity = new ClaimsIdentity(userClaim, "user identity");
+               // var licenseIdentity = new ClaimsIdentity(licenceClame, "Licence identity");
+                //var userPrinciple = new ClaimsPrincipal(new[] { userIdentity, licenseIdentity });
+                var userPrinciple = new ClaimsPrincipal(new[] { userIdentity });
+
+                HttpContext.SignInAsync(userPrinciple);
+
+                return RedirectToAction("Index");
+            }
+            return RedirectToAction("LogIn");
+        }
+
+        [Authorize]
+        public IActionResult Secret()
+        {
+            return View();
+        }
+
+        public async Task<IActionResult> LogOut()
+        {
+            await HttpContext.SignOutAsync();
             return RedirectToAction("Index");
         }
 
+        public bool checkAuthentification()
+        {
+
+            bool result = HttpContext.User.Identity.IsAuthenticated;
+            return result;
+        }
 
     }
 }

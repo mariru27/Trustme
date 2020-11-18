@@ -24,13 +24,38 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Administration" asp-action="Register">Register</a>
-                        </li>
+                        <ul class="nav navbar-nav ml-auto">
+
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Administration" asp-action="Register">Register</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Administration" asp-action="LogIn">Login</a>
+                            </li>
+                            @*@{
+                                bool result = Html.Raw("~/Administration/checkAuthentification");
+
+                            }*@
+                            @*@if (result == true)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Administration" asp-action="Register">Register</a>
+                                </li>
+                            }*@
+                            <li class="nav-item">
+                                 <a class="nav-link text-dark" asp-area="" asp-controller="Administration" asp-action="LogOut">Logout</a>
+                          </li>
+                        </ul>
                     </ul>
                 </div>
             </div>
         </nav>
+
+
+
+
+
+
     </header>
     <div class="container">
         <main role="main" class="pb-3">
