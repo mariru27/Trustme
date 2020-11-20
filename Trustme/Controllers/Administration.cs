@@ -56,22 +56,6 @@ namespace Trustme.Controllers
             return View();
         }
 
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-
-        //public string LogIn(string username, string password)
-        //{
-
-        //    User user = _context.User.Where(a => a.username == username).SingleOrDefault();
-        //    if (user != null && password == user.password)
-        //    {
-        //        HttpContext.Session.SetString("name",
-        //            JsonConvert.SerializeObject(user));
-        //        return "You are login";
-        //    }
-        //    return "Your password or name is incorrect";
-
-        //}
         [HttpPost]
         [ValidateAntiForgeryToken]
 
@@ -84,16 +68,8 @@ namespace Trustme.Controllers
                 {
                     new Claim(ClaimTypes.Name, username),
                 };
-
-                //var licenceClame = new List<Claim>()
-                //{
-                //    new Claim(ClaimTypes.Name, username),
-                //    new Claim("LicenceClame", "Is just a test"),
-                //};
-
                 var userIdentity = new ClaimsIdentity(userClaim, "user identity");
-               // var licenseIdentity = new ClaimsIdentity(licenceClame, "Licence identity");
-                //var userPrinciple = new ClaimsPrincipal(new[] { userIdentity, licenseIdentity });
+
                 var userPrinciple = new ClaimsPrincipal(new[] { userIdentity });
 
                 HttpContext.SignInAsync(userPrinciple);
@@ -115,11 +91,14 @@ namespace Trustme.Controllers
             return RedirectToAction("Index");
         }
 
-        public bool checkAuthentification()
+        public  bool checkAuthentification()
         {
 
-            bool result = HttpContext.User.Identity.IsAuthenticated;
+            bool result = User.Identity.IsAuthenticated;
+
+
             return result;
+            
         }
 
     }
