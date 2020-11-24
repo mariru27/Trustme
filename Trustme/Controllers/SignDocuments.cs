@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Org.BouncyCastle.Asn1.Pkcs;
 using Org.BouncyCastle.Asn1.X509;
@@ -17,7 +19,7 @@ using Org.BouncyCastle.X509;
 
 namespace Trustme.Controllers
 {
-    //[Authorize]
+    [Authorize]
     public class SignDocuments : Controller
     {
         public Administration admin;
@@ -34,9 +36,7 @@ namespace Trustme.Controllers
 
         public string test()
         {
-            //this do not work, checkAuthentification return a null reference
-            bool a = admin.checkAuthentification();
-            if (a == false)
+            if (admin.isloggedIn(HttpContext) == false)
                 return "nu este logat";
             return "este logat";
         }
@@ -49,7 +49,7 @@ namespace Trustme.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken] 
+        [ValidateAntiForgeryToken]
         public string GenerateCertificate()
         {
 

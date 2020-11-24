@@ -12,22 +12,6 @@ namespace Trustme.Data
 
     public class InitDB
     {
-        static string Hash(string input)
-        {
-            using (SHA1Managed sha1 = new SHA1Managed())
-            {
-                var hash = sha1.ComputeHash(Encoding.UTF8.GetBytes(input));
-                var sb = new StringBuilder(hash.Length * 2);
-
-                foreach (byte b in hash)
-                {
-                    // can be "x2" if you want lowercase
-                    sb.Append(b.ToString("X2"));
-                }
-
-                return sb.ToString();
-            }
-        }
         public static void InitDb(AppContext context)
         {
             context.Database.EnsureCreated();
@@ -38,7 +22,7 @@ namespace Trustme.Data
 
             var users = new User[]
             {
-                new User{UserId = 1, firstName = "Mihai", secondName="Popescu", mail="mihaipopescu@gmail.com", username="mihai12345", password = Hash("password") }
+                new User{UserId = 1, firstName = "Mihai", secondName="Popescu", mail="mihaipopescu@gmail.com", username="mihai12345", password = "password" }
             };
 
             foreach(User u in users)

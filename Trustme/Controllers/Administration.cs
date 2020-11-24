@@ -18,9 +18,6 @@ namespace Trustme.Controllers
     public class Administration : Controller
     {
         private readonly AppContext _context;
-
-        
-
         public Administration(AppContext context)
         {
             _context = context;
@@ -44,8 +41,9 @@ namespace Trustme.Controllers
 
                 _context.Add(user);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(LogIn));
+                return RedirectToAction(nameof(Index));
             }
+            //ModelState.AddModelError("", "could not log in");
             return View(user);
             
         }
@@ -59,21 +57,25 @@ namespace Trustme.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
 
-        public IActionResult LogIn(string username, string password)
+        public async Task<IActionResult> LogIn(string username, string password)
         {
+            if (isloggedIn(HttpContext) == true)
+                await LogOut();
             User user = _context.User.Where(a => a.username == username).SingleOrDefault();
             if (user != null && password == user.password)
             {
                 var userClaim = new List<Claim>()
                 {
-                    new Claim(ClaimTypes.Name, username),
+                    new Claim(ClaimTypes.NameIdentifier, user.username),
+                    new Claim(ClaimTypes.Email, user.mail),
                 };
                 var userIdentity = new ClaimsIdentity(userClaim, "user identity");
-
+                
                 var userPrinciple = new ClaimsPrincipal(new[] { userIdentity });
-
-                HttpContext.SignInAsync(userPrinciple);
-
+                
+                await HttpContext.SignInAsync(userPrinciple);
+                ViewData["username"] = user.username;
+                            
                 return RedirectToAction("Index");
             }
             return RedirectToAction("LogIn");
@@ -91,14 +93,12 @@ namespace Trustme.Controllers
             return RedirectToAction("Index");
         }
 
-        public  bool checkAuthentification()
+        public  bool isloggedIn(HttpContext httpcontext)
         {
-
-            bool result = User.Identity.IsAuthenticated;
-
-
-            return result;
-            
+            var username = httpcontext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+            if (username != null)
+                return true;
+            return false;
         }
 
     }

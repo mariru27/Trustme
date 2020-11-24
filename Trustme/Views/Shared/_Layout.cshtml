@@ -9,6 +9,15 @@
 </head>
 <body>
     <header>
+
+        @{
+
+            @using System.Security.Claims;
+            @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+            var username = HttpContextAccessor.HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+
+        }
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Trustme</a>
@@ -25,29 +34,29 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
                         <ul class="nav navbar-nav ml-auto">
+                            <li class="nav-item">
+                                @{
+                                    if (username != null)
+                                    {
 
+                                        <a class="navbar-brand" href="#">username: @username</a>
+
+                                    }
+                                }
+                            </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Administration" asp-action="Register">Register</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Administration" asp-action="LogIn">Login</a>
-                            </li>                            
+                            </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="SignDocuments" asp-action="Signdocument">Sign Document</a>
                             </li>
-                            @*@{
-                                bool result = Html.Raw("~/Administration/checkAuthentification");
-
-                            }*@
-                            @*@if (result == true)
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Administration" asp-action="Register">Register</a>
-                                </li>
-                            }*@
                             <li class="nav-item">
-                                 <a class="nav-link text-dark" asp-area="" asp-controller="Administration" asp-action="LogOut">Logout</a>
-                          </li>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Administration" asp-action="LogOut">Logout</a>
+                            </li>
+
                         </ul>
                     </ul>
                 </div>

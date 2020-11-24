@@ -12,6 +12,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Trustme.Controllers;
+using Trustme.Data;
 using AppContext = Trustme.Data.AppContext;
 
 namespace Trustme
@@ -21,13 +23,29 @@ namespace Trustme
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            
         }
 
         public IConfiguration Configuration { get; }
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            //services.AddSingleton<Administration>();
+
             services.AddMvc().AddControllersAsServices();
+            services.AddHttpContextAccessor();
+            //services.AddSingleton<Administration>();
+            //services.AddMvc();
+            //services.AddScoped<DbContext, AppContext>();
+            //services.AddScoped<Administration>();
+            //services.AddScoped<SignDocuments>();
+
+            //services.AddSingleton<DbContextOptions>();
+            //services.AddSingleton<AppContext>();
+            //services.AddSingleton<Administration>();
+            //services.AddTransient<SignDocuments>();
+
             services.AddAuthentication("CookieAuth").AddCookie("CookieAuth", config =>
             {
                 config.Cookie.Name = "User.cookie";
@@ -59,10 +77,10 @@ namespace Trustme
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
+
             //app.UseCookiePolicy();
             //app.UseAuthentication();
             ////app.UseSession();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
