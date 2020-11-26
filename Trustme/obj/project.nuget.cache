@@ -1,9 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "4HejpDrUrpXdT16/8iTWYZnpRp3IqWYW0ReZkx+MaCRKDkhWDp3a6jcQ+4vZIgayuCAjFVXEiU0i2IqoJDhVaw==",
+  "dgSpecHash": "O+v2OKUdQno3JaCzk4BCVSzv89q+21DBnqmzeG79DswM/erqOcjk6G12NQF0wfTny2L9OC32okNI+fmCiD1ntQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\Marina Rusu\\Desktop\\Trustme\\Trustme\\Trustme\\Trustme.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\Marina Rusu\\.nuget\\packages\\grpc.core\\2.33.1\\grpc.core.2.33.1.nupkg.sha512",
+    "C:\\Users\\Marina Rusu\\.nuget\\packages\\grpc.core.api\\2.33.1\\grpc.core.api.2.33.1.nupkg.sha512",
     "C:\\Users\\Marina Rusu\\.nuget\\packages\\microsoft.aspnet.identity.core\\2.2.3\\microsoft.aspnet.identity.core.2.2.3.nupkg.sha512",
     "C:\\Users\\Marina Rusu\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\3.1.9\\microsoft.aspnetcore.cryptography.internal.3.1.9.nupkg.sha512",
     "C:\\Users\\Marina Rusu\\.nuget\\packages\\microsoft.aspnetcore.cryptography.keyderivation\\3.1.9\\microsoft.aspnetcore.cryptography.keyderivation.3.1.9.nupkg.sha512",

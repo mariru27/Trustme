@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using Grpc.Core;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -17,6 +18,7 @@ using Org.BouncyCastle.Pkcs;
 using Org.BouncyCastle.Security;
 using Org.BouncyCastle.X509;
 using Trustme.Models;
+using System.IO.Compression;
 
 namespace Trustme.Controllers
 {
@@ -89,18 +91,22 @@ namespace Trustme.Controllers
             //{
             //    outStream.Write(privatekey_byte, 0, privatekey_byte.Length);
             //}
+
+
+
+            string filepath1 = "C:\\Users\\Marina Rusu\\Desktop\\Trustme\\Trustme\\Trustme\\Certificates";
+            string filepath2 = "C:\\Users\\Marina Rusu\\Desktop\\Trustme\\Trustme\\Trustme\\Certificates.zip";
+
+            ZipFile.CreateFromDirectory(filepath1, filepath2, System.IO.Compression.CompressionLevel.Optimal, false);
+
+            const string contentType = "application/zip";
+            HttpContext.Response.ContentType = contentType;
+            var result = new FileContentResult(System.IO.File.ReadAllBytes(filepath2), contentType);
+            
+               string FileDownloadName = filepath2;
             
 
-            string pathtofile = "C:\\Users\\Marina Rusu\\Desktop\\Trustme\\Trustme\\Trustme\\Certificates";
-
-            string filename = Path.GetFileName("privatekey.txt");
-
-            string fullPath = Path.Combine(pathtofile, filename);
-
-            var stream = System.IO.File.OpenRead(fullPath);
-
-
-            return File(stream, "text/plain", "privatekey.txt") ;
+            return result;
 
         }
 
