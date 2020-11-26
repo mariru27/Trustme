@@ -16,6 +16,7 @@ using Org.BouncyCastle.Math;
 using Org.BouncyCastle.Pkcs;
 using Org.BouncyCastle.Security;
 using Org.BouncyCastle.X509;
+using Trustme.Models;
 
 namespace Trustme.Controllers
 {
@@ -50,7 +51,7 @@ namespace Trustme.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public string GenerateCertificate()
+        public IActionResult GenerateCertificate()
         {
 
             // Keypair Generator
@@ -74,21 +75,33 @@ namespace Trustme.Controllers
 
             byte[] encoded = cert.GetEncoded();
 
-            using (FileStream outStream = new FileStream("C:\\Users\\Marina Rusu\\Desktop\\Trustme\\Trustme\\Trustme\\Certificates\\cetificate.der", FileMode.Create, FileAccess.ReadWrite))
-            {
-                outStream.Write(encoded, 0, encoded.Length);
-            }
+            //using (FileStream outStream = new FileStream("C:\\Users\\Marina Rusu\\Desktop\\Trustme\\Trustme\\Trustme\\Certificates\\cetificate.der", FileMode.Create, FileAccess.ReadWrite))
+            //{
+            //    outStream.Write(encoded, 0, encoded.Length);
+            //}
 
             PrivateKeyInfo pkInfo = PrivateKeyInfoFactory.CreatePrivateKeyInfo(kp.Private);
             string privatekey = Convert.ToBase64String(pkInfo.GetDerEncoded());
 
             byte[] privatekey_byte = Encoding.ASCII.GetBytes(privatekey);
 
-            using (FileStream outStream = new FileStream("C:\\Users\\Marina Rusu\\Desktop\\Trustme\\Trustme\\Trustme\\Certificates\\privatekey.txt", FileMode.Create, FileAccess.ReadWrite))
-            {
-                outStream.Write(privatekey_byte, 0, privatekey_byte.Length);
-            }
-            return privatekey;
+            //using (FileStream outStream = new FileStream("C:\\Users\\Marina Rusu\\Desktop\\Trustme\\Trustme\\Trustme\\Certificates\\privatekey.txt", FileMode.Create, FileAccess.ReadWrite))
+            //{
+            //    outStream.Write(privatekey_byte, 0, privatekey_byte.Length);
+            //}
+            
+
+            string pathtofile = "C:\\Users\\Marina Rusu\\Desktop\\Trustme\\Trustme\\Trustme\\Certificates";
+
+            string filename = Path.GetFileName("privatekey.txt");
+
+            string fullPath = Path.Combine(pathtofile, filename);
+
+            var stream = System.IO.File.OpenRead(fullPath);
+
+
+            return File(stream, "text/plain", "privatekey.txt") ;
+
         }
 
     }
