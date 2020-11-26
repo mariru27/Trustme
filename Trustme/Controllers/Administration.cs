@@ -101,5 +101,20 @@ namespace Trustme.Controllers
             return false;
         }
 
+        public string getUsername(HttpContext httpcontext)
+        {
+            return httpcontext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+        }
+
+        public async void addPublicKey(string username, string publicKey)
+        {
+            User user = await _context.User.Where(a => a.username == username)?.SingleOrDefaultAsync();
+            Key key = new Key();
+            key.UserId = user.UserId;
+            key.PublicKey = publicKey;
+            _context.Add(key);
+            await _context.SaveChangesAsync();
+        }
+
     }
 }

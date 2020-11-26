@@ -19,6 +19,7 @@ using Org.BouncyCastle.Security;
 using Org.BouncyCastle.X509;
 using Trustme.Models;
 using System.IO.Compression;
+using Microsoft.AspNetCore.Hosting;
 
 namespace Trustme.Controllers
 {
@@ -27,10 +28,12 @@ namespace Trustme.Controllers
     {
         public Administration admin;
         private const string SignatureAlgorithm = "sha1WithRSA";
+        private IHostingEnvironment Environment;
 
-        public SignDocuments(Administration _admin)
+        public SignDocuments(Administration _admin, IHostingEnvironment _environment)
         {
             admin = _admin;
+            Environment = _environment;
         }
         public IActionResult Index()
         {
@@ -55,6 +58,7 @@ namespace Trustme.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult GenerateCertificate()
         {
+            string wwwPath = this.Environment.WebRootPath;
 
             // Keypair Generator
             RsaKeyPairGenerator kpGenerator = new RsaKeyPairGenerator();
@@ -72,40 +76,57 @@ namespace Trustme.Controllers
             cGenerator.SetNotAfter(DateTime.Now.Add(new TimeSpan(365, 0, 0, 0))); // Expire in 1 year
             cGenerator.SetSignatureAlgorithm(SignatureAlgorithm); // See the Appendix Below for info on the hash types supported by Bouncy Castle C#
             cGenerator.SetPublicKey(kp.Public); // Only the public key should be used here!
+            //we saved public key in database
+            //if (admin.isloggedIn(HttpContext) == true)
+            //{
+            //    string username = admin.getUsername(HttpContext);
+            //    admin.addPublicKey(username, kp.Public.ToString());
+            //}
 
             var cert = cGenerator.Generate(kp.Private); // Create a self-signed cert
 
             byte[] encoded = cert.GetEncoded();
 
-            //using (FileStream outStream = new FileStream("C:\\Users\\Marina Rusu\\Desktop\\Trustme\\Trustme\\Trustme\\Certificates\\cetificate.der", FileMode.Create, FileAccess.ReadWrite))
-            //{
-            //    outStream.Write(encoded, 0, encoded.Length);
-            //}
+            string pathDir = Path.Combine(wwwPath, "Certificate_PKey");
+            if (!Directory.Exists(pathDir))
+            {
+                Directory.CreateDirectory(pathDir);
+            }
+
+
+            string pathCertificate = Path.Combine(pathDir, "certificate.der");
+            using (FileStream outStream = new FileStream(pathCertificate, FileMode.Create, FileAccess.ReadWrite))
+            {
+                outStream.Write(encoded, 0, encoded.Length);
+            }
 
             PrivateKeyInfo pkInfo = PrivateKeyInfoFactory.CreatePrivateKeyInfo(kp.Private);
             string privatekey = Convert.ToBase64String(pkInfo.GetDerEncoded());
-
             byte[] privatekey_byte = Encoding.ASCII.GetBytes(privatekey);
 
-            //using (FileStream outStream = new FileStream("C:\\Users\\Marina Rusu\\Desktop\\Trustme\\Trustme\\Trustme\\Certificates\\privatekey.txt", FileMode.Create, FileAccess.ReadWrite))
-            //{
-            //    outStream.Write(privatekey_byte, 0, privatekey_byte.Length);
-            //}
+            string pathPrivateKey = Path.Combine(pathDir, "privateKey.txt");
+            using (FileStream outStream = new FileStream(pathPrivateKey, FileMode.Create, FileAccess.ReadWrite))
+            {
+                outStream.Write(privatekey_byte, 0, privatekey_byte.Length);
+            }
+            
+            string pathDirectoryZip = Path.Combine(wwwPath, "Certificate_Key");
 
-
-
-            string filepath1 = "C:\\Users\\Marina Rusu\\Desktop\\Trustme\\Trustme\\Trustme\\Certificates";
-            string filepath2 = "C:\\Users\\Marina Rusu\\Desktop\\Trustme\\Trustme\\Trustme\\Certificates.zip";
-
-            ZipFile.CreateFromDirectory(filepath1, filepath2, System.IO.Compression.CompressionLevel.Optimal, false);
+            ZipFile.CreateFromDirectory(pathDir, pathDirectoryZip, System.IO.Compression.CompressionLevel.Optimal, false);
 
             const string contentType = "application/zip";
             HttpContext.Response.ContentType = contentType;
-            var result = new FileContentResult(System.IO.File.ReadAllBytes(filepath2), contentType);
-            
-               string FileDownloadName = filepath2;
-            
+            var result = new FileContentResult(System.IO.File.ReadAllBytes(pathDirectoryZip), contentType);
 
+
+            System.IO.DirectoryInfo dir = new DirectoryInfo(pathDir);
+            foreach (FileInfo files in dir.GetFiles())
+            {
+                files.Delete();
+            }
+            Directory.Delete(pathDir);
+            System.IO.File.Delete(pathDirectoryZip);
+            
             return result;
 
         }
