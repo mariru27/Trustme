@@ -27,35 +27,41 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
+                        @{
+                            if (username != null)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="SignDocuments" asp-action="Signdocument">Sign Document</a>
+                                </li>
+                            }
+                        }
+
                         <ul class="nav navbar-nav ml-auto">
-                            <li class="nav-item">
-                                @{
-                                    if (username != null)
-                                    {
-
+                            @{
+                                if (username != null)
+                                {
+                                    <li class="nav-item">
                                         <a class="navbar-brand" href="#">username: @username</a>
+                                    </li>
 
-                                    }
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="Administration" asp-action="LogOut">Logout</a>
+                                    </li>
                                 }
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Administration" asp-action="Register">Register</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Administration" asp-action="LogIn">Login</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="SignDocuments" asp-action="Signdocument">Sign Document</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Administration" asp-action="LogOut">Logout</a>
-                            </li>
+                                else
+                                {
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="Administration" asp-action="LogIn">Login</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="Administration" asp-action="Register">Register</a>
+                                    </li>
+                                }
+                            }
+
+
+
+
 
                         </ul>
                     </ul>

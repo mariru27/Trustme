@@ -36,16 +36,20 @@ namespace Trustme.Controllers
 
         public async Task<IActionResult> Register([Bind("UserId,firstName,secondName,mail,username,password,confirmPassword")] User user)
         {
-            if(ModelState.IsValid && user.password == user.confirmPassword)
+            User usedUser = _context.User.Where(a => a.username == user.username)?.SingleOrDefault();
+            if (usedUser != null)
+            {
+                ModelState.AddModelError("", "Try another username, this username already is used");
+                return View(user);
+            }
+            if (ModelState.IsValid && user.password == user.confirmPassword)
             {
 
                 _context.Add(user);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return  await LogIn(user.username, user.password);
             }
-            //ModelState.AddModelError("", "could not log in");
-            return View(user);
-            
+            return View(user);            
         }
 
         [HttpGet]
@@ -106,14 +110,22 @@ namespace Trustme.Controllers
             return httpcontext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
         }
 
-        public async void addPublicKey(string username, string publicKey)
+        public  void addPublicKey(string username, string publicKey)
         {
-            User user = await _context.User.Where(a => a.username == username)?.SingleOrDefaultAsync();
-            Key key = new Key();
-            key.UserId = user.UserId;
-            key.PublicKey = publicKey;
-            _context.Add(key);
-            await _context.SaveChangesAsync();
+            User user =  _context.User.Where(a => a.username == username)?.SingleOrDefault();
+            Key userKey = _context.Key.Where(a => a.UserId == user.UserId)?.SingleOrDefault();
+            if (userKey == null)
+            {
+                Key newKey = new Key();
+                newKey.UserId = user.UserId;
+                newKey.PublicKey = publicKey;
+                 _context.Add(newKey);
+            }
+            else
+            {
+                userKey.PublicKey = publicKey;
+            }
+             _context.SaveChanges();
         }
 
     }

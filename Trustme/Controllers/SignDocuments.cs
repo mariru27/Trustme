@@ -77,11 +77,15 @@ namespace Trustme.Controllers
             cGenerator.SetSignatureAlgorithm(SignatureAlgorithm); // See the Appendix Below for info on the hash types supported by Bouncy Castle C#
             cGenerator.SetPublicKey(kp.Public); // Only the public key should be used here!
             //we saved public key in database
-            //if (admin.isloggedIn(HttpContext) == true)
-            //{
-            //    string username = admin.getUsername(HttpContext);
-            //    admin.addPublicKey(username, kp.Public.ToString());
-            //}
+            if (admin.isloggedIn(HttpContext) == true)
+            {
+                
+                string username = admin.getUsername(HttpContext);
+
+                byte[] publicKeyDer = SubjectPublicKeyInfoFactory.CreateSubjectPublicKeyInfo(kp.Public).GetDerEncoded();
+                String publickey = Convert.ToBase64String(publicKeyDer);
+                admin.addPublicKey(username, publickey);
+            }
 
             var cert = cGenerator.Generate(kp.Private); // Create a self-signed cert
 
