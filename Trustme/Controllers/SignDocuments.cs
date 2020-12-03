@@ -20,6 +20,9 @@ using Org.BouncyCastle.X509;
 using Trustme.Models;
 using System.IO.Compression;
 using Microsoft.AspNetCore.Hosting;
+using System.Security.Cryptography;
+using Org.BouncyCastle.OpenSsl;
+using System.Text;
 
 namespace Trustme.Controllers
 {
@@ -90,7 +93,7 @@ namespace Trustme.Controllers
             var cert = cGenerator.Generate(kp.Private); // Create a self-signed cert
 
             byte[] encoded = cert.GetEncoded();
-
+            
             string pathDir = Path.Combine(wwwPath, "Certificate_PKey");
             if (!Directory.Exists(pathDir))
             {
@@ -106,9 +109,20 @@ namespace Trustme.Controllers
 
             PrivateKeyInfo pkInfo = PrivateKeyInfoFactory.CreatePrivateKeyInfo(kp.Private);
             string privatekey = Convert.ToBase64String(pkInfo.GetDerEncoded());
-            byte[] privatekey_byte = Encoding.ASCII.GetBytes(privatekey);
 
-            string pathPrivateKey = Path.Combine(pathDir, "privateKey.txt");
+
+            TextWriter textWriter = new StringWriter();
+            PemWriter pemWriter = new PemWriter(textWriter);
+            //pemWriter.WriteObject(kp.Public);
+            pemWriter.WriteObject(kp.Private);
+            pemWriter.Writer.Flush();
+
+            string privateKey = textWriter.ToString();
+
+            //string privatekeypem = "-----BEGIN ENCRYPTED PRIVATE KEY-----\n" + privatekey + "\n-----END ENCRYPTED PRIVATE KEY-----";
+            byte[] privatekey_byte = Encoding.ASCII.GetBytes(privateKey);
+
+            string pathPrivateKey = Path.Combine(pathDir, "privateKey.pem");
             using (FileStream outStream = new FileStream(pathPrivateKey, FileMode.Create, FileAccess.ReadWrite))
             {
                 outStream.Write(privatekey_byte, 0, privatekey_byte.Length);
@@ -135,5 +149,78 @@ namespace Trustme.Controllers
 
         }
 
+
+        //public async Task<string> SignDoc(IFormFile file)
+        //{
+
+        //    string bytekey = file.ContentType.ToString();
+        //    var filePath = this.Environment.WebRootPath; //we are using Temp file name just for the example. Add your own file path.c
+        //    filePath = Path.Combine(filePath, "testdir");
+        //    filePath = Path.Combine(filePath, "test.txt");
+        //    using (var stream = new FileStream(filePath, FileMode.Create, FileAccess.ReadWrite))
+        //    {
+        //        await file.CopyToAsync(stream);
+        //    }
+        //    return "dsd";
+        //}
+
+        //public async Task<string> SignDoc(IFormFile file)
+        //{
+
+        //    var filePath = this.Environment.WebRootPath; //we are using Temp file name just for the example. Add your own file path.c
+        //    filePath = Path.Combine(filePath, "testdir");
+        //    filePath = Path.Combine(filePath, file.FileName);
+        //    using (var stream = new FileStream(filePath, FileMode.Create, FileAccess.ReadWrite))
+        //    {
+        //        await file.CopyToAsync(stream);
+        //    }
+        //    return "dsd";
+        //}
+
+
+        public Org.BouncyCastle.Crypto.AsymmetricKeyParameter ReadAsymmetricKeyParameter(string pemFilename)
+        {
+            var fileStream = System.IO.File.OpenText(pemFilename);
+            var pemReader = new Org.BouncyCastle.OpenSsl.PemReader(fileStream);
+            var KeyParameter = (Org.BouncyCastle.Crypto.AsymmetricKeyParameter)pemReader.ReadObject();
+            return KeyParameter;
+        }
+
+        public async Task<string> SignDoc(IFormFile pkfile, IFormFile docfile)
+        {
+
+            var wwwfilePath = this.Environment.WebRootPath; //we are using Temp file name just for the example. Add your own file path.c
+            wwwfilePath = Path.Combine(wwwfilePath, "testdir");
+            var filePath = Path.Combine(wwwfilePath, pkfile.FileName);
+            using (var stream = new FileStream(filePath, FileMode.Create, FileAccess.ReadWrite))
+            {
+                await pkfile.CopyToAsync(stream);
+            }
+
+
+            string keypath = Path.Combine(wwwfilePath, pkfile.FileName);
+            var reader = System.IO.File.OpenText(keypath);
+ 
+            var keypem = new PemReader(reader);
+            var o = keypem.ReadObject();
+            AsymmetricCipherKeyPair keyPair = (AsymmetricCipherKeyPair)o;
+
+            AsymmetricKeyParameter privatekeyy = keyPair.Private;
+
+            string message = "acesta este mesajul";
+
+            byte[] messagebyte = Encoding.ASCII.GetBytes(message);
+
+
+            ISigner sign = SignerUtilities.GetSigner(PkcsObjectIdentifiers.Sha256WithRsaEncryption.Id);
+            sign.Init(true, privatekeyy);
+            sign.BlockUpdate(messagebyte, 0, messagebyte.Length);
+            var signature = sign.GenerateSignature();
+
+
+            string signaturestring = Convert.ToBase64String(signature);
+
+            return signaturestring;
+        }
     }
 }
