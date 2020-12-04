@@ -28,12 +28,16 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav flex-grow-1">
                         @{
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="VerifySignature" asp-action="VerifySign">Verify Signature</a>
+                            </li>
                             if (username != null)
                             {
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="SignDocuments" asp-action="Signdocument">Sign Document</a>
                                 </li>
                             }
+
                         }
 
                         <ul class="nav navbar-nav ml-auto">
