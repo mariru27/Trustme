@@ -4,14 +4,27 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using AppContext = Trustme.Data.AppContext;
+using Trustme.Models;
+using Org.BouncyCastle.OpenSsl;
+using System.IO;
+using Org.BouncyCastle.Crypto;
+using Org.BouncyCastle.Security;
+using Org.BouncyCastle.Asn1.Pkcs;
+using System.Text;
+using Microsoft.AspNetCore.Hosting;
 
 namespace Trustme.Controllers
 {
     public class VerifySignature : Controller
     {
-        public IActionResult Index()
+        private readonly AppContext _context;
+        private IHostingEnvironment Environment;
+
+        public VerifySignature(AppContext context, IHostingEnvironment _environment)
         {
-            return View();
+            _context = context;
+            Environment = _environment;
         }
 
         public IActionResult VerifySign()
@@ -22,9 +35,44 @@ namespace Trustme.Controllers
         [HttpPost]
         public string VerifySignatureDocument(string username, string signature, IFormFile document)
         {
+
             if(ModelState.IsValid)
             {
-                return "is valid";
+                string wwwPath = this.Environment.WebRootPath;
+
+                User user = _context.User.Where(a => a.username == username)?.SingleOrDefault();
+                Key key = _context.Key.Where(a => a.UserId == user.UserId)?.SingleOrDefault();
+                string publicKeystring = key.PublicKey;
+
+                byte[] publickeybyte = Encoding.ASCII.GetBytes(publicKeystring);
+
+                var reader = new StringReader(publicKeystring);
+                var keypem = new PemReader(reader);
+
+                var publickey = (Org.BouncyCastle.Crypto.AsymmetricKeyParameter)keypem.ReadObject();
+
+
+                reader.Close();
+
+                byte[] fileBytesdoc;
+                using (var ms = new MemoryStream())
+                {
+                    document.CopyTo(ms);
+                    fileBytesdoc = ms.ToArray();
+                }
+
+                ISigner sign = SignerUtilities.GetSigner(PkcsObjectIdentifiers.Sha256WithRsaEncryption.Id);
+                sign.Init(false, publickey);
+                sign.BlockUpdate(fileBytesdoc, 0, fileBytesdoc.Length);
+
+                byte[] signaturebyte = Convert.FromBase64String(signature);
+
+                if (sign.VerifySignature(signaturebyte))
+                    return "is valid";
+                else
+                    return "not valid";
+
+
             }
             return "not valid";
         }
