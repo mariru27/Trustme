@@ -222,10 +222,40 @@ namespace Trustme.Controllers
             AsymmetricCipherKeyPair keyPair = (AsymmetricCipherKeyPair)o;
             AsymmetricKeyParameter privatekeyy = keyPair.Private;
 
+            //just for test
+            //-------begin--test------
+            string testmessage = "this is a test message";
+            byte[] testmessagetyte = Encoding.ASCII.GetBytes(testmessage);
 
-            //string message = "acesta este mesajul";
+            //phrase public key
+            string publicKeystring = admin.getPublicKey(HttpContext);
 
-            //byte[] messagebyte = Encoding.ASCII.GetBytes(message);
+            byte[] publickeybyte = Encoding.ASCII.GetBytes(publicKeystring);
+
+            var readerPublickey = new StringReader(publicKeystring);
+            var pemPublicKey = new PemReader(readerPublickey);
+
+            var publickey = (Org.BouncyCastle.Crypto.AsymmetricKeyParameter)pemPublicKey.ReadObject();
+
+            reader.Close();
+
+            ISigner signtest = SignerUtilities.GetSigner(PkcsObjectIdentifiers.Sha256WithRsaEncryption.Id);
+            signtest.Init(true, privatekeyy);
+            signtest.BlockUpdate(testmessagetyte, 0, testmessagetyte.Length);
+            var signaturetest = signtest.GenerateSignature();
+            string signatureteststring = Convert.ToBase64String(signaturetest);
+
+            signtest.Init(false, publickey);
+            signtest.BlockUpdate(testmessagetyte, 0, testmessagetyte.Length);
+
+            byte[] signaturetestbyte = Convert.FromBase64String(signatureteststring);
+
+            var verifytest = signtest.VerifySignature(signaturetestbyte);
+            if (verifytest == false)
+                return "private key is not correct, you can generate another one if you lost it";
+
+
+            //------end--test---------
 
             ISigner sign = SignerUtilities.GetSigner(PkcsObjectIdentifiers.Sha256WithRsaEncryption.Id);
             sign.Init(true, privatekeyy);

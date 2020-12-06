@@ -20,11 +20,14 @@ namespace Trustme.Controllers
     {
         private readonly AppContext _context;
         private IHostingEnvironment Environment;
+        public Administration admin;
 
-        public VerifySignature(AppContext context, IHostingEnvironment _environment)
+        public VerifySignature(AppContext context, IHostingEnvironment _environment, Administration _admin)
         {
             _context = context;
             Environment = _environment;
+            admin = _admin;
+
         }
 
         public IActionResult VerifySign()
@@ -40,9 +43,7 @@ namespace Trustme.Controllers
             {
                 string wwwPath = this.Environment.WebRootPath;
 
-                User user = _context.User.Where(a => a.username == username)?.SingleOrDefault();
-                Key key = _context.Key.Where(a => a.UserId == user.UserId)?.SingleOrDefault();
-                string publicKeystring = key.PublicKey;
+                string publicKeystring = admin.getPublicKey(HttpContext);
 
                 byte[] publickeybyte = Encoding.ASCII.GetBytes(publicKeystring);
 
@@ -50,7 +51,6 @@ namespace Trustme.Controllers
                 var keypem = new PemReader(reader);
 
                 var publickey = (Org.BouncyCastle.Crypto.AsymmetricKeyParameter)keypem.ReadObject();
-
 
                 reader.Close();
 

@@ -85,6 +85,15 @@ namespace Trustme.Controllers
             return RedirectToAction("LogIn");
         }
 
+        public string getPublicKey(HttpContext httpcontext)
+        {
+            var username = this.getUsername(httpcontext);
+            User user = _context.User.Where(a => a.username == username)?.SingleOrDefault();
+            Key key = _context.Key.Where(a => a.UserId == user.UserId)?.SingleOrDefault();
+            return key.PublicKey;
+
+        }
+
         [Authorize]
         public IActionResult Secret()
         {
