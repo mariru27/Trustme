@@ -51,11 +51,9 @@ namespace Trustme.Controllers
             return "este logat";
         }
 
-        //[HttpGet]
-        //[ValidateAntiForgeryToken]
+
         public IActionResult Signdocument()
         {
-            //ViewData["signature"] = "sdad";
 
             if (TempData["testKey"] != null && (bool)TempData["testKey"] == false)
             {
@@ -234,7 +232,6 @@ namespace Trustme.Controllers
                 var verifytest = signtest.VerifySignature(signaturetestbyte);
                 //------end--test-----------------------------------------------------------------
 
-                ViewData["signature"] = "";
                 TempData["signature"] = "";
                 TempData["testKey"] = true;
                 if (verifytest == false)
@@ -252,7 +249,6 @@ namespace Trustme.Controllers
 
                     reader.Close();
                     System.IO.File.Delete(keypath);
-                    ViewData["signature"] = signature;
                     TempData["signature"] = signaturestring;
 
                 }

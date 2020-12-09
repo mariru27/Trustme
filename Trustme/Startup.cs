@@ -35,16 +35,6 @@ namespace Trustme
 
             services.AddMvc().AddControllersAsServices();
             services.AddHttpContextAccessor();
-            //services.AddSingleton<Administration>();
-            //services.AddMvc();
-            //services.AddScoped<DbContext, AppContext>();
-            //services.AddScoped<Administration>();
-            //services.AddScoped<SignDocuments>();
-
-            //services.AddSingleton<DbContextOptions>();
-            //services.AddSingleton<AppContext>();
-            //services.AddSingleton<Administration>();
-            //services.AddTransient<SignDocuments>();
 
             services.AddAuthentication("CookieAuth").AddCookie("CookieAuth", config =>
             {
@@ -77,15 +67,11 @@ namespace Trustme
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
-
-            //app.UseCookiePolicy();
-            //app.UseAuthentication();
-            ////app.UseSession();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Administration}/{action=Index}/{id?}");
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

@@ -4,19 +4,18 @@
 *@
 @{
     ViewData["Title"] = "Sign Documents";
-    var data = ViewBag.Message;
     var signature = (string)TempData["signature"];
 
 }
 
-<h3 class="display-3">Generate certificates</h3>
+<h4 class="display-4">Generate certificate and sign documents</h4>
 
 
 <hr />
 
 <form asp-action="GenerateCertificate">
     <div class="form-group">
-        <input type="submit" value="Generate Cerificate and private key" class="btn btn-success" />
+        <input type="submit" value="Generate Cerificate" class="btn btn-success" />
     </div>
 </form>
 <br />

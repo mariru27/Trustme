@@ -2,21 +2,21 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
+    var validSignature = (string)TempData["validSignature"];
 }
 
-<h3 class="display-3">verify signature</h3>
-
+<h4 class="display-4">Verify signature</h4>
+<hr />
 <div class="row">
     <div class="col-md-4">
         <form action="VerifySignatureDocument" enctype="multipart/form-data" method="post">
             <div class="form-group">
-                <label for="username" class="control-label">username that signed document</label>
+                <label for="username" class="control-label">Username that signed document:</label>
                 <input fro="username" name="username" type="text" class="form-control" />
             </div>
             <div class="form-group">
-                <label for="signature" class="control-label">user signature</label>
+                <label for="signature" class="control-label">User signature:</label>
                 <textarea class="form-control" name="signature" rows="3"></textarea>
-                @*<input for="signature" name="signature" type="text" class="form-control" />*@
 
             </div>
             <div class="form-group">
@@ -29,3 +29,20 @@
         </form>
     </div>
 </div>
+
+
+<br />
+@{
+    if (validSignature != null && validSignature == "valid")
+    {
+        <div class="alert alert-success" role="alert">
+            Succes!!! This signature is valid!
+        </div>
+    }
+    if(validSignature != null && validSignature == "invalid")
+    {
+        <div class="alert alert-danger" role="alert">
+            This document was corrupted, this is an invalid signature!!!
+        </div>
+    }
+}

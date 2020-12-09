@@ -36,14 +36,14 @@ namespace Trustme.Controllers
         }
 
         [HttpPost]
-        public string VerifySignatureDocument(string username, string signature, IFormFile document)
+        public IActionResult VerifySignatureDocument(string username, string signature, IFormFile document)
         {
 
             if(ModelState.IsValid)
             {
                 string wwwPath = this.Environment.WebRootPath;
 
-                string publicKeystring = admin.getPublicKey(HttpContext);
+                string publicKeystring = admin.getPublicKey(username);
 
                 byte[] publickeybyte = Encoding.ASCII.GetBytes(publicKeystring);
 
@@ -60,21 +60,22 @@ namespace Trustme.Controllers
                     document.CopyTo(ms);
                     fileBytesdoc = ms.ToArray();
                 }
-
+                 
                 ISigner sign = SignerUtilities.GetSigner(PkcsObjectIdentifiers.Sha256WithRsaEncryption.Id);
                 sign.Init(false, publickey);
                 sign.BlockUpdate(fileBytesdoc, 0, fileBytesdoc.Length);
 
+                TempData["validSignature"] = "invalid";
                 byte[] signaturebyte = Convert.FromBase64String(signature);
-
                 if (sign.VerifySignature(signaturebyte))
-                    return "is valid";
+                    TempData["validSignature"] = "valid";
                 else
-                    return "not valid";
+                    TempData["validSignature"] = "invalid";
 
 
             }
-            return "not valid";
+            TempData["validSignatrue"] = "invalid";
+            return RedirectToAction("VerifySign");
         }
     }
 }

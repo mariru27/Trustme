@@ -18,6 +18,7 @@ namespace Trustme.Controllers
     public class Administration : Controller
     {
         private readonly AppContext _context;
+        
         public Administration(AppContext context)
         {
             _context = context;
@@ -79,8 +80,8 @@ namespace Trustme.Controllers
                 
                 await HttpContext.SignInAsync(userPrinciple);
                 ViewData["username"] = user.username;
-                            
-                return RedirectToAction("Index");
+
+                return RedirectToAction("Index", "Home");
             }
             return RedirectToAction("LogIn");
         }
@@ -88,6 +89,13 @@ namespace Trustme.Controllers
         public string getPublicKey(HttpContext httpcontext)
         {
             var username = this.getUsername(httpcontext);
+            User user = _context.User.Where(a => a.username == username)?.SingleOrDefault();
+            Key key = _context.Key.Where(a => a.UserId == user.UserId)?.SingleOrDefault();
+            return key.PublicKey;
+
+        }
+        public string getPublicKey(string username)
+        {
             User user = _context.User.Where(a => a.username == username)?.SingleOrDefault();
             Key key = _context.Key.Where(a => a.UserId == user.UserId)?.SingleOrDefault();
             return key.PublicKey;
@@ -103,7 +111,7 @@ namespace Trustme.Controllers
         public async Task<IActionResult> LogOut()
         {
             await HttpContext.SignOutAsync();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index","Home");
         }
 
         public  bool isloggedIn(HttpContext httpcontext)
