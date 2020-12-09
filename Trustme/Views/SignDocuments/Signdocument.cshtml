@@ -4,35 +4,47 @@
 *@
 @{
     ViewData["Title"] = "Sign Documents";
+    var data = ViewBag.Message;
+    var signature = (string)TempData["signature"];
+
 }
-<h1>Generate certificates</h1>
+
+<h3 class="display-3">Generate certificates</h3>
+
 
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="GenerateCertificate">
-            <div class="col text-center">
-                <input type="submit" value="Generate Cerificate and private key" class="btn btn-primary" />
-            </div>
-        </form>
+
+<form asp-action="GenerateCertificate">
+    <div class="form-group">
+        <input type="submit" value="Generate Cerificate and private key" class="btn btn-success" />
     </div>
-</div>
-<hr />
+</form>
+<br />
 
 <form asp-action="SignDoc" enctype="multipart/form-data" method="post">
-    <dl class="row">
-        <dt>
-            <label for="pkfile">Private key</label>
-            <input for="pkfile" name="pkfile" type="file">
-
-        </dt>
-        <dt>
-            <label for="docfile">Document</label>
-            <input for="docfile" name="docfile" type="file">
-        </dt>
-
-    </dl>
-        <input type="submit" value="Upload" class="btn btn-primary" />
+    <div class="form-group">
+        <label for="pkfile"><strong>Private key</strong></label>
+        <input for="pkfile" name="pkfile" type="file">
+    </div>
+    <br />
+    <div class="form-group">
+        <label for="docfile"><strong>Document</strong></label>
+        <input for="docfile" name="docfile" type="file">
+    </div>
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="submit" value="Upload" class="btn btn-primary" />
 </form>
+<br />
 
 
+@{
+    if (signature != "" && signature != null)
+    {
+        <div class="alert alert-success">
+            <strong>Success!</strong> You signed your document.
+        </div>
+        <p class="font-weight-normal">Your signature:</p>
+        <textarea class="form-control" name="signature">@signature</textarea>
+
+    }
+}
