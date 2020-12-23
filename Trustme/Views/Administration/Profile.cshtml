@@ -1,6 +1,42 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
+    @model Trustme.Models.User
+
 }
-<h1>this is profile</h1>
+
+<h4 class="display-4">User: @Html.DisplayFor(modelItem => modelItem.username) Profile</h4>
+
+<hr />
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.firstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.secondName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.mail)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.username)
+            </th>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => modelItem.firstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => modelItem.secondName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => modelItem.mail)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => modelItem.username)
+            </td>
+        </tr>
+
+        </tr>
+    </thead> 
+</table>
