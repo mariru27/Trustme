@@ -28,6 +28,11 @@ namespace Trustme.Controllers
             return View(await _context.User.ToListAsync());
         }
 
+        public IActionResult Profile()
+        {
+            return View();
+        }
+
         public IActionResult Register()
         {
             return View();

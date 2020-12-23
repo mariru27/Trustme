@@ -384,3 +384,4 @@ C:\Users\Marina Rusu\Desktop\Trustme\Trustme\Trustme\bin\Debug\netcoreapp3.1\run
 C:\Users\Marina Rusu\Desktop\Trustme\Trustme\Trustme\obj\Debug\netcoreapp3.1\Razor\Views\VerifySignature\VerifySign.cshtml.g.cs
 C:\Users\Marina Rusu\Desktop\Trustme\Trustme\Trustme\obj\Debug\netcoreapp3.1\Trustme.csproj.CoreCompileInputs.cache
 C:\Users\Marina Rusu\Desktop\Trustme\Trustme\Trustme\obj\Debug\netcoreapp3.1\Trustme.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\Marina Rusu\Desktop\Trustme\Trustme\Trustme\obj\Debug\netcoreapp3.1\Razor\Views\Administration\Profile.cshtml.g.cs
