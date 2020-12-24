@@ -68,7 +68,7 @@ namespace Trustme.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult GenerateCertificate()
+        public IActionResult GenerateCertificate(string certificateName, string description)
         {
             string wwwPath = this.Environment.WebRootPath;
 

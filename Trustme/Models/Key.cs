@@ -10,6 +10,8 @@ namespace Trustme.Models
     {
         [Key]
         public int KeyId { set; get; }
+        public string certificateName { set; get; }
+        public string description { set; get; }
         public int UserId { set; get; }
         public string PublicKey { set; get; }
         public virtual User User { set; get; }
