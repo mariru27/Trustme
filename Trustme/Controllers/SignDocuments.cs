@@ -24,6 +24,8 @@ using System.Security.Cryptography;
 using Org.BouncyCastle.OpenSsl;
 using System.Text;
 using System.Net.Http.Headers;
+using AppContext = Trustme.Data.AppContext;
+using Microsoft.EntityFrameworkCore;
 
 namespace Trustme.Controllers
 {
@@ -33,11 +35,15 @@ namespace Trustme.Controllers
         public Administration admin;
         private const string SignatureAlgorithm = "sha1WithRSA";
         private IHostingEnvironment Environment;
+        private readonly AppContext _context;
 
-        public SignDocuments(Administration _admin, IHostingEnvironment _environment)
+
+        public SignDocuments(Administration _admin, IHostingEnvironment _environment, AppContext context)
         {
             admin = _admin;
             Environment = _environment;
+            _context = context;
+
         }
         public IActionResult Index()
         {
@@ -52,8 +58,8 @@ namespace Trustme.Controllers
         }
 
 
-        public IActionResult Signdocument()
-        {
+        public async Task<IActionResult> Signdocument()
+        { 
 
             if (TempData["testKey"] != null && (bool)TempData["testKey"] == false)
             {
@@ -63,7 +69,8 @@ namespace Trustme.Controllers
             {
                 ModelState.AddModelError("", "You are missing a file");
             }
-            return View();
+
+            return View(await _context.Key.Where(a => a.UserId == admin.getUserId(HttpContext)).ToListAsync());
         }
 
         [HttpPost]
@@ -93,15 +100,15 @@ namespace Trustme.Controllers
             {
                 
                 string username = admin.getUsername(HttpContext);
+                
 
                 TextWriter textWriter1 = new StringWriter();
                 PemWriter pemWriter1 = new PemWriter(textWriter1);
-                //pemWriter.WriteObject(kp.Public);
                 pemWriter1.WriteObject(kp.Public);
                 pemWriter1.Writer.Flush();
 
                 string publicKey = textWriter1.ToString();
-                admin.addPublicKey(username, publicKey);
+                admin.addPublicKey(username, publicKey,certificateName,description);
             }
 
             var cert = cGenerator.Generate(kp.Private); // Create a self-signed cert

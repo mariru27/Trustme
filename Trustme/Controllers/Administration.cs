@@ -176,5 +176,19 @@ namespace Trustme.Controllers
             _context.SaveChanges();
         }
 
+        public int getUserId(string username)
+        {
+            User user =  _context.User.Where(a => a.username == username)?.FirstOrDefault();
+            return user.UserId;
+
+        }
+        public int getUserId(HttpContext httpcontext)
+        {
+            string username = this.getUsername(httpcontext);
+            User user = _context.User.Where(a => a.username == username)?.FirstOrDefault();
+            return user.UserId;
+
+        }
+
     }
 }
