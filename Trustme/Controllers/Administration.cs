@@ -168,7 +168,13 @@ namespace Trustme.Controllers
             }
             _context.SaveChanges();
         }
-
+        public void deletePublicKey(string username, string certificateName)
+        {
+            User user = _context.User.Where(a => a.username == username)?.SingleOrDefault();
+            Key userKey = _context.Key.Where(a => a.UserId == user.UserId && a.certificateName == certificateName)?.SingleOrDefault();
+            _context.Key.Remove(userKey);
+            _context.SaveChanges();
+        }
 
     }
 }
