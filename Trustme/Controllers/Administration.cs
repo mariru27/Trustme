@@ -142,8 +142,6 @@ namespace Trustme.Controllers
             //find user
             User user =  _context.User.Where(a => a.username == username)?.SingleOrDefault();
             
-           // Key userKey = _context.Key.Where(a => a.UserId == user.UserId)?.SingleOrDefault();
-
             Key userKey = _context.Key.Where(a => a.UserId == user.UserId && a.certificateName == certificateName)?.SingleOrDefault();
 
             if (userKey == null)
@@ -156,6 +154,19 @@ namespace Trustme.Controllers
                  _context.Add(newKey);
             }
              _context.SaveChanges();
+        }
+
+        public void editPublicKey(string username, string publicKey, string certificateName)
+        {
+            User user = _context.User.Where(a => a.username == username)?.SingleOrDefault();
+            Key userKey = _context.Key.Where(a => a.UserId == user.UserId && a.certificateName == certificateName)?.SingleOrDefault();
+
+            if (userKey != null)
+            {
+                userKey.PublicKey = publicKey;
+
+            }
+            _context.SaveChanges();
         }
 
 
