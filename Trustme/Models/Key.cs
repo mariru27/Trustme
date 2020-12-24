@@ -9,6 +9,7 @@ namespace Trustme.Models
     public class Key
     {
         [Key]
+        public int KeyId { set; get; }
         public int UserId { set; get; }
         public string PublicKey { set; get; }
         public virtual User User { set; get; }
