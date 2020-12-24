@@ -111,6 +111,7 @@ namespace Trustme.Controllers
 
         }
 
+
         [Authorize]
         public IActionResult Secret()
         {
@@ -136,23 +137,27 @@ namespace Trustme.Controllers
             return httpcontext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
         }
 
-        public  void addPublicKey(string username, string publicKey)
+        public  void addPublicKey(string username, string publicKey, string certificateName, string description)
         {
+            //find user
             User user =  _context.User.Where(a => a.username == username)?.SingleOrDefault();
-            Key userKey = _context.Key.Where(a => a.UserId == user.UserId)?.SingleOrDefault();
+            
+           // Key userKey = _context.Key.Where(a => a.UserId == user.UserId)?.SingleOrDefault();
+
+            Key userKey = _context.Key.Where(a => a.UserId == user.UserId && a.certificateName == certificateName)?.SingleOrDefault();
+
             if (userKey == null)
             {
                 Key newKey = new Key();
                 newKey.UserId = user.UserId;
                 newKey.PublicKey = publicKey;
+                newKey.certificateName = certificateName;
+                newKey.description = description;
                  _context.Add(newKey);
-            }
-            else
-            {
-                userKey.PublicKey = publicKey;
             }
              _context.SaveChanges();
         }
+
 
     }
 }
