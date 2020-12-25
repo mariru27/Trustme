@@ -37,6 +37,14 @@ namespace Trustme.Controllers
             return View();
         }
 
+
+        public User getUserbyId(int id)
+        {
+            return  _context.User.Where(a => a.UserId == id)?.SingleOrDefault();
+        }
+
+
+
         public IActionResult Register()
         {
             return View();
