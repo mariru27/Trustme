@@ -180,6 +180,7 @@ namespace Trustme.Controllers
                 newKey.PublicKey = publicKey;
                 newKey.certificateName = certificateName;
                 newKey.description = description;
+                //user.Keys.Add(newKey);
                  _context.Add(newKey);
             }
              _context.SaveChanges();

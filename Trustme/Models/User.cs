@@ -44,6 +44,6 @@ namespace Trustme.Models
         [Compare("password", ErrorMessage = "Confirm password doesn't match, Type again !")]
         [Display(Name = "Confirm Password")]
         public string confirmPassword { get; set; }
-        public List<Key> Keys {set; get;}
+        public virtual List<Key> Keys {set; get;}
     }
 }
