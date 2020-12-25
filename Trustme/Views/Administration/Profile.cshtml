@@ -1,12 +1,12 @@
 ﻿
 @{
-    @model IEnumerable<Trustme.Models.Key>
 
-   @model Trustme.Models.User
+    IEnumerable<Key> Keys = ViewData["keys"] as IEnumerable<Key>;
+    User CurrentUser = ViewData["user"] as User;
 
 }
 
-<h4 class="display-4">User: @Html.DisplayFor(modelItem => modelItem.username) Profile</h4>
+<h4 class="display-4">User: @CurrentUser.username Profile</h4>
 
 <hr />
 
@@ -14,29 +14,29 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.firstName)
+                First name
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.secondName)
+                Second name
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.mail)
+                Mail
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.username)
+                Username
             </th>
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => modelItem.firstName)
+                @CurrentUser.firstName
             </td>
             <td>
-                @Html.DisplayFor(modelItem => modelItem.secondName)
+                @CurrentUser.secondName
             </td>
             <td>
-                @Html.DisplayFor(modelItem => modelItem.mail)
+                @CurrentUser.mail
             </td>
             <td>
-                @Html.DisplayFor(modelItem => modelItem.username)
+                @CurrentUser.username
             </td>
         </tr>
     </thead>
@@ -48,18 +48,18 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.KeyId)
+                Certificate id
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.certificateName)
+                Certificate name
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.description)
+                Description
             </th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @foreach (var item in Keys)
         {
             <tr>
                 <td>
