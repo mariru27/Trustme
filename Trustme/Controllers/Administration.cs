@@ -37,6 +37,22 @@ namespace Trustme.Controllers
             return View();
         }
 
+        public IActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            User user = this.getUserbyId(this.getUserId(HttpContext));
+            Key key = user.Keys.Where(a => a.KeyId == id).SingleOrDefault();
+
+            if (key == null)
+            {
+                return NotFound();
+            }
+
+            return View(key);
+        }
 
         public User getUserByUsername(string username)
         {
