@@ -61,17 +61,23 @@
     <tbody>
         @foreach (var item in Keys)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.KeyId)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.certificateName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.description)
-                </td>
-            </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.KeyId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.certificateName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.description)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.KeyId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.KeyId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.KeyId">Delete</a>
+            </td>
+        </tr>
+
         }
     </tbody>
 </table>

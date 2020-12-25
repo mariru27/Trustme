@@ -29,43 +29,6 @@
 </form>
 <br />
 
-@*display documents*@
-
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.KeyId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.certificateName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.description)
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.KeyId)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.certificateName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.description)
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
-
-
-
-
 <hr />
 
 <br />
