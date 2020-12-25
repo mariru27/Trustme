@@ -38,6 +38,11 @@ namespace Trustme.Controllers
         }
 
 
+        public User getUserByUsername(string username)
+        {
+            return  _context.User.Where(a => a.username == username)?.SingleOrDefault();
+        }
+
         public User getUserbyId(int id)
         {
             return  _context.User.Where(a => a.UserId == id)?.SingleOrDefault();
