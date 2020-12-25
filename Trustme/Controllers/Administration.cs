@@ -44,8 +44,7 @@ namespace Trustme.Controllers
             {
                 return NotFound();
             }
-            User user = this.getUserbyId(this.getUserId(HttpContext));
-            Key key = user.Keys.Where(a => a.KeyId == id).SingleOrDefault();
+            Key key = _context.Key.Where(a => a.UserId == this.getUserId(HttpContext) && a.KeyId == id).SingleOrDefault();
             if (key == null)
             {
                 return NotFound();
@@ -181,7 +180,7 @@ namespace Trustme.Controllers
                 newKey.certificateName = certificateName;
                 newKey.description = description;
 
-                user.Keys.Add(newKey);
+                //user.Keys.Add(newKey);
                 
                 _context.Add(newKey);
             }
