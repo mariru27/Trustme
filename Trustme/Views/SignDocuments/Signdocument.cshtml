@@ -40,7 +40,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.certificateName)
             </th>
-            <th></th>
+            <th>
+                @Html.DisplayNameFor(model => model.description)
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -52,6 +54,9 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.certificateName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.description)
                 </td>
             </tr>
         }

@@ -75,7 +75,7 @@ namespace Trustme.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult GenerateCertificate(string certificateName, string description)
+        public async Task<IActionResult> GenerateCertificate(string certificateName, string description)
         {
             string wwwPath = this.Environment.WebRootPath;
 
@@ -163,7 +163,8 @@ namespace Trustme.Controllers
             }
             Directory.Delete(pathDir);
             System.IO.File.Delete(pathDirectoryZip);
-            
+
+           
             return result;
 
         }

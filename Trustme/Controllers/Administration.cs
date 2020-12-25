@@ -29,12 +29,12 @@ namespace Trustme.Controllers
         }
 
         [Authorize]
-        public IActionResult Profile()
+        public async Task<IActionResult> Profile()
         {
             string username = this.getUsername(HttpContext);
-            User user = _context.User.Where(a => a.username == username).SingleOrDefault();
-            
-            return View(user);
+            ViewData["user"] = _context.User.Where(a => a.username == username).SingleOrDefault();
+            ViewData["keys"] = await _context.Key.Where(a => a.UserId == this.getUserId(HttpContext)).ToListAsync();
+            return View();
         }
 
         public IActionResult Register()
