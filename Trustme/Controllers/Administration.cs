@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using Trustme.Data;
@@ -45,12 +46,11 @@ namespace Trustme.Controllers
             }
             User user = this.getUserbyId(this.getUserId(HttpContext));
             Key key = user.Keys.Where(a => a.KeyId == id).SingleOrDefault();
-
             if (key == null)
             {
                 return NotFound();
             }
-
+            ViewData["UserId"] = new SelectList(_context.User, "UserId", "UserId", key.UserId);
             return View(key);
         }
 
