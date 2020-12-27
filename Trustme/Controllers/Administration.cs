@@ -38,14 +38,14 @@ namespace Trustme.Controllers
             return View();
         }
 
-        public async Task<IActionResult> DeleteCertificate(int? id)
+        public IActionResult DeleteCertificate(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-
-            Key key;
+            
+            var key = getKey(this.getUserId(HttpContext), (int)id);
             if (key == null)
             {
                 return NotFound();
