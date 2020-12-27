@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "O+v2OKUdQno3JaCzk4BCVSzv89q+21DBnqmzeG79DswM/erqOcjk6G12NQF0wfTny2L9OC32okNI+fmCiD1ntQ==",
+  "dgSpecHash": "6ZKycPI3nw7ZenTLNm+2f6acx14aSfN0NpyqVYLFPrWFI8vEyGmZQtcBnoIBQoFitAPPvZYr+Kv8x8zfH2JdBg==",
   "success": true,
   "projectFilePath": "C:\\Users\\Marina Rusu\\Desktop\\Trustme\\Trustme\\Trustme\\Trustme.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\Marina Rusu\\.nuget\\packages\\bouncycastle\\1.8.6.1\\bouncycastle.1.8.6.1.nupkg.sha512",
     "C:\\Users\\Marina Rusu\\.nuget\\packages\\grpc.core\\2.33.1\\grpc.core.2.33.1.nupkg.sha512",
     "C:\\Users\\Marina Rusu\\.nuget\\packages\\grpc.core.api\\2.33.1\\grpc.core.api.2.33.1.nupkg.sha512",
     "C:\\Users\\Marina Rusu\\.nuget\\packages\\microsoft.aspnet.identity.core\\2.2.3\\microsoft.aspnet.identity.core.2.2.3.nupkg.sha512",
@@ -192,6 +193,16 @@
     "C:\\Users\\Marina Rusu\\.nuget\\packages\\system.xml.xmlserializer\\4.3.0\\system.xml.xmlserializer.4.3.0.nupkg.sha512"
   ],
   "logs": [
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'BouncyCastle 1.8.6.1' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework '.NETCoreApp,Version=v3.1'. This package may not be fully compatible with your project.",
+      "libraryId": "BouncyCastle",
+      "targetGraphs": [
+        ".NETCoreApp,Version=v3.1"
+      ]
+    },
     {
       "code": "NU1701",
       "level": "Warning",
