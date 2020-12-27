@@ -386,3 +386,4 @@ C:\Users\Marina Rusu\Desktop\Trustme\Trustme\Trustme\obj\Debug\netcoreapp3.1\Tru
 C:\Users\Marina Rusu\Desktop\Trustme\Trustme\Trustme\obj\Debug\netcoreapp3.1\Trustme.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\Marina Rusu\Desktop\Trustme\Trustme\Trustme\obj\Debug\netcoreapp3.1\Razor\Views\Administration\Profile.cshtml.g.cs
 C:\Users\Marina Rusu\Desktop\Trustme\Trustme\Trustme\obj\Debug\netcoreapp3.1\Razor\Views\Administration\Edit.cshtml.g.cs
+C:\Users\Marina Rusu\Desktop\Trustme\Trustme\Trustme\obj\Debug\netcoreapp3.1\Razor\Views\Administration\DeleteCertificate.cshtml.g.cs

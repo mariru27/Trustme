@@ -1,5 +1,31 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model Trustme.Models.Key
+
 @{
+    ViewData["Title"] = "Delete Certificate";
 }
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Key</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.certificateName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.certificateName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.description)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.description)
+        </dd>
+    </dl>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="UserId" />
+        <input type="hidden" asp-for="KeyId" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-action="Profile">Back to profile</a>
+    </form>
+</div>
