@@ -164,7 +164,9 @@ namespace Trustme.Controllers
             Directory.Delete(pathDir);
             System.IO.File.Delete(pathDirectoryZip);
 
-           
+            result.FileDownloadName = certificateName + ".zip";
+
+
             return result;
 
         }
