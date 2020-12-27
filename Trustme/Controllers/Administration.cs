@@ -38,6 +38,42 @@ namespace Trustme.Controllers
             return View();
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, [Bind("UserId,KeyId,certificateName,description")] Key key)
+        {
+            if (id != key.KeyId)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(key);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!KeyExists(key.UserId, key.KeyId))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Profile));
+            }
+            ViewData["user"] = _context.User.Where(a => a.UserId == key.UserId).SingleOrDefault();
+            return View(key);
+        }
+        private bool KeyExists(int idUser, int idKey)
+        {
+            return _context.Key.Any(e => e.UserId == idUser && e.KeyId == idKey);
+        }
         public IActionResult Edit(int? id)
         {
             if (id == null)
