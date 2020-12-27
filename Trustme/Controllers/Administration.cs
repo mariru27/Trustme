@@ -53,9 +53,19 @@ namespace Trustme.Controllers
 
             return View(key);
         }
-        public async Task<Key> getKey(int userId, int keyId)
+
+        [HttpPost, ActionName("DeleteCertificate")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            return await _context.Key.Where(a => a.UserId == userId && a.KeyId == keyId).SingleOrDefaultAsync();
+            var key = this.getKey(this.getUserId(HttpContext), id);
+            _context.Key.Remove(key);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Profile));
+        }
+        public Key getKey(int userId, int keyId)
+        {
+            return _context.Key.Where(a => a.UserId == userId && a.KeyId == keyId).SingleOrDefault();
         }
 
 
