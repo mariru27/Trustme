@@ -58,7 +58,7 @@ namespace Trustme.Controllers
         }
 
 
-        public async Task<IActionResult> Signdocument()
+        public IActionResult Signdocument()
         { 
 
             if (TempData["testKey"] != null && (bool)TempData["testKey"] == false)
@@ -69,8 +69,7 @@ namespace Trustme.Controllers
             {
                 ModelState.AddModelError("", "You are missing a file");
             }
-            await _context.Key.Where(a => a.UserId == admin.getUserId(HttpContext)).ToListAsync();
-            return View();
+            return View(admin.getAllKeys(HttpContext));
         }
 
         [HttpPost]

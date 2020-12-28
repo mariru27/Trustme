@@ -38,10 +38,10 @@ namespace Trustme.Controllers
             return View();
         }
 
-        public async Task<IActionResult> getAllKeys()
+        public IActionResult getAllKeys(HttpContext httpContext)
         {
-            var appContext = _context.Key.Include(k => k.UserId == this.getUserId(HttpContext));
-            return View(await appContext.ToListAsync());
+            var appContext = _context.Key.Where(k => k.UserId == this.getUserId(httpContext)).AsEnumerable();
+            return View(appContext);
         }
 
         public IActionResult DeleteCertificate(int? id)
