@@ -12,6 +12,7 @@
 <h4 class="display-4">Generate certificate and sign documents</h4>
 
 
+
 <hr />
 
 <form asp-action="GenerateCertificate">
@@ -31,16 +32,19 @@
 
 <hr />
 
-<label for="certificates">Choose a certifificate:</label>
-<select name="certificates" id="certificates">
-    @{
-        foreach (var c in Model)
-        {
-            <option value=@c.KeyId>@c.certificateName</option>
+<div class="form-group">
+    <label for="certificates">Choose a certifificate:</label>
+    <select class="form-control" id="certificates">
+        @{
+            foreach (var c in Model)
+            {
+                <option value=@c.KeyId>@c.certificateName</option>
 
+            }
         }
-    }
-</select>
+    </select>
+</div>
+
 
 <br />
 <form asp-action="SignDoc" enctype="multipart/form-data" method="post">
