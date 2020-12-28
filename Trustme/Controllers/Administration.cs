@@ -204,10 +204,10 @@ namespace Trustme.Controllers
             return key.PublicKey;
 
         }
-        public string getPublicKey(HttpContext httpcontext, string certificateName)
+        public string getPublicKey(HttpContext httpcontext, int certificateId)
         {
             var username = this.getUsername(httpcontext);
-            Key key = _context.Key.Where(a => a.UserId == this.getUserId(httpcontext) && a.certificateName == certificateName).SingleOrDefault();
+            Key key = _context.Key.Where(a => a.UserId == this.getUserId(httpcontext) && a.KeyId == certificateId).SingleOrDefault();
             return key.PublicKey;
 
         }

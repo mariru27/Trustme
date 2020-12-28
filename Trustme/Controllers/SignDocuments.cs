@@ -185,7 +185,7 @@ namespace Trustme.Controllers
             return KeyParameter;
         }
 
-        public async Task<IActionResult> SignDoc(IFormFile pkfile, IFormFile docfile)
+        public async Task<IActionResult> SignDoc(IFormFile pkfile, IFormFile docfile, int certificates)
         {
             TempData["missingFiles"] = false;
 
@@ -223,7 +223,7 @@ namespace Trustme.Controllers
                 byte[] testmessagetyte = Encoding.ASCII.GetBytes(testmessage);
 
                 //phrase public key
-                string publicKeystring = admin.getPublicKey(HttpContext);
+                string publicKeystring = admin.getPublicKey(HttpContext, certificates);
 
                 byte[] publickeybyte = Encoding.ASCII.GetBytes(publicKeystring);
 

@@ -13,22 +13,20 @@
 
 <hr />
 
-<div class="form-group">
-    <label for="certificates">Choose a certifificate:</label>
-    <select  class="form-control" id="certificates">
-        @{
-            foreach (var c in Model)
-            {
-                <option value=@c.KeyId>@c.certificateName</option>
 
-            }
-        }
-    </select>
-</div>
-
-<br />
 
 <form asp-action="SignDoc" enctype="multipart/form-data" method="post">
+    <label for="certificates">Choose a certifificate:</label>
+    <select class="form-control" name="certificates" id="certificates">
+    @{
+        foreach (var c in Model)
+        {
+            <option value=@c.KeyId>@c.certificateName</option>
+
+        }
+    }
+    </select>
+    <br />
     <div class="form-group">
         <label for="pkfile"><strong>Private key</strong></label>
         <input for="pkfile" name="pkfile" type="file">
