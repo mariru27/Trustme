@@ -9,9 +9,15 @@
 
 }
 
-<h4 class="display-4">Generate certificate and sign documents</h4>
+<script type="text/javascript">
+    function myFunction() {
+        setTimeout(function () {
+            window.location.reload(1);
+        }, 4000);
+    }
+</script>
 
-
+<h4 class="display-4">Generate certificates</h4>
 
 <hr />
 
@@ -25,16 +31,18 @@
         <textarea class="form-control" name="description" rows="3"></textarea>
     </div>
     <div class="form-group">
-        <input type="submit" value="Generate Cerificate" class="btn btn-success" />
+        <input type="submit" onClick="myFunction()" value="Generate Cerificate" class="btn btn-success" />
     </div>
 </form>
 <br />
 
 <hr />
 
+<h4 class="display-4">Sign documents</h4>
+
 <div class="form-group">
     <label for="certificates">Choose a certifificate:</label>
-    <select class="form-control" id="certificates">
+    <select  class="form-control" id="certificates">
         @{
             foreach (var c in Model)
             {
@@ -45,8 +53,8 @@
     </select>
 </div>
 
-
 <br />
+
 <form asp-action="SignDoc" enctype="multipart/form-data" method="post">
     <div class="form-group">
         <label for="pkfile"><strong>Private key</strong></label>
@@ -60,8 +68,8 @@
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <input type="submit" value="Upload" class="btn btn-primary" />
 </form>
-<br />
 
+<br />
 
 @{
     if (signature != "" && signature != null)
@@ -74,3 +82,4 @@
 
     }
 }
+
