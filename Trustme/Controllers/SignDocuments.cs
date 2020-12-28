@@ -69,8 +69,8 @@ namespace Trustme.Controllers
             {
                 ModelState.AddModelError("", "You are missing a file");
             }
-
-            return View(await _context.Key.Where(a => a.UserId == admin.getUserId(HttpContext)).ToListAsync());
+            await _context.Key.Where(a => a.UserId == admin.getUserId(HttpContext)).ToListAsync();
+            return View();
         }
 
         [HttpPost]
