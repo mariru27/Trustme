@@ -1,4 +1,4 @@
-﻿@*@model Trustme.Models.Key*@
+﻿@*@model Trustme.Models.Key;*@
 @model IEnumerable<Trustme.Models.Key>
 @*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -6,7 +6,7 @@
 @{
     ViewData["Title"] = "Sign Documents";
     var signature = (string)TempData["signature"];
-
+    
 }
 
 <script type="text/javascript">
@@ -17,23 +17,7 @@
     }
 </script>
 
-<h4 class="display-4">Generate certificates</h4>
 
-<hr />
-
-<form asp-action="GenerateCertificate">
-    <div class="form-group">
-        <label for="certificateName">Certificate name</label>
-        <input for="certificateName" name="certificateName" type="text">
-    </div>
-    <div class="form-group">
-        <label for="description" class="control-label">Description</label>
-        <textarea class="form-control" name="description" rows="3"></textarea>
-    </div>
-    <div class="form-group">
-        <input type="submit" onClick="myFunction()" value="Generate Cerificate" class="btn btn-success" />
-    </div>
-</form>
 <br />
 
 <hr />

@@ -10,6 +10,8 @@ namespace Trustme.Models
     {
         [Key]
         public int KeyId { set; get; }
+        //[Required]
+        //[StringLength(50, ErrorMessage = "Requred certificate name", MinimumLength = 1)]
         public string certificateName { set; get; }
         public string description { set; get; }
         public int UserId { set; get; }
