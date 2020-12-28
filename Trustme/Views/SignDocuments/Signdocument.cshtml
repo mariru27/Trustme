@@ -33,8 +33,13 @@
 
 <label for="certificates">Choose a certifificate:</label>
 <select name="certificates" id="certificates">
-    <option value="sd">dfds</option>
+    @{
+        foreach (var c in Model)
+        {
+            <option value=@c.KeyId>@c.certificateName</option>
 
+        }
+    }
 </select>
 
 <br />

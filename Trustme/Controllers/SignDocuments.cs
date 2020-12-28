@@ -69,7 +69,8 @@ namespace Trustme.Controllers
             {
                 ModelState.AddModelError("", "You are missing a file");
             }
-            return View(admin.getAllKeys(HttpContext));
+            var certificates = admin.getAllKeys(HttpContext);
+            return View(certificates);
         }
 
         [HttpPost]
