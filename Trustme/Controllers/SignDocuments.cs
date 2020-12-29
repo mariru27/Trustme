@@ -114,7 +114,7 @@ namespace Trustme.Controllers
                 pemWriter1.Writer.Flush();
 
                 string publicKey = textWriter1.ToString();
-                admin.addPublicKey(username, publicKey,certificateName,description);
+                admin.addPublicKey(username, publicKey,certificateName,description, keySize);
             }
 
             var cert = cGenerator.Generate(kp.Private); // Create a self-signed cert
