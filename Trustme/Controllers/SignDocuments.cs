@@ -80,14 +80,14 @@ namespace Trustme.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> GenerateCertificate(string certificateName, string description)
+        public async Task<IActionResult> GenerateCertificate(string certificateName, string description, int keySize)
         {
 
             string wwwPath = this.Environment.WebRootPath;
 
             // Keypair Generator
             RsaKeyPairGenerator kpGenerator = new RsaKeyPairGenerator();
-            kpGenerator.Init(new KeyGenerationParameters(new SecureRandom(), 2048));
+            kpGenerator.Init(new KeyGenerationParameters(new SecureRandom(), keySize));
 
             // Create a keypair
             AsymmetricCipherKeyPair kp = kpGenerator.GenerateKeyPair();
