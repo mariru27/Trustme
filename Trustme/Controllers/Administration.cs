@@ -245,7 +245,7 @@ namespace Trustme.Controllers
             return httpcontext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
         }
 
-        public  void addPublicKey(string username, string publicKey, string certificateName, string description)
+        public  void addPublicKey(string username, string publicKey, string certificateName, string description, int keySize)
         {
             //find user
             User user =  _context.User.Where(a => a.username == username)?.SingleOrDefault();
@@ -259,6 +259,7 @@ namespace Trustme.Controllers
                 newKey.PublicKey = publicKey;
                 newKey.certificateName = certificateName;
                 newKey.description = description;
+                newKey.keySize = keySize;
 
                 //user.Keys.Add(newKey);
                 
