@@ -12,6 +12,13 @@
         <label for="certificateName">Certificate name</label>
         <input for="certificateName" name="certificateName" type="text">
     </div>
+    <label for="keySize">Choose key size:</label>
+    <select class="form-control" name="keySize" id="keySize">
+        <option value=256>256</option>
+        <option value=512>512</option>
+        <option value=1024>1024</option>
+        <option value=2048>2048</option>
+    </select>
     <div class="form-group">
         <label for="description" class="control-label">Description</label>
         <textarea class="form-control" name="description" rows="3"></textarea>
