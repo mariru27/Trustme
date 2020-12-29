@@ -56,6 +56,9 @@
             <th>
                 Description
             </th>
+            <th>
+                Key Size
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -70,6 +73,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.keySize)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.KeyId">Edit</a> |
