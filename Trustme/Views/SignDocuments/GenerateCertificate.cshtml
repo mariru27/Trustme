@@ -1,16 +1,15 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@model Trustme.Models.Key;
+
 <h4 class="display-4">Generate certificates</h4>
 
 <hr />
 
 <form asp-action="GenerateCertificate">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div class="form-group">
-        <label for="certificateName">Certificate name</label>
-        <input for="certificateName" name="certificateName" type="text">
+        <label asp-for="certificateName">Certificate name</label>
+        <input asp-for="certificateName" name="certificateName" type="text">
+        <span asp-validation-for="certificateName" class="text-danger"></span>
     </div>
     <label for="keySize">Choose key size:</label>
     <select class="form-control" name="keySize" id="keySize">
@@ -20,7 +19,7 @@
         <option value=4096>4096</option>
     </select>
     <div class="form-group">
-        <label for="description" class="control-label">Description</label>
+        <label asp-for="description" class="control-label">Description</label>
         <textarea class="form-control" name="description" rows="3"></textarea>
     </div>
     <div class="form-group">
