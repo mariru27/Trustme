@@ -14,9 +14,7 @@ namespace Trustme.Models
         public string certificateName { set; get; }
         public string description { set; get; }
         public int UserId { set; get; }
-        [Required]
         public string PublicKey { set; get; }
-        [Required]
         public int keySize { set; get; }
         public virtual User User { set; get; }
     }
