@@ -22,10 +22,7 @@ namespace Trustme.Controllers
         private IHostingEnvironment Environment;
         public Administration admin;
 
-        public IActionResult VerifyUser()
-        {
-            return View();
-        }
+
         public VerifySignature(AppContext context, IHostingEnvironment _environment, Administration _admin)
         {
             _context = context;
@@ -33,12 +30,14 @@ namespace Trustme.Controllers
             admin = _admin;
 
         }
-
-        public IActionResult VerifySign()
+        public IActionResult VerifyUser()
         {
             return View();
         }
-
+        public IActionResult VerifySign(string username)
+        {
+            return View(admin.getAllKeysByUsername(username));
+        }
 
         [HttpPost]
         public IActionResult VerifySignatureDocument(string username, string signature, IFormFile document)

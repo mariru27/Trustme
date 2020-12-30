@@ -1,6 +1,5 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model IEnumerable<Trustme.Models.Key>
+
 @{
     var validSignature = (string)TempData["validSignature"];
 }
@@ -10,6 +9,17 @@
 <div class="row">
     <div class="col-md-4">
         <form action="VerifySignatureDocument" enctype="multipart/form-data" method="post">
+            <label for="certificates">Choose a certifificate:</label>
+            <select class="form-control" name="certificates" id="certificates">
+                @{
+                    foreach (var c in Model)
+                    {
+                        <option value=@c.KeyId>@c.certificateName</option>
+
+                    }
+                }
+            </select>
+            <br />
             <div class="form-group">
                 <label for="signature" class="control-label">User signature:</label>
                 <textarea class="form-control" name="signature" rows="3"></textarea>
@@ -35,7 +45,7 @@
             Succes!!! This signature is valid!
         </div>
     }
-    if(validSignature != null && validSignature == "invalid")
+    if (validSignature != null && validSignature == "invalid")
     {
         <div class="alert alert-danger" role="alert">
             This document was corrupted, this is an invalid signature!!!
