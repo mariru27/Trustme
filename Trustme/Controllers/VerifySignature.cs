@@ -39,6 +39,7 @@ namespace Trustme.Controllers
             return View();
         }
 
+
         [HttpPost]
         public IActionResult VerifySignatureDocument(string username, string signature, IFormFile document)
         {
