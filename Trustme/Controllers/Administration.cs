@@ -43,6 +43,12 @@ namespace Trustme.Controllers
             var appContext = _context.Key.Where(k => k.UserId == this.getUserId(httpContext)).AsEnumerable();
             return appContext;
         }
+        public IEnumerable<Key> getAllKeysByUsername(string username)
+        {
+            int id = getUserId(username);
+            var appContext = _context.Key.Where(k => k.UserId == username).AsEnumerable();
+            return appContext;
+        }
 
         public IActionResult DeleteCertificate(int? id)
         {
