@@ -22,6 +22,10 @@ namespace Trustme.Controllers
         private IHostingEnvironment Environment;
         public Administration admin;
 
+        public IActionResult VerifyUser()
+        {
+            return View();
+        }
         public VerifySignature(AppContext context, IHostingEnvironment _environment, Administration _admin)
         {
             _context = context;
