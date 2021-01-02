@@ -83,7 +83,7 @@ namespace Trustme.Controllers
 
             }
             TempData["validSignatrue"] = "invalid";
-            return RedirectToAction("VerifySign");
+            return RedirectToAction("VerifySign", new { username = username });
         }
     }
 }
