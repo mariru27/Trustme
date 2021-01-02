@@ -47,9 +47,10 @@ namespace Trustme.Controllers
             {
                 string wwwPath = this.Environment.WebRootPath;
 
-                string publicKeystring = admin.getPublicKey(username);
+                //string publicKeystring = admin.getPublicKey(username);
                 //get public key by name from database, use key to decrypt
-                
+
+                string publicKeystring = admin.getPublicKeyByCertificateName(username, certificateName);
 
                 byte[] publickeybyte = Encoding.ASCII.GetBytes(publicKeystring);
 
