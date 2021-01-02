@@ -36,12 +36,12 @@ namespace Trustme.Controllers
         }
         public IActionResult VerifySign(string username)
         {
-            
+            ViewData["username"] = username;
             return View(admin.getAllKeysByUsername(username));
         }
 
         [HttpPost]
-        public IActionResult VerifySignatureDocument(string certificateName, string username, string signature, IFormFile document)
+        public IActionResult VerifySignatureDocument(string username, string certificateName, string signature, IFormFile document)
         {
 
             if(ModelState.IsValid)
