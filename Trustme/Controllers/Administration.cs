@@ -19,7 +19,7 @@ namespace Trustme.Controllers
     public class Administration : Controller
     {
         private readonly AppContext _context;
-        
+        private string username;
         public Administration(AppContext context)
         {
             _context = context;
