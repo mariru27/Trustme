@@ -36,6 +36,7 @@ namespace Trustme.Controllers
         }
         public IActionResult VerifySign(string username)
         {
+            
             return View(admin.getAllKeysByUsername(username));
         }
 
