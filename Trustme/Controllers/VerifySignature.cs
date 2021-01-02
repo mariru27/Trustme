@@ -40,7 +40,7 @@ namespace Trustme.Controllers
         }
 
         [HttpPost]
-        public IActionResult VerifySignatureDocument(string username, string signature, IFormFile document)
+        public IActionResult VerifySignatureDocument(string certificateName, string username, string signature, IFormFile document)
         {
 
             if(ModelState.IsValid)
@@ -48,6 +48,8 @@ namespace Trustme.Controllers
                 string wwwPath = this.Environment.WebRootPath;
 
                 string publicKeystring = admin.getPublicKey(username);
+                //get public key by name from database, use key to decrypt
+                
 
                 byte[] publickeybyte = Encoding.ASCII.GetBytes(publicKeystring);
 
