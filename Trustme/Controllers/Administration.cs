@@ -45,8 +45,8 @@ namespace Trustme.Controllers
         }
         public IEnumerable<Key> getAllKeysByUsername(string username)
         {
-            int id = getUserId(username);
-            if (id == -1)
+            int? id = getUserId(username);
+            if (id == null)
                 return null;
             var appContext = _context.Key.Where(k => k.UserId == id).AsEnumerable();
             return appContext;
@@ -309,11 +309,11 @@ namespace Trustme.Controllers
             _context.SaveChanges();
         }
 
-        public int getUserId(string username)
+        public int? getUserId(string username)
         {
             User user = _context.User.Where(a => a.username == username)?.FirstOrDefault();
             if (user == null)
-                return -1;
+                return null;
             return user.UserId;
 
         }

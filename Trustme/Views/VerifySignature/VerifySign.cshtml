@@ -15,6 +15,7 @@
             <label for="certificateName">Choose a certifificate:</label>
             <select class="form-control" name="certificateName" id="certificateName">
                 @{
+                    if(Model != null)
                     foreach (var c in Model)
                     {
                         <option value=@c.certificateName>@c.certificateName</option>
