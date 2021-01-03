@@ -36,8 +36,13 @@ namespace Trustme.Controllers
         }
         public IActionResult VerifySign(string username)
         {
-            ViewData["username"] = username;
-            return View(admin.getAllKeysByUsername(username));
+            if (username != null)
+            {
+                ViewData["username"] = username;
+                return View(admin.getAllKeysByUsername(username));
+            }
+            else
+            return RedirectToAction("VerifyUser");
         }
 
         [HttpPost]
@@ -48,7 +53,6 @@ namespace Trustme.Controllers
             {
                 string wwwPath = this.Environment.WebRootPath;
 
-                //string publicKeystring = admin.getPublicKey(username);
                 //get public key by name from database, use key to decrypt
 
                 string publicKeystring = admin.getPublicKeyByCertificateName(username, certificateName);
