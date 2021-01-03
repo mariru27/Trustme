@@ -309,7 +309,14 @@ namespace Trustme.Controllers
 
         public int getUserId(string username)
         {
-            User user =  _context.User.Where(a => a.username == username)?.FirstOrDefault();
+            try
+            {
+                User usertry =  _context.User.Where(a => a.username == username)?.FirstOrDefault();
+            }catch(Exception e)
+            {
+                return -1;
+            }
+            User user = _context.User.Where(a => a.username == username)?.FirstOrDefault();
             return user.UserId;
 
         }
