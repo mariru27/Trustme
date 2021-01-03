@@ -1,6 +1,8 @@
-﻿
+﻿@{ 
+    var error = (string)ViewData["error"];
+} 
 <h4 class="display-4">Verify signature</h4>
-
+@error
 <hr />
 <div class="row">
     <div class="col-md-4">

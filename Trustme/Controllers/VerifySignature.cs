@@ -32,16 +32,22 @@ namespace Trustme.Controllers
         }
         public IActionResult VerifyUser()
         {
+
+            if (TempData["error"] != null && (bool)TempData["error"] == true)
+                ViewData["error"] = "You forgot to enter a username";
             return View();
+
         }
         public IActionResult VerifySign(string username)
         {
+            TempData["error"] = false;  
             if (username != null)
             {
                 ViewData["username"] = username;
                 return View(admin.getAllKeysByUsername(username));
             }
             else
+                TempData["error"] = true;
             return RedirectToAction("VerifyUser");
         }
 
