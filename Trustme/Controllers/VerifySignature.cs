@@ -73,8 +73,9 @@ namespace Trustme.Controllers
         [HttpPost]
         public IActionResult VerifySignatureDocument(string username, string certificateName, string signature, IFormFile document)
         {
-
             TempData["SignatureError"] = false;
+            TempData["documentError"] = false;
+
             if(ModelState.IsValid)
             {
                 if(signature == null)
@@ -83,6 +84,12 @@ namespace Trustme.Controllers
                     return RedirectToAction("VerifySign", new { username = username }); 
                 }
                 string wwwPath = this.Environment.WebRootPath;
+
+                if(document == null)
+                {
+                    TempData["documentError"] = true;
+                    return RedirectToAction("VerifySign", new { username = username });
+                }
 
                 //get public key by name from database, use key to decrypt
 
@@ -98,6 +105,7 @@ namespace Trustme.Controllers
                 reader.Close();
 
                 byte[] fileBytesdoc;
+
                 using (var ms = new MemoryStream())
                 {
                     document.CopyTo(ms);
