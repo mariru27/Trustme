@@ -64,8 +64,14 @@ namespace Trustme.Controllers
         public IActionResult VerifySignatureDocument(string username, string certificateName, string signature, IFormFile document)
         {
 
+            TempData["usernameError"] = false;
             if(ModelState.IsValid)
             {
+                if(username == null)
+                {
+                    TempData["usernameError"] = true;
+                    return RedirectToAction("VerifySign"); 
+                }
                 string wwwPath = this.Environment.WebRootPath;
 
                 //get public key by name from database, use key to decrypt
