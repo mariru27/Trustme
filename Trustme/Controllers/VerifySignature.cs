@@ -52,7 +52,7 @@ namespace Trustme.Controllers
                 if (keyList != null)
                     return View(keyList);
             }                
-            if(TempData["documentError"] == null && (bool)TempData["documentError"] == true)
+            if(TempData["documentError"] != null && (bool)TempData["documentError"] == true)
             {
                 ViewData["documentError"] = "Required file";
                 TempData["documentError"] = false;
@@ -123,6 +123,7 @@ namespace Trustme.Controllers
                 sign.BlockUpdate(fileBytesdoc, 0, fileBytesdoc.Length);
 
                 TempData["validSignature"] = "invalid";
+                
                 byte[] signaturebyte = Convert.FromBase64String(signature);
                 if (sign.VerifySignature(signaturebyte))
                     TempData["validSignature"] = "valid";
