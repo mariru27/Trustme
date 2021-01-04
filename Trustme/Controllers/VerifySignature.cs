@@ -52,10 +52,16 @@ namespace Trustme.Controllers
                 if (keyList != null)
                     return View(keyList);
             }                
-
+            if(TempData["documentError"] == null && (bool)TempData["documentError"] == true)
+            {
+                ViewData["documentError"] = "Required file";
+                TempData["documentError"] = false;
+                var keyList = admin.getAllKeysByUsername(username);
+                if (keyList != null)
+                    return View(keyList);
+            }
             if (username != null)
             {
-               // ViewData["username"] = username;
                 var keyList = admin.getAllKeysByUsername(username);
                 if (keyList != null)
                     return View(keyList);
