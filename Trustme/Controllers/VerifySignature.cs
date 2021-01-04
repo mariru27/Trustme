@@ -47,8 +47,10 @@ namespace Trustme.Controllers
             if (TempData["SignatureError"] != null && (bool)TempData["SignatureError"] == true)
             {
                 ViewData["SignatureError"] = "Require signature";
-                return RedirectToAction("VerifySign");
+                TempData["SignatureError"] = false;
+                return View();
             }
+
                 
 
             if (username != null)
@@ -75,10 +77,10 @@ namespace Trustme.Controllers
             TempData["SignatureError"] = false;
             if(ModelState.IsValid)
             {
-                if(username == null)
+                if(signature == null)
                 {
                     TempData["SignatureError"] = true;
-                    return RedirectToAction("VerifySign"); 
+                    return RedirectToAction("VerifySign", new { username = username }); 
                 }
                 string wwwPath = this.Environment.WebRootPath;
 
