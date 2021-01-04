@@ -28,7 +28,6 @@ namespace Trustme.Controllers
             _context = context;
             Environment = _environment;
             admin = _admin;
-
         }
         public IActionResult VerifyUser()
         {
@@ -53,7 +52,7 @@ namespace Trustme.Controllers
                 else
                 {
                     TempData["error2"] = true;
-                    return View("VerifyUser");
+                    return RedirectToAction("VerifyUser");
                 }
             }
             else

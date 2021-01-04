@@ -1,5 +1,6 @@
 ﻿@{ 
     var error = (string)ViewData["error"];
+    var error2 = (string)ViewData["error2"];
 } 
 <h4 class="display-4">Verify signature</h4>
 
@@ -16,6 +17,12 @@
                 {
                     <div class="alert alert-danger">
                         @error
+                    </div>
+                }
+                if (error2 != null)
+                {
+                    <div class="alert alert-danger">
+                        @error2
                     </div>
                 }
             }
