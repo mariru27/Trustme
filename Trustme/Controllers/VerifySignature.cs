@@ -123,8 +123,17 @@ namespace Trustme.Controllers
                 sign.BlockUpdate(fileBytesdoc, 0, fileBytesdoc.Length);
 
                 TempData["validSignature"] = "invalid";
-                
+                try 
+                {
+                    Convert.FromBase64String(signature);
+
+                }catch(Exception e)
+                {
+                    return RedirectToAction("VerifySign", new { username = username });
+                };
                 byte[] signaturebyte = Convert.FromBase64String(signature);
+
+                
                 if (sign.VerifySignature(signaturebyte))
                     TempData["validSignature"] = "valid";
                 else
