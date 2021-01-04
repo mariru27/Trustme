@@ -43,6 +43,13 @@ namespace Trustme.Controllers
         {
             TempData["error"] = false;
             TempData["error2"] = false;
+
+            if (TempData["usernameError"] != null && (bool)TempData["usernameError"] == true)
+            {
+                ViewData["usernameError"] = "Required username";
+            }
+                
+
             if (username != null)
             {
                 ViewData["username"] = username;
