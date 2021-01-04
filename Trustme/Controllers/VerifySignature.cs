@@ -37,25 +37,25 @@ namespace Trustme.Controllers
             if (TempData["error2"] != null && (bool)TempData["error2"] == true)
                 ViewData["error2"] = "User do not exist";
             return View();
-
         }
         public IActionResult VerifySign(string username)
         {
+            ViewData["username"] = username;
             TempData["error"] = false;
             TempData["error2"] = false;
 
-            if (TempData["SignatureError"] != null && (bool)TempData["SignatureError"] == true)
+            if(TempData["SignatureError"] != null && (bool)TempData["SignatureError"] == true)
             {
                 ViewData["SignatureError"] = "Require signature";
                 TempData["SignatureError"] = false;
-                return View();
-            }
-
-                
+                var keyList = admin.getAllKeysByUsername(username);
+                if (keyList != null)
+                    return View(keyList);
+            }                
 
             if (username != null)
             {
-                ViewData["username"] = username;
+               // ViewData["username"] = username;
                 var keyList = admin.getAllKeysByUsername(username);
                 if (keyList != null)
                     return View(keyList);
