@@ -44,9 +44,10 @@ namespace Trustme.Controllers
             TempData["error"] = false;
             TempData["error2"] = false;
 
-            if (TempData["usernameError"] != null && (bool)TempData["usernameError"] == true)
+            if (TempData["SignatureError"] != null && (bool)TempData["SignatureError"] == true)
             {
-                ViewData["usernameError"] = "Required username";
+                ViewData["SignatureError"] = "Require signature";
+                return RedirectToAction("VerifySign");
             }
                 
 
@@ -71,12 +72,12 @@ namespace Trustme.Controllers
         public IActionResult VerifySignatureDocument(string username, string certificateName, string signature, IFormFile document)
         {
 
-            TempData["usernameError"] = false;
+            TempData["SignatureError"] = false;
             if(ModelState.IsValid)
             {
                 if(username == null)
                 {
-                    TempData["usernameError"] = true;
+                    TempData["SignatureError"] = true;
                     return RedirectToAction("VerifySign"); 
                 }
                 string wwwPath = this.Environment.WebRootPath;
