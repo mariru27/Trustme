@@ -13,6 +13,8 @@
     <div class="col-md-4">
         <form action="VerifySignatureDocument" enctype="multipart/form-data" method="post">
             <input type="hidden" name="username" value=@username id="username" />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
             <label for="certificateName">Choose a certifificate:</label>
             <select class="form-control" name="certificateName" id="certificateName">
                 @{

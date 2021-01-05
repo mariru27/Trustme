@@ -46,16 +46,15 @@ namespace Trustme.Controllers
 
             if(TempData["SignatureError"] != null && (bool)TempData["SignatureError"] == true)
             {
-                ViewData["SignatureError"] = "Require signature";
-                TempData["SignatureError"] = false;
+                ModelState.AddModelError("", "Require signature");
                 var keyList = admin.getAllKeysByUsername(username);
                 if (keyList != null)
                     return View(keyList);
             }                
             if(TempData["documentError"] != null && (bool)TempData["documentError"] == true)
             {
-                ViewData["documentError"] = "Required file";
                 TempData["documentError"] = false;
+                ModelState.AddModelError("", "Required file");
                 var keyList = admin.getAllKeysByUsername(username);
                 if (keyList != null)
                     return View(keyList);
