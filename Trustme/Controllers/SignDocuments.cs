@@ -207,13 +207,17 @@ namespace Trustme.Controllers
                     docfile.CopyTo(ms);
                     fileBytesdoc = ms.ToArray();
                 }
-
-
                 //read private key and phrase
                 string keypath = Path.Combine(wwwfilePath, pkfile.FileName);
                 var reader = System.IO.File.OpenText(keypath);
                 var keypem = new PemReader(reader);
                 var o = keypem.ReadObject();
+                TempData["validKey"] = false;
+                if(o == null)
+                {
+                    TempData["validKey"] = true;
+                    return RedirectToAction("SignDocument");
+                }
                 AsymmetricCipherKeyPair keyPair = (AsymmetricCipherKeyPair)o;
                 AsymmetricKeyParameter privatekeyy = keyPair.Private;
 
