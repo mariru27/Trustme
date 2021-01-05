@@ -3,8 +3,7 @@
 @{
     var validSignature = (string)TempData["validSignature"];
     var username = (string)ViewData["username"];
-    var signatureError = (string)ViewData["SignatureError"];
-    var documentError = (string)ViewData["documentError"];
+
 }
 
 <h4 class="display-4">Verify signature</h4>
@@ -17,36 +16,24 @@
 
             <label for="certificateName">Choose a certifificate:</label>
             <select class="form-control" name="certificateName" id="certificateName">
-                @{
-                    if (Model != null)
-                        foreach (var c in Model)
-                        {
-                            <option value=@c.certificateName>@c.certificateName</option>
+            @{
+                if (Model != null)
+                    foreach (var c in Model)
+                    {
+                        <option value=@c.certificateName>@c.certificateName</option>
 
-                        }
-                }
+                    }
+            }
             </select>
             <br />
             <div class="form-group">
                 <label for="signature" class="control-label">User signature:</label>
                 <textarea class="form-control" name="signature" rows="3"></textarea>
             </div>
-            @if (signatureError != null)
-            {
-                <div class="alert alert-danger">
-                    @signatureError
-                </div>
-            }
             <div class="form-group">
                 <label for="document">Document:</label>
                 <input for="document" name="document" type="file" class="form-control-file" />
             </div>
-            @if (documentError != null)
-            {
-                <div class="alert alert-danger">
-                    @documentError
-                </div>
-            }
             <div class="form-group">
                 <input type="submit" value="Verify" class="btn btn-primary" />
             </div>
