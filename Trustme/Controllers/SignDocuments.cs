@@ -69,6 +69,10 @@ namespace Trustme.Controllers
             {
                 ModelState.AddModelError("", "You are missing a file");
             }
+            if(TempData["validKey"] != null && (bool)TempData["validKey"] == true)
+            {
+                ModelState.AddModelError("", "Private key is not valid");
+            }
             var certificates = admin.getAllKeys(HttpContext);
             return View(certificates);
         }
