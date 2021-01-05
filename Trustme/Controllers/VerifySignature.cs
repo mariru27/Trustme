@@ -33,9 +33,13 @@ namespace Trustme.Controllers
         {
 
             if (TempData["error"] != null && (bool)TempData["error"] == true)
-                ViewData["error"] = "You forgot to enter a username";
+            {
+                ModelState.AddModelError("", "You forgot to enter a username");
+            }
             if (TempData["error2"] != null && (bool)TempData["error2"] == true)
-                ViewData["error2"] = "User do not exist";
+            {
+                ModelState.AddModelError("", "User do not exist");
+            }
             return View();
         }
         public IActionResult VerifySign(string username)

@@ -12,6 +12,7 @@
                 <label for="username" class="control-label">Username that signed document:</label>
                 <input fro="username" name="username" type="text" class="form-control" />
             </div>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             @{
                 if (error != null)
                 {
