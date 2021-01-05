@@ -79,6 +79,7 @@ namespace Trustme.Controllers
 
         public IActionResult GenerateCertificate()
         {
+
             return View();
         }
 
@@ -86,7 +87,12 @@ namespace Trustme.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> GenerateCertificate(string certificateName, string description, int keySize)
         {
-
+            TempData["certificateName"] = true;
+            if (certificateName == null)
+            {
+                TempData["certificateName"] = false;
+                return RedirectToAction("GenerateCertificate");
+            }
             string wwwPath = this.Environment.WebRootPath;
 
             // Keypair Generator
