@@ -1,7 +1,4 @@
-﻿@{ 
-    var error = (string)ViewData["error"];
-    var error2 = (string)ViewData["error2"];
-} 
+﻿
 <h4 class="display-4">Verify signature</h4>
 
 <hr />
@@ -13,21 +10,6 @@
                 <input fro="username" name="username" type="text" class="form-control" />
             </div>
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            @{
-                if (error != null)
-                {
-                    <div class="alert alert-danger">
-                        @error
-                    </div>
-                }
-                if (error2 != null)
-                {
-                    <div class="alert alert-danger">
-                        @error2
-                    </div>
-                }
-            }
-
             <div class="form-group">
                 <input type="submit" value="Verify" class="btn btn-primary" />
             </div>
