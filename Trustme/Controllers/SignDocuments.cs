@@ -79,7 +79,10 @@ namespace Trustme.Controllers
 
         public IActionResult GenerateCertificate()
         {
-
+            if(TempData["certificateNameError"] != null && (bool)TempData["certificateNameError"] == false)
+            {
+                ModelState.AddModelError("", "Required certificate name");
+            }
             return View();
         }
 
@@ -87,10 +90,10 @@ namespace Trustme.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> GenerateCertificate(string certificateName, string description, int keySize)
         {
-            TempData["certificateName"] = true;
+            TempData["certificateNameError"] = true;
             if (certificateName == null)
             {
-                TempData["certificateName"] = false;
+                TempData["certificateNameError"] = false;
                 return RedirectToAction("GenerateCertificate");
             }
             string wwwPath = this.Environment.WebRootPath;
