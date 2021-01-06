@@ -242,8 +242,11 @@ namespace Trustme.Controllers
 
 
         [Authorize]
-        public IActionResult Secret()
+        public async Task<IActionResult> Secret()
         {
+            string username = this.getUsername(HttpContext);
+            ViewData["user"] = _context.User.Where(a => a.Username == username).SingleOrDefault();
+            ViewData["keys"] = await _context.Key.Where(a => a.UserId == this.getUserId(HttpContext)).ToListAsync();
             return View();
         }
 
