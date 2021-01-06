@@ -7,8 +7,8 @@
 <form asp-action="GenerateCertificate">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div class="form-group">
-        <label asp-for="certificateName">Certificate name</label>
-        <input asp-for="certificateName" name="certificateName" type="text">
+        <label asp-for="certificateName" class="control-label">Certificate name</label>
+        <input asp-for="certificateName" class="form-control" name="certificateName" type="text">
         <span asp-validation-for="certificateName" class="text-danger"></span>
     </div>
     <label for="keySize">Choose key size:</label>
