@@ -145,23 +145,24 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav flex-grow-1">
-                        @{
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="VerifySignature" asp-action="VerifyUser">Verify Signature</a>
-                            </li>
-                            if (username != null)
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="SignDocuments" asp-action="Signdocument">Sign Document</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="SignDocuments" asp-action="GenerateCertificate">Generate Certificate</a>
-                                </li>
-                            }
-
-                        }
+                       
 
                         <ul class="nav navbar-nav ml-auto">
+                            @{
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="VerifySignature" asp-action="VerifyUser">Verify</a>
+                                </li>
+                                if (username != null)
+                                {
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="SignDocuments" asp-action="Signdocument">Sign</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="SignDocuments" asp-action="GenerateCertificate">Generate</a>
+                                    </li>
+                                }
+
+                            }
                             @{
                                 if (username != null)
                                 {
@@ -169,9 +170,9 @@
                                         <a class="nav-link text-dark" asp-area="" asp-controller="Administration" asp-action="Profile">Profile</a>
                                     </li>
 
-                                    <li class="nav-item">
+                                    @*<li class="nav-item">
                                         <a class="nav-link text-dark" asp-area="" asp-controller="Administration" asp-action="LogOut">Logout</a>
-                                    </li>
+                                    </li>*@
                                 }
                                 else
                                 {
