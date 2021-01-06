@@ -7,9 +7,9 @@
 <form asp-action="GenerateCertificate">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div class="form-group">
-        <label asp-for="certificateName" class="control-label">Certificate name</label>
-        <input asp-for="certificateName" class="form-control" name="certificateName" type="text">
-        <span asp-validation-for="certificateName" class="text-danger"></span>
+        <label asp-for="CertificateName" class="control-label">Certificate name</label>
+        <input asp-for="CertificateName" class="form-control" name="certificateName" type="text">
+        <span asp-validation-for="CertificateName" class="text-danger"></span>
     </div>
     <label for="keySize">Choose key size:</label>
     <select class="form-control" name="keySize" id="keySize">
@@ -19,7 +19,7 @@
         <option value=4096>4096</option>
     </select>
     <div class="form-group">
-        <label asp-for="description" class="control-label">Description</label>
+        <label asp-for="Description" class="control-label">Description</label>
         <textarea class="form-control" name="description" rows="3"></textarea>
     </div>
     <div class="form-group">

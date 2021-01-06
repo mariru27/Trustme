@@ -16,16 +16,16 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="UserId" />
             <input type="hidden" asp-for="KeyId" />
-            <input type="hidden" asp-for="keySize" />
+            <input type="hidden" asp-for="KeySize" />
             <div class="form-group">
-                <label asp-for="certificateName" class="control-label"></label>
-                <input asp-for="certificateName" class="form-control" />
-                <span asp-validation-for="certificateName" class="text-danger"></span>
+                <label asp-for="CertificateName" class="control-label"></label>
+                <input asp-for="CertificateName" class="form-control" />
+                <span asp-validation-for="CertificateName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="description" class="control-label"></label>
-                <textarea class="form-control" asp-for="description" rows="3"></textarea>
-                <span asp-validation-for="description" class="text-danger"></span>
+                <label asp-for="Description" class="control-label"></label>
+                <textarea class="form-control" asp-for="Description" rows="3"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

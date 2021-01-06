@@ -6,7 +6,7 @@
 
 }
 
-<h4 class="display-4">User: @CurrentUser.username Profile</h4>
+<h4 class="display-4">User: @CurrentUser.Username Profile</h4>
 
 <hr />
 
@@ -27,16 +27,16 @@
             </th>
         <tr>
             <td>
-                @CurrentUser.firstName
+                @CurrentUser.FirstName
             </td>
             <td>
-                @CurrentUser.secondName
+                @CurrentUser.SecondName
             </td>
             <td>
-                @CurrentUser.mail
+                @CurrentUser.Mail
             </td>
             <td>
-                @CurrentUser.username
+                @CurrentUser.Username
             </td>
         </tr>
     </thead>
@@ -69,13 +69,13 @@
                 @Html.DisplayFor(modelItem => item.KeyId)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.certificateName)
+                @Html.DisplayFor(modelItem => item.CertificateName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.description)
+                @Html.DisplayFor(modelItem => item.Description)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.keySize)
+                @Html.DisplayFor(modelItem => item.KeySize)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.KeyId">Edit</a> |

@@ -22,7 +22,7 @@ namespace Trustme.Data
 
             var users = new User[]
             {
-                new User{UserId = 1, firstName = "Mihai", secondName="Popescu", mail="mihaipopescu@gmail.com", username="mihai12345", password = "password" }
+                new User{UserId = 1, FirstName = "Mihai", SecondName="Popescu", Mail="mihaipopescu@gmail.com", Username="mihai12345", Password = "password" }
             };
 
             foreach(User u in users)

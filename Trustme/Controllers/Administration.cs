@@ -33,7 +33,7 @@ namespace Trustme.Controllers
         public async Task<IActionResult> Profile()
         {
             string username = this.getUsername(HttpContext);
-            ViewData["user"] = _context.User.Where(a => a.username == username).SingleOrDefault();
+            ViewData["user"] = _context.User.Where(a => a.Username == username).SingleOrDefault();
             ViewData["keys"] = await _context.Key.Where(a => a.UserId == this.getUserId(HttpContext)).ToListAsync();
             return View();
         }
@@ -136,7 +136,7 @@ namespace Trustme.Controllers
 
         public User getUserByUsername(string username)
         {
-            return  _context.User.Where(a => a.username == username)?.SingleOrDefault();
+            return  _context.User.Where(a => a.Username == username)?.SingleOrDefault();
         }
 
         public User getUserbyId(int id)
@@ -155,18 +155,18 @@ namespace Trustme.Controllers
 
         public async Task<IActionResult> Register([Bind("UserId,firstName,secondName,mail,username,password,confirmPassword")] User user)
         {
-            User usedUser = _context.User.Where(a => a.username == user.username)?.SingleOrDefault();
+            User usedUser = _context.User.Where(a => a.Username == user.Username)?.SingleOrDefault();
             if (usedUser != null)
             {
                 ModelState.AddModelError("", "Try another username, this username already is used");
                 return View(user);
             }
-            if (ModelState.IsValid && user.password == user.confirmPassword)
+            if (ModelState.IsValid && user.Password == user.ConfirmPassword)
             {
 
                 _context.Add(user);
                 await _context.SaveChangesAsync();
-                return  await LogIn(user.username, user.password);
+                return  await LogIn(user.Username, user.Password);
             }
             return View(user);            
         }
@@ -184,20 +184,20 @@ namespace Trustme.Controllers
         {
             if (isloggedIn(HttpContext) == true)
                 await LogOut();
-            User user = _context.User.Where(a => a.username == username).SingleOrDefault();
-            if (user != null && password == user.password)
+            User user = _context.User.Where(a => a.Username == username).SingleOrDefault();
+            if (user != null && password == user.Password)
             {
                 var userClaim = new List<Claim>()
                 {
-                    new Claim(ClaimTypes.NameIdentifier, user.username),
-                    new Claim(ClaimTypes.Email, user.mail),
+                    new Claim(ClaimTypes.NameIdentifier, user.Username),
+                    new Claim(ClaimTypes.Email, user.Mail),
                 };
                 var userIdentity = new ClaimsIdentity(userClaim, "user identity");
                 
                 var userPrinciple = new ClaimsPrincipal(new[] { userIdentity });
                 
                 await HttpContext.SignInAsync(userPrinciple);
-                ViewData["username"] = user.username;
+                ViewData["username"] = user.Username;
 
                 return RedirectToAction("Index", "Home");
             }
@@ -206,8 +206,8 @@ namespace Trustme.Controllers
 
         public string getPublicKeyByCertificateName(string username, string certificateName)
         {
-            User user = _context.User.Where(a => a.username == username)?.SingleOrDefault();
-            Key key = _context.Key.Where(a => a.UserId == user.UserId && a.certificateName == certificateName)?.SingleOrDefault();
+            User user = _context.User.Where(a => a.Username == username)?.SingleOrDefault();
+            Key key = _context.Key.Where(a => a.UserId == user.UserId && a.CertificateName == certificateName)?.SingleOrDefault();
             
             return key.PublicKey;
         }
@@ -215,14 +215,14 @@ namespace Trustme.Controllers
         public string getPublicKey(HttpContext httpcontext)
         {
             var username = this.getUsername(httpcontext);
-            User user = _context.User.Where(a => a.username == username)?.SingleOrDefault();
+            User user = _context.User.Where(a => a.Username == username)?.SingleOrDefault();
             Key key = _context.Key.Where(a => a.UserId == user.UserId)?.SingleOrDefault();
             return key.PublicKey;
 
         }
         public User getUserbyId(string username)
         {
-            User user = _context.User.Where(a => a.username == username)?.SingleOrDefault();
+            User user = _context.User.Where(a => a.Username == username)?.SingleOrDefault();
             return user;
         }
         public string getPublicKey(HttpContext httpcontext, int certificateId)
@@ -234,7 +234,7 @@ namespace Trustme.Controllers
         }
         public string getPublicKey(string username)
         {
-            User user = _context.User.Where(a => a.username == username)?.SingleOrDefault();
+            User user = _context.User.Where(a => a.Username == username)?.SingleOrDefault();
             Key key = _context.Key.Where(a => a.UserId == user.UserId)?.SingleOrDefault();
             return key.PublicKey;
 
@@ -269,18 +269,18 @@ namespace Trustme.Controllers
         public  void addPublicKey(string username, string publicKey, string certificateName, string description, int keySize)
         {
             //find user
-            User user =  _context.User.Where(a => a.username == username)?.SingleOrDefault();
+            User user =  _context.User.Where(a => a.Username == username)?.SingleOrDefault();
             
-            Key userKey = _context.Key.Where(a => a.UserId == user.UserId && a.certificateName == certificateName)?.SingleOrDefault();
+            Key userKey = _context.Key.Where(a => a.UserId == user.UserId && a.CertificateName == certificateName)?.SingleOrDefault();
 
             if (userKey == null)
             {
                 Key newKey = new Key();
                 newKey.UserId = user.UserId;
                 newKey.PublicKey = publicKey;
-                newKey.certificateName = certificateName;
-                newKey.description = description;
-                newKey.keySize = keySize;
+                newKey.CertificateName = certificateName;
+                newKey.Description = description;
+                newKey.KeySize = keySize;
 
                 //user.Keys.Add(newKey);
                 
@@ -291,8 +291,8 @@ namespace Trustme.Controllers
 
         public void editPublicKey(string username, string publicKey, string certificateName)
         {
-            User user = _context.User.Where(a => a.username == username)?.SingleOrDefault();
-            Key userKey = _context.Key.Where(a => a.UserId == user.UserId && a.certificateName == certificateName)?.SingleOrDefault();
+            User user = _context.User.Where(a => a.Username == username)?.SingleOrDefault();
+            Key userKey = _context.Key.Where(a => a.UserId == user.UserId && a.CertificateName == certificateName)?.SingleOrDefault();
 
             if (userKey != null)
             {
@@ -303,15 +303,15 @@ namespace Trustme.Controllers
         }
         public void deletePublicKey(string username, string certificateName)
         {
-            User user = _context.User.Where(a => a.username == username)?.SingleOrDefault();
-            Key userKey = _context.Key.Where(a => a.UserId == user.UserId && a.certificateName == certificateName)?.SingleOrDefault();
+            User user = _context.User.Where(a => a.Username == username)?.SingleOrDefault();
+            Key userKey = _context.Key.Where(a => a.UserId == user.UserId && a.CertificateName == certificateName)?.SingleOrDefault();
             _context.Key.Remove(userKey);
             _context.SaveChanges();
         }
 
         public int? getUserId(string username)
         {
-            User user = _context.User.Where(a => a.username == username)?.FirstOrDefault();
+            User user = _context.User.Where(a => a.Username == username)?.FirstOrDefault();
             if (user == null)
                 return null;
             return user.UserId;
@@ -320,7 +320,7 @@ namespace Trustme.Controllers
         public int getUserId(HttpContext httpcontext)
         {
             string username = this.getUsername(httpcontext);
-            User user = _context.User.Where(a => a.username == username)?.FirstOrDefault();
+            User user = _context.User.Where(a => a.Username == username)?.FirstOrDefault();
             return user.UserId;
 
         }

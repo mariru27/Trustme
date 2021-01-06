@@ -11,11 +11,11 @@ namespace Trustme.Models
         [Key]
         public int KeyId { set; get; }
         [Required]
-        public string certificateName { set; get; }
-        public string description { set; get; }
+        public string CertificateName { set; get; }
+        public string Description { set; get; }
         public int UserId { set; get; }
         public string PublicKey { set; get; }
-        public int keySize { set; get; }
+        public int KeySize { set; get; }
         public virtual User User { set; get; }
     }
 }

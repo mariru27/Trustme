@@ -18,7 +18,7 @@
     @{
         foreach (var c in Model)
         {
-            <option value=@c.KeyId>@c.certificateName</option>
+            <option value=@c.KeyId>@c.CertificateName</option>
 
         }
     }
@@ -28,6 +28,7 @@
         <label for="pkfile"><strong>Private key</strong></label>
         <input for="pkfile" name="pkfile" type="file">
     </div>
+
     <br />
     <div class="form-group">
         <label for="docfile"><strong>Document</strong></label>
