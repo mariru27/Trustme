@@ -6,83 +6,91 @@
 
 }
 
-<h4 class="display-4">User: @CurrentUser.Username Profile</h4>
+<div class="container emp-profile">
+    <form method="post">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="profile-img">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog" alt="" />
+                    <div class="file btn btn-lg btn-primary">
+                        Change Photo
+                        <input type="file" name="file" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="profile-head">
+                    <div class="col-md-8">
+                        <div class="tab-content profile-tab" id="myTabContent">
+                            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                @if (CurrentUser != null)
+                                {
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Firt name</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p> @CurrentUser.FirstName </p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Second name</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p> @CurrentUser.SecondName </p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Mail</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p> @CurrentUser.Mail </p>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-<hr />
-
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                First name
-            </th>
-            <th>
-                Second name
-            </th>
-            <th>
-                Mail
-            </th>
-            <th>
-                Username
-            </th>
-        <tr>
-            <td>
-                @CurrentUser.FirstName
-            </td>
-            <td>
-                @CurrentUser.SecondName
-            </td>
-            <td>
-                @CurrentUser.Mail
-            </td>
-            <td>
-                @CurrentUser.Username
-            </td>
-        </tr>
-    </thead>
-</table>
-
-
-
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                Certificate id
-            </th>
-            <th>
-                Certificate name
-            </th>
-            <th>
-                Description
-            </th>
-            <th>
-                Key Size
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Keys)
-        {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.KeyId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CertificateName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.KeySize)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.KeyId">Edit</a> |
-                <a asp-action="DeleteCertificate" asp-route-id="@item.KeyId">Delete</a>
-            </td>
-        </tr>
-
-        }
-    </tbody>
-</table>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        Certificate name
+                    </th>
+                    <th>
+                        Description
+                    </th>
+                    <th>
+                        Key Size
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Keys)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CertificateName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Description)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.KeySize)
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.KeyId">Edit</a> |
+                            <a asp-action="DeleteCertificate" asp-route-id="@item.KeyId">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </form>
+</div>
