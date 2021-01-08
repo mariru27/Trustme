@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Trustme.Models
 {
-    public class Roles
+    public class Role
     {
         [Key]
         public string RoleName { get; set; }
