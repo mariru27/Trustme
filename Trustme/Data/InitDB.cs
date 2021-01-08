@@ -17,16 +17,20 @@ namespace Trustme.Data
             context.Database.EnsureCreated();
             if (!context.Role.Any())
             {
-                var Role = new Role[]
+                var roles = new Role[]
                 {
                     new Role { RoleName = "Admin"},
                     new Role { RoleName = "User"},
                     new Role { RoleName = "Pro"},
                     new Role { RoleName = "Free"},
-
                 };
+                foreach(var r in roles)
+                {
+                    context.Role.Add(r);
+                }
+                context.SaveChanges();
             }
-            if(context.Key.Any())
+            if (context.Key.Any())
             {
                 return;
             }
