@@ -148,6 +148,7 @@ namespace Trustme.Controllers
 
         public IActionResult Register()
         {
+            ViewData["roles"] = _context.Role.ToList();
             return View();
         }
         [HttpPost]

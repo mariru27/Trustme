@@ -1,6 +1,7 @@
 ﻿@model Trustme.Models.User
 @{
     ViewData["Title"] = "Register";
+    IEnumerable<Role> roles = ViewData["roles"] as IEnumerable<Role>;
 }
 <h4 class="display-4">Register page</h4>
 
