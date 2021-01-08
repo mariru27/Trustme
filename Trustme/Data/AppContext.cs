@@ -24,6 +24,7 @@ namespace Trustme.Data
             modelBuilder.Entity<User>().ToTable("User");
 
             modelBuilder.Entity<Key>().ToTable("Key");
+
             modelBuilder.Entity<Role>().ToTable("Role");
         }
 

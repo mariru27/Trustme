@@ -15,10 +15,22 @@ namespace Trustme.Data
         public static void InitDb(AppContext context)
         {
             context.Database.EnsureCreated();
+            if (!context.Role.Any())
+            {
+                var Role = new Role[]
+                {
+                    new Role { RoleName = "Admin"},
+                    new Role { RoleName = "User"},
+                    new Role { RoleName = "Pro"},
+                    new Role { RoleName = "Free"},
+
+                };
+            }
             if(context.Key.Any())
             {
                 return;
             }
+
 
             var users = new User[]
             {
