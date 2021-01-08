@@ -42,8 +42,21 @@
                 <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Register" class="btn btn-primary" />
+                <label for="role">Choose a role:</label>
+                <select class="form-control" name="role" id="role">
+                    @{
+                        if (roles != null)
+                            foreach (var r in roles)
+                            {
+                                <option value=@r.RoleName>@r.RoleName</option>
+
+                            }
+                    }
+                </select>
             </div>
+                <div class="form-group">
+                    <input type="submit" value="Register" class="btn btn-primary" />
+                </div>
         </form>
     </div>
 </div>
