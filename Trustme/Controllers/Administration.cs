@@ -154,22 +154,22 @@ namespace Trustme.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
 
-        public async Task<IActionResult> Register([Bind("UserId,firstName,secondName,mail,username,password,confirmPassword,UserRole")] User myuser)
+        public async Task<IActionResult> Register([Bind("UserId,FirstName,SecondName,Mail,Username,Password,ConfirmPassword,UserRole")] User user)
         {
-            User usedUser = _context.User.Where(a => a.Username == myuser.Username)?.SingleOrDefault();
+            User usedUser = _context.User.Where(a => a.Username == user.Username)?.SingleOrDefault();
             if (usedUser != null)
             {
                 ModelState.AddModelError("", "Try another username, this username already is used");
-                return View(myuser);
+                return View(user);
             }
-            if (ModelState.IsValid && myuser.Password == myuser.ConfirmPassword)
+            if (ModelState.IsValid && user.Password == user.ConfirmPassword)
             {
 
-                _context.Add(myuser);
+                _context.Add(user);
                 await _context.SaveChangesAsync();
-                return  await LogIn(myuser.Username, myuser.Password);
+                return  await LogIn(user.Username, user.Password);
             }
-            return View(myuser);            
+            return View(user);            
         }
 
         [HttpGet]
