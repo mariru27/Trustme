@@ -10,7 +10,7 @@ namespace Trustme.Models
     {
         [Key]
         public string RoleName { get; set; }
-        public string IdUser { get; set; }
+        public int? IdUser { get; set; }
         public List<User> Users { get; set; } = new List<User>();
     }
 }

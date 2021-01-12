@@ -165,7 +165,7 @@ namespace Trustme.Controllers
             if (ModelState.IsValid && user.Password == user.ConfirmPassword)
             {
                 Role role = _context.Role.Where(a => a.RoleName == user.UserRole).FirstOrDefault();
-                //role.IdUser = user.UserId;
+                role.IdUser = user.UserId;
                 role.Users.Add(user);
                 user.Role = role;
                 _context.Add(user);
