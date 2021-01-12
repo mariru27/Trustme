@@ -41,19 +41,19 @@
                 <input asp-for="ConfirmPassword" type="password" class="form-control" value="" />
                 <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label for="role">Choose a role:</label>
-                <select class="form-control" name="role" id="role">
-                    @{
-                        if (roles != null)
-                            foreach (var r in roles)
-                            {
-                                <option value=@r.RoleName>@r.RoleName</option>
+            @*<div class="form-group">
+                <label asp-for="UserRole">Choose a role:</label>
+                <select class="form-control" asp-for="UserRole">
+                @{
+                    if (roles != null)
+                        foreach (var r in roles)
+                        {
+                            <option value=@r.RoleName>@r.RoleName</option>
 
-                            }
-                    }
+                        }
+                }
                 </select>
-            </div>
+            </div>*@
                 <div class="form-group">
                     <input type="submit" value="Register" class="btn btn-primary" />
                 </div>

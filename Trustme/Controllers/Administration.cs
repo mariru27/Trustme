@@ -154,7 +154,7 @@ namespace Trustme.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
 
-        public async Task<IActionResult> Register([Bind("UserId,firstName,secondName,mail,username,password,confirmPassword")] User user)
+        public async Task<IActionResult> Register([Bind("UserId,firstName,secondName,mail,username,password,confirmPassword,UserRole")] User user, int UserId)
         {
             User usedUser = _context.User.Where(a => a.Username == user.Username)?.SingleOrDefault();
             if (usedUser != null)

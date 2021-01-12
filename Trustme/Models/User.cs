@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace Trustme.Models
 {
+
     public class User
     {
         [Key]
