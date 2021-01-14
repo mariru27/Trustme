@@ -31,6 +31,7 @@ namespace Trustme.Data
             {
                 context.Role.Add(r);
             }
+            context.SaveChanges();
 
             var users = new User[]
             {
@@ -53,6 +54,7 @@ namespace Trustme.Data
             {
                 context.User.Add(u);
             }
+            context.SaveChanges();
 
             foreach (Key k in keys)
             {
