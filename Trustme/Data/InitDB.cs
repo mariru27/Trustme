@@ -40,7 +40,8 @@ namespace Trustme.Data
 
             users[0].UserRole = roles[0];
             users[1].UserRole = roles[0];
-            
+            roles[0].Users.Add(users[0]);
+            roles[0].Users.Add(users[1]);
 
             var keys = new Key[] 
             {
