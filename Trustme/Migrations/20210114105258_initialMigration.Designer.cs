@@ -9,8 +9,8 @@ using Trustme.Data;
 namespace Trustme.Migrations
 {
     [DbContext(typeof(AppContext))]
-    [Migration("20210112083225_userRole")]
-    partial class userRole
+    [Migration("20210114105258_initialMigration")]
+    partial class initialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -84,15 +84,12 @@ namespace Trustme.Migrations
                         .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
 
-                    b.Property<string>("RoleName")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("SecondName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UserRole")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<string>("UserRoleRoleName")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Username")
                         .IsRequired()
@@ -100,7 +97,7 @@ namespace Trustme.Migrations
 
                     b.HasKey("UserId");
 
-                    b.HasIndex("RoleName");
+                    b.HasIndex("UserRoleRoleName");
 
                     b.ToTable("User");
                 });
@@ -116,9 +113,9 @@ namespace Trustme.Migrations
 
             modelBuilder.Entity("Trustme.Models.User", b =>
                 {
-                    b.HasOne("Trustme.Models.Role", "Role")
-                        .WithMany()
-                        .HasForeignKey("RoleName");
+                    b.HasOne("Trustme.Models.Role", "UserRole")
+                        .WithMany("Users")
+                        .HasForeignKey("UserRoleRoleName");
                 });
 #pragma warning restore 612, 618
         }

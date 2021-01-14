@@ -82,15 +82,12 @@ namespace Trustme.Migrations
                         .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
 
-                    b.Property<string>("RoleName1")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("SecondName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UserRole")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<string>("UserRoleRoleName")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Username")
                         .IsRequired()
@@ -98,7 +95,7 @@ namespace Trustme.Migrations
 
                     b.HasKey("UserId");
 
-                    b.HasIndex("RoleName1");
+                    b.HasIndex("UserRoleRoleName");
 
                     b.ToTable("User");
                 });
@@ -114,9 +111,9 @@ namespace Trustme.Migrations
 
             modelBuilder.Entity("Trustme.Models.User", b =>
                 {
-                    b.HasOne("Trustme.Models.Role", "RoleName")
+                    b.HasOne("Trustme.Models.Role", "UserRole")
                         .WithMany("Users")
-                        .HasForeignKey("RoleName1");
+                        .HasForeignKey("UserRoleRoleName");
                 });
 #pragma warning restore 612, 618
         }

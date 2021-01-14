@@ -2,7 +2,7 @@
 
 namespace Trustme.Migrations
 {
-    public partial class rolename_obj_userTable : Migration
+    public partial class initialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -19,19 +19,19 @@ namespace Trustme.Migrations
                 table: "User");
 
             migrationBuilder.AddColumn<string>(
-                name: "RoleName1",
+                name: "UserRoleRoleName",
                 table: "User",
                 nullable: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_User_RoleName1",
+                name: "IX_User_UserRoleRoleName",
                 table: "User",
-                column: "RoleName1");
+                column: "UserRoleRoleName");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_User_Role_RoleName1",
+                name: "FK_User_Role_UserRoleRoleName",
                 table: "User",
-                column: "RoleName1",
+                column: "UserRoleRoleName",
                 principalTable: "Role",
                 principalColumn: "RoleName",
                 onDelete: ReferentialAction.Restrict);
@@ -40,15 +40,15 @@ namespace Trustme.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_User_Role_RoleName1",
+                name: "FK_User_Role_UserRoleRoleName",
                 table: "User");
 
             migrationBuilder.DropIndex(
-                name: "IX_User_RoleName1",
+                name: "IX_User_UserRoleRoleName",
                 table: "User");
 
             migrationBuilder.DropColumn(
-                name: "RoleName1",
+                name: "UserRoleRoleName",
                 table: "User");
 
             migrationBuilder.AddColumn<string>(
