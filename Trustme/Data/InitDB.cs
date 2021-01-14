@@ -38,6 +38,9 @@ namespace Trustme.Data
                 new User{FirstName = "Mihai", SecondName="Popescu", Mail="mihaipopescu@gmail.com", Username="mariru", Password = "marina", UserRole = roles[0]  }
             };
 
+            users[0].UserRole = roles[0];
+            users[1].UserRole = roles[0];
+            
 
             var keys = new Key[] 
             {
@@ -45,7 +48,6 @@ namespace Trustme.Data
                  new Key{PublicKey = " ", CertificateName = "testeCertificate2", Description = "test description3", KeySize = 1024, User = users[1]},     
             };
 
-            
 
             foreach (User u in users)
             {
@@ -56,9 +58,6 @@ namespace Trustme.Data
             {
                 context.Key.Add(k);
             }
-
-
-
 
             context.SaveChanges();
         }
