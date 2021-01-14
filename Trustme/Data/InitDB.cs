@@ -15,6 +15,10 @@ namespace Trustme.Data
         public static void InitDb(AppContext context)
         {
             context.Database.EnsureCreated();
+            if (context.Key.Any() && context.User.Any() && context.Role.Any())
+            {
+                return;
+            }
             if (!context.Role.Any())
             {
                 var roles = new Role[]
@@ -30,15 +34,13 @@ namespace Trustme.Data
                 }
                 context.SaveChanges();
             }
-            if (context.Key.Any())
-            {
-                return;
-            }
+
 
 
             var users = new User[]
             {
-                new User{UserId = 1, FirstName = "Mihai", SecondName="Popescu", Mail="mihaipopescu@gmail.com", Username="mihai12345", Password = "password" }
+                new User{UserId = 1, FirstName = "Mihai", SecondName="Popescu", Mail="mihaipopescu@gmail.com", Username="mihai12345", Password = "password" },
+                new User{UserId = 2, FirstName = "Mihai", SecondName="Popescu", Mail="mihaipopescu@gmail.com", Username="mariru", Password = "marina" }
             };
 
             foreach(User u in users)
