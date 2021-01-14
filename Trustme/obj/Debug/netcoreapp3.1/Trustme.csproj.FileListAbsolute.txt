@@ -341,7 +341,6 @@ C:\Users\Marina Rusu\Desktop\Trustme\Trustme\Trustme\bin\Debug\netcoreapp3.1\run
 C:\Users\Marina Rusu\Desktop\Trustme\Trustme\Trustme\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp2.0\System.Runtime.Caching.dll
 C:\Users\Marina Rusu\Desktop\Trustme\Trustme\Trustme\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.0\System.Runtime.Caching.dll
 C:\Users\Marina Rusu\Desktop\Trustme\Trustme\Trustme\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
-C:\Users\Marina Rusu\Desktop\Trustme\Trustme\Trustme\obj\Debug\netcoreapp3.1\Trustme.csprojAssemblyReference.cache
 C:\Users\Marina Rusu\Desktop\Trustme\Trustme\Trustme\obj\Debug\netcoreapp3.1\Trustme.AssemblyInfoInputs.cache
 C:\Users\Marina Rusu\Desktop\Trustme\Trustme\Trustme\obj\Debug\netcoreapp3.1\Trustme.AssemblyInfo.cs
 C:\Users\Marina Rusu\Desktop\Trustme\Trustme\Trustme\obj\Debug\netcoreapp3.1\Trustme.csproj.CoreCompileInputs.cache
@@ -389,3 +388,4 @@ C:\Users\Marina Rusu\Desktop\Trustme\Trustme\Trustme\obj\Debug\netcoreapp3.1\sta
 C:\Users\Marina Rusu\Desktop\Trustme\Trustme\Trustme\obj\Debug\netcoreapp3.1\Trustme.dll
 C:\Users\Marina Rusu\Desktop\Trustme\Trustme\Trustme\obj\Debug\netcoreapp3.1\Trustme.pdb
 C:\Users\Marina Rusu\Desktop\Trustme\Trustme\Trustme\obj\Debug\netcoreapp3.1\Trustme.genruntimeconfig.cache
+C:\Users\Marina Rusu\Desktop\Trustme\Trustme\Trustme\obj\Debug\netcoreapp3.1\Trustme.csprojAssemblyReference.cache

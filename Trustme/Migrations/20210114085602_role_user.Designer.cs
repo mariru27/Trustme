@@ -2,15 +2,17 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Trustme.Data;
 
 namespace Trustme.Migrations
 {
     [DbContext(typeof(AppContext))]
-    partial class AppContextModelSnapshot : ModelSnapshot
+    [Migration("20210114085602_role_user")]
+    partial class role_user
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -82,7 +84,7 @@ namespace Trustme.Migrations
                         .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
 
-                    b.Property<string>("RoleName1")
+                    b.Property<string>("RoleName")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("SecondName")
@@ -98,7 +100,7 @@ namespace Trustme.Migrations
 
                     b.HasKey("UserId");
 
-                    b.HasIndex("RoleName1");
+                    b.HasIndex("RoleName");
 
                     b.ToTable("User");
                 });
@@ -114,9 +116,9 @@ namespace Trustme.Migrations
 
             modelBuilder.Entity("Trustme.Models.User", b =>
                 {
-                    b.HasOne("Trustme.Models.Role", "RoleName")
+                    b.HasOne("Trustme.Models.Role", "Role")
                         .WithMany("Users")
-                        .HasForeignKey("RoleName1");
+                        .HasForeignKey("RoleName");
                 });
 #pragma warning restore 612, 618
         }
