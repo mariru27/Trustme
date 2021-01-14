@@ -19,44 +19,47 @@ namespace Trustme.Data
             {
                 return;
             }
-            if (!context.Role.Any())
+
+            var roles = new Role[]
             {
-                var roles = new Role[]
-                {
-                    new Role { RoleName = "Admin"},
-                    new Role { RoleName = "User"},
-                    new Role { RoleName = "Pro"},
-                    new Role { RoleName = "Free"},
-                };
-                foreach(var r in roles)
-                {
-                    context.Role.Add(r);
-                }
-                context.SaveChanges();
+                new Role { RoleName = "Admin"},
+                new Role { RoleName = "User"},
+                new Role { RoleName = "Pro"},
+                new Role { RoleName = "Free"},
+            };
+            foreach(var r in roles)
+            {
+                context.Role.Add(r);
             }
-
-
 
             var users = new User[]
             {
-                new User{UserId = 1, FirstName = "Mihai", SecondName="Popescu", Mail="mihaipopescu@gmail.com", Username="mihai12345", Password = "password" },
-                new User{UserId = 2, FirstName = "Mihai", SecondName="Popescu", Mail="mihaipopescu@gmail.com", Username="mariru", Password = "marina" }
+                new User{FirstName = "Mihai", SecondName="Popescu", Mail="mihaipopescu@gmail.com", Username="mihai12345", Password = "password", UserRole = roles[0] },
+                new User{FirstName = "Mihai", SecondName="Popescu", Mail="mihaipopescu@gmail.com", Username="mariru", Password = "marina", UserRole = roles[0]  }
             };
 
-            foreach(User u in users)
+
+            var keys = new Key[] 
+            {
+                 new Key{PublicKey = " ", CertificateName = "testeCertificate1", Description = "test description", KeySize = 1024, User = users[0]},     
+                 new Key{PublicKey = " ", CertificateName = "testeCertificate2", Description = "test description3", KeySize = 1024, User = users[1]},     
+            };
+
+            
+
+            foreach (User u in users)
             {
                 context.User.Add(u);
             }
 
-            var keys = new Key[]
-            {
-                new Key{UserId = 1, PublicKey = " "}
-            };
-
-            foreach(Key k in keys)
+            foreach (Key k in keys)
             {
                 context.Key.Add(k);
             }
+
+
+
+
             context.SaveChanges();
         }
     }
