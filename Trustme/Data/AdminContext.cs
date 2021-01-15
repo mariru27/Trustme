@@ -12,7 +12,6 @@ namespace Trustme.Data
     {
         public AdminContext(DbContextOptions<AdminContext> options) : base(options)
         {
-
         }
         public DbSet<User> User { set; get; }
         public DbSet<Role> Role { set; get; }

@@ -85,7 +85,7 @@ namespace Trustme.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("UserId,KeyId,keySize,certificateName,description")] Key key)
+        public async Task<IActionResult> Edit(int id, [Bind("UserId,KeyId,KeySize,CertificateName,Description")] Key key)
         {
             if (id != key.KeyId)
             {
