@@ -9,8 +9,8 @@ using Trustme.Data;
 namespace Trustme.Migrations
 {
     [DbContext(typeof(AppContext))]
-    [Migration("20201225123419_virtualKeysInUser_LazyLoading")]
-    partial class virtualKeysInUser_LazyLoading
+    [Migration("20210114103628_initialM")]
+    partial class initialM
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -27,23 +27,37 @@ namespace Trustme.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("CertificateName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("KeySize")
+                        .HasColumnType("int");
+
                     b.Property<string>("PublicKey")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
-                    b.Property<string>("certificateName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("description")
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("KeyId");
 
                     b.HasIndex("UserId");
 
                     b.ToTable("Key");
+                });
+
+            modelBuilder.Entity("Trustme.Models.Role", b =>
+                {
+                    b.Property<string>("RoleName")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("RoleName");
+
+                    b.ToTable("Role");
                 });
 
             modelBuilder.Entity("Trustme.Models.User", b =>
@@ -53,32 +67,40 @@ namespace Trustme.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("confirmPassword")
+                    b.Property<string>("ConfirmPassword")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("firstName")
+                    b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("mail")
+                    b.Property<string>("Mail")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("password")
+                    b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
 
-                    b.Property<string>("secondName")
+                    b.Property<string>("RoleName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SecondName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("username")
+                    b.Property<string>("UserRoleRoleName")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Username")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("UserId");
+
+                    b.HasIndex("UserRoleRoleName");
 
                     b.ToTable("User");
                 });
@@ -90,6 +112,13 @@ namespace Trustme.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Trustme.Models.User", b =>
+                {
+                    b.HasOne("Trustme.Models.Role", "UserRole")
+                        .WithMany("Users")
+                        .HasForeignKey("UserRoleRoleName");
                 });
 #pragma warning restore 612, 618
         }

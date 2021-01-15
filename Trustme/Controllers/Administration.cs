@@ -85,7 +85,7 @@ namespace Trustme.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("UserId,KeyId,keySize,certificateName,description")] Key key)
+        public async Task<IActionResult> Edit(int id, [Bind("UserId,KeyId,KeySize,CertificateName,Description")] Key key)
         {
             if (id != key.KeyId)
             {
@@ -148,12 +148,13 @@ namespace Trustme.Controllers
 
         public IActionResult Register()
         {
+            ViewData["roles"] = _context.Role.ToList();
             return View();
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
 
-        public async Task<IActionResult> Register([Bind("UserId,firstName,secondName,mail,username,password,confirmPassword")] User user)
+        public async Task<IActionResult> Register([Bind("FirstName,SecondName,Mail,Username,Password,ConfirmPassword,UserRole")] User user, string RoleName)
         {
             User usedUser = _context.User.Where(a => a.Username == user.Username)?.SingleOrDefault();
             if (usedUser != null)
@@ -163,7 +164,9 @@ namespace Trustme.Controllers
             }
             if (ModelState.IsValid && user.Password == user.ConfirmPassword)
             {
-
+                Role role = _context.Role.Where(a => a.RoleName == RoleName).SingleOrDefault();
+                user.UserRole = role;
+                role.Users.Add(user);
                 _context.Add(user);
                 await _context.SaveChangesAsync();
                 return  await LogIn(user.Username, user.Password);
@@ -244,6 +247,7 @@ namespace Trustme.Controllers
         [Authorize]
         public async Task<IActionResult> Secret()
         {
+            
             string username = this.getUsername(HttpContext);
             ViewData["user"] = _context.User.Where(a => a.Username == username).SingleOrDefault();
             ViewData["keys"] = await _context.Key.Where(a => a.UserId == this.getUserId(HttpContext)).ToListAsync();

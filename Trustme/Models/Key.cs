@@ -16,6 +16,6 @@ namespace Trustme.Models
         public int UserId { set; get; }
         public string PublicKey { set; get; }
         public int KeySize { set; get; }
-        public virtual User User { set; get; }
+        public User User { set; get; }
     }
 }

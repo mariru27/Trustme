@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace Trustme.Models
 {
+
     public class User
     {
         [Key]
@@ -44,6 +45,9 @@ namespace Trustme.Models
         [Compare("Password", ErrorMessage = "Confirm password doesn't match, Type again !")]
         [Display(Name = "Confirm Password")]
         public string ConfirmPassword { get; set; }
-        public virtual List<Key> Keys {set; get;}
+
+        //public string RoleName { get; set; }
+        public Role UserRole { get; set; } = new Role();
+        public List<Key> Keys {set; get;}
     }
 }

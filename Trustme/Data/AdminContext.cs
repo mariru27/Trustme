@@ -8,25 +8,18 @@ using Trustme.Models;
 
 namespace Trustme.Data
 {
-    public class AppContext : DbContext
+    public class AdminContext : DbContext
     {
-        public AppContext(DbContextOptions<AppContext> options) : base(options)
+        public AdminContext(DbContextOptions<AdminContext> options) : base(options)
         {
-
         }
-
-        public DbSet<User> User {set; get;}
-        public DbSet<Key> Key { set; get; }
-
+        public DbSet<User> User { set; get; }
         public DbSet<Role> Role { set; get; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>().ToTable("User");
 
-            modelBuilder.Entity<Key>().ToTable("Key");
-
             modelBuilder.Entity<Role>().ToTable("Role");
         }
-
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Trustme.Migrations
 {
-    public partial class m : Migration
+    public partial class asyncnow : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
