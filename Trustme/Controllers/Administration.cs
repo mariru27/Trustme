@@ -85,7 +85,7 @@ namespace Trustme.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("UserId,KeyId,KeySize,CertificateName,Description")] Key key)
+        public async Task<IActionResult> Edit(int id, Key key)
         {
             if (id != key.KeyId)
             {
@@ -154,7 +154,7 @@ namespace Trustme.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
 
-        public async Task<IActionResult> Register([Bind("FirstName,SecondName,Mail,Username,Password,ConfirmPassword,UserRole")] User user, string RoleName)
+        public async Task<IActionResult> Register(User user, string RoleName)
         {
             User usedUser = _context.User.Where(a => a.Username == user.Username)?.SingleOrDefault();
             if (usedUser != null)

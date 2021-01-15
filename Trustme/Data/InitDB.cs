@@ -19,7 +19,6 @@ namespace Trustme.Data
             {
                 return;
             }
-
             var roles = new Role[]
             {
                 new Role { RoleName = "Admin"},
@@ -35,8 +34,8 @@ namespace Trustme.Data
 
             var users = new User[]
             {
-                new User{UserId = 1, FirstName = "Mihai", SecondName="Popescu", Mail="mihaipopescu@gmail.com", Username="mihai12345", Password = "password", UserRole = roles[0] },
-                new User{UserId = 2, FirstName = "Mihai", SecondName="Popescu", Mail="mihaipopescu@gmail.com", Username="mariru", Password = "marina", UserRole = roles[0]  }
+                new User{UserId = 1, FirstName = "Mihai", SecondName="Popescu", Mail="mihaipopescu@gmail.com", Username="mihai12345", Password = "password", ConfirmPassword = "password", UserRole = roles[0] },
+                new User{UserId = 2, FirstName = "Mihai", SecondName="Popescu", Mail="mihaipopescu@gmail.com", Username="mariru", Password = "marina", ConfirmPassword = "passwor", UserRole = roles[0]  }
             };
 
             users[0].UserRole = roles[0];
