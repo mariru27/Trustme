@@ -32,35 +32,35 @@ namespace Trustme.Data
             }
             context.SaveChanges();
 
-            var users = new User[]
-            {
-                new User{UserId = 1, FirstName = "Mihai", SecondName="Popescu", Mail="mihaipopescu@gmail.com", Username="mihai12345", Password = "password", ConfirmPassword = "password", UserRole = roles[0] },
-                new User{UserId = 2, FirstName = "Mihai", SecondName="Popescu", Mail="mihaipopescu@gmail.com", Username="mariru", Password = "marina", ConfirmPassword = "passwor", UserRole = roles[0]  }
-            };
+            //var users = new User[]
+            //{
+            //    new User{UserId = 1, FirstName = "Mihai", SecondName="Popescu", Mail="mihaipopescu@gmail.com", Username="mihai12345", Password = "password", ConfirmPassword = "password", UserRole = roles[0] },
+            //    new User{UserId = 2, FirstName = "Mihai", SecondName="Popescu", Mail="mihaipopescu@gmail.com", Username="mariru", Password = "marina", ConfirmPassword = "passwor", UserRole = roles[0]  }
+            //};
 
-            users[0].UserRole = roles[0];
-            users[1].UserRole = roles[0];
-            roles[0].Users.Add(users[0]);
-            roles[0].Users.Add(users[1]);
+            //users[0].UserRole = roles[0];
+            //users[1].UserRole = roles[0];
+            //roles[0].Users.Add(users[0]);
+            //roles[0].Users.Add(users[1]);
 
-            var keys = new Key[] 
-            {
-                 new Key{ KeyId = 1, UserId = 1, PublicKey = " ", CertificateName = "testeCertificate1", Description = "test description", KeySize = 1024, User = users[0]},     
-                 new Key{ KeyId = 2, UserId = 2,PublicKey = " ", CertificateName = "testeCertificate2", Description = "test description3", KeySize = 1024, User = users[1]},     
-            };
+            //var keys = new Key[] 
+            //{
+            //     new Key{ KeyId = 1, UserId = 1, PublicKey = " ", CertificateName = "testeCertificate1", Description = "test description", KeySize = 1024, User = users[0]},     
+            //     new Key{ KeyId = 2, UserId = 2,PublicKey = " ", CertificateName = "testeCertificate2", Description = "test description3", KeySize = 1024, User = users[1]},     
+            //};
 
-            foreach (User u in users)
-            {
-                context.User.Add(u);
-            }
-            context.SaveChanges();
+            //foreach (User u in users)
+            //{
+            //    context.User.Add(u);
+            //}
+            //context.SaveChanges();
 
-            foreach (Key k in keys)
-            {
-                context.Key.Add(k);
-            }
+            //foreach (Key k in keys)
+            //{
+            //    context.Key.Add(k);
+            //}
 
-            context.SaveChanges();
+           // context.SaveChanges();
         }
     }
 }
