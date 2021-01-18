@@ -151,7 +151,7 @@ namespace Trustme.Controllers
         {
             //ViewData["roles"] = _context.Role.ToList();
             RolesUserViewModel rolesUserViewModel = new RolesUserViewModel();
-            rolesUserViewModel.Roles = _context.Role.ToList(); 
+            rolesUserViewModel.Roles = new SelectList(_context.Role,"IdRole");
             return View(rolesUserViewModel);
         }
         [HttpPost]

@@ -19,18 +19,18 @@ namespace Trustme.Data
             {
                 return;
             }
-            var roles = new Role[]
-            {
-                new Role { RoleName = "Admin"},
-                new Role { RoleName = "User"},
-                new Role { RoleName = "Pro"},
-                new Role { RoleName = "Free"},
-            };
-            foreach(var r in roles)
-            {
-                context.Role.Add(r);
-            }
-            context.SaveChanges();
+            //var roles = new Role[]
+            //{
+            //    new Role { RoleName = "Admin"},
+            //    new Role { RoleName = "User"},
+            //    new Role { RoleName = "Pro"},
+            //    new Role { RoleName = "Free"},
+            //};
+            //foreach(var r in roles)
+            //{
+            //    context.Role.Add(r);
+            //}
+            //context.SaveChanges();
 
             //var users = new User[]
             //{

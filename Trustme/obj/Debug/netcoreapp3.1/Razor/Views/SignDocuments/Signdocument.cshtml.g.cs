@@ -26,8 +26,15 @@ using Trustme.Models;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 3 "C:\Users\Marina Rusu\Desktop\Trustme\Trustme\Trustme\Views\_ViewImports.cshtml"
+using Trustme.ViewModels;
+
+#line default
+#line hidden
+#nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"dde29467c8aae6c1d982d1b24907178419909d13", @"/Views/SignDocuments/Signdocument.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"6b450d8e4c3bdf78a3af6b230fe2b1a4ad1228e7", @"/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"72b90e9542d3d8e5acfb65a75d80cf9e64289297", @"/Views/_ViewImports.cshtml")]
     public class Views_SignDocuments_Signdocument : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<IEnumerable<Trustme.Models.Key>>
     {
         private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_0 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("class", new global::Microsoft.AspNetCore.Html.HtmlString("text-danger"), global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
@@ -73,7 +80,7 @@ using Trustme.Models;
 #line hidden
 #nullable disable
             WriteLiteral("\r\n<h4 class=\"display-4\">Sign documents</h4>\r\n\r\n<hr />\r\n\r\n\r\n\r\n");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "dde29467c8aae6c1d982d1b24907178419909d135287", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "dde29467c8aae6c1d982d1b24907178419909d135473", async() => {
                 WriteLiteral("\r\n    <label for=\"certificates\">Choose a certifificate:</label>\r\n    <select class=\"form-control\" name=\"certificates\" id=\"certificates\">\r\n");
 #nullable restore
 #line 18 "C:\Users\Marina Rusu\Desktop\Trustme\Trustme\Trustme\Views\SignDocuments\Signdocument.cshtml"
@@ -85,7 +92,7 @@ using Trustme.Models;
 #line hidden
 #nullable disable
                 WriteLiteral("            ");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "dde29467c8aae6c1d982d1b24907178419909d135967", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "dde29467c8aae6c1d982d1b24907178419909d136153", async() => {
 #nullable restore
 #line 21 "C:\Users\Marina Rusu\Desktop\Trustme\Trustme\Trustme\Views\SignDocuments\Signdocument.cshtml"
                               Write(c.CertificateName);
@@ -138,7 +145,7 @@ using Trustme.Models;
         <input for=""docfile"" name=""docfile"" type=""file"">
     </div>
     ");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("div", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "dde29467c8aae6c1d982d1b24907178419909d138459", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("div", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "dde29467c8aae6c1d982d1b24907178419909d138645", async() => {
                 }
                 );
                 __Microsoft_AspNetCore_Mvc_TagHelpers_ValidationSummaryTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.TagHelpers.ValidationSummaryTagHelper>();
