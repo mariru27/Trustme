@@ -2,7 +2,7 @@
 
 namespace Trustme.Migrations
 {
-    public partial class initialM : Migration
+    public partial class InitialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -10,11 +10,13 @@ namespace Trustme.Migrations
                 name: "Role",
                 columns: table => new
                 {
-                    RoleName = table.Column<string>(nullable: false)
+                    IdRole = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    RoleName = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Role", x => x.RoleName);
+                    table.PrimaryKey("PK_Role", x => x.IdRole);
                 });
 
             migrationBuilder.CreateTable(
@@ -29,17 +31,17 @@ namespace Trustme.Migrations
                     Username = table.Column<string>(nullable: false),
                     Password = table.Column<string>(maxLength: 50, nullable: false),
                     ConfirmPassword = table.Column<string>(nullable: false),
-                    RoleName = table.Column<string>(nullable: true),
-                    UserRoleRoleName = table.Column<string>(nullable: true)
+                    IdRole = table.Column<int>(nullable: false),
+                    RoleIdRole = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_User", x => x.UserId);
                     table.ForeignKey(
-                        name: "FK_User_Role_UserRoleRoleName",
-                        column: x => x.UserRoleRoleName,
+                        name: "FK_User_Role_RoleIdRole",
+                        column: x => x.RoleIdRole,
                         principalTable: "Role",
-                        principalColumn: "RoleName",
+                        principalColumn: "IdRole",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -72,9 +74,9 @@ namespace Trustme.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_User_UserRoleRoleName",
+                name: "IX_User_RoleIdRole",
                 table: "User",
-                column: "UserRoleRoleName");
+                column: "RoleIdRole");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
