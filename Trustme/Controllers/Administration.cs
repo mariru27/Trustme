@@ -149,9 +149,8 @@ namespace Trustme.Controllers
 
         public IActionResult Register()
         {
-            //ViewData["roles"] = _context.Role.ToList();
             RolesUserViewModel rolesUserViewModel = new RolesUserViewModel();
-            rolesUserViewModel.Roles = new SelectList(_context.Role,"IdRole");
+            rolesUserViewModel.Roles = new SelectList(_context.Role.ToList(),"IdRole","RoleName");
             return View(rolesUserViewModel);
         }
         [HttpPost]
