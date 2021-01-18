@@ -13,6 +13,7 @@ using Newtonsoft.Json;
 using Trustme.Data;
 using Trustme.Models;
 using AppContext = Trustme.Data.AppContext;
+using Trustme.ViewModels;
 
 namespace Trustme.Controllers
 {
@@ -148,8 +149,10 @@ namespace Trustme.Controllers
 
         public IActionResult Register()
         {
-            ViewData["roles"] = _context.Role.ToList();
-            return View();
+            //ViewData["roles"] = _context.Role.ToList();
+            RolesUserViewModel rolesUserViewModel = new RolesUserViewModel();
+            rolesUserViewModel.Roles = _context.Role.ToList(); 
+            return View(rolesUserViewModel);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]

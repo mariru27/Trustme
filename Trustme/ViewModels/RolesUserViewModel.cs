@@ -9,6 +9,6 @@ namespace Trustme.ViewModels
     public class RolesUserViewModel
     {
         public User User { get; set; }
-        public Role Role { get; set; }
+        public List<Role> Roles { get; set; }
     }
 }
