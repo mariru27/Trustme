@@ -11,7 +11,6 @@ namespace Trustme.Data
     public class UserRoleContext : DbContext
     {
         public UserRoleContext(DbContextOptions<UserRoleContext> options) : base(options) {  }
-
         public DbSet<User> User { set; get; }
         public DbSet<Role> Role { set; get; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)

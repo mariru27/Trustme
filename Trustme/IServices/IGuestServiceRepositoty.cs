@@ -9,7 +9,7 @@ namespace Trustme.IServices
     interface IGuestServiceRepositoty
     {
         //register and login
-        User LogIn(User user);
-        User Register(User user);
+        void LogIn(User user);
+        void Register(User user);
     }
 }
