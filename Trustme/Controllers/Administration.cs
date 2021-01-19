@@ -159,9 +159,15 @@ namespace Trustme.Controllers
         public async Task<IActionResult> Register(User user)
         {
             User usedUser = _context.User.Where(a => a.Username == user.Username)?.SingleOrDefault();
+            User usedMailUser = _context.User.Where(a => a.Mail == user.Mail)?.SingleOrDefault();
+
             if (usedUser != null)
             {
                 ModelState.AddModelError("", "Try another username, this username already is used");
+                if(usedMailUser != null)
+                {
+                    ModelState.AddModelError("", "Try another mail, this mail already is used");
+                }
                 return View(user);
             }
             if (ModelState.IsValid && user.Password == user.ConfirmPassword)
