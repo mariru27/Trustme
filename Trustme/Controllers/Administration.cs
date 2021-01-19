@@ -156,11 +156,13 @@ namespace Trustme.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
 
-        public async Task<IActionResult> Register(RolesUserViewModel model)
+        public async Task<IActionResult> Register(User user)
         {
-            User usedUser = _context.User.Where(a => a.Username == model.User.Username)?.FirstOrDefault();
-            User usedMailUser = _context.User.Where(a => a.Mail == model.User.Mail)?.FirstOrDefault();
-
+            User usedUser = _context.User.Where(a => a.Username == user.Username)?.FirstOrDefault();
+            User usedMailUser = _context.User.Where(a => a.Mail == user.Mail)?.FirstOrDefault();
+            RolesUserViewModel userResult = new RolesUserViewModel();
+            userResult.User = user;
+            userResult.Roles = new SelectList(_context.Role.ToList(), "IdRole", "RoleName");
             if (usedUser != null || usedMailUser != null)
             {
                 if(usedMailUser != null)
@@ -171,18 +173,18 @@ namespace Trustme.Controllers
 
                     ModelState.AddModelError("", "Try another username, this username already is used");
                 }
-                return View(model.User);
+                return View(userResult);
             }
-            if (ModelState.IsValid && model.User.Password == model.User.ConfirmPassword)
+            if (ModelState.IsValid && user.Password == user.ConfirmPassword)
             {
-                Role role = _context.Role.Where(a => a.IdRole == model.User.IdRole).SingleOrDefault();
-                model.User.UserRole = role;
-                role.Users.Add(model.User);
-                _context.Add(model.User);
+                Role role = _context.Role.Where(a => a.IdRole == user.IdRole).SingleOrDefault();
+                user.UserRole = role;
+                role.Users.Add(user);
+                _context.Add(user);
                 await _context.SaveChangesAsync();
-                return  await LogIn(model.User.Username, model.User.Password);
+                return  await LogIn(user.Username, user.Password);
             }
-            return View(model.User);            
+            return View(userResult);            
         }
 
         [HttpGet]
