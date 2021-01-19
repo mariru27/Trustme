@@ -14,6 +14,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Trustme.Controllers;
 using Trustme.Data;
+using Trustme.IServices;
+using Trustme.Service;
 using AppContext = Trustme.Data.AppContext;
 
 namespace Trustme
@@ -32,6 +34,7 @@ namespace Trustme
         {
 
             //services.AddSingleton<Administration>();
+            services.AddScoped<IGuestServiceRepositoty, GuestServiceRepository>();
 
             services.AddMvc().AddControllersAsServices();
             services.AddHttpContextAccessor();
