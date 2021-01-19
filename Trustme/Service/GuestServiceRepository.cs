@@ -15,7 +15,7 @@ namespace Trustme.Service
         {
             _userRoleContext = userRoleContext;
         }
-        public User LogIn(User user)
+        public void LogIn(User user)
         {
             throw new NotImplementedException();
         }

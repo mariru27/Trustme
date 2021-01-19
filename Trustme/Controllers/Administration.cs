@@ -14,6 +14,7 @@ using Trustme.Data;
 using Trustme.Models;
 using AppContext = Trustme.Data.AppContext;
 using Trustme.ViewModels;
+using Trustme.Service;
 
 namespace Trustme.Controllers
 {
@@ -21,9 +22,11 @@ namespace Trustme.Controllers
     {
         private readonly AppContext _context;
         private string username;
-        public Administration(AppContext context)
+        private GuestServiceRepository _guestServiceRepository;
+        public Administration(AppContext context, GuestServiceRepository guestServiceRepository)
         {
             _context = context;
+            _guestServiceRepository = guestServiceRepository;
         }
         public async Task<IActionResult> Index()
         {
@@ -160,9 +163,11 @@ namespace Trustme.Controllers
         {
             User usedUser = _context.User.Where(a => a.Username == user.Username)?.FirstOrDefault();
             User usedMailUser = _context.User.Where(a => a.Mail == user.Mail)?.FirstOrDefault();
+
             RolesUserViewModel userResult = new RolesUserViewModel();
             userResult.User = user;
             userResult.Roles = new SelectList(_context.Role.ToList(), "IdRole", "RoleName");
+
             if (usedUser != null || usedMailUser != null)
             {
                 if(usedMailUser != null)
@@ -179,9 +184,13 @@ namespace Trustme.Controllers
             {
                 Role role = _context.Role.Where(a => a.IdRole == user.IdRole).SingleOrDefault();
                 user.UserRole = role;
-                role.Users.Add(user);
-                _context.Add(user);
-                await _context.SaveChangesAsync();
+                //from here I can use GuestServiceRepository
+
+                _guestServiceRepository.Register(user);
+
+                //role.Users.Add(user);
+                //_context.Add(user);
+                //await _context.SaveChangesAsync();
                 return  await LogIn(user.Username, user.Password);
             }
             return View(userResult);            
