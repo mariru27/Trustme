@@ -183,8 +183,8 @@ namespace Trustme.Controllers
             }
             if (ModelState.IsValid && user.Password == user.ConfirmPassword)
             {
-                Role role = _context.Role.Where(a => a.IdRole == user.IdRole).SingleOrDefault();
-                user.UserRole = role;
+                Role role = _context.Role.Where(a => a.IdRole == user.RoleId).SingleOrDefault();
+                user.Role = role;
                 //from here I can use GuestServiceRepository
 
                 //_guestServiceRepository.Register(user);

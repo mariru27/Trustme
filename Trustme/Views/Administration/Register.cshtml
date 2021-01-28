@@ -42,8 +42,8 @@
                 <span asp-validation-for="@Model.User.ConfirmPassword" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="@Model.User.IdRole" class="control-label"></label>
-                <select asp-for="@Model.User.IdRole" class="form-control" asp-items="@Model.Roles"></select>
+                <label asp-for="@Model.User.RoleId" class="control-label"></label>
+                <select asp-for="@Model.User.RoleId" class="form-control" asp-items="@Model.Roles"></select>
             </div>
             <div class="form-group">
                 <input type="submit" value="Register" class="btn btn-primary" />
