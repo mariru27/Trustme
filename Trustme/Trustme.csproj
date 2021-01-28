@@ -28,8 +28,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="IServices\" />
-    <Folder Include="Service\" />
     <Folder Include="wwwroot\dirForPK\" />
     <Folder Include="wwwroot\testdir\" />
   </ItemGroup>
