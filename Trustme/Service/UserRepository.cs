@@ -7,7 +7,7 @@ using Trustme.IServices;
 
 namespace Trustme.Service
 {
-    public class KeyRepository : IKeyRepository
+    public class UserRepository : IUserRepository
     {
         public void add()
         {
@@ -19,7 +19,7 @@ namespace Trustme.Service
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Key> listAllKeys(User user)
+        public IEnumerable<User> listAllUsers()
         {
             throw new NotImplementedException();
         }
