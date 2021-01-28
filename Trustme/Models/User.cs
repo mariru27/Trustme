@@ -48,6 +48,8 @@ namespace Trustme.Models
         public string ConfirmPassword { get; set; }
         public int IdRole { get; set; }
         public Role UserRole { get; set; }
+        public int IdUserKey { get; set; }
+
         public List<Key> Keys {set; get;}
     }
 }

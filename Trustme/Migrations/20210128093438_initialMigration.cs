@@ -2,7 +2,7 @@
 
 namespace Trustme.Migrations
 {
-    public partial class InitialMigration : Migration
+    public partial class initialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -32,14 +32,14 @@ namespace Trustme.Migrations
                     Password = table.Column<string>(maxLength: 50, nullable: false),
                     ConfirmPassword = table.Column<string>(nullable: false),
                     IdRole = table.Column<int>(nullable: false),
-                    RoleIdRole = table.Column<int>(nullable: true)
+                    UserRoleIdRole = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_User", x => x.UserId);
                     table.ForeignKey(
-                        name: "FK_User_Role_RoleIdRole",
-                        column: x => x.RoleIdRole,
+                        name: "FK_User_Role_UserRoleIdRole",
+                        column: x => x.UserRoleIdRole,
                         principalTable: "Role",
                         principalColumn: "IdRole",
                         onDelete: ReferentialAction.Restrict);
@@ -74,9 +74,9 @@ namespace Trustme.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_User_RoleIdRole",
+                name: "IX_User_UserRoleIdRole",
                 table: "User",
-                column: "RoleIdRole");
+                column: "UserRoleIdRole");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
