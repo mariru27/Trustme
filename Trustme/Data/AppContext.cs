@@ -19,6 +19,7 @@ namespace Trustme.Data
         public DbSet<Key> Key { set; get; }
 
         public DbSet<Role> Role { set; get; }
+        public DbSet<UserKey> UserKey { set; get; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>().ToTable("User");
@@ -26,6 +27,8 @@ namespace Trustme.Data
             modelBuilder.Entity<Key>().ToTable("Key");
 
             modelBuilder.Entity<Role>().ToTable("Role");
+            modelBuilder.Entity<UserKey>().ToTable("UserKey");
+
         }
 
     }
