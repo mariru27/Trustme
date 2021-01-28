@@ -64,14 +64,14 @@ namespace Trustme.Migrations
                         name: "FK_Key_User_UserId",
                         column: x => x.UserId,
                         principalTable: "User",
-                        principalColumn: "UserId",
+                        principalColumn: "UserKeyId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Key_UserId",
                 table: "Key",
-                column: "UserId");
+                column: "UserKeyId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_User_UserRoleIdRole",

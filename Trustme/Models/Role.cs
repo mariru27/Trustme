@@ -11,6 +11,5 @@ namespace Trustme.Models
         [Key]
         public int IdRole { get; set; }
         public string RoleName { get; set; }
-        public List<User> Users { get; set; } = new List<User>();
     }
 }

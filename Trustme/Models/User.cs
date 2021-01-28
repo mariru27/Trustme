@@ -47,8 +47,7 @@ namespace Trustme.Models
         [Display(Name = "Confirm Password")]
         public string ConfirmPassword { get; set; }
         public int RoleId { get; set; }
-        public Role Role { get; set; }
 
-        public List<Key> Keys {set; get;}
+        public Role Role { get; set; }
     }
 }

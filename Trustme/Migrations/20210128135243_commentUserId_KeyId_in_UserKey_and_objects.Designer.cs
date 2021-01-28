@@ -10,8 +10,8 @@ using Trustme.Data;
 namespace Trustme.Migrations
 {
     [DbContext(typeof(Data.AppContext))]
-    [Migration("20210128101714_UserKey")]
-    partial class UserKey
+    [Migration("20210128135243_commentUserId_KeyId_in_UserKey_and_objects")]
+    partial class commentUserId_KeyId_in_UserKey_and_objects
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -81,12 +81,6 @@ namespace Trustme.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("IdRole")
-                        .HasColumnType("int");
-
-                    b.Property<int>("IdUserKey")
-                        .HasColumnType("int");
-
                     b.Property<string>("Mail")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -96,12 +90,12 @@ namespace Trustme.Migrations
                         .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
 
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
+
                     b.Property<string>("SecondName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("UserRoleIdRole")
-                        .HasColumnType("int");
 
                     b.Property<string>("Username")
                         .IsRequired()
@@ -109,7 +103,7 @@ namespace Trustme.Migrations
 
                     b.HasKey("UserKeyId");
 
-                    b.HasIndex("UserRoleIdRole");
+                    b.HasIndex("RoleId");
 
                     b.ToTable("User");
                 });
@@ -121,13 +115,15 @@ namespace Trustme.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("IdKey")
+                    b.Property<int>("KeyId")
                         .HasColumnType("int");
 
-                    b.Property<int>("IdUser")
+                    b.Property<int?>("UserKeyId")
                         .HasColumnType("int");
 
                     b.HasKey("IdUserKey");
+
+                    b.HasIndex("UserKeyId");
 
                     b.ToTable("UserKey");
                 });
@@ -143,9 +139,18 @@ namespace Trustme.Migrations
 
             modelBuilder.Entity("Trustme.Models.User", b =>
                 {
-                    b.HasOne("Trustme.Models.Role", "UserRole")
-                        .WithMany("Users")
-                        .HasForeignKey("UserRoleIdRole");
+                    b.HasOne("Trustme.Models.Role", "Role")
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Trustme.Models.UserKey", b =>
+                {
+                    b.HasOne("Trustme.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserKeyId");
                 });
 #pragma warning restore 612, 618
         }

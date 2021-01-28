@@ -41,12 +41,12 @@ namespace Trustme.Migrations
                     b.Property<string>("PublicKey")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UserId")
+                    b.Property<int>("UserKeyId")
                         .HasColumnType("int");
 
                     b.HasKey("KeyId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserKeyId");
 
                     b.ToTable("Key");
                 });
@@ -68,7 +68,7 @@ namespace Trustme.Migrations
 
             modelBuilder.Entity("Trustme.Models.User", b =>
                 {
-                    b.Property<int>("UserId")
+                    b.Property<int>("UserKeyId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -107,7 +107,7 @@ namespace Trustme.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("UserId");
+                    b.HasKey("UserKeyId");
 
                     b.HasIndex("UserRoleIdRole");
 
@@ -118,7 +118,7 @@ namespace Trustme.Migrations
                 {
                     b.HasOne("Trustme.Models.User", "User")
                         .WithMany("Keys")
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("UserKeyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

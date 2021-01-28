@@ -10,7 +10,9 @@ namespace Trustme.Models
     {
         [Key]
         public int IdUserKey { get; set; }
-        public int IdUser { get; set; }
-        public int IdKey { get; set; }
+        public int UserId { get; set; }
+        public User User { get; set; }
+        public int KeyId { get; set; }
+        public Key Key { get; set; }
     }
 }
