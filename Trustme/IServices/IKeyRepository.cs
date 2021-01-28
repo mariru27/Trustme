@@ -11,7 +11,7 @@ namespace Trustme.IServices
         public void add();
         public void delete();
         public void update();
-        public Enumerable listAllKeys(User user);
+        public IEnumerable<Key> listAllKeys(User user);
 
     }
 }
