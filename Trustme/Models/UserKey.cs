@@ -1,0 +1,16 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace Trustme.Models
+{
+    public class UserKey
+    {
+        [Key]
+        public int IdUserKey { get; set; }
+        public int IdUser { get; set; }
+        public int IdKey { get; set; }
+    }
+}

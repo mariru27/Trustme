@@ -33,11 +33,14 @@ namespace Trustme
         public void ConfigureServices(IServiceCollection services)
         {
 
+            services.AddEntityFrameworkSqlServer().AddDbContext<AppContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             //services.AddSingleton<Administration>();
-            services.AddScoped<IGuestServiceRepositoty, GuestServiceRepository>();
+
+            //services.AddScoped<IGuestServiceRepositoty, GuestServiceRepository>();
+            //services.AddScoped(typeof(IGuestServiceRepositoty), typeof(GuestServiceRepository));
+            services.AddHttpContextAccessor();
 
             services.AddMvc().AddControllersAsServices();
-            services.AddHttpContextAccessor();
 
             services.AddAuthentication("CookieAuth").AddCookie("CookieAuth", config =>
             {
@@ -45,7 +48,6 @@ namespace Trustme
                 config.LoginPath = "/Administration/LogIn";
                 config.LogoutPath = "/Administration/LogOut";
             });
-            services.AddEntityFrameworkSqlServer().AddDbContext<AppContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddControllersWithViews();
 
 

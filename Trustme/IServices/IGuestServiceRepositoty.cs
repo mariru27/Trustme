@@ -6,7 +6,7 @@ using Trustme.Models;
 
 namespace Trustme.IServices
 {
-    interface IGuestServiceRepositoty
+    public interface IGuestServiceRepositoty
     {
         //register and login
         void LogIn(User user);

@@ -15,6 +15,7 @@ using Trustme.Models;
 using AppContext = Trustme.Data.AppContext;
 using Trustme.ViewModels;
 using Trustme.Service;
+using Trustme.IServices;
 
 namespace Trustme.Controllers
 {
@@ -22,11 +23,11 @@ namespace Trustme.Controllers
     {
         private readonly AppContext _context;
         private string username;
-        private GuestServiceRepository _guestServiceRepository;
-        public Administration(AppContext context, GuestServiceRepository guestServiceRepository)
+        ///private GuestServiceRepository _guestServiceRepository;
+        public Administration(AppContext context)
         {
             _context = context;
-            _guestServiceRepository = guestServiceRepository;
+            //_guestServiceRepository = guestServiceRepository;
         }
         public async Task<IActionResult> Index()
         {
@@ -186,11 +187,11 @@ namespace Trustme.Controllers
                 user.UserRole = role;
                 //from here I can use GuestServiceRepository
 
-                _guestServiceRepository.Register(user);
+                //_guestServiceRepository.Register(user);
 
-                //role.Users.Add(user);
-                //_context.Add(user);
-                //await _context.SaveChangesAsync();
+                role.Users.Add(user);
+                _context.Add(user);
+                await _context.SaveChangesAsync();
                 return  await LogIn(user.Username, user.Password);
             }
             return View(userResult);            
