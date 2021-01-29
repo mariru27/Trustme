@@ -28,12 +28,11 @@ namespace Trustme.Data
 
             modelBuilder.Entity<Role>().ToTable("Role");
             modelBuilder.Entity<UserKey>().ToTable("UserKey");
-            // modelBuilder
-            //.Entity<UserKey>()
-            //.HasOne(e => e.User)
-            //.WithOne(e => e.)
-            //.OnDelete(DeleteBehavior.ClientCascade);
+
             modelBuilder.Entity<Key>().HasOne(e => e.UserKey).WithOne(e => e.Key).OnDelete(DeleteBehavior.ClientCascade);
+            modelBuilder.Entity<UserKey>().HasOne(e => e.User).WithMany().OnDelete(DeleteBehavior.ClientCascade);
+            modelBuilder.Entity<UserKey>().HasOne(e => e.Key).WithOne(e => e.UserKey).OnDelete(DeleteBehavior.ClientCascade);
+
 
         }
 
