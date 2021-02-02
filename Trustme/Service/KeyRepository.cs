@@ -4,14 +4,21 @@ using System.Linq;
 using System.Threading.Tasks;
 using Trustme.Models;
 using Trustme.IServices;
+using Trustme.Data;
 
 namespace Trustme.Service
 {
     public class KeyRepository : IKeyRepository
     {
-        public void add()
+        private UserKeyContext _context;
+        KeyRepository(UserKeyContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
+        }
+        public void addKey(Key key)
+        {
+            _context.Key.Add(key);
+            _context.SaveChanges();
         }
 
         public void delete()
