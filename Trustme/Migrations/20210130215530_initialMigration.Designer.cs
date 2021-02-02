@@ -10,8 +10,8 @@ using Trustme.Data;
 namespace Trustme.Migrations
 {
     [DbContext(typeof(Data.AppContext))]
-    [Migration("20210128113330_idUserKey_delete_from_user")]
-    partial class idUserKey_delete_from_user
+    [Migration("20210130215530_initialMigration")]
+    partial class initialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -44,9 +44,12 @@ namespace Trustme.Migrations
                     b.Property<int>("UserKeyId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("UserKeyIdUserKey")
+                        .HasColumnType("int");
+
                     b.HasKey("KeyId");
 
-                    b.HasIndex("UserKeyId");
+                    b.HasIndex("UserKeyIdUserKey");
 
                     b.ToTable("Key");
                 });
@@ -68,7 +71,7 @@ namespace Trustme.Migrations
 
             modelBuilder.Entity("Trustme.Models.User", b =>
                 {
-                    b.Property<int>("UserKeyId")
+                    b.Property<int>("UserId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -81,9 +84,6 @@ namespace Trustme.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("IdRole")
-                        .HasColumnType("int");
-
                     b.Property<string>("Mail")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -93,20 +93,20 @@ namespace Trustme.Migrations
                         .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
 
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
+
                     b.Property<string>("SecondName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("UserRoleIdRole")
-                        .HasColumnType("int");
 
                     b.Property<string>("Username")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("UserKeyId");
+                    b.HasKey("UserId");
 
-                    b.HasIndex("UserRoleIdRole");
+                    b.HasIndex("RoleId");
 
                     b.ToTable("User");
                 });
@@ -118,10 +118,10 @@ namespace Trustme.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("IdKey")
+                    b.Property<int>("KeyId")
                         .HasColumnType("int");
 
-                    b.Property<int>("IdUser")
+                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("IdUserKey");
@@ -131,18 +131,18 @@ namespace Trustme.Migrations
 
             modelBuilder.Entity("Trustme.Models.Key", b =>
                 {
-                    b.HasOne("Trustme.Models.User", "User")
-                        .WithMany("Keys")
-                        .HasForeignKey("UserKeyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("Trustme.Models.UserKey", "UserKey")
+                        .WithMany()
+                        .HasForeignKey("UserKeyIdUserKey");
                 });
 
             modelBuilder.Entity("Trustme.Models.User", b =>
                 {
-                    b.HasOne("Trustme.Models.Role", "UserRole")
-                        .WithMany("Users")
-                        .HasForeignKey("UserRoleIdRole");
+                    b.HasOne("Trustme.Models.Role", "Role")
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

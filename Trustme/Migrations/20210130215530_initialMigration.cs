@@ -20,6 +20,20 @@ namespace Trustme.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "UserKey",
+                columns: table => new
+                {
+                    IdUserKey = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<int>(nullable: false),
+                    KeyId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserKey", x => x.IdUserKey);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "User",
                 columns: table => new
                 {
@@ -31,18 +45,17 @@ namespace Trustme.Migrations
                     Username = table.Column<string>(nullable: false),
                     Password = table.Column<string>(maxLength: 50, nullable: false),
                     ConfirmPassword = table.Column<string>(nullable: false),
-                    IdRole = table.Column<int>(nullable: false),
-                    UserRoleIdRole = table.Column<int>(nullable: true)
+                    RoleId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_User", x => x.UserId);
                     table.ForeignKey(
-                        name: "FK_User_Role_UserRoleIdRole",
-                        column: x => x.UserRoleIdRole,
+                        name: "FK_User_Role_RoleId",
+                        column: x => x.RoleId,
                         principalTable: "Role",
                         principalColumn: "IdRole",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -53,30 +66,31 @@ namespace Trustme.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CertificateName = table.Column<string>(nullable: false),
                     Description = table.Column<string>(nullable: true),
-                    UserId = table.Column<int>(nullable: false),
+                    UserKeyId = table.Column<int>(nullable: false),
                     PublicKey = table.Column<string>(nullable: true),
-                    KeySize = table.Column<int>(nullable: false)
+                    KeySize = table.Column<int>(nullable: false),
+                    UserKeyIdUserKey = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Key", x => x.KeyId);
                     table.ForeignKey(
-                        name: "FK_Key_User_UserId",
-                        column: x => x.UserId,
-                        principalTable: "User",
-                        principalColumn: "UserKeyId",
-                        onDelete: ReferentialAction.Cascade);
+                        name: "FK_Key_UserKey_UserKeyIdUserKey",
+                        column: x => x.UserKeyIdUserKey,
+                        principalTable: "UserKey",
+                        principalColumn: "IdUserKey",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Key_UserId",
+                name: "IX_Key_UserKeyIdUserKey",
                 table: "Key",
-                column: "UserKeyId");
+                column: "UserKeyIdUserKey");
 
             migrationBuilder.CreateIndex(
-                name: "IX_User_UserRoleIdRole",
+                name: "IX_User_RoleId",
                 table: "User",
-                column: "UserRoleIdRole");
+                column: "RoleId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -86,6 +100,9 @@ namespace Trustme.Migrations
 
             migrationBuilder.DropTable(
                 name: "User");
+
+            migrationBuilder.DropTable(
+                name: "UserKey");
 
             migrationBuilder.DropTable(
                 name: "Role");

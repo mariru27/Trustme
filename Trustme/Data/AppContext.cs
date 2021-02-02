@@ -22,11 +22,12 @@ namespace Trustme.Data
         public DbSet<UserKey> UserKey { set; get; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Key>().HasOne(e => e.UserKey).WithOne(e => e.Key).OnDelete(DeleteBehavior.ClientCascade);
-            modelBuilder.Entity<UserKey>().HasOne(e => e.User).WithMany().OnDelete(DeleteBehavior.ClientCascade);
-            modelBuilder.Entity<UserKey>().HasOne(e => e.Key).WithOne(e => e.UserKey).OnDelete(DeleteBehavior.ClientCascade);
-            modelBuilder.Entity<User>().HasOne(e => e.Role).WithMany().OnDelete(DeleteBehavior.ClientCascade);
+            //modelBuilder.Entity<Key>().HasOne(e => e.UserKey).WithOne(e => e.Key).OnDelete(DeleteBehavior.ClientCascade);
+            //modelBuilder.Entity<UserKey>().HasOne(e => e.User).WithMany().OnDelete(DeleteBehavior.ClientCascade);
+            //modelBuilder.Entity<UserKey>().HasOne(e => e.Key).WithOne(e => e.UserKey).OnDelete(DeleteBehavior.ClientCascade);
+            //modelBuilder.Entity<User>().HasOne(e => e.Role).WithMany().OnDelete(DeleteBehavior.ClientCascade);
 
+            modelBuilder.Entity<Key>().HasOne(e => e.UserKey).WithOne(e => e.Key).HasForeignKey<UserKey>(e => e.IdUserKey);
             modelBuilder.Entity<User>().ToTable("User");
             modelBuilder.Entity<Key>().ToTable("Key");
             modelBuilder.Entity<Role>().ToTable("Role");
