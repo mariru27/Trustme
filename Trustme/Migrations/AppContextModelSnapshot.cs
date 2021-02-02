@@ -135,7 +135,7 @@ namespace Trustme.Migrations
                     b.HasOne("Trustme.Models.Key", "Key")
                         .WithOne("UserKey")
                         .HasForeignKey("Trustme.Models.UserKey", "IdUserKey")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
 
                     b.HasOne("Trustme.Models.User", "User")

@@ -9,7 +9,7 @@ using Trustme.Data;
 namespace Trustme.Migrations
 {
     [DbContext(typeof(AppContext))]
-    [Migration("20210202100646_init")]
+    [Migration("20210202103726_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -137,7 +137,7 @@ namespace Trustme.Migrations
                     b.HasOne("Trustme.Models.Key", "Key")
                         .WithOne("UserKey")
                         .HasForeignKey("Trustme.Models.UserKey", "IdUserKey")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
 
                     b.HasOne("Trustme.Models.User", "User")

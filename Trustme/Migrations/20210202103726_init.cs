@@ -77,7 +77,7 @@ namespace Trustme.Migrations
                         column: x => x.IdUserKey,
                         principalTable: "Key",
                         principalColumn: "KeyId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_UserKey_User_UserId",
                         column: x => x.UserId,
