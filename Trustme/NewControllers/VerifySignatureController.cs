@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Trustme.NewControllers
+namespace Trustme.Controllers
 {
     //display all user keys, verify signature
     public class VerifySignatureController : Controller
