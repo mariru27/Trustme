@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Trustme.Controllers
+namespace Trustme.NewControllers
 {
     //delete, edit user profile, change user profile, 
     //change user key name, 

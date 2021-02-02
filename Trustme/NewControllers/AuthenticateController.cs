@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Trustme.Controllers
+namespace Trustme.NewControllers
 {   
     //register, login
     public class AuthenticateController : Controller
