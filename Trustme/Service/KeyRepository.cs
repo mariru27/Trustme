@@ -46,6 +46,8 @@ namespace Trustme.Service
             
             //remove _UserKey
             _context.UserKey.Remove(_UserKey);
+            //remove Key
+            _context.Key.Remove(_UserKey.Key);
 
             //save
             _context.SaveChanges();
