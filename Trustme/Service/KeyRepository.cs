@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Trustme.Models;
 using Trustme.IServices;
 using Trustme.Data;
+using Trustme.ViewModels;
 
 namespace Trustme.Service
 {
@@ -15,9 +16,20 @@ namespace Trustme.Service
         {
             _context = context;
         }
-        public void addKey(Key key)
+        public void addKey(UserKeyModel _UserKeyModel)
         {
-            _context.Key.Add(key);
+            // add key 
+            _context.Key.Add(_UserKeyModel.Key);
+            
+            // add UserKey
+            UserKey _UserKey = new UserKey();
+            _UserKey.Key = _UserKeyModel.Key;
+            _UserKey.KeyId = _UserKeyModel.Key.KeyId;
+            _UserKey.User = _UserKeyModel.User;
+            _UserKey.UserId = _UserKeyModel.User.UserId;
+            _context.UserKey.Add(_UserKey);
+            
+            //save
             _context.SaveChanges();
         }
 
