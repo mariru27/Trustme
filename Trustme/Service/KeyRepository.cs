@@ -58,9 +58,21 @@ namespace Trustme.Service
             throw new NotImplementedException();
         }
 
-        public void update()
+        public void update(UserKeyModel _UserKeyModel)
         {
-            throw new NotImplementedException();
+            //create UserKey model and populate with _UserKeyModel values
+            UserKey _UserKey = new UserKey();
+            _UserKey.Key = _UserKeyModel.Key;
+            _UserKey.KeyId = _UserKeyModel.Key.KeyId;
+            _UserKey.User = _UserKeyModel.User;
+            _UserKey.UserId = _UserKeyModel.User.UserId;
+
+            _context.UserKey.Update(_UserKey);
+            _context.User.Update(_UserKeyModel.User);
+            _context.Key.Update(_UserKeyModel.Key);
+
+            //save
+            _context.SaveChanges();
         }
     }
 }
