@@ -20,22 +20,35 @@ namespace Trustme.Service
         {
             // add key 
             _context.Key.Add(_UserKeyModel.Key);
-            
-            // add UserKey
+
+            // create UserKey model and populate with _UserKeyModel values
             UserKey _UserKey = new UserKey();
             _UserKey.Key = _UserKeyModel.Key;
             _UserKey.KeyId = _UserKeyModel.Key.KeyId;
             _UserKey.User = _UserKeyModel.User;
             _UserKey.UserId = _UserKeyModel.User.UserId;
+
+            // add UserKey
             _context.UserKey.Add(_UserKey);
             
             //save
             _context.SaveChanges();
         }
 
-        public void delete()
+        public void delete(UserKeyModel _UserKeyModel)
         {
-            throw new NotImplementedException();
+            //create UserKey model and populate with _UserKeyModel values
+            UserKey _UserKey = new UserKey();
+            _UserKey.Key = _UserKeyModel.Key;
+            _UserKey.KeyId = _UserKeyModel.Key.KeyId;
+            _UserKey.User = _UserKeyModel.User;
+            _UserKey.UserId = _UserKeyModel.User.UserId;
+            
+            //remove _UserKey
+            _context.UserKey.Remove(_UserKey);
+
+            //save
+            _context.SaveChanges();
         }
 
         public IEnumerable<Key> listAllKeys(User user)
