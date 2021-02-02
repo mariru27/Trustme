@@ -6,6 +6,9 @@ using Trustme.Data;
 using Trustme.ViewModels;
 using Trustme.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Http;
 
 namespace Trustme.Controllers
 {   
@@ -104,6 +107,20 @@ namespace Trustme.Controllers
                 return RedirectToAction("Index", "Home");
             }
             return RedirectToAction("LogIn");
+        }
+
+
+        public bool isloggedIn(HttpContext httpcontext)
+        {
+            var username = httpcontext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+            if (username != null)
+                return true;
+            return false;
+        }
+        public async Task<IActionResult> LogOut()
+        {
+            await HttpContext.SignOutAsync();
+            return RedirectToAction("Index", "Home");
         }
     }
 }

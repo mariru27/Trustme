@@ -1,5 +1,53 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model RolesUserViewModel
 @{
+    //ViewData["Title"] = "Register";
+    //IEnumerable<Role> roles = ViewData["roles"] as IEnumerable<Role>;
 }
+<h4 class="display-4">Register page</h4>
+
+<hr />
+
+<div class="row">
+    <div class="col-4md-4">
+        <form asp-action="Register" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="@Model.User.FirstName" class="control-label"></label>
+                <input asp-for="@Model.User.FirstName" class="form-control" />
+                <span asp-validation-for="@Model.User.FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.User.SecondName" class="control-label"></label>
+                <input asp-for="@Model.User.SecondName" class="form-control" />
+                <span asp-validation-for="@Model.User.SecondName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.User.Mail" class="control-label"></label>
+                <input asp-for="@Model.User.Mail" class="form-control" />
+                <span asp-validation-for="@Model.User.Mail" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.User.Username" class="control-label"></label>
+                <input asp-for="@Model.User.Username" class="form-control" />
+                <span asp-validation-for="@Model.User.Username" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.User.Password" class="control-label"></label>
+                <input asp-for="@Model.User.Password" type="password" class="form-control" value="" />
+                <span asp-validation-for="@Model.User.Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.User.ConfirmPassword" class="control-label"></label>
+                <input asp-for="@Model.User.ConfirmPassword" type="password" class="form-control" value="" />
+                <span asp-validation-for="@Model.User.ConfirmPassword" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.User.RoleId" class="control-label"></label>
+                <select asp-for="@Model.User.RoleId" class="form-control" asp-items="@Model.Roles"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Register" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>

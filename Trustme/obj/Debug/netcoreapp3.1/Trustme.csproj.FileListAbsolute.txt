@@ -380,3 +380,5 @@ C:\Users\Marina Rusu\Desktop\Trustme\Trustme\Trustme\obj\Debug\netcoreapp3.1\sta
 C:\Users\Marina Rusu\Desktop\Trustme\Trustme\Trustme\obj\Debug\netcoreapp3.1\Trustme.dll
 C:\Users\Marina Rusu\Desktop\Trustme\Trustme\Trustme\obj\Debug\netcoreapp3.1\Trustme.pdb
 C:\Users\Marina Rusu\Desktop\Trustme\Trustme\Trustme\obj\Debug\netcoreapp3.1\Trustme.genruntimeconfig.cache
+C:\Users\Marina Rusu\Desktop\Trustme\Trustme\Trustme\obj\Debug\netcoreapp3.1\Razor\Views\Authentificate\Login.cshtml.g.cs
+C:\Users\Marina Rusu\Desktop\Trustme\Trustme\Trustme\obj\Debug\netcoreapp3.1\Razor\Views\Authentificate\Register.cshtml.g.cs
