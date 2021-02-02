@@ -9,8 +9,8 @@ using Trustme.Data;
 namespace Trustme.Migrations
 {
     [DbContext(typeof(AppContext))]
-    [Migration("20210202094456_User_Key_objs")]
-    partial class User_Key_objs
+    [Migration("20210202100646_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
