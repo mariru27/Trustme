@@ -10,8 +10,8 @@ namespace Trustme.IServices
     interface IRoleRepository
     {
         public void addRole(Role _Role);
-        public void delete();
-        public void update();
-        public IEnumerable<User> listAllUsers(Role role);
+        public void delete(Role _Role);
+        public void update(Role _Role);
+        public IEnumerable<Role> listAllRoles();
     }
 }

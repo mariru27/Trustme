@@ -22,19 +22,20 @@ namespace Trustme.Service
             _context.SaveChanges();
         }
 
-        public void delete()
+        public void deleteRole(Role _Role)
         {
-            throw new NotImplementedException();
+            _context.Role.Remove(_Role);
+            _context.SaveChanges();
         }
 
-        public IEnumerable<User> listAllUsers(Role role)
+        public IEnumerable<Role> listAllRoles()
         {
-            throw new NotImplementedException();
+            return _context.Role.ToList();
         }
 
-        public void update()
+        public void updateRole(Role _Role)
         {
-            throw new NotImplementedException();
+            _context.Role.Update(_Role);
         }
 
 
