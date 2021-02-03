@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Trustme.Models;
 using Trustme.IServices;
 using Trustme.Data;
+using Trustme.ViewModels;
 
 namespace Trustme.Service
 {
@@ -26,6 +27,16 @@ namespace Trustme.Service
         public IEnumerable<User> listAllUsers()
         {
             return _context.User.ToList();
+        }
+
+        public IEnumerable<User> listAllUsers(Role _Role)
+        {
+
+            List<User> UsersList = (List<User>)_context.Role.Join(_context.User,
+                role => role.IdRole,
+                user => user.RoleId,
+                (role, user) => new User()) ; 
+            return UsersList;
         }
 
         public void update(User _User)
