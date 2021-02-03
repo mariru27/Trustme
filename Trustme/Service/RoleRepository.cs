@@ -4,14 +4,22 @@ using System.Linq;
 using System.Threading.Tasks;
 using Trustme.IServices;
 using Trustme.Models;
+using Trustme.ViewModels;
+using Trustme.Data;
 
 namespace Trustme.Service
 {
     public class RoleRepository : IRoleRepository
     {
-        public void add()
+        private RoleContext _context;
+        RoleRepository(RoleContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
+        }
+        public void addRole(Role _Role)
+        {
+            _context.Role.Add(_Role);
+            _context.SaveChanges();
         }
 
         public void delete()
