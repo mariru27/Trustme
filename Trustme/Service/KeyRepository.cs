@@ -53,11 +53,20 @@ namespace Trustme.Service
             _context.SaveChanges();
         }
 
-        public IEnumerable<Key> listAllKeys(User user)
+        public IEnumerable<Key> listAllKeys(User _User)
         {
-            throw new NotImplementedException();
-        }
+            List<Key> KeysList = (List<Key>)_context.User.Join(_context.UserKey,
+                user => user.UserId,
+                userKey => userKey.UserId,
+                (user, userKey) => new { user, userKey }
+                ).Join(_context.Key,
+                userKeyResult => userKeyResult.userKey.KeyId,
+                key => key.KeyId,
+                (userKeyResult, key) => new { key }
+                );
 
+            return KeysList;
+        }
         public void update(UserKeyModel _UserKeyModel)
         {
             //create UserKey model and populate with _UserKeyModel values

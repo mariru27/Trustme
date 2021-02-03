@@ -12,7 +12,7 @@ namespace Trustme.IServices
         public void addKey(UserKeyModel _UserKeyModel);
         public void delete(UserKeyModel _UserKeyModel);
         public void update(UserKeyModel _UserKeyModel);
-        public IEnumerable<Key> listAllKeys(User user);
+        public IEnumerable<Key> listAllKeys(User _User);
 
     }
 }
