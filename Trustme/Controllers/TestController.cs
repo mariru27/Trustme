@@ -13,10 +13,10 @@ namespace Trustme.Controllers
 {
     public class TestController : Controller
     {
-        private KeyRepository _KeyRepository;
-        private RoleRepository _RoleRepository;
-        private UserRepository _UserRepository;
-        TestController(KeyRepository keyRepository, RoleRepository roleRepository, UserRepository userRepository)
+        private IKeyRepository _KeyRepository;
+        private IRoleRepository _RoleRepository;
+        private IUserRepository _UserRepository;
+        TestController(IKeyRepository keyRepository, IRoleRepository roleRepository, IUserRepository userRepository)
         {
             _KeyRepository = keyRepository;
             _RoleRepository = roleRepository;
