@@ -11,12 +11,9 @@ namespace Trustme.Data
     {
         public RoleContext(DbContextOptions<RoleContext> options) : base(options) { }
         public DbSet<Role> Role { set; get; }
-        public DbSet<User> User { set; get; }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>().ToTable("User");
-            modelBuilder.Entity<User>().ToTable("Role");
 
         }
 
