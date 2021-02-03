@@ -13,7 +13,7 @@ namespace Trustme.IServices
         public void delete(User _User);
         public void update(User _User);
         public IEnumerable<User> listAllUsers();
-        public IEnumerable<User> listAllUsers(RoleUserModel _RoleUserModel);
+        public IEnumerable<User> listAllUsers(Role _Role);
 
     }
 }
