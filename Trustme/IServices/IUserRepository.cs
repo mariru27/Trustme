@@ -10,7 +10,7 @@ namespace Trustme.IServices
     {
         public void add(User _User);
         public void delete(User _User);
-        public void update();
+        public void update(User _User);
         public IEnumerable<User> listAllUsers();
     }
 }

@@ -25,12 +25,13 @@ namespace Trustme.Service
 
         public IEnumerable<User> listAllUsers()
         {
-            throw new NotImplementedException();
+            return _context.User.ToList();
         }
 
-        public void update()
+        public void update(User _User)
         {
-            throw new NotImplementedException();
+            _context.User.Update(_User);
+            _context.SaveChanges();
         }
     }
 }
