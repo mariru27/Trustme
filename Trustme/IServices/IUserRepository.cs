@@ -8,8 +8,8 @@ namespace Trustme.IServices
 {
     interface IUserRepository
     {
-        public void add();
-        public void delete();
+        public void add(User _User);
+        public void delete(User _User);
         public void update();
         public IEnumerable<User> listAllUsers();
     }
