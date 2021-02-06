@@ -16,6 +16,7 @@ using Trustme.Controllers;
 using Trustme.Data;
 using Trustme.IServices;
 using Trustme.Service;
+using Trustme.Models;
 using AppContext = Trustme.Data.AppContext;
 
 namespace Trustme
@@ -35,11 +36,16 @@ namespace Trustme
 
             services.AddEntityFrameworkSqlServer().AddDbContext<AppContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             //services.AddSingleton<Administration>();
-            services.AddScoped<IKeyRepository, KeyRepository>();
-            services.AddScoped<IRoleRepository, RoleRepository>();
-            services.AddScoped<IUserRepository, UserRepository>();
-            //services.AddScoped(typeof(IGuestServiceRepositoty), typeof(GuestServiceRepository));
+
+
+
             services.AddHttpContextAccessor();
+            //services.AddSingleton(typeof(UserKeyContext));
+            //services.AddScoped<IKeyRepository, KeyRepository>();
+            services.AddScoped<ITest, Test>();
+            //services.AddScoped<IRoleRepository, RoleRepository>();
+            //services.AddScoped<IUserRepository, UserRepository>();
+            //services.AddScoped(typeof(IGuestServiceRepositoty), typeof(GuestServiceRepository));
 
             services.AddMvc().AddControllersAsServices();
 
@@ -50,6 +56,8 @@ namespace Trustme
                 config.LogoutPath = "/Administration/LogOut";
             });
             services.AddControllersWithViews();
+            services.AddMemoryCache();
+
 
 
         }

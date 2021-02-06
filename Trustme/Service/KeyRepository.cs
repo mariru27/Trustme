@@ -6,12 +6,15 @@ using Trustme.Models;
 using Trustme.IServices;
 using Trustme.Data;
 using Trustme.ViewModels;
+using System.Net.Http;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace Trustme.Service
 {
     public class KeyRepository : IKeyRepository
     {
         private UserKeyContext _context;
+
         KeyRepository(UserKeyContext context)
         {
             _context = context;
@@ -55,7 +58,8 @@ namespace Trustme.Service
 
         public IEnumerable<Key> listAllKeys(User _User)
         {
-            List<Key> KeysList = (List<Key>)_context.User.Join(_context.UserKey,
+            List<Key> KeysList = (List<Key>)_context.User.
+                Join(_context.UserKey,
                 user => user.UserId,
                 userKey => userKey.UserId,
                 (user, userKey) => new { user, userKey }

@@ -13,14 +13,14 @@ namespace Trustme.Controllers
 {
     public class TestController : Controller
     {
-        private IKeyRepository _KeyRepository;
-        private IRoleRepository _RoleRepository;
-        private IUserRepository _UserRepository;
-        TestController(IKeyRepository keyRepository, IRoleRepository roleRepository, IUserRepository userRepository)
+       // private IKeyRepository _KeyRepository;
+        //private IRoleRepository _RoleRepository;
+        //private IUserRepository _UserRepository;
+        TestController()
         {
-            _KeyRepository = keyRepository;
-            _RoleRepository = roleRepository;
-            _UserRepository = userRepository;
+          //  _KeyRepository = keyRepository;
+            //_RoleRepository = roleRepository;
+            //_UserRepository = userRepository;
         }
         public IActionResult Index()
         {

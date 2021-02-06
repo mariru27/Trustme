@@ -21,12 +21,6 @@ namespace Trustme.Controllers
         {
             _context = context;
         }
-        public IActionResult Index()
-        {
-            return View();
-        }
-
-
         public IActionResult Register()
         {
             RolesUserViewModel rolesUserViewModel = new RolesUserViewModel();
