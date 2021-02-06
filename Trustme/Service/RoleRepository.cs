@@ -12,7 +12,7 @@ namespace Trustme.Service
     public class RoleRepository : IRoleRepository
     {
         private RoleContext _context;
-        RoleRepository(RoleContext context)
+        public RoleRepository(RoleContext context)
         {
             _context = context;
         }

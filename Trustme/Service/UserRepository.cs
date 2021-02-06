@@ -12,6 +12,12 @@ namespace Trustme.Service
     public class UserRepository : IUserRepository
     {
         private UserContext _context;
+
+        public UserRepository(UserContext context)
+        {
+            _context = context;
+        }
+
         public void add(User _User)
         {
             _context.User.Add(_User);

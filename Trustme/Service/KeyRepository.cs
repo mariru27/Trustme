@@ -15,7 +15,7 @@ namespace Trustme.Service
     {
         private UserKeyContext _context;
 
-        KeyRepository(UserKeyContext context)
+        public KeyRepository(UserKeyContext context)
         {
             _context = context;
         }
