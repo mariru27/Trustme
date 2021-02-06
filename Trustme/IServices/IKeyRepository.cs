@@ -7,7 +7,7 @@ using Trustme.ViewModels;
 
 namespace Trustme.IServices
 {
-    interface IKeyRepository
+    public interface IKeyRepository
     {
         public void addKey(UserKeyModel _UserKeyModel);
         public void delete(UserKeyModel _UserKeyModel);

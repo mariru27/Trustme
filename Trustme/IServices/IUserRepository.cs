@@ -7,7 +7,7 @@ using Trustme.ViewModels;
 
 namespace Trustme.IServices
 {
-    interface IUserRepository
+    public interface IUserRepository
     {
         public void add(User _User);
         public void delete(User _User);

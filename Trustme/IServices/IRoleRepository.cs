@@ -7,7 +7,7 @@ using Trustme.ViewModels;
 
 namespace Trustme.IServices
 {
-    interface IRoleRepository
+    public interface IRoleRepository
     {
         public void addRole(Role _Role);
         public void deleteRole(Role _Role);

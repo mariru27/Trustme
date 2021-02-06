@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Trustme.IServices
 {
-    interface ITest
+    public interface ITest
     {
         void test();
     }
