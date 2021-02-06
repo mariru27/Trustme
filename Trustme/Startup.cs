@@ -41,10 +41,10 @@ namespace Trustme
 
             services.AddHttpContextAccessor();
             //services.AddSingleton(typeof(UserKeyContext));
-            //services.AddScoped<IKeyRepository, KeyRepository>();
-            //services.AddScoped<ITest, Test>();
-            //services.AddScoped<IRoleRepository, RoleRepository>();
-            //services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IKeyRepository, KeyRepository>();
+            services.AddScoped<ITest, Test>();
+            services.AddScoped<IRoleRepository, RoleRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
             //services.AddScoped(typeof(IGuestServiceRepositoty), typeof(GuestServiceRepository));
 
             services.AddMvc().AddControllersAsServices();
