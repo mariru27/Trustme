@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Trustme.Models;
@@ -13,9 +12,9 @@ namespace Trustme.Service
 {
     public class KeyRepository : IKeyRepository
     {
-        private UserKeyContext _context;
+        private AppContext _context;
 
-        public KeyRepository(UserKeyContext context)
+        public KeyRepository(AppContext context)
         {
             _context = context;
         }

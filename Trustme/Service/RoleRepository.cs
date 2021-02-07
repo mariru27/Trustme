@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Trustme.IServices;
@@ -11,8 +10,8 @@ namespace Trustme.Service
 {
     public class RoleRepository : IRoleRepository
     {
-        private RoleContext _context;
-        public RoleRepository(RoleContext context)
+        private AppContext _context;
+        public RoleRepository(AppContext context)
         {
             _context = context;
         }

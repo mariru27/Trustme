@@ -35,17 +35,17 @@ namespace Trustme
         {
 
             services.AddEntityFrameworkSqlServer().AddDbContext<AppContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+
             //services.AddSingleton<Administration>();
 
 
 
             services.AddHttpContextAccessor();
-            //services.AddSingleton(typeof(UserKeyContext));
             services.AddScoped<IKeyRepository, KeyRepository>();
             services.AddScoped<ITest, Test>();
             services.AddScoped<IRoleRepository, RoleRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
-            //services.AddScoped(typeof(IGuestServiceRepositoty), typeof(GuestServiceRepository));
 
             services.AddMvc().AddControllersAsServices();
 

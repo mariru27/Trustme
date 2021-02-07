@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Trustme.Models;
@@ -11,9 +10,9 @@ namespace Trustme.Service
 {
     public class UserRepository : IUserRepository
     {
-        private UserContext _context;
+        private AppContext _context;
 
-        public UserRepository(UserContext context)
+        public UserRepository(AppContext context)
         {
             _context = context;
         }
