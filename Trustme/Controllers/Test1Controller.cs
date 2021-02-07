@@ -11,15 +11,19 @@ namespace Trustme.Controllers
 {
     public class Test1Controller : Controller
     {
-        private readonly AppContext _context;
-
-        public Test1Controller(AppContext context)
+        private IKeyRepository _keyRepository;
+        public Test1Controller(IKeyRepository keyRepository)
         {
-            _context = context;
+            _keyRepository = keyRepository;
         }
         public IActionResult Index()
         {
             return View();
+        }
+        public void test()
+        {
+            
+            //_keyRepository.addKey();
         }
     }
 }
