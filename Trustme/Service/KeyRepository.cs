@@ -18,7 +18,7 @@ namespace Trustme.Service
         {
             _context = context;
         }
-        public void addKey(UserKeyModel _UserKeyModel)
+        public void AddKey(UserKeyModel _UserKeyModel)
         {
             // add key 
             _context.Key.Add(_UserKeyModel.Key);
@@ -37,7 +37,7 @@ namespace Trustme.Service
             _context.SaveChanges();
         }
 
-        public void delete(UserKeyModel _UserKeyModel)
+        public void Delete(UserKeyModel _UserKeyModel)
         {
             //create UserKey model and populate with _UserKeyModel values
             UserKey _UserKey = new UserKey();
@@ -54,7 +54,7 @@ namespace Trustme.Service
             //save
             _context.SaveChanges();
         }
-        public UserKeyModel createDefaultUserKeyModel()
+        public UserKeyModel CreateDefaultUserKeyModel()
         {
             User user = new User();
             user.FirstName = "First name";
@@ -77,7 +77,7 @@ namespace Trustme.Service
             return userKeyModel;
         }
 
-        public IEnumerable<Key> listAllKeys(User _User)
+        public IEnumerable<Key> ListAllKeys(User _User)
         {
             List<Key> KeysList = (List<Key>)_context.User.
                 Join(_context.UserKey,
@@ -92,7 +92,7 @@ namespace Trustme.Service
 
             return KeysList;
         }
-        public void update(UserKeyModel _UserKeyModel)
+        public void Update(UserKeyModel _UserKeyModel)
         {
             //create UserKey model and populate with _UserKeyModel values
             UserKey _UserKey = new UserKey();

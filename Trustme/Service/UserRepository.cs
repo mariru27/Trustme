@@ -17,24 +17,24 @@ namespace Trustme.Service
             _context = context;
         }
 
-        public void add(User _User)
+        public void AddUser(User _User)
         {
             _context.User.Add(_User);
             _context.SaveChanges();
         }
 
-        public void delete(User _User)
+        public void DeleteUser(User _User)
         {
             _context.User.Remove(_User);
             _context.SaveChanges();
         }
 
-        public IEnumerable<User> listAllUsers()
+        public IEnumerable<User> ListAllUsers()
         {
             return _context.User.ToList();
         }
 
-        public IEnumerable<User> listAllUsers(Role _Role)
+        public IEnumerable<User> ListAllUsers(Role _Role)
         {
 
             List<User> UsersList = (List<User>)_context.Role.Join(_context.User,
@@ -44,7 +44,7 @@ namespace Trustme.Service
             return UsersList;
         }
 
-        public void update(User _User)
+        public void UpdateUser(User _User)
         {
             _context.User.Update(_User);
             _context.SaveChanges();

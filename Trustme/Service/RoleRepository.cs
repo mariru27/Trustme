@@ -15,24 +15,24 @@ namespace Trustme.Service
         {
             _context = context;
         }
-        public void addRole(Role _Role)
+        public void AddRole(Role _Role)
         {
             _context.Role.Add(_Role);
             _context.SaveChanges();
         }
 
-        public void deleteRole(Role _Role)
+        public void DeleteRole(Role _Role)
         {
             _context.Role.Remove(_Role);
             _context.SaveChanges();
         }
 
-        public IEnumerable<Role> listAllRoles()
+        public IEnumerable<Role> ListAllRoles()
         {
             return _context.Role.ToList();
         }
 
-        public void updateRole(Role _Role)
+        public void UpdateRole(Role _Role)
         {
             _context.Role.Update(_Role);
         }

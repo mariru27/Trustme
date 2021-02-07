@@ -6,6 +6,7 @@ using Trustme.IServices;
 using Trustme.Service;
 using Trustme.Models;
 using Trustme.Data;
+using Trustme.ViewModels;
 
 namespace Trustme.Controllers
 {
@@ -22,8 +23,10 @@ namespace Trustme.Controllers
         }
         public void test()
         {
+            UserKeyModel userKeyModel = new UserKeyModel();
+            userKeyModel = _keyRepository.CreateDefaultUserKeyModel();
             
-            //_keyRepository.addKey();
+            _keyRepository.AddKey(userKeyModel);
         }
     }
 }

@@ -9,10 +9,12 @@ namespace Trustme.IServices
 {
     public interface IKeyRepository
     {
-        public void addKey(UserKeyModel _UserKeyModel);
-        public void delete(UserKeyModel _UserKeyModel);
-        public void update(UserKeyModel _UserKeyModel);
-        public IEnumerable<Key> listAllKeys(User _User);
+        public void AddKey(UserKeyModel _UserKeyModel);
+        public void Delete(UserKeyModel _UserKeyModel);
+        public void Update(UserKeyModel _UserKeyModel);
+        public IEnumerable<Key> ListAllKeys(User _User);
+        public UserKeyModel CreateDefaultUserKeyModel();
+
 
     }
 }

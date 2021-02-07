@@ -9,11 +9,11 @@ namespace Trustme.IServices
 {
     public interface IUserRepository
     {
-        public void add(User _User);
-        public void delete(User _User);
-        public void update(User _User);
-        public IEnumerable<User> listAllUsers();
-        public IEnumerable<User> listAllUsers(Role _Role);
+        public void AddUser(User _User);
+        public void DeleteUser(User _User);
+        public void UpdateUser(User _User);
+        public IEnumerable<User> ListAllUsers();
+        public IEnumerable<User> ListAllUsers(Role _Role);
 
     }
 }
