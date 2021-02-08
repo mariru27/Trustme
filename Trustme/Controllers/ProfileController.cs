@@ -9,7 +9,7 @@ using Trustme.IServices;
 using Trustme.Service;
 using Trustme.Models;
 
-namespace Trustme.NewControllers
+namespace Trustme.Controllers
 {
     //change phpto, edit all values, display
     public class ProfileController : Controller
