@@ -42,8 +42,8 @@ namespace Trustme.Controllers
 
         public async Task<IActionResult> Register(User user)
         {
-            User usedUser = _UserRepository.getUserbyUsername(user.Username);
-            User usedMailUser = _UserRepository.getUserbyMail(user.Mail);
+            User usedUser = _UserRepository.GetUserbyUsername(user.Username);
+            User usedMailUser = _UserRepository.GetUserbyMail(user.Mail);
 
             RolesUserViewModel userResult = new RolesUserViewModel();
             userResult.User = user;
@@ -71,8 +71,7 @@ namespace Trustme.Controllers
                 //_guestServiceRepository.Register(user);
 
                 //role.Users.Add(user);
-                _context.Add(user);
-                await _context.SaveChangesAsync();
+                _UserRepository.AddUser(user);
                 return await LogIn(user.Username, user.Password);
             }
             return View(userResult);
