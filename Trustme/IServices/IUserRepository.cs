@@ -16,6 +16,7 @@ namespace Trustme.IServices
         public IEnumerable<User> ListAllUsers(Role _Role);
 
         public User getUserbyUsername(string username);
+        public User getUserbyMail(string mail);
 
     }
 }

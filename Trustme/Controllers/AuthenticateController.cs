@@ -43,7 +43,7 @@ namespace Trustme.Controllers
         public async Task<IActionResult> Register(User user)
         {
             User usedUser = _UserRepository.getUserbyUsername(user.Username);
-            User usedMailUser = _context.User.Where(a => a.Mail == user.Mail)?.FirstOrDefault();
+            User usedMailUser = _UserRepository.getUserbyMail(user.Mail);
 
             RolesUserViewModel userResult = new RolesUserViewModel();
             userResult.User = user;
