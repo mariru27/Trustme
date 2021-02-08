@@ -112,7 +112,6 @@ namespace Trustme.Service
         public Key GetKeyById(int keyId)
         {
             return _context.Key.Where(a => a.KeyId == keyId)?.SingleOrDefault();
-             
         }
     }
 }
