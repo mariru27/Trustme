@@ -66,11 +66,6 @@ namespace Trustme.Controllers
             {
                 Role role = _RoleReporitory.GetRoleById(user.RoleId);
                 user.Role = role;
-                //from here I can use GuestServiceRepository
-
-                //_guestServiceRepository.Register(user);
-
-                //role.Users.Add(user);
                 _UserRepository.AddUser(user);
                 return await LogIn(user.Username, user.Password);
             }
@@ -79,51 +74,50 @@ namespace Trustme.Controllers
 
 
 
-        //    [HttpGet]
-        //    public IActionResult LogIn()
-        //    {
-        //        return View();
-        //    }
+        [HttpGet]
+        public IActionResult LogIn()
+        {
+            return View();
+        }
 
-        //    [HttpPost]
-        //    [ValidateAntiForgeryToken]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
 
-        //    public async Task<IActionResult> LogIn(string username, string password)
-        //    {
-        //        if (isloggedIn(HttpContext) == true)
-        //            await LogOut();
-        //        User user = _context.User.Where(a => a.Username == username).SingleOrDefault();
-        //        if (user != null && password == user.Password)
-        //        {
-        //            var userClaim = new List<Claim>()
-        //            {
-        //                new Claim(ClaimTypes.NameIdentifier, user.Username),
-        //                new Claim(ClaimTypes.Email, user.Mail),
-        //            };
-        //            var userIdentity = new ClaimsIdentity(userClaim, "user identity");
+        public async Task<IActionResult> LogIn(string username, string password)
+        {
+            if (isloggedIn(HttpContext) == true)
+                await LogOut();
+            User user = _UserRepository.GetUserbyUsername(username);
+            if (user != null && password == user.Password)
+            {
+                var userClaim = new List<Claim>()
+                    {
+                        new Claim(ClaimTypes.NameIdentifier, user.Username),
+                        new Claim(ClaimTypes.Email, user.Mail),
+                    };
+                var userIdentity = new ClaimsIdentity(userClaim, "user identity");
 
-        //            var userPrinciple = new ClaimsPrincipal(new[] { userIdentity });
+                var userPrinciple = new ClaimsPrincipal(new[] { userIdentity });
 
-        //            await HttpContext.SignInAsync(userPrinciple);
-        //            ViewData["username"] = user.Username;
+                await HttpContext.SignInAsync(userPrinciple);
+                ViewData["username"] = user.Username;
 
-        //            return RedirectToAction("Index", "Home");
-        //        }
-        //        return RedirectToAction("LogIn");
-        //    }
+                return RedirectToAction("Index", "Home");
+            }
+            return RedirectToAction("LogIn");
+        }
 
-
-        //    public bool isloggedIn(HttpContext httpcontext)
-        //    {
-        //        var username = httpcontext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
-        //        if (username != null)
-        //            return true;
-        //        return false;
-        //    }
-        //    public async Task<IActionResult> LogOut()
-        //    {
-        //        await HttpContext.SignOutAsync();
-        //        return RedirectToAction("Index", "Home");
-        //    }
+        public bool isloggedIn(HttpContext httpcontext)
+        {
+            var username = httpcontext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+            if (username != null)
+                return true;
+            return false;
+        }
+        public async Task<IActionResult> LogOut()
+        {
+            await HttpContext.SignOutAsync();
+            return RedirectToAction("Index", "Home");
+        }
     }
 }
