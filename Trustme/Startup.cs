@@ -46,6 +46,7 @@ namespace Trustme
             services.AddScoped<ITest, Test>();
             services.AddScoped<IRoleRepository, RoleRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IHttpRequestFunctions, HttpRequestFunctions>();
 
             services.AddMvc().AddControllersAsServices();
 

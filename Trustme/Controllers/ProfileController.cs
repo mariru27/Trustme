@@ -1,23 +1,22 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
 using Trustme.Data;
 using Trustme.IServices;
 using Trustme.Service;
-using Trustme.Models;
 
 namespace Trustme.Controllers
 {
     //change phpto, edit all values, display
     public class ProfileController : Controller
     {
-        private HttpRequestFunctions _HttpRequestFunctions;
+        private IHttpRequestFunctions _HttpRequestFunctions;
         private IUserRepository _UserRepository;
         private IKeyRepository _KeyRepository;
-        public ProfileController(HttpRequestFunctions httpRequestFunctions, IKeyRepository keyRepository, IUserRepository userRepository)
+        public ProfileController(IHttpRequestFunctions httpRequestFunctions, IKeyRepository keyRepository, IUserRepository userRepository)
         {
             _HttpRequestFunctions = httpRequestFunctions;
             _KeyRepository = keyRepository;
@@ -29,7 +28,7 @@ namespace Trustme.Controllers
         }
 
 
-        [Authorize]
+       // [Authorize]
         public IActionResult Profile()
         {
             string username = _HttpRequestFunctions.getUsername(HttpContext);

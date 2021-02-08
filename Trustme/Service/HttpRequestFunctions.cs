@@ -10,7 +10,7 @@ using Trustme.Models;
 
 namespace Trustme.Service
 {
-    public class HttpRequestFunctions
+    public class HttpRequestFunctions : IHttpRequestFunctions
     {
 
         private IKeyRepository _KeyRepository;
