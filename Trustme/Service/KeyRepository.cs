@@ -108,5 +108,11 @@ namespace Trustme.Service
             //save
             _context.SaveChanges();
         }
+
+        public Key GetKeyById(int keyId)
+        {
+            return _context.Key.Where(a => a.KeyId == keyId)?.SingleOrDefault();
+             
+        }
     }
 }

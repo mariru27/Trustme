@@ -15,7 +15,7 @@ namespace Trustme.IServices
         public IEnumerable<Key> ListAllKeys(User _User);
         public UserKeyModel CreateDefaultUserKeyModel();
 
-
+        public Key GetKeyById(int keyId);
 
 
     }

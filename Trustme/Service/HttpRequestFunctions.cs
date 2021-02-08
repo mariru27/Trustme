@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Trustme.IServices;
 using Trustme.Models;
@@ -26,22 +27,24 @@ namespace Trustme.Service
             return appContext;
         }
 
-        public string getPublicKey(HttpContext httpcontext)
-        {
-            var username = this.getUsername(httpcontext);
-            User user = _context.User.Where(a => a.Username == username)?.SingleOrDefault();
-            Key key = _context.Key.Where(a => a.UserKeyId == user.UserId)?.SingleOrDefault();
-            return key.PublicKey;
+        //public string getPublicKey(HttpContext httpcontext)
+        //{
+        //    var username = this.getUsername(httpcontext);
+        //    //return key of a certain user 
+        //    User user = _UserRepository.GetUserbyUsername(username);
+        //    //Key key = _KeyRepository
+        //    Key key = _context.Key.Where(a => a.UserKeyId == user.UserId)?.SingleOrDefault();
+        //    return key.PublicKey;
 
-        }
+        //}
 
-        public string getPublicKey(HttpContext httpcontext, int certificateId)
-        {
-            var username = this.getUsername(httpcontext);
-            Key key = _context.Key.Where(a => a.UserKeyId == this.getUserId(httpcontext) && a.KeyId == certificateId).SingleOrDefault();
-            return key.PublicKey;
+        //public string getPublicKey(HttpContext httpcontext, int certificateId)
+        //{
+        //    var username = this.getUsername(httpcontext);
+        //    Key key = _context.Key.Where(a => a.UserKeyId == this.getUserId(httpcontext) && a.KeyId == certificateId).SingleOrDefault();
+        //    return key.PublicKey;
 
-        }
+        //}
 
         public bool isloggedIn(HttpContext httpcontext)
         {
@@ -59,7 +62,7 @@ namespace Trustme.Service
         public int getUserId(HttpContext httpcontext)
         {
             string username = this.getUsername(httpcontext);
-            User user = _context.User.Where(a => a.Username == username)?.FirstOrDefault();
+            User user = _UserRepository.GetUserbyUsername(username);
             return user.UserId;
 
         }
