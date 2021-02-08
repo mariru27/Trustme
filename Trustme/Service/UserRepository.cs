@@ -29,6 +29,12 @@ namespace Trustme.Service
             _context.SaveChanges();
         }
 
+        public User getUserbyUsername(string username)
+        {
+            User usedUser = _context.User.Where(a => a.Username == username)?.FirstOrDefault();
+            return usedUser;
+        }
+
         public IEnumerable<User> ListAllUsers()
         {
             return _context.User.ToList();
