@@ -29,6 +29,12 @@ namespace Trustme.Service
             _context.SaveChanges();
         }
 
+        public User GetUserById(int idUser)
+        {
+            User user = _context.User.Where(a => a.UserId == idUser)?.FirstOrDefault();
+            return user;
+        }
+
         public User GetUserbyMail(string mail)
         {
             User usedMailUser = _context.User.Where(a => a.Mail == mail)?.FirstOrDefault();

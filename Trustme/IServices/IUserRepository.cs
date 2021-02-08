@@ -18,5 +18,7 @@ namespace Trustme.IServices
         public User GetUserbyUsername(string username);
         public User GetUserbyMail(string mail);
 
+        public User GetUserById(int idUser);
+
     }
 }

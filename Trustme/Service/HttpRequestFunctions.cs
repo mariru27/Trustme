@@ -1,15 +1,28 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Trustme.IServices;
+using Trustme.Models;
+
 
 namespace Trustme.Service
 {
     public class HttpRequestFunctions
     {
+
+        private IKeyRepository _KeyRepository;
+        private IUserRepository _UserRepository;
+        public HttpRequestFunctions(IKeyRepository keyRepository, IUserRepository userRepository)
+        {
+            _KeyRepository = keyRepository;
+            _UserRepository = userRepository;
+        }
         public IEnumerable<Key> getAllKeys(HttpContext httpContext)
         {
-            var appContext = _context.Key.Where(k => k.UserKeyId == this.getUserId(httpContext)).AsEnumerable();
+            User user = _UserRepository.GetUserById(this.getUserId(httpContext));
+            var appContext = _KeyRepository.ListAllKeys(user).AsEnumerable();
             return appContext;
         }
 
