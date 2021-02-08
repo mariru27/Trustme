@@ -37,7 +37,7 @@ namespace Trustme.Service
             _context.SaveChanges();
         }
 
-        public void Delete(UserKeyModel _UserKeyModel)
+        public void DeleteKey(UserKeyModel _UserKeyModel)
         {
             //create UserKey model and populate with _UserKeyModel values
             UserKey _UserKey = new UserKey();
@@ -92,7 +92,7 @@ namespace Trustme.Service
 
             return KeysList;
         }
-        public void Update(UserKeyModel _UserKeyModel)
+        public void UpdateKey(UserKeyModel _UserKeyModel)
         {
             //create UserKey model and populate with _UserKeyModel values
             UserKey _UserKey = new UserKey();

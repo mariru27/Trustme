@@ -186,7 +186,6 @@ C:\Users\Marina Rusu\source\repos\Trustme\Trustme\obj\Debug\netcoreapp3.1\Trustm
 C:\Users\Marina Rusu\source\repos\Trustme\Trustme\obj\Debug\netcoreapp3.1\Trustme.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\Marina Rusu\Desktop\Trustme\Trustme\Trustme\bin\Debug\netcoreapp3.1\appsettings.Development.json
 C:\Users\Marina Rusu\Desktop\Trustme\Trustme\Trustme\bin\Debug\netcoreapp3.1\appsettings.json
-C:\Users\Marina Rusu\Desktop\Trustme\Trustme\Trustme\bin\Debug\netcoreapp3.1\Properties\launchSettings.json
 C:\Users\Marina Rusu\Desktop\Trustme\Trustme\Trustme\bin\Debug\netcoreapp3.1\Trustme.exe
 C:\Users\Marina Rusu\Desktop\Trustme\Trustme\Trustme\bin\Debug\netcoreapp3.1\Trustme.deps.json
 C:\Users\Marina Rusu\Desktop\Trustme\Trustme\Trustme\bin\Debug\netcoreapp3.1\Trustme.runtimeconfig.json
@@ -380,5 +379,6 @@ C:\Users\Marina Rusu\Desktop\Trustme\Trustme\Trustme\obj\Debug\netcoreapp3.1\sta
 C:\Users\Marina Rusu\Desktop\Trustme\Trustme\Trustme\obj\Debug\netcoreapp3.1\Trustme.dll
 C:\Users\Marina Rusu\Desktop\Trustme\Trustme\Trustme\obj\Debug\netcoreapp3.1\Trustme.pdb
 C:\Users\Marina Rusu\Desktop\Trustme\Trustme\Trustme\obj\Debug\netcoreapp3.1\Trustme.genruntimeconfig.cache
-C:\Users\Marina Rusu\Desktop\Trustme\Trustme\Trustme\obj\Debug\netcoreapp3.1\Razor\Views\Authentificate\Login.cshtml.g.cs
-C:\Users\Marina Rusu\Desktop\Trustme\Trustme\Trustme\obj\Debug\netcoreapp3.1\Razor\Views\Authentificate\Register.cshtml.g.cs
+C:\Users\Marina Rusu\Desktop\Trustme\Trustme\Trustme\obj\Debug\netcoreapp3.1\scopedcss\bundle\Trustme.styles.css
+C:\Users\Marina Rusu\Desktop\Trustme\Trustme\Trustme\obj\Debug\netcoreapp3.1\Razor\Views\Authenticate\Login.cshtml.g.cs
+C:\Users\Marina Rusu\Desktop\Trustme\Trustme\Trustme\obj\Debug\netcoreapp3.1\Razor\Views\Authenticate\Register.cshtml.g.cs
