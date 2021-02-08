@@ -47,7 +47,7 @@ namespace Trustme.Controllers
 
             RolesUserViewModel userResult = new RolesUserViewModel();
             userResult.User = user;
-            userResult.Roles = new SelectList(_context.Role.ToList(), "IdRole", "RoleName");
+            userResult.Roles = new SelectList(_RoleReporitory.ListAllRoles(), "IdRole", "RoleName");
 
             if (usedUser != null || usedMailUser != null)
             {
@@ -64,7 +64,7 @@ namespace Trustme.Controllers
             }
             if (ModelState.IsValid && user.Password == user.ConfirmPassword)
             {
-                Role role = _context.Role.Where(a => a.IdRole == user.RoleId).SingleOrDefault();
+                Role role = _RoleReporitory.GetRoleById(user.RoleId);
                 user.Role = role;
                 //from here I can use GuestServiceRepository
 

@@ -13,5 +13,7 @@ namespace Trustme.IServices
         public void DeleteRole(Role _Role);
         public void UpdateRole(Role _Role);
         public IEnumerable<Role> ListAllRoles();
+
+        public Role GetRoleById(int id);
     }
 }

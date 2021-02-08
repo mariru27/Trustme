@@ -27,6 +27,12 @@ namespace Trustme.Service
             _context.SaveChanges();
         }
 
+        public Role GetRoleById(int roleId)
+        {
+            Role role = _context.Role.Where(a => a.IdRole == roleId).SingleOrDefault();
+            return role;
+        }
+
         public IEnumerable<Role> ListAllRoles()
         {
             return _context.Role.ToList();
