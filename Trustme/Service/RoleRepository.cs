@@ -35,10 +35,7 @@ namespace Trustme.Service
 
         public Role GetUserRole(User User)
         {
-            Role userRole = _context.User.Join(_context.Role,
-                user => user.RoleId,
-                role => role.IdRole,
-                (role, user) => new Role(role));
+            return _context.Role.Where(role => role.IdRole == User.RoleId)?.SingleOrDefault();
         }
 
         public IEnumerable<Role> ListAllRoles()
