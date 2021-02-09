@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Trustme.Data;
 using Trustme.IServices;
 using Trustme.Service;
+using Trustme.ViewModels;
 
 namespace Trustme.Controllers
 {
@@ -33,6 +34,7 @@ namespace Trustme.Controllers
         {
             string username = _HttpRequestFunctions.getUsername(HttpContext);
             ViewData["user"] = _UserRepository.GetUserbyUsername(username);
+
             ViewData["keys"] = _KeyRepository.ListAllKeys(_UserRepository.GetUserbyUsername(username));
             return View();
         }
