@@ -15,5 +15,7 @@ namespace Trustme.IServices
         public IEnumerable<Role> ListAllRoles();
 
         public Role GetRoleById(int id);
+
+        public Role GetUserRole(User User);
     }
 }

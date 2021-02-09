@@ -33,6 +33,14 @@ namespace Trustme.Service
             return role;
         }
 
+        public Role GetUserRole(User User)
+        {
+            Role userRole = _context.User.Join(_context.Role,
+                user => user.RoleId,
+                role => role.IdRole,
+                (role, user) => new Role(role));
+        }
+
         public IEnumerable<Role> ListAllRoles()
         {
             return _context.Role.ToList();
