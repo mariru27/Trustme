@@ -8,7 +8,7 @@ namespace Trustme.ViewModels
 {
     public class UserKeysModel
     {
-        public List<Key> Keys = new List<Key>();
+        public IEnumerable<Key> Keys;
         public User User;
     }
 }

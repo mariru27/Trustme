@@ -79,7 +79,7 @@ namespace Trustme.Service
 
         public IEnumerable<Key> ListAllKeys(User _User)
         {
-            List<Key> KeysList = _context.User.
+            IEnumerable<Key> KeysList = _context.User.
                 Join(_context.UserKey,
                 user => user.UserId,
                 userKey => userKey.UserId,

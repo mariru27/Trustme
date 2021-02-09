@@ -33,10 +33,12 @@ namespace Trustme.Controllers
         public IActionResult Profile()
         {
             string username = _HttpRequestFunctions.getUsername(HttpContext);
-            ViewData["user"] = _UserRepository.GetUserbyUsername(username);
-
-            ViewData["keys"] = _KeyRepository.ListAllKeys(_UserRepository.GetUserbyUsername(username));
-            return View();
+            UserKeysModel userKeysModel = new UserKeysModel
+            {
+                User = _UserRepository.GetUserbyUsername(username),
+                Keys = _KeyRepository.ListAllKeys(_UserRepository.GetUserbyUsername(username))
+            };
+            return View(userKeysModel);
         }
     }
 }
