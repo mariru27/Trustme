@@ -112,5 +112,10 @@ namespace Trustme.Service
         {
             return _context.Key.Where(a => a.KeyId == keyId)?.SingleOrDefault();
         }
+
+        public Key GetKey(int userId, int keyId)
+        {
+            return _context.Key.Where(a => a.UserKeyId == userId && a.KeyId == keyId).SingleOrDefault();
+        }
     }
 }
