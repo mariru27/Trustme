@@ -8,6 +8,19 @@ namespace Trustme.Models
 {
     public class Key
     {
+        public Key() { }
+        public Key(Key key)
+        {
+            
+            this.KeyId = key.KeyId;
+            this.CertificateName = key.CertificateName;
+            this.Description = key.Description;
+            this.UserKeyId = key.UserKeyId;
+            this.PublicKey = key.PublicKey;
+            this.KeySize = key.KeySize;
+            this.UserKey = key.UserKey;
+
+        }
         [Key]
         public int KeyId { set; get; }
         [Required]

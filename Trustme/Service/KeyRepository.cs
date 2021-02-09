@@ -79,18 +79,40 @@ namespace Trustme.Service
 
         public IEnumerable<Key> ListAllKeys(User _User)
         {
-            List<Key> KeysList = (List<Key>)_context.User.
+            //List<Key> KeysList = (List<Key>)_context.User.
+            //    Join(_context.UserKey,
+            //    user => user.UserId,
+            //    userKey => userKey.UserId,
+            //    (user, userKey) => new { user, userKey }
+            //    ).Join(_context.Key,
+            //    userKeyResult => userKeyResult.userKey.KeyId,
+            //    key => key.KeyId,
+            //    (userKeyResult, key) => new { key }
+            //    );
+
+            var test = _context.User.
                 Join(_context.UserKey,
                 user => user.UserId,
                 userKey => userKey.UserId,
                 (user, userKey) => new { user, userKey }
-                ).Join(_context.Key,
+                ).Where(a => a.user.UserId == _User.UserId).Join(_context.Key,
+                userKeyResult => userKeyResult.userKey.KeyId,
+                key => key.KeyId,
+                (userKeyResult, key) => new Key(key)
+                );
+            List<Key> keys = test.ToList();
+            List<Key> KeyList1 = (List<Key>)_context.User.
+                Join(_context.UserKey,
+                user => user.UserId,
+                userKey => userKey.UserId,
+                (user, userKey) => new { user, userKey }
+                ).Where(a => a.user.UserId == _User.UserId).Join(_context.Key,
                 userKeyResult => userKeyResult.userKey.KeyId,
                 key => key.KeyId,
                 (userKeyResult, key) => new { key }
                 );
 
-            return KeysList;
+            return KeyList1;
         }
         public void UpdateKey(UserKeyModel _UserKeyModel)
         {
