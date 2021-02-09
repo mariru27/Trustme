@@ -84,8 +84,8 @@ namespace Trustme.Controllers
             {
                 return NotFound();
             }
-            
-            var key = getKey(this.getUserId(HttpContext), (int)id);
+            var key = _KeyRepository.GetKey(_HttpRequestFunctions.getUserId(HttpContext), (int)id);
+            //var key = getKey(this.getUserId(HttpContext), (int)id);
             if (key == null)
             {
                 return NotFound();
