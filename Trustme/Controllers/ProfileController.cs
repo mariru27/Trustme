@@ -17,11 +17,14 @@ namespace Trustme.Controllers
         private IHttpRequestFunctions _HttpRequestFunctions;
         private IUserRepository _UserRepository;
         private IKeyRepository _KeyRepository;
-        public ProfileController(IHttpRequestFunctions httpRequestFunctions, IKeyRepository keyRepository, IUserRepository userRepository)
+        private IRoleRepository _RoleRepository;
+        public ProfileController(IHttpRequestFunctions httpRequestFunctions, IKeyRepository keyRepository, IUserRepository userRepository, IRoleRepository roleRepository)
         {
             _HttpRequestFunctions = httpRequestFunctions;
             _KeyRepository = keyRepository;
             _UserRepository = userRepository;
+            _RoleRepository = roleRepository;
+            
         }
         public IActionResult Index()
         {
@@ -33,12 +36,13 @@ namespace Trustme.Controllers
         public IActionResult Profile()
         {
             string username = _HttpRequestFunctions.getUsername(HttpContext);
-            UserKeysModel userKeysModel = new UserKeysModel
+            UserKeysRoleModel userKeysRoleModel = new UserKeysRoleModel
             {
                 User = _UserRepository.GetUserbyUsername(username),
-                Keys = _KeyRepository.ListAllKeys(_UserRepository.GetUserbyUsername(username))
+                Keys = _KeyRepository.ListAllKeys(_UserRepository.GetUserbyUsername(username)),
+                Role = _RoleRepository.GetUserRole(_UserRepository.GetUserbyUsername(username)) 
             };
-            return View(userKeysModel);
+            return View(userKeysRoleModel);
         }
     }
 }

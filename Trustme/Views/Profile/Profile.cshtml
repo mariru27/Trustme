@@ -1,9 +1,5 @@
-﻿@model UserKeysModel
-@{
-    IEnumerable<Key> Keys = ViewData["keys"] as IEnumerable<Key>;
-    User CurrentUser = ViewData["user"] as User;
+﻿@model UserKeysRoleModel
 
-}
 
 <div class="container emp-profile">
     <form method="post">
@@ -61,7 +57,7 @@
                                             <label>Role</label>
                                         </div>
                                         <div class="col-md-6">
-                                            @*<p> @CurrentUser.UserRole.RoleName</p>*@
+                                            <p> @Model.Role.RoleName</p>
                                         </div>
                                     </div>
                                 }
