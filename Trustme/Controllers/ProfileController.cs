@@ -36,7 +36,7 @@ namespace Trustme.Controllers
         [Authorize]
         public IActionResult Profile()
         {
-            string username = _HttpRequestFunctions.getUsername(HttpContext);
+            string username = _HttpRequestFunctions.GetUsername(HttpContext);
             UserKeysRoleModel userKeysRoleModel = new UserKeysRoleModel
             {
                 User = _UserRepository.GetUserbyUsername(username),
@@ -84,8 +84,7 @@ namespace Trustme.Controllers
             {
                 return NotFound();
             }
-            var key = _KeyRepository.GetKey(_HttpRequestFunctions.getUserId(HttpContext), (int)id);
-            //var key = getKey(this.getUserId(HttpContext), (int)id);
+            var key = _KeyRepository.GetKey(_HttpRequestFunctions.GetUserId(HttpContext), (int)id);
             if (key == null)
             {
                 return NotFound();

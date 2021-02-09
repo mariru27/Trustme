@@ -20,9 +20,9 @@ namespace Trustme.Service
             _KeyRepository = keyRepository;
             _UserRepository = userRepository;
         }
-        public IEnumerable<Key> getAllKeys(HttpContext httpContext)
+        public IEnumerable<Key> GetAllKeys(HttpContext httpContext)
         {
-            User user = _UserRepository.GetUserById(this.getUserId(httpContext));
+            User user = _UserRepository.GetUserById(this.GetUserId(httpContext));
             var appContext = _KeyRepository.ListAllKeys(user).AsEnumerable();
             return appContext;
         }
@@ -46,7 +46,7 @@ namespace Trustme.Service
 
         //}
 
-        public bool isloggedIn(HttpContext httpcontext)
+        public bool IsloggedIn(HttpContext httpcontext)
         {
             var username = httpcontext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
             if (username != null)
@@ -54,14 +54,14 @@ namespace Trustme.Service
             return false;
         }
 
-        public string getUsername(HttpContext httpcontext)
+        public string GetUsername(HttpContext httpcontext)
         {
             return httpcontext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
         }
 
-        public int getUserId(HttpContext httpcontext)
+        public int GetUserId(HttpContext httpcontext)
         {
-            string username = this.getUsername(httpcontext);
+            string username = this.GetUsername(httpcontext);
             User user = _UserRepository.GetUserbyUsername(username);
             return user.UserId;
 

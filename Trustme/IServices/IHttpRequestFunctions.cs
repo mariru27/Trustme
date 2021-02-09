@@ -9,9 +9,9 @@ namespace Trustme.IServices
 {
     public interface IHttpRequestFunctions
     {
-        public IEnumerable<Key> getAllKeys(HttpContext httpContext);
-        public bool isloggedIn(HttpContext httpcontext);
-        public string getUsername(HttpContext httpcontext);
-        public int getUserId(HttpContext httpcontext);
+        public IEnumerable<Key> GetAllKeys(HttpContext httpContext);
+        public bool IsloggedIn(HttpContext httpcontext);
+        public string GetUsername(HttpContext httpcontext);
+        public int GetUserId(HttpContext httpcontext);
     }
 }
