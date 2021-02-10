@@ -168,12 +168,10 @@ namespace Trustme.Controllers
                 return NotFound();
             }
             Key key = _KeyRepository.GetKey(_HttpRequestFunctions.GetUserId(HttpContext),(int) id);
-            //Key key = _context.Key.Where(a => a.UserKeyId == this.getUserId(HttpContext) && a.KeyId == id).SingleOrDefault();
             if (key == null)
             {
                 return NotFound();
             }
-            //ViewData["UserKeyId"] = new SelectList(_UserRepository.ListAllUsers(), "UserKeyId", "UserKeyId", key.UserKeyId);
             return View(key);
         }
 
