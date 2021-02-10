@@ -10,6 +10,7 @@ using Trustme.IServices;
 using Trustme.Service;
 using Trustme.ViewModels;
 using Trustme.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Trustme.Controllers
 {
@@ -109,43 +110,8 @@ namespace Trustme.Controllers
             return RedirectToAction(nameof(Profile));
         }
 
-        //private bool KeyExists(int idUser, int idKey)
-        //{
-        //    return _context.Key.Any(e => e.UserKeyId == idUser && e.KeyId == idKey);
-        //}
 
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Edit(int id, Key key)
-        //{
-        //    if (id != key.KeyId)
-        //    {
-        //        return NotFound();
-        //    }
 
-        //    if (ModelState.IsValid)
-        //    {
-        //        try
-        //        {
-        //            _context.Update(key);
-        //            await _context.SaveChangesAsync();
-        //        }
-        //        catch (DbUpdateConcurrencyException)
-        //        {
-        //            if (!KeyExists(key.UserKeyId, key.KeyId))
-        //            {
-        //                return NotFound();
-        //            }
-        //            else
-        //            {
-        //                throw;
-        //            }
-        //        }
-        //        return RedirectToAction(nameof(Profile));
-        //    }
-        //    ViewData["user"] = _context.User.Where(a => a.UserId == key.UserKeyId).SingleOrDefault();
-        //    return View(key);
-        //}
 
         //public void editPublicKey(string username, string publicKey, string certificateName)
         //{
@@ -160,6 +126,45 @@ namespace Trustme.Controllers
         //    _context.SaveChanges();
         //}
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, Key key)
+        {
+            if (id != key.KeyId)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    UserKeyModel userKeyModel = new UserKeyModel
+                    {
+                        User = _HttpRequestFunctions.GetUser(HttpContext),
+                        Key = key
+                    };
+
+                    _KeyRepository.UpdateKey(userKeyModel);
+                    //_context.Update(key);
+                    //await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!KeyExists(key.UserKeyId, key.KeyId))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Profile));
+            }
+            ViewData["user"] = _context.User.Where(a => a.UserId == key.UserKeyId).SingleOrDefault();
+            return View(key);
+        }
 
         public IActionResult EditCertificate(int? id)
         {

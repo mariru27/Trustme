@@ -113,6 +113,14 @@ namespace Trustme.Service
             return _context.Key.Where(a => a.KeyId == keyId)?.SingleOrDefault();
         }
 
+        public bool KeyExists(int idUser, int idKey)
+        {
+            return _context.UserKey.Where(uk => uk.UserId == idUser && uk.KeyId == idKey).Join(_context.Key,
+                user => user.IdUserKey,
+                key => key.KeyId,
+                (user, key) => new Key(key)).Any();
+        }
+
         public Key GetKey(int userId, int keyId)
         {
             return _context.UserKey.Where(uk => uk.UserId == userId && uk.KeyId == keyId).Join(_context.Key,
