@@ -13,5 +13,7 @@ namespace Trustme.IServices
         public bool IsloggedIn(HttpContext httpcontext);
         public string GetUsername(HttpContext httpcontext);
         public int GetUserId(HttpContext httpcontext);
+
+        public User GetUser(HttpContext httpContext);
     }
 }
