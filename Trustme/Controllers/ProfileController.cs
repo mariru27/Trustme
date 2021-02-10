@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,7 @@ using Trustme.Data;
 using Trustme.IServices;
 using Trustme.Service;
 using Trustme.ViewModels;
+using Trustme.Models;
 
 namespace Trustme.Controllers
 {
@@ -159,20 +161,21 @@ namespace Trustme.Controllers
         //}
 
 
-        //public IActionResult Edit(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    Key key = _context.Key.Where(a => a.UserKeyId == this.getUserId(HttpContext) && a.KeyId == id).SingleOrDefault();
-        //    if (key == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    ViewData["UserKeyId"] = new SelectList(_context.User, "UserKeyId", "UserKeyId", key.UserKeyId);
-        //    return View(key);
-        //}
+        public IActionResult EditCertificate(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            Key key = _KeyRepository.GetKey(_HttpRequestFunctions.GetUserId(HttpContext),(int) id);
+            //Key key = _context.Key.Where(a => a.UserKeyId == this.getUserId(HttpContext) && a.KeyId == id).SingleOrDefault();
+            if (key == null)
+            {
+                return NotFound();
+            }
+            //ViewData["UserKeyId"] = new SelectList(_UserRepository.ListAllUsers(), "UserKeyId", "UserKeyId", key.UserKeyId);
+            return View(key);
+        }
 
     }
 }
