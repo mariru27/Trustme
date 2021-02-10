@@ -128,7 +128,7 @@ namespace Trustme.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, Key key)
+        public IActionResult EditCertificate(int id, Key key)
         {
             if (id != key.KeyId)
             {
@@ -146,12 +146,11 @@ namespace Trustme.Controllers
                     };
 
                     _KeyRepository.UpdateKey(userKeyModel);
-                    //_context.Update(key);
-                    //await _context.SaveChangesAsync();
+
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!KeyExists(key.UserKeyId, key.KeyId))
+                    if (!_KeyRepository.KeyExists(key.UserKeyId, key.KeyId))
                     {
                         return NotFound();
                     }
@@ -162,7 +161,6 @@ namespace Trustme.Controllers
                 }
                 return RedirectToAction(nameof(Profile));
             }
-            ViewData["user"] = _context.User.Where(a => a.UserId == key.UserKeyId).SingleOrDefault();
             return View(key);
         }
 

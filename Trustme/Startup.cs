@@ -37,7 +37,7 @@ namespace Trustme
             services.AddEntityFrameworkSqlServer().AddDbContext<AppContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
 
-            //services.AddSingleton<Administration>();
+           //services.AddScoped<AppContext>();
 
 
 

@@ -18,6 +18,6 @@ namespace Trustme.IServices
 
         public Key GetKeyById(int keyId);
 
-
+        public bool KeyExists(int idUser, int idKey);
     }
 }
