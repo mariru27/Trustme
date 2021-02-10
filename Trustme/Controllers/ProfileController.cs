@@ -95,14 +95,15 @@ namespace Trustme.Controllers
 
         [HttpPost, ActionName("DeleteCertificate")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public IActionResult DeleteConfirmed(int id)
         {
-            var key = _KeyRepository.GetKey(_HttpRequestFunctions.GetUserId(HttpContext), (int)id);
+            UserKeyModel userKeyModel = new UserKeyModel
+            {
+                Key = _KeyRepository.GetKey(_HttpRequestFunctions.GetUserId(HttpContext), (int)id),
+                User = _HttpRequestFunctions.GetUser(HttpContext)
+            };
 
-            //var key = this.getKey(this.getUserId(HttpContext), id);
-            _KeyRepository.DeleteKey(key);
-            _context.Key.Remove(key);
-            await _context.SaveChangesAsync();
+            _KeyRepository.DeleteKey(userKeyModel);
             return RedirectToAction(nameof(Profile));
         }
 
