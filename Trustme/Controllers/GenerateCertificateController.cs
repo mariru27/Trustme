@@ -39,12 +39,14 @@ namespace Trustme.Controllers
         private IHostingEnvironment Environment;
         private readonly AppContext _context;
         private IHttpRequestFunctions _HttpRequestFunctions;
+        private IKeyRepository _KeyRepository;
 
-        public GenerateCertificateController(Administration _admin, IHostingEnvironment _environment, AppContext context, IHttpRequestFunctions httpRequestFunctions)
+        public GenerateCertificateController(Administration _admin, IHostingEnvironment _environment, AppContext context, IHttpRequestFunctions httpRequestFunctions, IKeyRepository keyRepository)
         {
             _HttpRequestFunctions = httpRequestFunctions;
             Environment = _environment;
             _context = context;
+            _KeyRepository = keyRepository;
         }
         public IActionResult Index()
         {
@@ -106,6 +108,9 @@ namespace Trustme.Controllers
                 UserKeyModel userKeyModel = new UserKeyModel();
                 userKeyModel.User = currentUser;
                 userKeyModel.Key = currentKey;
+
+                _KeyRepository.AddKey(userKeyModel);
+                
             }
 
             var cert = cGenerator.Generate(kp.Private); // Create a self-signed cert

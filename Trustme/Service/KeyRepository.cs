@@ -29,6 +29,7 @@ namespace Trustme.Service
             {
                 // add key 
                 _context.Key.Add(_UserKeyModel.Key);
+                
 
                 // create UserKey model and populate with _UserKeyModel values
                 UserKey _UserKey = new UserKey();
