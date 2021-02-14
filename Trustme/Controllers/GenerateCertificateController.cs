@@ -28,6 +28,7 @@ using AppContext = Trustme.Data.AppContext;
 using Microsoft.EntityFrameworkCore;
 using Trustme.IServices;
 using Trustme.Service;
+using Trustme.ViewModels;
 
 namespace Trustme.Controllers
 {
@@ -83,7 +84,7 @@ namespace Trustme.Controllers
             if (_HttpRequestFunctions.IsloggedIn(HttpContext) == true)
             {
 
-                string username = _HttpRequestFunctions.GetUsername(HttpContext);
+                //string username = _HttpRequestFunctions.GetUsername(HttpContext);
 
 
                 TextWriter textWriter1 = new StringWriter();
@@ -92,7 +93,19 @@ namespace Trustme.Controllers
                 pemWriter1.Writer.Flush();
 
                 string publicKey = textWriter1.ToString();
-                admin.addPublicKey(username, publicKey, certificateName, description, keySize);
+
+                User currentUser = _HttpRequestFunctions.GetUser(HttpContext);
+
+                Key currentKey = new Key();
+                currentKey.CertificateName = certificateName;
+                currentKey.Description = description;
+                currentKey.KeySize = keySize;
+                currentKey.PublicKey = publicKey;
+                
+
+                UserKeyModel userKeyModel = new UserKeyModel();
+                userKeyModel.User = currentUser;
+                userKeyModel.Key = currentKey;
             }
 
             var cert = cGenerator.Generate(kp.Private); // Create a self-signed cert
