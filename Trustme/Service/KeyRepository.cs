@@ -20,21 +20,29 @@ namespace Trustme.Service
         }
         public void AddKey(UserKeyModel _UserKeyModel)
         {
-            // add key 
-            _context.Key.Add(_UserKeyModel.Key);
+            //find user
+            User user = _context.User.Where(a => a.Username == _UserKeyModel.User.Username)?.SingleOrDefault();
 
-            // create UserKey model and populate with _UserKeyModel values
-            UserKey _UserKey = new UserKey();
-            _UserKey.Key = _UserKeyModel.Key;
-            _UserKey.KeyId = _UserKeyModel.Key.KeyId;
-            _UserKey.User = _UserKeyModel.User;
-            _UserKey.UserId = _UserKeyModel.User.UserId;
+            Key userKey = _context.Key.Where(a => a.UserKeyId == user.UserId && a.CertificateName == _UserKeyModel.Key.CertificateName)?.SingleOrDefault();
 
-            // add UserKey
-            _context.UserKey.Add(_UserKey);
+            if(userKey == null)
+            {
+                // add key 
+                _context.Key.Add(_UserKeyModel.Key);
+
+                // create UserKey model and populate with _UserKeyModel values
+                UserKey _UserKey = new UserKey();
+                _UserKey.Key = _UserKeyModel.Key;
+                _UserKey.KeyId = _UserKeyModel.Key.KeyId;
+                _UserKey.User = _UserKeyModel.User;
+                _UserKey.UserId = _UserKeyModel.User.UserId;
+
+                // add UserKey
+                _context.UserKey.Add(_UserKey);
             
-            //save
-            _context.SaveChanges();
+                //save
+                _context.SaveChanges();
+            }
         }
 
         public void DeleteKey(UserKeyModel _UserKeyModel)
