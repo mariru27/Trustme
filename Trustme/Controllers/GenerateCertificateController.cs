@@ -26,19 +26,22 @@ using System.Text;
 using System.Net.Http.Headers;
 using AppContext = Trustme.Data.AppContext;
 using Microsoft.EntityFrameworkCore;
+using Trustme.IServices;
+using Trustme.Service;
 
 namespace Trustme.Controllers
 {
     public class GenerateCertificateController : Controller
     {
-        public Administration admin;
+        //public Administration admin;
         private const string SignatureAlgorithm = "sha1WithRSA";
         private IHostingEnvironment Environment;
         private readonly AppContext _context;
+        private IHttpRequestFunctions _HttpRequestFunctions;
 
-        public GenerateCertificateController(Administration _admin, IHostingEnvironment _environment, AppContext context)
+        public GenerateCertificateController(Administration _admin, IHostingEnvironment _environment, AppContext context, IHttpRequestFunctions httpRequestFunctions)
         {
-            admin = _admin;
+            _HttpRequestFunctions = httpRequestFunctions;
             Environment = _environment;
             _context = context;
         }
@@ -77,10 +80,10 @@ namespace Trustme.Controllers
             cGenerator.SetSignatureAlgorithm(SignatureAlgorithm); // See the Appendix Below for info on the hash types supported by Bouncy Castle C#
             cGenerator.SetPublicKey(kp.Public); // Only the public key should be used here!
             //we saved public key in database
-            if (admin.isloggedIn(HttpContext) == true)
+            if (_HttpRequestFunctions.IsloggedIn(HttpContext) == true)
             {
 
-                string username = admin.getUsername(HttpContext);
+                string username = _HttpRequestFunctions.GetUsername(HttpContext);
 
 
                 TextWriter textWriter1 = new StringWriter();
