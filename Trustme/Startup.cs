@@ -34,7 +34,7 @@ namespace Trustme
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddScoped<AppContext>();
+            //services.AddScoped<AppContext>();
             services.AddEntityFrameworkSqlServer().AddDbContext<AppContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")).EnableSensitiveDataLogging());
 
            //services.AddScoped<AppContext>();

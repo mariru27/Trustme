@@ -50,26 +50,14 @@ namespace Trustme.Service
 
         public void DeleteKey(UserKeyModel _UserKeyModel)
         {
-            //create UserKey model and populate with _UserKeyModel values
+            //create UserKey model
             UserKey _UserKey = new UserKey();
-            _UserKey.Key = _UserKeyModel.Key;
-            _UserKey.KeyId = _UserKeyModel.Key.KeyId;
-            _UserKey.User = _UserKeyModel.User;
-            _UserKey.UserId = _UserKeyModel.User.UserId;
+            _UserKey = this.GetUserKeyById(_UserKeyModel.Key.KeyId);
 
-            //remove _UserKey
-            _context.Entry(_UserKey).State = EntityState.Deleted;
             _context.UserKey.Remove(_UserKey);
             _context.SaveChanges();
-
-
-            //remove Key
-            _context.Entry(_UserKeyModel.Key).State = EntityState.Deleted;
-            _context.Key.Remove(_UserKeyModel.Key);
-
-            //save
-            _context.SaveChanges();
         }
+
         public UserKeyModel CreateDefaultUserKeyModel()
         {
             User user = new User();
