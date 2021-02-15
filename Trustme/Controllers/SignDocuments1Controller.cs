@@ -47,7 +47,7 @@ namespace Trustme.Controllers
         {
             Environment = _environment;
             _KeyRepository = keyRepository;
-            _HttpRequestFunctions = httpRequestFunctions
+            _HttpRequestFunctions = httpRequestFunctions;
         }
 
         public IActionResult SignDocument()
@@ -67,8 +67,6 @@ namespace Trustme.Controllers
             }
             User currentUser = _HttpRequestFunctions.GetUser(HttpContext);
             var certificates = _KeyRepository.ListAllKeys(currentUser);
-           // var certificates = admin.getAllKeys(HttpContext);
-           // var certificates = _KeyRepository.ListAllKeys();
             return View(certificates);
         }
         public async Task<IActionResult> SignDoc(IFormFile pkfile, IFormFile docfile, int certificates)
@@ -112,12 +110,11 @@ namespace Trustme.Controllers
                 string testmessage = "this is a test message";
                 byte[] testmessagetyte = Encoding.ASCII.GetBytes(testmessage);
 
+                var currentKey = _KeyRepository.GetKey(_HttpRequestFunctions.GetUserId(HttpContext), certificates);
+
+                byte[] publickeybyte = Encoding.ASCII.GetBytes(currentKey.PublicKey);
                 //phrase public key
-                string publicKeystring = admin.getPublicKey(HttpContext, certificates);
-
-                byte[] publickeybyte = Encoding.ASCII.GetBytes(publicKeystring);
-
-                var readerPublickey = new StringReader(publicKeystring);
+                var readerPublickey = new StringReader(currentKey.PublicKey);
                 var pemPublicKey = new PemReader(readerPublickey);
 
                 var publickey = (Org.BouncyCastle.Crypto.AsymmetricKeyParameter)pemPublicKey.ReadObject();
