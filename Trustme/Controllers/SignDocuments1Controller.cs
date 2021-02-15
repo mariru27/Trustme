@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Trustme.Controllers
 {
-    public class SignDocumentsController : Controller
+    public class SignDocuments1Controller : Controller
     {
         public IActionResult Index()
         {

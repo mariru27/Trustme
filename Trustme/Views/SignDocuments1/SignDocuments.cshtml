@@ -1,0 +1,54 @@
+﻿@model IEnumerable<Trustme.Models.Key>
+
+@{
+    ViewData["Title"] = "Sign Documents";
+    var signature = (string)TempData["signature"];
+
+}
+
+<h4 class="display-4">Sign documents</h4>
+
+<hr />
+
+
+
+<form asp-action="SignDoc" enctype="multipart/form-data" method="post">
+    <label for="certificates">Choose a certifificate:</label>
+    <select class="form-control" name="certificates" id="certificates">
+        @{
+            foreach (var c in Model)
+            {
+                <option value=@c.KeyId>@c.CertificateName</option>
+
+            }
+        }
+    </select>
+    <br />
+    <div class="form-group">
+        <label for="pkfile"><strong>Private key</strong></label>
+        <input for="pkfile" name="pkfile" type="file">
+    </div>
+
+    <br />
+    <div class="form-group">
+        <label for="docfile"><strong>Document</strong></label>
+        <input for="docfile" name="docfile" type="file">
+    </div>
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="submit" value="Upload" class="btn btn-primary" />
+</form>
+
+<br />
+
+@{
+    if (signature != "" && signature != null)
+    {
+        <div class="alert alert-success">
+            <strong>Success!</strong> You signed your document.
+        </div>
+        <p class="font-weight-normal">Your signature:</p>
+        <textarea class="form-control" name="signature">@signature</textarea>
+
+    }
+}
+
