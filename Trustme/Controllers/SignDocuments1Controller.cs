@@ -26,6 +26,9 @@ using System.Text;
 using System.Net.Http.Headers;
 using AppContext = Trustme.Data.AppContext;
 using Microsoft.EntityFrameworkCore;
+using Trustme.IServices;
+using Trustme.Service;
+using Trustme.Models;
 
 namespace Trustme.Controllers
 {
@@ -33,17 +36,18 @@ namespace Trustme.Controllers
 
     public class SignDocuments1Controller : Controller
     {
-        public Administration admin;
+        //public Administration admin;
         private const string SignatureAlgorithm = "sha1WithRSA";
         private IHostingEnvironment Environment;
         private readonly AppContext _context;
+        private IKeyRepository _KeyRepository;
+        private IHttpRequestFunctions _HttpRequestFunctions;
 
-        public SignDocuments1Controller(Administration _admin, IHostingEnvironment _environment, AppContext context)
+        public SignDocuments1Controller(IHostingEnvironment _environment, IKeyRepository keyRepository, IHttpRequestFunctions httpRequestFunctions)
         {
-            admin = _admin;
             Environment = _environment;
-            _context = context;
-
+            _KeyRepository = keyRepository;
+            _HttpRequestFunctions = httpRequestFunctions
         }
 
         public IActionResult SignDocument()
@@ -61,7 +65,10 @@ namespace Trustme.Controllers
             {
                 ModelState.AddModelError("", "Private key is not valid");
             }
-            var certificates = admin.getAllKeys(HttpContext);
+            User currentUser = _HttpRequestFunctions.GetUser(HttpContext);
+            var certificates = _KeyRepository.ListAllKeys(currentUser);
+           // var certificates = admin.getAllKeys(HttpContext);
+           // var certificates = _KeyRepository.ListAllKeys();
             return View(certificates);
         }
         public async Task<IActionResult> SignDoc(IFormFile pkfile, IFormFile docfile, int certificates)
