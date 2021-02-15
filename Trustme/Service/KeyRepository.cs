@@ -95,7 +95,7 @@ namespace Trustme.Service
                 userKey => userKey.UserId,
                 (user, userKey) => new { user, userKey }
                 ).Where(a => a.user.UserId == _User.UserId).Join(_context.Key,
-                userKeyResult => userKeyResult.userKey.KeyId,
+                userKeyResult => userKeyResult.userKey.IdUserKey,
                 key => key.KeyId,
                 (userKeyResult, key) => new Key(key)
                 ).ToList();
