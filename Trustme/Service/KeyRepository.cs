@@ -30,13 +30,10 @@ namespace Trustme.Service
                 // add key 
                 _context.Key.Add(_UserKeyModel.Key);
 
-                _context.SaveChanges();
-                _UserKeyModel.Key = this.GetKeyByCertificateName(_UserKeyModel.User.UserId, _UserKeyModel.Key.CertificateName);
-
                 // create UserKey model and populate with _UserKeyModel values
                 UserKey _UserKey = new UserKey();
                 _UserKey.Key = _UserKeyModel.Key;
-                _UserKey.KeyId = _UserKeyModel.Key.KeyId;
+                //_UserKey.KeyId = _context.Key.Count() + 1;
                 _UserKey.User = _UserKeyModel.User;
                 _UserKey.UserId = _UserKeyModel.User.UserId;
 
@@ -135,10 +132,20 @@ namespace Trustme.Service
 
         public Key GetKeyByCertificateName(int idUser, string name)
         {
+            var k = _context.User.
+                Join(_context.UserKey,
+                user => user.UserId,
+                userKey => userKey.UserId,
+                (user, userKey) => new { user, userKey }
+                ).Where(a => a.user.UserId == idUser).Join(_context.Key,
+                userKeyResult => userKeyResult.userKey.IdUserKey,
+                key => key.KeyId,
+                (userKeyResult, key) => new Key(key)
+                ).AsEnumerable().Where(a => a.CertificateName == name).SingleOrDefault();
             return _context.UserKey.Where(uk => uk.UserId == idUser).Join(_context.Key,
                 user => user.IdUserKey,
                 key => key.KeyId,
-                (user, key) => new Key(key)).Where(u => u.CertificateName == name).SingleOrDefault();
+                (user, key) => new Key(key)).AsEnumerable().Where(u => u.CertificateName == name).SingleOrDefault();
         }
     }
 }
