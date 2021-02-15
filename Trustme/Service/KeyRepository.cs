@@ -20,21 +20,31 @@ namespace Trustme.Service
         }
         public void AddKey(UserKeyModel _UserKeyModel)
         {
-            // add key 
-            _context.Key.Add(_UserKeyModel.Key);
+            //find user
+            User user = _context.User.Where(a => a.Username == _UserKeyModel.User.Username)?.SingleOrDefault();
 
-            // create UserKey model and populate with _UserKeyModel values
-            UserKey _UserKey = new UserKey();
-            _UserKey.Key = _UserKeyModel.Key;
-            _UserKey.KeyId = _UserKeyModel.Key.KeyId;
-            _UserKey.User = _UserKeyModel.User;
-            _UserKey.UserId = _UserKeyModel.User.UserId;
+            Key userKey = _context.Key.Where(a => a.UserKeyId == user.UserId && a.CertificateName == _UserKeyModel.Key.CertificateName)?.SingleOrDefault();
 
-            // add UserKey
-            _context.UserKey.Add(_UserKey);
+            if(userKey == null)
+            {
+                // add key 
+                _context.Key.Add(_UserKeyModel.Key);
+
+                // create UserKey model and populate with _UserKeyModel values
+                UserKey _UserKey = new UserKey();
+                _UserKey.Key = _UserKeyModel.Key;
+                _UserKey.KeyId = _context.Key.Count();
+                _UserKey.KeyId = _UserKey.KeyId + 2;
+                _UserKey.User = _UserKeyModel.User;
+                _UserKey.UserId = _UserKeyModel.User.UserId;
+                _UserKey.Key.UserKeyId = _UserKey.KeyId;
+
+                // add UserKey
+                _context.UserKey.Add(_UserKey);
             
-            //save
-            _context.SaveChanges();
+                //save
+                _context.SaveChanges();
+            }
         }
 
         public void DeleteKey(UserKeyModel _UserKeyModel)
@@ -120,6 +130,24 @@ namespace Trustme.Service
                 user => user.IdUserKey,
                 key => key.KeyId,
                 (user, key) => new Key(key)).SingleOrDefault();
+        }
+
+        public Key GetKeyByCertificateName(int idUser, string name)
+        {
+            var k = _context.User.
+                Join(_context.UserKey,
+                user => user.UserId,
+                userKey => userKey.UserId,
+                (user, userKey) => new { user, userKey }
+                ).Where(a => a.user.UserId == idUser).Join(_context.Key,
+                userKeyResult => userKeyResult.userKey.IdUserKey,
+                key => key.KeyId,
+                (userKeyResult, key) => new Key(key)
+                ).AsEnumerable().Where(a => a.CertificateName == name).SingleOrDefault();
+            return _context.UserKey.Where(uk => uk.UserId == idUser).Join(_context.Key,
+                user => user.IdUserKey,
+                key => key.KeyId,
+                (user, key) => new Key(key)).AsEnumerable().Where(u => u.CertificateName == name).SingleOrDefault();
         }
     }
 }

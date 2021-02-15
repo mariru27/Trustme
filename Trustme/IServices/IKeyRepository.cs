@@ -15,8 +15,9 @@ namespace Trustme.IServices
         public IEnumerable<Key> ListAllKeys(User _User);
         public UserKeyModel CreateDefaultUserKeyModel();
         public Key GetKey(int userId, int keyId);
-
         public Key GetKeyById(int keyId);
+
+        public Key GetKeyByCertificateName(int idUser, string name);
 
         public bool KeyExists(int idUser, int idKey);
     }
