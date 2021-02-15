@@ -7,6 +7,7 @@ using Trustme.Data;
 using Trustme.ViewModels;
 using System.Net.Http;
 using Microsoft.Extensions.Caching.Memory;
+using Microsoft.EntityFrameworkCore;
 
 namespace Trustme.Service
 {
@@ -55,11 +56,16 @@ namespace Trustme.Service
             _UserKey.KeyId = _UserKeyModel.Key.KeyId;
             _UserKey.User = _UserKeyModel.User;
             _UserKey.UserId = _UserKeyModel.User.UserId;
-            
-            _context.UserKey.Remove(_UserKey);
-            //remove Key
-            _context.Key.Remove(_UserKeyModel.Key);
+
             //remove _UserKey
+            _context.Entry(_UserKey).State = EntityState.Deleted;
+            _context.UserKey.Remove(_UserKey);
+            _context.SaveChanges();
+
+
+            //remove Key
+            _context.Entry(_UserKeyModel.Key).State = EntityState.Deleted;
+            _context.Key.Remove(_UserKeyModel.Key);
 
             //save
             _context.SaveChanges();
@@ -148,6 +154,11 @@ namespace Trustme.Service
                 user => user.IdUserKey,
                 key => key.KeyId,
                 (user, key) => new Key(key)).AsEnumerable().Where(u => u.CertificateName == name).SingleOrDefault();
+        }
+
+        public UserKey GetUserKeyById(int idUserKey)
+        {
+            return _context.UserKey.Where(uk => uk.IdUserKey == idUserKey).SingleOrDefault();
         }
     }
 }
