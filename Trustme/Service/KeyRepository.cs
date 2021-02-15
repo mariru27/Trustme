@@ -130,5 +130,13 @@ namespace Trustme.Service
                 key => key.KeyId,
                 (user, key) => new Key(key)).SingleOrDefault();
         }
+
+        public Key GetKeyByCertificateName(int idUser, string name)
+        {
+            return _context.UserKey.Where(uk => uk.UserId == idUser).Join(_context.Key,
+                user => user.IdUserKey,
+                key => key.KeyId,
+                (user, key) => new Key(key)).Where(u => u.CertificateName == name).SingleOrDefault();
+        }
     }
 }
