@@ -386,4 +386,4 @@ C:\Users\Marina Rusu\Desktop\Trustme\Trustme\Trustme\obj\Debug\netcoreapp3.1\Tru
 C:\Users\Marina Rusu\Desktop\Trustme\Trustme\Trustme\obj\Debug\netcoreapp3.1\Razor\Views\Profile\DeleteCertificate.cshtml.g.cs
 C:\Users\Marina Rusu\Desktop\Trustme\Trustme\Trustme\obj\Debug\netcoreapp3.1\Razor\Views\Profile\EditCertificate.cshtml.g.cs
 C:\Users\Marina Rusu\Desktop\Trustme\Trustme\Trustme\obj\Debug\netcoreapp3.1\Razor\Views\GenerateCertificate\GenerateCertificate.cshtml.g.cs
-C:\Users\Marina Rusu\Desktop\Trustme\Trustme\Trustme\obj\Debug\netcoreapp3.1\Razor\Views\SignDocuments1\SignDocuments.cshtml.g.cs
+C:\Users\Marina Rusu\Desktop\Trustme\Trustme\Trustme\obj\Debug\netcoreapp3.1\Razor\Views\SignDocuments1\SignDocument.cshtml.g.cs

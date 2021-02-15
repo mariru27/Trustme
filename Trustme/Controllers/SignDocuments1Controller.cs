@@ -46,7 +46,7 @@ namespace Trustme.Controllers
 
         }
 
-        public IActionResult Signdocument()
+        public IActionResult SignDocument()
         {
 
             if (TempData["testKey"] != null && (bool)TempData["testKey"] == false)
