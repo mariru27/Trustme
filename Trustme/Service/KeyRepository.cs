@@ -7,6 +7,7 @@ using Trustme.Data;
 using Trustme.ViewModels;
 using System.Net.Http;
 using Microsoft.Extensions.Caching.Memory;
+using Microsoft.EntityFrameworkCore;
 
 namespace Trustme.Service
 {
@@ -49,21 +50,14 @@ namespace Trustme.Service
 
         public void DeleteKey(UserKeyModel _UserKeyModel)
         {
-            //create UserKey model and populate with _UserKeyModel values
+            //create UserKey model
             UserKey _UserKey = new UserKey();
-            _UserKey.Key = _UserKeyModel.Key;
-            _UserKey.KeyId = _UserKeyModel.Key.KeyId;
-            _UserKey.User = _UserKeyModel.User;
-            _UserKey.UserId = _UserKeyModel.User.UserId;
-            
-            //remove Key
-            _context.Key.Remove(_UserKeyModel.Key);
-            //remove _UserKey
-            _context.UserKey.Remove(_UserKey);
+            _UserKey = this.GetUserKeyById(_UserKeyModel.Key.KeyId);
 
-            //save
+            _context.UserKey.Remove(_UserKey);
             _context.SaveChanges();
         }
+
         public UserKeyModel CreateDefaultUserKeyModel()
         {
             User user = new User();
@@ -95,7 +89,7 @@ namespace Trustme.Service
                 userKey => userKey.UserId,
                 (user, userKey) => new { user, userKey }
                 ).Where(a => a.user.UserId == _User.UserId).Join(_context.Key,
-                userKeyResult => userKeyResult.userKey.KeyId,
+                userKeyResult => userKeyResult.userKey.IdUserKey,
                 key => key.KeyId,
                 (userKeyResult, key) => new Key(key)
                 ).ToList();
@@ -126,7 +120,7 @@ namespace Trustme.Service
 
         public Key GetKey(int userId, int keyId)
         {
-            return _context.UserKey.Where(uk => uk.UserId == userId && uk.KeyId == keyId).Join(_context.Key,
+            return _context.UserKey.Where(uk => uk.UserId == userId && uk.IdUserKey == keyId).Join(_context.Key,
                 user => user.IdUserKey,
                 key => key.KeyId,
                 (user, key) => new Key(key)).SingleOrDefault();
@@ -148,6 +142,11 @@ namespace Trustme.Service
                 user => user.IdUserKey,
                 key => key.KeyId,
                 (user, key) => new Key(key)).AsEnumerable().Where(u => u.CertificateName == name).SingleOrDefault();
+        }
+
+        public UserKey GetUserKeyById(int idUserKey)
+        {
+            return _context.UserKey.Where(uk => uk.IdUserKey == idUserKey).SingleOrDefault();
         }
     }
 }
