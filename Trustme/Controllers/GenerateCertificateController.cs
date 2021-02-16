@@ -37,15 +37,13 @@ namespace Trustme.Controllers
         //public Administration admin;
         private const string SignatureAlgorithm = "sha1WithRSA";
         private IHostingEnvironment Environment;
-        private readonly AppContext _context;
         private IHttpRequestFunctions _HttpRequestFunctions;
         private IKeyRepository _KeyRepository;
 
-        public GenerateCertificateController(Administration _admin, IHostingEnvironment _environment, AppContext context, IHttpRequestFunctions httpRequestFunctions, IKeyRepository keyRepository)
+        public GenerateCertificateController( IHostingEnvironment _environment, IHttpRequestFunctions httpRequestFunctions, IKeyRepository keyRepository)
         {
             _HttpRequestFunctions = httpRequestFunctions;
             Environment = _environment;
-            _context = context;
             _KeyRepository = keyRepository;
         }
         public IActionResult Index()
