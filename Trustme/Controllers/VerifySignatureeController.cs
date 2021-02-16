@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using AppContext = Trustme.Data.AppContext;
 using Trustme.Models;
 using Org.BouncyCastle.OpenSsl;
 using System.IO;
@@ -21,13 +20,11 @@ namespace Trustme.Controllers
 {
     public class VerifySignatureeController : Controller
     {
-        private readonly AppContext _context;
         private IHostingEnvironment Environment;
         private IKeyRepository _KeyRepository;
         private IUserRepository _UserRepository;
-        //public Administration admin;
 
-        public VerifySignatureeController(IHostingEnvironment _environment, Administration _admin, IKeyRepository keyRepository, IUserRepository userRepository)
+        public VerifySignatureeController(IHostingEnvironment _environment, IKeyRepository keyRepository, IUserRepository userRepository)
         {
             _UserRepository = userRepository;
             _KeyRepository = keyRepository;
@@ -58,7 +55,6 @@ namespace Trustme.Controllers
 
                 User currentUser = _UserRepository.GetUserbyUsername(username);
                 var keyList = _KeyRepository.ListAllKeys(currentUser);
-                //var keyList = admin.getAllKeysByUsername(username);
                 if (keyList != null)
                     return View(keyList);
             }
@@ -69,7 +65,6 @@ namespace Trustme.Controllers
 
                 User currentUser = _UserRepository.GetUserbyUsername(username);
                 var keyList = _KeyRepository.ListAllKeys(currentUser);
-                //var keyList = admin.getAllKeysByUsername(username);
                 if (keyList != null)
                     return View(keyList);
             }
