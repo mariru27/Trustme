@@ -72,8 +72,6 @@ namespace Trustme.Controllers
             return View(userResult);
         }
 
-
-
         [HttpGet]
         public IActionResult LogIn()
         {

@@ -54,6 +54,8 @@ namespace Trustme.Service
             return false;
         }
 
+
+
         public string GetUsername(HttpContext httpcontext)
         {
             return httpcontext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
