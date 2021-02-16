@@ -150,12 +150,12 @@
                         <ul class="nav navbar-nav ml-auto">
                             @{
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="VerifySignaturee" asp-action="VerifyUser">Verify</a>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="VerifySignature" asp-action="VerifyUser">Verify</a>
                                 </li>
                                 if (username != null)
                                 {
                                     <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-controller="SignDocuments1" asp-action="Signdocument">Sign</a>
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="SignDocuments" asp-action="Signdocument">Sign</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link text-dark" asp-area="" asp-controller="GenerateCertificate" asp-action="GenerateCertificate">Generate</a>

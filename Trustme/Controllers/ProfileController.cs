@@ -14,8 +14,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Trustme.Controllers
 {
-    //change phpto, edit all values, display
-    //edit, delete key
+    [Authorize]
+
     public class ProfileController : Controller
     {
         private IHttpRequestFunctions _HttpRequestFunctions;
@@ -49,37 +49,6 @@ namespace Trustme.Controllers
             return View(userKeysRoleModel);
         }
 
-    
-        //public void addPublicKey(string username, string publicKey, string certificateName, string description, int keySize)
-        //{
-        //    //find user
-        //    User user = _context.User.Where(a => a.Username == username)?.SingleOrDefault();
-
-        //    Key userKey = _context.Key.Where(a => a.UserKeyId == user.UserId && a.CertificateName == certificateName)?.SingleOrDefault();
-
-        //    if (userKey == null)
-        //    {
-        //        Key newKey = new Key();
-        //        newKey.UserKeyId = user.UserId;
-        //        newKey.PublicKey = publicKey;
-        //        newKey.CertificateName = certificateName;
-        //        newKey.Description = description;
-        //        newKey.KeySize = keySize;
-
-        //        //user.Keys.Add(newKey);
-
-        //        _context.Add(newKey);
-        //    }
-        //    _context.SaveChanges();
-        //}
-        //public void deletePublicKey(string username, string certificateName)
-        //{
-
-        //    User user = _context.User.Where(a => a.Username == username)?.SingleOrDefault();
-        //    Key userKey = _context.Key.Where(a => a.UserKeyId == user.UserId && a.CertificateName == certificateName)?.SingleOrDefault();
-        //    _context.Key.Remove(userKey);
-        //    _context.SaveChanges();
-        //}
 
         public IActionResult DeleteCertificate(int? id)
         {

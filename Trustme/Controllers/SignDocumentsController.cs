@@ -34,16 +34,14 @@ namespace Trustme.Controllers
 {
     [Authorize]
 
-    public class SignDocuments1Controller : Controller
+    public class SignDocumentsController : Controller
     {
-        //public Administration admin;
         private const string SignatureAlgorithm = "sha1WithRSA";
         private IHostingEnvironment Environment;
-        private readonly AppContext _context;
         private IKeyRepository _KeyRepository;
         private IHttpRequestFunctions _HttpRequestFunctions;
 
-        public SignDocuments1Controller(IHostingEnvironment _environment, IKeyRepository keyRepository, IHttpRequestFunctions httpRequestFunctions)
+        public SignDocumentsController(IHostingEnvironment _environment, IKeyRepository keyRepository, IHttpRequestFunctions httpRequestFunctions)
         {
             Environment = _environment;
             _KeyRepository = keyRepository;

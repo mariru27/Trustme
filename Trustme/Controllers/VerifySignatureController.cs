@@ -18,13 +18,13 @@ using Trustme.Service;
 
 namespace Trustme.Controllers
 {
-    public class VerifySignatureeController : Controller
+    public class VerifySignatureController : Controller
     {
         private IHostingEnvironment Environment;
         private IKeyRepository _KeyRepository;
         private IUserRepository _UserRepository;
 
-        public VerifySignatureeController(IHostingEnvironment _environment, IKeyRepository keyRepository, IUserRepository userRepository)
+        public VerifySignatureController(IHostingEnvironment _environment, IKeyRepository keyRepository, IUserRepository userRepository)
         {
             _UserRepository = userRepository;
             _KeyRepository = keyRepository;
