@@ -34,11 +34,8 @@ namespace Trustme.Service
                 // create UserKey model and populate with _UserKeyModel values
                 UserKey _UserKey = new UserKey();
                 _UserKey.Key = _UserKeyModel.Key;
-                _UserKey.KeyId = _context.Key.Count();
-                _UserKey.KeyId = _UserKey.KeyId + 2;
                 _UserKey.User = _UserKeyModel.User;
                 _UserKey.UserId = _UserKeyModel.User.UserId;
-                _UserKey.Key.UserKeyId = _UserKey.KeyId;
 
                 // add UserKey
                 _context.UserKey.Add(_UserKey);
@@ -126,22 +123,20 @@ namespace Trustme.Service
                 (user, key) => new Key(key)).SingleOrDefault();
         }
 
-        public Key GetKeyByCertificateName(int idUser, string name)
+        public Key GetKeyByCertificateName(string username, string name)
         {
-            var k = _context.User.
-                Join(_context.UserKey,
-                user => user.UserId,
-                userKey => userKey.UserId,
-                (user, userKey) => new { user, userKey }
-                ).Where(a => a.user.UserId == idUser).Join(_context.Key,
-                userKeyResult => userKeyResult.userKey.IdUserKey,
-                key => key.KeyId,
-                (userKeyResult, key) => new Key(key)
-                ).AsEnumerable().Where(a => a.CertificateName == name).SingleOrDefault();
-            return _context.UserKey.Where(uk => uk.UserId == idUser).Join(_context.Key,
-                user => user.IdUserKey,
-                key => key.KeyId,
-                (user, key) => new Key(key)).AsEnumerable().Where(u => u.CertificateName == name).SingleOrDefault();
+            User user = _context.User.Where(u => u.Username == username).SingleOrDefault();
+
+            if(user != null)
+            {
+                Key key = _context.UserKey.Where(uk => uk.UserId == user.UserId).Join(
+                    _context.Key.Where(k => k.CertificateName == name),
+                    uk => uk.IdUserKey,
+                    k => k.KeyId,
+                    (uk, k) => new Key(k)).SingleOrDefault();
+                return key;
+            }
+            return null;
         }
 
         public UserKey GetUserKeyById(int idUserKey)
