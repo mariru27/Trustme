@@ -130,10 +130,10 @@ namespace Trustme.Service
             if(user != null)
             {
                 Key key = _context.UserKey.Where(uk => uk.UserId == user.UserId).Join(
-                    _context.Key,
+                    _context.Key.Where(k => k.CertificateName == name),
                     uk => uk.IdUserKey,
                     k => k.KeyId,
-                    (uk, k) => new Key(k)).Where(currentK => currentK.CertificateName == name).SingleOrDefault();
+                    (uk, k) => new Key(k)).SingleOrDefault();
                 return key;
             }
             return null;

@@ -31,7 +31,6 @@ namespace Trustme.Controllers
         {
             _UserRepository = userRepository;
             _KeyRepository = keyRepository;
-            _context = context;
             Environment = _environment;
         }
         public IActionResult VerifyUser()
@@ -116,6 +115,7 @@ namespace Trustme.Controllers
                 //get public key by name from database, use key to decrypt
 
                 Key userKey = _KeyRepository.GetKeyByCertificateName(username, certificateName);
+                string publicKeystring = userKey.PublicKey;
                 //string publicKeystring = admin.getPublicKeyByCertificateName(username, certificateName);
 
                 byte[] publickeybyte = Encoding.ASCII.GetBytes(publicKeystring);
