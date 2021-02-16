@@ -123,22 +123,20 @@ namespace Trustme.Service
                 (user, key) => new Key(key)).SingleOrDefault();
         }
 
-        public Key GetKeyByCertificateName(int idUser, string name)
+        public Key GetKeyByCertificateName(string username, string name)
         {
-            var k = _context.User.
-                Join(_context.UserKey,
-                user => user.UserId,
-                userKey => userKey.UserId,
-                (user, userKey) => new { user, userKey }
-                ).Where(a => a.user.UserId == idUser).Join(_context.Key,
-                userKeyResult => userKeyResult.userKey.IdUserKey,
-                key => key.KeyId,
-                (userKeyResult, key) => new Key(key)
-                ).AsEnumerable().Where(a => a.CertificateName == name).SingleOrDefault();
-            return _context.UserKey.Where(uk => uk.UserId == idUser).Join(_context.Key,
-                user => user.IdUserKey,
-                key => key.KeyId,
-                (user, key) => new Key(key)).AsEnumerable().Where(u => u.CertificateName == name).SingleOrDefault();
+            User user = _context.User.Where(u => u.Username == username).SingleOrDefault();
+
+            if(user != null)
+            {
+                Key key = _context.UserKey.Where(uk => uk.UserId == user.UserId).Join(
+                    _context.Key,
+                    uk => uk.IdUserKey,
+                    k => k.KeyId,
+                    (uk, k) => new Key(k)).Where(currentK => currentK.CertificateName == name).SingleOrDefault();
+                return key;
+            }
+            return null;
         }
 
         public UserKey GetUserKeyById(int idUserKey)

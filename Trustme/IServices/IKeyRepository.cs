@@ -17,7 +17,7 @@ namespace Trustme.IServices
         public Key GetKey(int userId, int keyId);
         public Key GetKeyById(int keyId);
 
-        public Key GetKeyByCertificateName(int idUser, string name);
+        public Key GetKeyByCertificateName(string username, string name);
 
         public bool KeyExists(int idUser, int idKey);
 
