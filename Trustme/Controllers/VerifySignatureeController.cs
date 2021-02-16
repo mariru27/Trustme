@@ -13,6 +13,9 @@ using Org.BouncyCastle.Security;
 using Org.BouncyCastle.Asn1.Pkcs;
 using System.Text;
 using Microsoft.AspNetCore.Hosting;
+using Trustme.Data;
+using Trustme.IServices;
+using Trustme.Service;
 
 namespace Trustme.Controllers
 {
@@ -20,13 +23,16 @@ namespace Trustme.Controllers
     {
         private readonly AppContext _context;
         private IHostingEnvironment Environment;
-        public Administration admin;
+        private IKeyRepository _KeyRepository;
+        private IUserRepository _UserRepository;
+        //public Administration admin;
 
-        public VerifySignatureeController(AppContext context, IHostingEnvironment _environment, Administration _admin)
+        public VerifySignatureeController(IHostingEnvironment _environment, Administration _admin, IKeyRepository keyRepository, IUserRepository userRepository)
         {
+            _UserRepository = userRepository;
+            _KeyRepository = keyRepository;
             _context = context;
             Environment = _environment;
-            admin = _admin;
         }
         public IActionResult VerifyUser()
         {
@@ -50,7 +56,10 @@ namespace Trustme.Controllers
             if (TempData["SignatureError"] != null && (bool)TempData["SignatureError"] == true)
             {
                 ModelState.AddModelError("", "Require signature");
-                var keyList = admin.getAllKeysByUsername(username);
+
+                User currentUser = _UserRepository.GetUserbyUsername(username);
+                var keyList = _KeyRepository.ListAllKeys(currentUser);
+                //var keyList = admin.getAllKeysByUsername(username);
                 if (keyList != null)
                     return View(keyList);
             }
@@ -58,13 +67,17 @@ namespace Trustme.Controllers
             {
                 TempData["documentError"] = false;
                 ModelState.AddModelError("", "Required file");
-                var keyList = admin.getAllKeysByUsername(username);
+
+                User currentUser = _UserRepository.GetUserbyUsername(username);
+                var keyList = _KeyRepository.ListAllKeys(currentUser);
+                //var keyList = admin.getAllKeysByUsername(username);
                 if (keyList != null)
                     return View(keyList);
             }
             if (username != null)
             {
-                var keyList = admin.getAllKeysByUsername(username);
+                User currentUser = _UserRepository.GetUserbyUsername(username);
+                var keyList = _KeyRepository.ListAllKeys(currentUser);
                 if (keyList != null)
                     return View(keyList);
                 else
@@ -102,7 +115,8 @@ namespace Trustme.Controllers
 
                 //get public key by name from database, use key to decrypt
 
-                string publicKeystring = admin.getPublicKeyByCertificateName(username, certificateName);
+                Key userKey = _KeyRepository.GetKeyByCertificateName(username, certificateName);
+                //string publicKeystring = admin.getPublicKeyByCertificateName(username, certificateName);
 
                 byte[] publickeybyte = Encoding.ASCII.GetBytes(publicKeystring);
 
