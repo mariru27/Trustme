@@ -14,6 +14,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Trustme.Controllers;
 using Trustme.Data;
+using Trustme.IServices;
+using Trustme.Service;
+using Trustme.Models;
 using AppContext = Trustme.Data.AppContext;
 
 namespace Trustme
@@ -31,10 +34,20 @@ namespace Trustme
         public void ConfigureServices(IServiceCollection services)
         {
 
-            //services.AddSingleton<Administration>();
+            //services.AddScoped<AppContext>();
+            services.AddEntityFrameworkSqlServer().AddDbContext<AppContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")).EnableSensitiveDataLogging());
+
+           //services.AddScoped<AppContext>();
+
+
+
+            services.AddHttpContextAccessor();
+            services.AddScoped<IKeyRepository, KeyRepository>();
+            services.AddScoped<IRoleRepository, RoleRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IHttpRequestFunctions, HttpRequestFunctions>();
 
             services.AddMvc().AddControllersAsServices();
-            services.AddHttpContextAccessor();
 
             services.AddAuthentication("CookieAuth").AddCookie("CookieAuth", config =>
             {
@@ -42,8 +55,9 @@ namespace Trustme
                 config.LoginPath = "/Administration/LogIn";
                 config.LogoutPath = "/Administration/LogOut";
             });
-            services.AddEntityFrameworkSqlServer().AddDbContext<AppContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddControllersWithViews();
+            services.AddMemoryCache();
+
 
 
         }

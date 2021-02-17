@@ -24,6 +24,7 @@
     ".NETCoreApp,Version=v3.1": {
       "Trustme/1.0.0": {
         "dependencies": {
+          "BCrypt.Net-Next": "4.0.2",
           "BouncyCastle": "1.8.6.1",
           "Grpc.Core": "2.33.1",
           "Microsoft.AspNet.Identity.Core": "2.2.3",
@@ -305,6 +306,17 @@
         },
         "compile": {
           "Trustme.dll": {}
+        }
+      },
+      "BCrypt.Net-Next/4.0.2": {
+        "runtime": {
+          "lib/netcoreapp3.1/BCrypt.Net-Next.dll": {
+            "assemblyVersion": "4.0.2.0",
+            "fileVersion": "4.0.2.0"
+          }
+        },
+        "compile": {
+          "lib/netcoreapp3.1/BCrypt.Net-Next.dll": {}
         }
       },
       "BouncyCastle/1.8.6.1": {
@@ -4179,6 +4191,13 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "BCrypt.Net-Next/4.0.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-LyNKpIpr4GraRD9+xlTviyxxbZpF6J4xJf7DvraC1mR8PSN/KonGc4rt8C/fjkD3vaEvgA7BcvsbHFCOjgczyQ==",
+      "path": "bcrypt.net-next/4.0.2",
+      "hashPath": "bcrypt.net-next.4.0.2.nupkg.sha512"
     },
     "BouncyCastle/1.8.6.1": {
       "type": "package",

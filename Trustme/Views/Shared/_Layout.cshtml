@@ -158,7 +158,7 @@
                                         <a class="nav-link text-dark" asp-area="" asp-controller="SignDocuments" asp-action="Signdocument">Sign</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-controller="SignDocuments" asp-action="GenerateCertificate">Generate</a>
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="GenerateCertificate" asp-action="GenerateCertificate">Generate</a>
                                     </li>
                                 }
 
@@ -167,16 +167,16 @@
                                 if (username != null)
                                 {
                                     <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-controller="Administration" asp-action="Profile">Profile</a>
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="Profile" asp-action="Profile">Profile</a>
                                     </li>
                                 }
                                 else
                                 {
                                     <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-controller="Administration" asp-action="LogIn">Login</a>
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="Authenticate" asp-action="LogIn">Login</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-controller="Administration" asp-action="Register">Register</a>
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="Authenticate" asp-action="Register">Register</a>
                                     </li>
                                 }
                             }

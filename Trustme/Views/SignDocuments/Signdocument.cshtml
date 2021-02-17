@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = "Sign Documents";
     var signature = (string)TempData["signature"];
-    
+
 }
 
 <h4 class="display-4">Sign documents</h4>
@@ -15,13 +15,13 @@
 <form asp-action="SignDoc" enctype="multipart/form-data" method="post">
     <label for="certificates">Choose a certifificate:</label>
     <select class="form-control" name="certificates" id="certificates">
-    @{
-        foreach (var c in Model)
-        {
-            <option value=@c.KeyId>@c.CertificateName</option>
+        @{
+            foreach (var c in Model)
+            {
+                <option value=@c.KeyId>@c.CertificateName</option>
 
+            }
         }
-    }
     </select>
     <br />
     <div class="form-group">

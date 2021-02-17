@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -45,9 +46,8 @@ namespace Trustme.Models
         [Compare("Password", ErrorMessage = "Confirm password doesn't match, Type again !")]
         [Display(Name = "Confirm Password")]
         public string ConfirmPassword { get; set; }
+        public int RoleId { get; set; }
 
-        //public string RoleName { get; set; }
-        public Role UserRole { get; set; } = new Role();
-        public List<Key> Keys {set; get;}
+        public Role Role { get; set; }
     }
 }
