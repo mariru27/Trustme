@@ -79,7 +79,6 @@ namespace Trustme.Controllers
             return RedirectToAction(nameof(Profile));
         }
 
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult EditCertificate(int id, Key key)
