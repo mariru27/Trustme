@@ -12,6 +12,7 @@
         <form asp-action="EditCertificate">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="KeyId" />
+            <input type="hidden" asp-for="PublicKey" />
             <input type="hidden" asp-for="KeySize" />
             <div class="form-group">
                 <label asp-for="CertificateName" class="control-label"></label>

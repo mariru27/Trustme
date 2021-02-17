@@ -80,21 +80,6 @@ namespace Trustme.Controllers
         }
 
 
-
-
-        //public void editPublicKey(string username, string publicKey, string certificateName)
-        //{
-        //    User user = _context.User.Where(a => a.Username == username)?.SingleOrDefault();
-        //    Key userKey = _context.Key.Where(a => a.UserKeyId == user.UserId && a.CertificateName == certificateName)?.SingleOrDefault();
-
-        //    if (userKey != null)
-        //    {
-        //        userKey.PublicKey = publicKey;
-
-        //    }
-        //    _context.SaveChanges();
-        //}
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult EditCertificate(int id, Key key)
