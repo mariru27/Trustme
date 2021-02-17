@@ -15,7 +15,6 @@ namespace Trustme.Models
             this.KeyId = key.KeyId;
             this.CertificateName = key.CertificateName;
             this.Description = key.Description;
-            this.UserKeyId = key.UserKeyId;
             this.PublicKey = key.PublicKey;
             this.KeySize = key.KeySize;
             this.UserKey = key.UserKey;

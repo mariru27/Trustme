@@ -119,7 +119,7 @@ namespace Trustme.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!_KeyRepository.KeyExists(key.UserKeyId, key.KeyId))
+                    if (!_KeyRepository.KeyExists(key.KeyId, key.KeyId))
                     {
                         return NotFound();
                     }
