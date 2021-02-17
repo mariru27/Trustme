@@ -24,7 +24,7 @@ namespace Trustme.Service
             //find user
             User user = _context.User.Where(a => a.Username == _UserKeyModel.User.Username)?.SingleOrDefault();
 
-            Key userKey = _context.Key.Where(a => a.UserKeyId == user.UserId && a.CertificateName == _UserKeyModel.Key.CertificateName)?.SingleOrDefault();
+            Key userKey = _context.Key.Where(a => a.KeyId == user.UserId && a.CertificateName == _UserKeyModel.Key.CertificateName)?.SingleOrDefault();
 
             if(userKey == null)
             {
@@ -109,7 +109,7 @@ namespace Trustme.Service
 
         public bool KeyExists(int idUser, int idKey)
         {
-            return _context.UserKey.Where(uk => uk.UserId == idUser && uk.KeyId == idKey).Join(_context.Key,
+            return _context.UserKey.Where(uk => uk.UserId == idUser && uk.IdUserKey == idKey).Join(_context.Key,
                 user => user.IdUserKey,
                 key => key.KeyId,
                 (user, key) => new Key(key)).Any();
