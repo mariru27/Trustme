@@ -50,13 +50,18 @@ namespace Trustme.Controllers
             return View();
         }
 
+        public IActionResult ErrorNrCertificates()
+        {
+            return View();
+        }
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> GenerateCertificate(string certificateName, string description, int keySize)
         {
             User currentUser = _HttpRequestFunctions.GetUser(HttpContext);
-            if(_KeyRepository.GetNrCertificates(currentUser) > UserMaximNumberOfCertificates)
+            if(_KeyRepository.GetNrCertificates(currentUser) >= UserMaximNumberOfCertificates)
             {
                 return RedirectToAction(nameof(ErrorNrCertificates));
             }
