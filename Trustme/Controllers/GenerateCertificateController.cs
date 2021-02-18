@@ -34,12 +34,11 @@ namespace Trustme.Controllers
 {
     public class GenerateCertificateController : Controller
     {
-        //public Administration admin;
         private const string SignatureAlgorithm = "sha1WithRSA";
         private IHostingEnvironment Environment;
         private IHttpRequestFunctions _HttpRequestFunctions;
         private IKeyRepository _KeyRepository;
-
+        private const int UserMaximNumberOfCertificates = 3;
         public GenerateCertificateController( IHostingEnvironment _environment, IHttpRequestFunctions httpRequestFunctions, IKeyRepository keyRepository)
         {
             _HttpRequestFunctions = httpRequestFunctions;
@@ -56,6 +55,12 @@ namespace Trustme.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> GenerateCertificate(string certificateName, string description, int keySize)
         {
+            User currentUser = _HttpRequestFunctions.GetUser(HttpContext);
+            if(_KeyRepository.GetNrCertificates(currentUser) > UserMaximNumberOfCertificates)
+            {
+                return RedirectToAction(nameof(ErrorNrCertificates));
+            }
+
             TempData["certificateNameError"] = true;
             if (certificateName == null)
             {
@@ -93,8 +98,6 @@ namespace Trustme.Controllers
                 pemWriter1.Writer.Flush();
 
                 string publicKey = textWriter1.ToString();
-
-                User currentUser = _HttpRequestFunctions.GetUser(HttpContext);
 
                 Key currentKey = new Key();
                 currentKey.CertificateName = certificateName;
