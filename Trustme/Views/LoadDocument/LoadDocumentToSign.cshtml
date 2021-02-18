@@ -5,3 +5,10 @@
 }
 
 <h1>Load document to sign</h1>
+
+<form asp-action="SendToSign">
+    <div class="form-group">
+        <label for="docfile"><strong>Document</strong></label>
+        <input for="docfile" name="docfile" type="file">
+    </div>
+</form>
