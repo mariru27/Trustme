@@ -143,5 +143,10 @@ namespace Trustme.Service
         {
             return _context.UserKey.Where(uk => uk.IdUserKey == idUserKey).SingleOrDefault();
         }
+
+        public int GetNrCertificates(User _User)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
