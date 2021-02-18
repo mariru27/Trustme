@@ -13,6 +13,9 @@ namespace Trustme.Controllers
             return View();
         }
 
-   
+        public IActionResult LoadDocumentToSign()
+        {
+            return View();
+        }
     }
 }
