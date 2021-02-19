@@ -10,6 +10,7 @@ namespace Trustme.Models
     {
         public int IdSignedDocument { get; set; }
         public int KeyId { get; set; }
+        public Key Key { get; set; }
         public IFormFile Document { get; set; }
         public string Signature { get; set; }
         public string Comment { get; set; }
