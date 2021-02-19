@@ -12,5 +12,6 @@ namespace Trustme.Models
         public int IdUserUnsignedDocument { get; set; }
         public int UserId { get; set; }
         public int UnsignedDocumentId { get; set; }
+        public UnsignedDocument UnsignedDocument { get; set; }
     }
 }

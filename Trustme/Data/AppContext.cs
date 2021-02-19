@@ -24,7 +24,9 @@ namespace Trustme.Data
         {
             modelBuilder.Entity<Key>().HasOne(e => e.UserKey).WithOne(e => e.Key).OnDelete(DeleteBehavior.ClientCascade);
             modelBuilder.Entity<Key>().HasOne(e => e.UserKey).WithOne(e => e.Key).HasForeignKey<UserKey>(e => e.IdUserKey);
-            
+            //modelBuilder.Entity<UnsignedDocument>().HasOne(e => e.)
+
+
             modelBuilder.Entity<User>().ToTable("User");
             modelBuilder.Entity<Key>().ToTable("Key");
             modelBuilder.Entity<Role>().ToTable("Role");
