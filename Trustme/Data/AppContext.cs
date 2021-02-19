@@ -20,11 +20,16 @@ namespace Trustme.Data
 
         public DbSet<Role> Role { set; get; }
         public DbSet<UserKey> UserKey { set; get; }
+
+        public DbSet<UserSignedDocument> UserSignedDocuments { set; get; }
+        public DbSet<UserUnsignedDocument> UserUnsignedDocuments { set; get; }
+
+        public DbSet<SignedDocument> SignedDocuments { set; get; }
+        public DbSet<UnsignedDocument> UnsignedDocuments { set; get; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Key>().HasOne(e => e.UserKey).WithOne(e => e.Key).OnDelete(DeleteBehavior.ClientCascade);
             modelBuilder.Entity<Key>().HasOne(e => e.UserKey).WithOne(e => e.Key).HasForeignKey<UserKey>(e => e.IdUserKey);
-            //modelBuilder.Entity<UnsignedDocument>().HasOne(e => e.)
 
 
             modelBuilder.Entity<User>().ToTable("User");
