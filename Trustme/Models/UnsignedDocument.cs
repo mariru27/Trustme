@@ -11,7 +11,10 @@ namespace Trustme.Models
     {
         [Key]
         public int IdUnisignedDocument { get; set; }
-        public IFormFile Document { get; set; }
+        public byte[] Document { get; set; }
         public string KeyPreference { get; set; }
+
+
+
     }
 }
