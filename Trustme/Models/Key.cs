@@ -28,5 +28,7 @@ namespace Trustme.Models
         public string PublicKey { set; get; }
         public int KeySize { set; get; }
         public UserKey UserKey { set; get; }
+        public int SignedDocumentId { set; get; }
+        public SignedDocument Signed { set; get; }
     }
 }
