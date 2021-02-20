@@ -6,8 +6,8 @@ using Trustme.Models;
 
 namespace Trustme.IServices
 {
-    interface IUnsignedDocuments
+    interface IUnsignedDocumentRepository
     {
-        public UnsignedDocument AddUnsignedDocument(UnsignedDocument unsignedDocument);  
+        public void AddUnsignedDocument(UserUnsignedDocument userUnsignedDocument);  
     }
 }
