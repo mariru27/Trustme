@@ -43,6 +43,7 @@ namespace Trustme
 
             services.AddHttpContextAccessor();
             services.AddScoped<IKeyRepository, KeyRepository>();
+            services.AddScoped<IUnsignedDocumentRepository, UnsignedDocumentRepository>();
             services.AddScoped<IRoleRepository, RoleRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IHttpRequestFunctions, HttpRequestFunctions>();
