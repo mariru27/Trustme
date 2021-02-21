@@ -23,14 +23,17 @@ namespace Trustme.Controllers
             
         }
 
+        [HttpGet]
         public IActionResult LoadDocumentToSign()
         {
             return View();
         }
 
+        [HttpPost]
         public IActionResult LoadDocumentToSign(DocumentModel documentModel)
         {
             UserUnsignedDocument userUnsignedDocument = new UserUnsignedDocument();
+            userUnsignedDocument.UnsignedDocument.Name = documentModel.Document.FileName;
             using (var target = new MemoryStream())
             {
                 documentModel.Document.CopyTo(target);
