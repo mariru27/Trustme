@@ -8,6 +8,7 @@ using Trustme.ViewModels;
 using Trustme.Service;
 using Trustme.IServices;
 using System.IO;
+using Microsoft.AspNetCore.Http;
 
 namespace Trustme.Controllers
 {
@@ -30,21 +31,24 @@ namespace Trustme.Controllers
         }
 
         [HttpPost]
-        public IActionResult LoadDocumentToSign(DocumentModel documentModel)
+        public IActionResult LoadDocumentToSign(string Username, string CertificateName, IFormFile Document)
         {
+
             UserUnsignedDocument userUnsignedDocument = new UserUnsignedDocument();
-            userUnsignedDocument.UnsignedDocument.Name = documentModel.Document.FileName;
+            UnsignedDocument unsignedDocument = new UnsignedDocument();
+            unsignedDocument.Name = Document.FileName;
             using (var target = new MemoryStream())
             {
-                documentModel.Document.CopyTo(target);
-                userUnsignedDocument.UnsignedDocument.Document = target.ToArray();
+                Document.CopyTo(target);
+                unsignedDocument.Document = target.ToArray();
             }
-            userUnsignedDocument.UnsignedDocument.KeyPreference = documentModel.CertificateName;
-            if(_UserRepository.GetUserbyUsername(documentModel.Username) != null)
+            unsignedDocument.KeyPreference = CertificateName;
+            if (_UserRepository.GetUserbyUsername(Username) != null)
             {
-                userUnsignedDocument.User = _UserRepository.GetUserbyUsername(documentModel.Username);
-
+                userUnsignedDocument.User = _UserRepository.GetUserbyUsername(Username);
+                userUnsignedDocument.UnsignedDocument = unsignedDocument;
             }
+            _UnsignedDocumentRepository.AddUnsignedDocument(userUnsignedDocument);
             return View();
         }
     }
