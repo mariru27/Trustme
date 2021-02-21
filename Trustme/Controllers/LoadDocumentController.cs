@@ -7,6 +7,7 @@ using Trustme.Models;
 using Trustme.ViewModels;
 using Trustme.Service;
 using Trustme.IServices;
+using System.IO;
 
 namespace Trustme.Controllers
 {
@@ -19,11 +20,7 @@ namespace Trustme.Controllers
         {
             _UserRepository = userRepository;
             _UnsignedDocumentRepository = unsignedDocumentRepository;
-                
-        }
-        public IActionResult Index()
-        {
-            return View();
+            
         }
 
         public IActionResult LoadDocumentToSign()
@@ -34,7 +31,11 @@ namespace Trustme.Controllers
         public IActionResult LoadDocumentToSign(DocumentModel documentModel)
         {
             UserUnsignedDocument userUnsignedDocument = new UserUnsignedDocument();
-            //unsignedDocument.Document = documentModel.Document;
+            using (var target = new MemoryStream())
+            {
+                documentModel.Document.CopyTo(target);
+                userUnsignedDocument.UnsignedDocument.Document = target.ToArray();
+            }
             userUnsignedDocument.UnsignedDocument.KeyPreference = documentModel.CertificateName;
             if(_UserRepository.GetUserbyUsername(documentModel.Username) != null)
             {
