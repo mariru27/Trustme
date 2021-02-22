@@ -37,8 +37,10 @@ namespace Trustme.Controllers
         {
 
             UserUnsignedDocument userUnsignedDocument = new UserUnsignedDocument();
-            UnsignedDocument unsignedDocument = new UnsignedDocument();
-            unsignedDocument.Name = Document.FileName;
+            UnsignedDocument unsignedDocument = new UnsignedDocument
+            {
+                Name = Document.FileName
+            };
             using (var target = new MemoryStream())
             {
                 Document.CopyTo(target);
