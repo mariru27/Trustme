@@ -22,5 +22,7 @@ namespace Trustme.IServices
         public bool KeyExists(int idUser, int idKey);
 
         public UserKey GetUserKeyById(int idUserKey);
+
+        public int GetNrCertificates(User _User);
     }
 }
