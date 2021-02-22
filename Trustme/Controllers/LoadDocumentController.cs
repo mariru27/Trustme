@@ -29,10 +29,7 @@ namespace Trustme.Controllers
         [HttpGet]
         public IActionResult LoadDocumentToSign()
         {
-            User user = new User();
-            user = _HttpRequestFunctions.GetUser(HttpContext);
-            IEnumerable<UnsignedDocument> unsignedDocuments= _UnsignedDocumentRepository.ListAllUsignedDocumentsByUser(user);
-            return View(unsignedDocuments);
+            return View();
         }
 
         [HttpPost]

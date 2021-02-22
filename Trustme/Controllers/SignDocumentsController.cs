@@ -40,17 +40,22 @@ namespace Trustme.Controllers
         private IHostingEnvironment Environment;
         private IKeyRepository _KeyRepository;
         private IHttpRequestFunctions _HttpRequestFunctions;
+        private IUnsignedDocumentRepository _UnsignedDocumentRepository;
 
-        public SignDocumentsController(IHostingEnvironment _environment, IKeyRepository keyRepository, IHttpRequestFunctions httpRequestFunctions)
+        public SignDocumentsController(IHostingEnvironment _environment, IKeyRepository keyRepository, IHttpRequestFunctions httpRequestFunctions, IUnsignedDocumentRepository unsignedDocumentRepository)
         {
             Environment = _environment;
             _KeyRepository = keyRepository;
             _HttpRequestFunctions = httpRequestFunctions;
+            _UnsignedDocumentRepository = unsignedDocumentRepository;
         }
 
         public IActionResult UnsignedDocuments()
         {
-            return View();
+            User user = new User();
+            user = _HttpRequestFunctions.GetUser(HttpContext);
+            IEnumerable<UnsignedDocument> unsignedDocuments = _UnsignedDocumentRepository.ListAllUsignedDocumentsByUser(user);
+            return View(unsignedDocuments);
         }
 
         public IActionResult SignDocument()
