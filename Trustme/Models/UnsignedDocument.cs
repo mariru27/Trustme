@@ -10,7 +10,7 @@ namespace Trustme.Models
     public class UnsignedDocument
     {
         [Key]
-        public int IdUnisignedDocument { get; set; }
+        public int IdUnsignedDocument { get; set; }
         public string Name { get; set; }
         public byte[] Document { get; set; }
         public string KeyPreference { get; set; }
