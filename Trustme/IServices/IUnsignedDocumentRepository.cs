@@ -9,6 +9,6 @@ namespace Trustme.IServices
     public interface IUnsignedDocumentRepository
     {
         public void AddUnsignedDocument(UserUnsignedDocument userUnsignedDocument);
-        public void ListAllUsignedDocumentsByUser(User User);
+        public IEnumerable<UnsignedDocument> ListAllUsignedDocumentsByUser(User User);
     }
 }

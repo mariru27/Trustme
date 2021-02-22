@@ -21,12 +21,14 @@ namespace Trustme.Service
             _context.UserUnsignedDocuments.Add(userUnsignedDocument);
             _context.SaveChanges();
         }
-        public void ListAllUsignedDocumentsByUser(User User)
+        public IEnumerable<UnsignedDocument> ListAllUsignedDocumentsByUser(User user)
         {
-            //IEnumerable<UnsignedDocument> unsignedDocuments = _context.UserUnsignedDocuments.Join(
-            //    _context.UnsignedDocuments,
-            //    u => u.UnsignedDocumentId,
-            //    ud => ud.IdUnisignedDocument)
+            IEnumerable<UnsignedDocument> unsignedDocuments = _context.UserUnsignedDocuments.Where(u => u.UserId == user.UserId).Join(
+                _context.UnsignedDocuments,
+                u => u.UnsignedDocumentId,
+                ud => ud.IdUnsignedDocument,
+                (u, ud) => new UnsignedDocument()).ToList();
+            return unsignedDocuments;
         }
     }
 }
