@@ -27,7 +27,7 @@ namespace Trustme.Service
                 _context.UnsignedDocuments,
                 u => u.UnsignedDocumentId,
                 ud => ud.IdUnsignedDocument,
-                (u, ud) => new UnsignedDocument()).ToList();
+                (u, ud) => new UnsignedDocument(ud)).ToList();
             return unsignedDocuments;
         }
     }
