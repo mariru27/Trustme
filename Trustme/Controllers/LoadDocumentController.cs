@@ -47,8 +47,13 @@ namespace Trustme.Controllers
             {
                 userUnsignedDocument.User = _UserRepository.GetUserbyUsername(Username);
                 userUnsignedDocument.UnsignedDocument = unsignedDocument;
+                _UnsignedDocumentRepository.AddUnsignedDocument(userUnsignedDocument);
+
             }
-            _UnsignedDocumentRepository.AddUnsignedDocument(userUnsignedDocument);
+            else
+            {
+                ModelState.AddModelError("", "This user do not exist");
+            }
             return View();
         }
     }
