@@ -3,18 +3,22 @@
 @{ 
    foreach (var udoc in Model)
    {
+    <form asp-action="SignSentDocument">
+        <input type="hidden" name="IdUnsignedDocument" value=@udoc.IdUnsignedDocument id="IdUnsignedDocument" />
+        <div class="card">
+            <div class="card-header">
+                @udoc.Name
+            </div>
+            <div class="card-body">
+                <p class="card-text">Key Preference: @udoc.KeyPreference </p>
+                <div class="form-group">
+                    <input type="submit" value="Submit" class="btn btn-primary" />
+                </div>
+            </div>
+        </div>
+        <br>
 
-    <div class="card">
-        <div class="card-header">
-            @udoc.Name
-        </div>
-        <div class="card-body">
-            <h5 class="card-title">Special title treatment</h5>
-            <p class="card-text">Key Preference: @udoc.KeyPreference </p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
-        </div>
-    </div>
-    
+    </form>
    }
 }
 

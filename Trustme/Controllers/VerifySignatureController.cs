@@ -85,6 +85,10 @@ namespace Trustme.Controllers
             return RedirectToAction("VerifyUser");
         }
 
+        public IActionResult SignSentDocument(int IdUnsignedDocument)
+        {
+            return View();   
+        }
 
         [HttpPost]
         public IActionResult VerifySignatureDocument(string username, string certificateName, string signature, IFormFile document)

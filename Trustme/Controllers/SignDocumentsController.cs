@@ -58,6 +58,12 @@ namespace Trustme.Controllers
             return View(unsignedDocuments);
         }
 
+        public IActionResult SignSentDocument(int IdUnsignedDocument)
+        {
+
+            return View();
+        }
+
         public IActionResult SignDocument()
         {
 
