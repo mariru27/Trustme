@@ -10,24 +10,29 @@ using Trustme.IServices;
 using System.IO;
 using Microsoft.AspNetCore.Http;
 
+
 namespace Trustme.Controllers
 {
     public class LoadDocumentController : Controller
     {
         private IUserRepository _UserRepository;
         private IUnsignedDocumentRepository _UnsignedDocumentRepository;
+        private IHttpRequestFunctions _HttpRequestFunctions;
 
-        public LoadDocumentController(IUserRepository userRepository, IUnsignedDocumentRepository unsignedDocumentRepository)
+        public LoadDocumentController(IUserRepository userRepository, IUnsignedDocumentRepository unsignedDocumentRepository, IHttpRequestFunctions httpRequestFunctions)
         {
             _UserRepository = userRepository;
             _UnsignedDocumentRepository = unsignedDocumentRepository;
-            
+            _HttpRequestFunctions = httpRequestFunctions;
         }
 
         [HttpGet]
         public IActionResult LoadDocumentToSign()
         {
-            return View();
+            User user = new User();
+            user = _HttpRequestFunctions.GetUser(HttpContext);
+            IEnumerable<UnsignedDocument> unsignedDocuments= _UnsignedDocumentRepository.ListAllUsignedDocumentsByUser(user);
+            return View(unsignedDocuments);
         }
 
         [HttpPost]
