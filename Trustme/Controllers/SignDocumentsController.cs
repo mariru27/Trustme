@@ -48,6 +48,11 @@ namespace Trustme.Controllers
             _HttpRequestFunctions = httpRequestFunctions;
         }
 
+        public IActionResult UnsignedDocuments()
+        {
+            return View();
+        }
+
         public IActionResult SignDocument()
         {
 
