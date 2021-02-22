@@ -9,6 +9,7 @@ namespace Trustme.Models
 {
     public class UnsignedDocument
     {
+        public UnsignedDocument() { }
         public UnsignedDocument(UnsignedDocument unsignedDocument)
         {
             this.IdUnsignedDocument = unsignedDocument.IdUnsignedDocument;
