@@ -1,36 +1,25 @@
 ﻿@model IEnumerable<UnsignedDocument>
 
-@{ 
-   foreach (var udoc in Model)
-   {
-    <form asp-action="SignSentDocument">
-        <input type="hidden" name="IdUnsignedDocument" value=@udoc.IdUnsignedDocument id="IdUnsignedDocument" />
-        <div class="card">
-            <div class="card-header">
-                @udoc.Name
-            </div>
-            <div class="card-body">
-                <p class="card-text">Key Preference: @udoc.KeyPreference </p>
-                <div class="form-group">
-                    <input type="submit" value="Submit" class="btn btn-primary" />
+    <a class="btn btn-primary" asp-controller="SignDocuments" asp-action="SignDocument">Sign my own document</a>
+    <br>
+    @{
+        foreach (var udoc in Model)
+        {
+            <form asp-action="SignSentDocument">
+                <input type="hidden" name="IdUnsignedDocument" value=@udoc.IdUnsignedDocument id="IdUnsignedDocument" />
+                <div class="card">
+                    <div class="card-header">
+                        @udoc.Name
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">Key Preference: @udoc.KeyPreference </p>
+                        <div class="form-group">
+                            <input type="submit" value="Sign" class="btn btn-primary" />
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-        <br>
+                <br>
 
-    </form>
-   }
-}
-
-
-
-@*<div class="card">
-    <div class="card-header">
-        Featured
-    </div>
-    <div class="card-body">
-        <h5 class="card-title">Special title treatment</h5>
-        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-        <a href="#" class="btn btn-primary">Go somewhere</a>
-    </div>
-</div>*@
+            </form>
+        }
+    }
