@@ -61,7 +61,7 @@ namespace Trustme.Controllers
         public IActionResult SignSentDocument(int IdUnsignedDocument)
         {
             
-            return View();
+            return View(_UnsignedDocumentRepository.GetUnsignedDocumentById(IdUnsignedDocument));
         }
 
         public IActionResult SignDocument()

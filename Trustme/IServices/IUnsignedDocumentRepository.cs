@@ -12,6 +12,5 @@ namespace Trustme.IServices
         public IEnumerable<UnsignedDocument> ListAllUsignedDocumentsByUser(User User);
 
         public UnsignedDocument GetUnsignedDocumentById(int IdUnsignedDocument);
-        public UnsignedDocument GetUnsignedDocumentById(int IdUnsignedDocument);
     }
 }
