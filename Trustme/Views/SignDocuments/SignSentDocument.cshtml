@@ -1,2 +1,19 @@
-﻿
+﻿@model UnsignedDocument
+
 <h1>Sign documet</h1>
+<form asp-action="SignSentDocument">
+    <input type="hidden" name="IdUnsignedDocument" value=@Model.IdUnsignedDocument id="IdUnsignedDocument" />
+    <div class="card">
+        <div class="card-header">
+            @Model.Name
+        </div>
+        <div class="card-body">
+            <p class="card-text">Key Preference: @Model.KeyPreference </p>
+            <div class="form-group">
+                <input type="submit" value="Sign" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+    <br>
+
+</form>
