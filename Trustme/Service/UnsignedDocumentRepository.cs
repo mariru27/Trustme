@@ -24,8 +24,7 @@ namespace Trustme.Service
 
         public UnsignedDocument GetUnsignedDocumentById(int IdUnsignedDocument)
         {
-            _context.UnsignedDocuments.Where(u => u.IdUnsignedDocument == IdUnsignedDocument).SingleOrDefault();
-            throw new System.NotImplementedException();
+            return _context.UnsignedDocuments.Where(u => u.IdUnsignedDocument == IdUnsignedDocument).SingleOrDefault();
         }
 
         public IEnumerable<UnsignedDocument> ListAllUsignedDocumentsByUser(User user)
