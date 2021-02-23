@@ -29,6 +29,7 @@ using Microsoft.EntityFrameworkCore;
 using Trustme.IServices;
 using Trustme.Service;
 using Trustme.Models;
+using Trustme.ViewModels;
 
 namespace Trustme.Controllers
 {
@@ -60,8 +61,13 @@ namespace Trustme.Controllers
 
         public IActionResult SignSentDocument(int IdUnsignedDocument)
         {
+            KeysUnsignedDocumentViewModel keysUnsignedDocumentViewModel = new KeysUnsignedDocumentViewModel
+            {
+                UnsignedDocument = _UnsignedDocumentRepository.GetUnsignedDocumentById(IdUnsignedDocument),
+                Keys = _KeyRepository.ListAllKeys(_HttpRequestFunctions.GetUser(HttpContext))
+            };
             
-            return View(_UnsignedDocumentRepository.GetUnsignedDocumentById(IdUnsignedDocument));
+            return View(keysUnsignedDocumentViewModel);
         }
 
         public IActionResult SignDocument()
