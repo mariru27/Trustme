@@ -1,14 +1,14 @@
-﻿@model UnsignedDocument
+﻿@model KeysUnsignedDocumentViewModel
 
 <h1>Sign documet</h1>
 <form asp-action="SignSentDocument">
-    <input type="hidden" name="IdUnsignedDocument" value=@Model.IdUnsignedDocument id="IdUnsignedDocument" />
+    <input type="hidden" name="IdUnsignedDocument" value=@Model.UnsignedDocument.IdUnsignedDocument id="IdUnsignedDocument" />
     <div class="card">
         <div class="card-header">
-            @Model.Name
+            @Model.UnsignedDocument.Name
         </div>
         <div class="card-body">
-            <p class="card-text">Key Preference: @Model.KeyPreference </p>
+            <p class="card-text">Key Preference: @Model.UnsignedDocument.KeyPreference </p>
             <div class="form-group">
                 <input type="submit" value="Sign" class="btn btn-primary" />
             </div>
