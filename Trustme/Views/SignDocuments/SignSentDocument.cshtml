@@ -9,6 +9,17 @@
         </div>
         <div class="card-body">
             <p class="card-text">Key Preference: @Model.UnsignedDocument.KeyPreference </p>
+            <label for="certificates">Choose a certifificate:</label>
+            <select class="form-control" name="certificates" id="certificates">
+                @{
+                    foreach (var c in Model.Keys)
+                    {
+                        <option value=@c.KeyId>@c.CertificateName</option>
+
+                    }
+                }
+            </select>
+            <br>
             <div class="form-group">
                 <input type="submit" value="Sign" class="btn btn-primary" />
             </div>
