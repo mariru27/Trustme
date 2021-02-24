@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,8 @@ namespace Trustme.ViewModels
     {
         public IEnumerable<Key> Keys { get; set; }
         public UnsignedDocument UnsignedDocument { get; set; }
+        public IFormFile PkFile { get; set; }
+        public IFormFile DocFile { get; set; }
 
     }
 }
