@@ -9,9 +9,8 @@ namespace Trustme.ViewModels
 {
     public class KeysUnsignedDocumentViewModel
     {
-        public SelectList Keys { get; set; }
+        public IEnumerable<Key> Keys { get; set; }
         public UnsignedDocument UnsignedDocument { get; set; }
-        public int KeyId;
 
     }
 }

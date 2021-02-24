@@ -65,13 +65,13 @@ namespace Trustme.Controllers
             KeysUnsignedDocumentViewModel keysUnsignedDocumentViewModel = new KeysUnsignedDocumentViewModel
             {
                 UnsignedDocument = _UnsignedDocumentRepository.GetUnsignedDocumentById(IdUnsignedDocument),
-                Keys = new SelectList(_KeyRepository.ListAllKeys(_HttpRequestFunctions.GetUser(HttpContext)), "KeyId", "CertificateName")
+                Keys =_KeyRepository.ListAllKeys(_HttpRequestFunctions.GetUser(HttpContext))
             };
             
             return View(keysUnsignedDocumentViewModel);
         }
         
-        public IActionResult SignSentDocumentCard(KeysUnsignedDocumentViewModel unsigned)
+        public IActionResult SignSentDocumentCard(int IdUnsignedDocument, int certificates)
         {
             
             return RedirectToAction("UnsignedDocuments");
