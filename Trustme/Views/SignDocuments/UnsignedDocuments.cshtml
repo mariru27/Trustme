@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<UnsignedDocument>
 
-    <a class="btn btn-primary" asp-controller="SignDocuments" asp-action="SignDocument">Sign my own document</a>
-    <br>
+    <a class="btn btn-primary" style="margin-bottom:15px" asp-controller="SignDocuments" asp-action="SignDocument">Sign my own document</a>
+
     @{
         foreach (var udoc in Model)
         {
