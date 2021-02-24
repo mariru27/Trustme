@@ -30,6 +30,7 @@ using Trustme.IServices;
 using Trustme.Service;
 using Trustme.Models;
 using Trustme.ViewModels;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Trustme.Controllers
 {
@@ -64,12 +65,17 @@ namespace Trustme.Controllers
             KeysUnsignedDocumentViewModel keysUnsignedDocumentViewModel = new KeysUnsignedDocumentViewModel
             {
                 UnsignedDocument = _UnsignedDocumentRepository.GetUnsignedDocumentById(IdUnsignedDocument),
-                Keys = _KeyRepository.ListAllKeys(_HttpRequestFunctions.GetUser(HttpContext))
+                Keys = new SelectList(_KeyRepository.ListAllKeys(_HttpRequestFunctions.GetUser(HttpContext)), "KeyId", "CertificateName")
             };
             
             return View(keysUnsignedDocumentViewModel);
         }
-
+        
+        public IActionResult SignSentDocumentCard(UnsignedDocument unsigned)
+        {
+            
+            return RedirectToAction("UnsignedDocuments");
+        }
         public IActionResult SignDocument()
         {
 
