@@ -11,6 +11,7 @@ namespace Trustme.ViewModels
     {
         public SelectList Keys { get; set; }
         public UnsignedDocument UnsignedDocument { get; set; }
+        public int KeyId;
 
     }
 }

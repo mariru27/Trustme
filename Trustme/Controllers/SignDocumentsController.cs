@@ -71,7 +71,7 @@ namespace Trustme.Controllers
             return View(keysUnsignedDocumentViewModel);
         }
         
-        public IActionResult SignSentDocumentCard(UnsignedDocument unsigned)
+        public IActionResult SignSentDocumentCard(KeysUnsignedDocumentViewModel unsigned)
         {
             
             return RedirectToAction("UnsignedDocuments");
