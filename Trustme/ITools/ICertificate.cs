@@ -5,7 +5,8 @@ using System.Threading.Tasks;
 
 namespace Trustme.ITools
 {
-    interface ICertificate
+    public interface ICertificate
     {
+        public void GenereateCertificate(int keySize);
     }
 }
