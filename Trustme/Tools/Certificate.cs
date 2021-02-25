@@ -94,7 +94,7 @@ namespace Trustme.Tools
                 outStream.Write(encoded, 0, encoded.Length);
             }
 
-            PrivateKeyInfo pkInfo = PrivateKeyInfoFactory.CreatePrivateKeyInfo(kp.Private);
+            PrivateKeyInfo pkInfo = PrivateKeyInfoFactory.CreatePrivateKeyInfo(keyPairCertificateGeneratorModel.KeyPair.Private);
             string privatekey = Convert.ToBase64String(pkInfo.GetDerEncoded());
 
 

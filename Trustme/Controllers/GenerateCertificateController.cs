@@ -87,13 +87,11 @@ namespace Trustme.Controllers
                 return RedirectToAction("GenerateCertificate");
             }
 
-            
+            KeyPairCertificateGeneratorModel keyPairCertificateGeneratorModel = new KeyPairCertificateGeneratorModel();
+            keyPairCertificateGeneratorModel = _Certificate.GenereateCertificate(keySize);
+
             if (_HttpRequestFunctions.IsloggedIn(HttpContext) == true)
             {
-
-                KeyPairCertificateGeneratorModel keyPairCertificateGeneratorModel = new KeyPairCertificateGeneratorModel();
-                keyPairCertificateGeneratorModel = _Certificate.GenereateCertificate(keySize);
-
                 _Certificate.CrateAndStoreKeyUserInDB(currentUser, keyPairCertificateGeneratorModel, key);
             }
 
