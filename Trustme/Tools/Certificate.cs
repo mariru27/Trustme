@@ -31,13 +31,13 @@ using Trustme.Service;
 using Trustme.ViewModels;
 using Trustme.ITools;
 using Trustme.Tools.ToolsModels;
-
+using Trustme.ViewModels;
 namespace Trustme.Tools
 {
     public class Certificate : ICertificate
     {
         private const string SignatureAlgorithm = "sha1WithRSA";
-        public void GenereateCertificate(int keySize)
+        public KeyPairCertificateGeneratorModel GenereateCertificate(int keySize)
         {
             // Keypair Generator
             RsaKeyPairGenerator kpGenerator = new RsaKeyPairGenerator();
@@ -54,6 +54,14 @@ namespace Trustme.Tools
             cGenerator.SetNotBefore(DateTime.Now);
             cGenerator.SetNotAfter(DateTime.Now.Add(new TimeSpan(365, 0, 0, 0))); // Expire in 1 year
             cGenerator.SetSignatureAlgorithm(SignatureAlgorithm); // See the Appendix Below for info on the hash types supported by Bouncy Castle C#
+
+            KeyPairCertificateGeneratorModel keyPairCertificateGeneratorModel = new KeyPairCertificateGeneratorModel
+            {
+                CertificateGenerator = cGenerator,
+                KeyPair = kp
+            };
+        
+            return keyPairCertificateGeneratorModel;
         }
     }
 }
