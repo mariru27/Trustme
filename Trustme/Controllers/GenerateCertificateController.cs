@@ -29,6 +29,9 @@ using Microsoft.EntityFrameworkCore;
 using Trustme.IServices;
 using Trustme.Service;
 using Trustme.ViewModels;
+using Trustme.Tools.ToolsModels;
+using Trustme.ITools;
+using Trustme.Tools;
 
 namespace Trustme.Controllers
 {
@@ -38,12 +41,14 @@ namespace Trustme.Controllers
         private IHostingEnvironment Environment;
         private IHttpRequestFunctions _HttpRequestFunctions;
         private IKeyRepository _KeyRepository;
+        private ICertificate _Certificate;
         private const int UserMaximNumberOfCertificates = 3;
-        public GenerateCertificateController( IHostingEnvironment _environment, IHttpRequestFunctions httpRequestFunctions, IKeyRepository keyRepository)
+        public GenerateCertificateController(ICertificate certificate, IHostingEnvironment _environment, IHttpRequestFunctions httpRequestFunctions, IKeyRepository keyRepository)
         {
             _HttpRequestFunctions = httpRequestFunctions;
             Environment = _environment;
             _KeyRepository = keyRepository;
+            _Certificate = certificate;
         }
         public IActionResult Index()
         {
@@ -78,8 +83,8 @@ namespace Trustme.Controllers
             if (_HttpRequestFunctions.IsloggedIn(HttpContext) == true)
             {
 
-                //string username = _HttpRequestFunctions.GetUsername(HttpContext);
-
+                KeyPairCertificateGeneratorModel keyPairCertificateGeneratorModel = new KeyPairCertificateGeneratorModel();
+                keyPairCertificateGeneratorModel = _Certificate.GenereateCertificate(keySize);
 
                 TextWriter textWriter1 = new StringWriter();
                 PemWriter pemWriter1 = new PemWriter(textWriter1);
