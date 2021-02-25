@@ -84,28 +84,7 @@ namespace Trustme.Controllers
             {
 
                 KeyPairCertificateGeneratorModel keyPairCertificateGeneratorModel = new KeyPairCertificateGeneratorModel();
-                keyPairCertificateGeneratorModel = _Certificate.GenereateCertificate(keySize);
-
-                TextWriter textWriter1 = new StringWriter();
-                PemWriter pemWriter1 = new PemWriter(textWriter1);
-                pemWriter1.WriteObject(kp.Public);
-                pemWriter1.Writer.Flush();
-
-                string publicKey = textWriter1.ToString();
-
-                Key currentKey = new Key();
-                currentKey.CertificateName = certificateName;
-                currentKey.Description = description;
-                currentKey.KeySize = keySize;
-                currentKey.PublicKey = publicKey;
-                
-
-                UserKeyModel userKeyModel = new UserKeyModel();
-                userKeyModel.User = currentUser;
-                userKeyModel.Key = currentKey;
-
-                _KeyRepository.AddKey(userKeyModel);
-                
+                keyPairCertificateGeneratorModel = _Certificate.GenereateCertificate(keySize);                
             }
 
             var cert = cGenerator.Generate(kp.Private); // Create a self-signed cert
