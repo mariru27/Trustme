@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Trustme.Tools.ToolsModels;
 using Trustme.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Trustme.ITools
 {
@@ -11,5 +12,7 @@ namespace Trustme.ITools
     {
         public KeyPairCertificateGeneratorModel GenereateCertificate(int keySize);
         public void CrateAndStoreKeyUserInDB(User currentUser, KeyPairCertificateGeneratorModel keyPairCertificateGeneratorModel, Key key);
+
+        public FileContentResult CreateCertificateFileAndPrivateKeyFile(KeyPairCertificateGeneratorModel keyPairCertificateGeneratorModel);
     }
 }
