@@ -31,12 +31,44 @@ using Trustme.Service;
 using Trustme.ViewModels;
 using Trustme.ITools;
 using Trustme.Tools.ToolsModels;
-using Trustme.ViewModels;
+
 namespace Trustme.Tools
 {
     public class Certificate : ICertificate
     {
         private const string SignatureAlgorithm = "sha1WithRSA";
+        private IHttpRequestFunctions _HttpRequestFunctions;
+        private IKeyRepository _KeyRepository;
+        public Certificate(IKeyRepository keyRepository)
+        {
+            _KeyRepository = keyRepository;
+        }
+        public void CrateAndStoreKeyUserInDB(User currentUser, KeyPairCertificateGeneratorModel keyPairCertificateGeneratorModel, Key key)
+        {
+
+
+            TextWriter textWriter1 = new StringWriter();
+            PemWriter pemWriter1 = new PemWriter(textWriter1);
+            pemWriter1.WriteObject(keyPairCertificateGeneratorModel.KeyPair.Public);
+            pemWriter1.Writer.Flush();
+
+            string publicKey = textWriter1.ToString();
+
+            Key currentKey = new Key();
+            currentKey.CertificateName = key.CertificateName;
+            currentKey.Description = key.Description;
+            currentKey.KeySize = key.KeySize;
+            currentKey.PublicKey = publicKey;
+
+
+            UserKeyModel userKeyModel = new UserKeyModel();
+            userKeyModel.User = currentUser;
+            userKeyModel.Key = currentKey;
+
+            _KeyRepository.AddKey(userKeyModel);
+
+        }
+
         public KeyPairCertificateGeneratorModel GenereateCertificate(int keySize)
         {
             // Keypair Generator
