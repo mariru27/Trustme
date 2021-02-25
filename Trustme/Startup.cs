@@ -18,6 +18,8 @@ using Trustme.IServices;
 using Trustme.Service;
 using Trustme.Models;
 using AppContext = Trustme.Data.AppContext;
+using Trustme.ITools;
+using Trustme.Tools;
 
 namespace Trustme
 {
@@ -47,6 +49,7 @@ namespace Trustme
             services.AddScoped<IRoleRepository, RoleRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IHttpRequestFunctions, HttpRequestFunctions>();
+            services.AddTransient<ICertificate, Certificate>();
 
             services.AddMvc().AddControllersAsServices();
 
