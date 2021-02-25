@@ -29,6 +29,8 @@ using Microsoft.EntityFrameworkCore;
 using Trustme.IServices;
 using Trustme.Service;
 using Trustme.Models;
+using Trustme.ViewModels;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Trustme.Controllers
 {
@@ -40,14 +42,40 @@ namespace Trustme.Controllers
         private IHostingEnvironment Environment;
         private IKeyRepository _KeyRepository;
         private IHttpRequestFunctions _HttpRequestFunctions;
+        private IUnsignedDocumentRepository _UnsignedDocumentRepository;
 
-        public SignDocumentsController(IHostingEnvironment _environment, IKeyRepository keyRepository, IHttpRequestFunctions httpRequestFunctions)
+        public SignDocumentsController(IHostingEnvironment _environment, IKeyRepository keyRepository, IHttpRequestFunctions httpRequestFunctions, IUnsignedDocumentRepository unsignedDocumentRepository)
         {
             Environment = _environment;
             _KeyRepository = keyRepository;
             _HttpRequestFunctions = httpRequestFunctions;
+            _UnsignedDocumentRepository = unsignedDocumentRepository;
         }
 
+        public IActionResult UnsignedDocuments()
+        {
+            User user = new User();
+            user = _HttpRequestFunctions.GetUser(HttpContext);
+            IEnumerable<UnsignedDocument> unsignedDocuments = _UnsignedDocumentRepository.ListAllUsignedDocumentsByUser(user);
+            return View(unsignedDocuments);
+        }
+
+        public IActionResult SignSentDocument(int IdUnsignedDocument)
+        {
+            KeysUnsignedDocumentViewModel keysUnsignedDocumentViewModel = new KeysUnsignedDocumentViewModel
+            {
+                UnsignedDocument = _UnsignedDocumentRepository.GetUnsignedDocumentById(IdUnsignedDocument),
+                Keys =_KeyRepository.ListAllKeys(_HttpRequestFunctions.GetUser(HttpContext))
+            };
+            
+            return View(keysUnsignedDocumentViewModel);
+        }
+        
+        public IActionResult SignSentDocumentCard(int IdUnsignedDocument, int certificates, IFormFile PkFile)
+        {
+            
+            return RedirectToAction("UnsignedDocuments");
+        }
         public IActionResult SignDocument()
         {
 

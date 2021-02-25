@@ -2,15 +2,17 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Trustme.Data;
 
 namespace Trustme.Migrations
 {
     [DbContext(typeof(AppContext))]
-    partial class AppContextModelSnapshot : ModelSnapshot
+    [Migration("20210222100232_unsigneddocument_edit")]
+    partial class unsigneddocument_edit
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -38,7 +40,12 @@ namespace Trustme.Migrations
                     b.Property<string>("PublicKey")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("SignedDocumentId")
+                        .HasColumnType("int");
+
                     b.HasKey("KeyId");
+
+                    b.HasIndex("SignedDocumentId");
 
                     b.ToTable("Key");
                 });
@@ -70,9 +77,6 @@ namespace Trustme.Migrations
 
                     b.Property<byte[]>("Document")
                         .HasColumnType("varbinary(max)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Signature")
                         .HasColumnType("nvarchar(max)");
@@ -202,6 +206,15 @@ namespace Trustme.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("UserUnsignedDocuments");
+                });
+
+            modelBuilder.Entity("Trustme.Models.Key", b =>
+                {
+                    b.HasOne("Trustme.Models.SignedDocument", "Signed")
+                        .WithMany()
+                        .HasForeignKey("SignedDocumentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Trustme.Models.User", b =>

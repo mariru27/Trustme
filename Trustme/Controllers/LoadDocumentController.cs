@@ -10,18 +10,20 @@ using Trustme.IServices;
 using System.IO;
 using Microsoft.AspNetCore.Http;
 
+
 namespace Trustme.Controllers
 {
     public class LoadDocumentController : Controller
     {
         private IUserRepository _UserRepository;
         private IUnsignedDocumentRepository _UnsignedDocumentRepository;
+        private IHttpRequestFunctions _HttpRequestFunctions;
 
-        public LoadDocumentController(IUserRepository userRepository, IUnsignedDocumentRepository unsignedDocumentRepository)
+        public LoadDocumentController(IUserRepository userRepository, IUnsignedDocumentRepository unsignedDocumentRepository, IHttpRequestFunctions httpRequestFunctions)
         {
             _UserRepository = userRepository;
             _UnsignedDocumentRepository = unsignedDocumentRepository;
-            
+            _HttpRequestFunctions = httpRequestFunctions;
         }
 
         [HttpGet]
@@ -35,8 +37,10 @@ namespace Trustme.Controllers
         {
 
             UserUnsignedDocument userUnsignedDocument = new UserUnsignedDocument();
-            UnsignedDocument unsignedDocument = new UnsignedDocument();
-            unsignedDocument.Name = Document.FileName;
+            UnsignedDocument unsignedDocument = new UnsignedDocument
+            {
+                Name = Document.FileName
+            };
             using (var target = new MemoryStream())
             {
                 Document.CopyTo(target);

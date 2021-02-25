@@ -1,0 +1,28 @@
+﻿@model IEnumerable<UnsignedDocument>
+
+    <h4 class="display-4">Unsigned Documents</h4>
+
+
+    <a class="btn btn-primary" style="margin-bottom:15px; margin-top:7px" asp-controller="SignDocuments" asp-action="SignDocument">Sign my own document</a>
+
+    @{
+        foreach (var udoc in Model)
+        {
+            <form asp-action="SignSentDocument">
+                <input type="hidden" name="IdUnsignedDocument" value=@udoc.IdUnsignedDocument id="IdUnsignedDocument" />
+                <div class="card">
+                    <div class="card-header">
+                        @udoc.Name
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text"><strong>Key Preference: @udoc.KeyPreference </strong></p>
+                        <div class="form-group">
+                            <input type="submit" value="Sign" class="btn btn-primary" />
+                        </div>
+                    </div>
+                </div>
+                <br>
+
+            </form>
+        }
+    }
