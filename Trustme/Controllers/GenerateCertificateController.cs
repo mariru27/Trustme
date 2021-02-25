@@ -86,7 +86,6 @@ namespace Trustme.Controllers
                 TempData["certificateNameError"] = false;
                 return RedirectToAction("GenerateCertificate");
             }
-            string wwwPath = this.Environment.WebRootPath;
 
             
             if (_HttpRequestFunctions.IsloggedIn(HttpContext) == true)
@@ -98,61 +97,7 @@ namespace Trustme.Controllers
                 _Certificate.CrateAndStoreKeyUserInDB(currentUser, keyPairCertificateGeneratorModel, key);
             }
 
-            var cert = cGenerator.Generate(kp.Private); // Create a self-signed cert
-
-            byte[] encoded = cert.GetEncoded();
-
-            string pathDir = Path.Combine(wwwPath, "Certificate_PKey");
-            if (!Directory.Exists(pathDir))
-            {
-                Directory.CreateDirectory(pathDir);
-            }
-
-
-            string pathCertificate = Path.Combine(pathDir, "certificate.der");
-            using (FileStream outStream = new FileStream(pathCertificate, FileMode.Create, FileAccess.ReadWrite))
-            {
-                outStream.Write(encoded, 0, encoded.Length);
-            }
-
-            PrivateKeyInfo pkInfo = PrivateKeyInfoFactory.CreatePrivateKeyInfo(kp.Private);
-            string privatekey = Convert.ToBase64String(pkInfo.GetDerEncoded());
-
-
-            TextWriter textWriter = new StringWriter();
-            PemWriter pemWriter = new PemWriter(textWriter);
-            pemWriter.WriteObject(kp.Private);
-            pemWriter.Writer.Flush();
-
-            string privateKey = textWriter.ToString();
-
-            byte[] privatekey_byte = Encoding.ASCII.GetBytes(privateKey);
-
-            string pathPrivateKey = Path.Combine(pathDir, "privateKey.pem");
-            using (FileStream outStream = new FileStream(pathPrivateKey, FileMode.Create, FileAccess.ReadWrite))
-            {
-                outStream.Write(privatekey_byte, 0, privatekey_byte.Length);
-            }
-
-            string pathDirectoryZip = Path.Combine(wwwPath, "Certificate_Key");
-
-            ZipFile.CreateFromDirectory(pathDir, pathDirectoryZip, System.IO.Compression.CompressionLevel.Optimal, false);
-
-            const string contentType = "application/zip";
-            HttpContext.Response.ContentType = contentType;
-            var result = new FileContentResult(System.IO.File.ReadAllBytes(pathDirectoryZip), contentType);
-
-
-            System.IO.DirectoryInfo dir = new DirectoryInfo(pathDir);
-            foreach (FileInfo files in dir.GetFiles())
-            {
-                files.Delete();
-            }
-            Directory.Delete(pathDir);
-            System.IO.File.Delete(pathDirectoryZip);
-
-            result.FileDownloadName = certificateName + ".zip";
-
+            var result = _Certificate.CreateCertificateFileAndPrivateKeyFile(keyPairCertificateGeneratorModel, key.CertificateName, HttpContext);
 
             return result;
 
