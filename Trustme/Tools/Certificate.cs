@@ -30,6 +30,7 @@ using Trustme.IServices;
 using Trustme.Service;
 using Trustme.ViewModels;
 using Trustme.ITools;
+using Trustme.Tools.ToolsModels;
 
 namespace Trustme.Tools
 {
