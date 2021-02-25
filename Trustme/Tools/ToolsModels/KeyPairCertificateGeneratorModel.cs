@@ -30,9 +30,10 @@ using Trustme.ViewModels;
 
 namespace Trustme.Tools.ToolsModels
 {
-    public class KeyCertificate
+    public class KeyPairCertificateGeneratorModel
     {
-        X509V3CertificateGenerator CertificateGenerator;
-        AsymmetricCipherKeyPair KeyPair;
+        public X509V3CertificateGenerator CertificateGenerator { get; set; }
+        public AsymmetricCipherKeyPair KeyPair { get; set; }
+        
     }
 }
