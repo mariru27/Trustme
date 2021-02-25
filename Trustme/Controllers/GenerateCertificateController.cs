@@ -74,23 +74,7 @@ namespace Trustme.Controllers
             }
             string wwwPath = this.Environment.WebRootPath;
 
-            // Keypair Generator
-            RsaKeyPairGenerator kpGenerator = new RsaKeyPairGenerator();
-            kpGenerator.Init(new KeyGenerationParameters(new SecureRandom(), keySize));
-
-            // Create a keypair
-            AsymmetricCipherKeyPair kp = kpGenerator.GenerateKeyPair();
-
-            // Certificate Generator
-            X509V3CertificateGenerator cGenerator = new X509V3CertificateGenerator();
-            cGenerator.SetSerialNumber(BigInteger.ProbablePrime(120, new Random()));
-            cGenerator.SetSubjectDN(new X509Name("CN=" + "trustme.com"));
-            cGenerator.SetIssuerDN(new X509Name("CN=" + "Trustme Application"));
-            cGenerator.SetNotBefore(DateTime.Now);
-            cGenerator.SetNotAfter(DateTime.Now.Add(new TimeSpan(365, 0, 0, 0))); // Expire in 1 year
-            cGenerator.SetSignatureAlgorithm(SignatureAlgorithm); // See the Appendix Below for info on the hash types supported by Bouncy Castle C#
-            cGenerator.SetPublicKey(kp.Public); // Only the public key should be used here!
-            //we saved public key in database
+            
             if (_HttpRequestFunctions.IsloggedIn(HttpContext) == true)
             {
 
