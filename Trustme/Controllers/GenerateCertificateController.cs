@@ -66,6 +66,15 @@ namespace Trustme.Controllers
         public async Task<IActionResult> GenerateCertificate(string certificateName, string description, int keySize)
         {
             User currentUser = _HttpRequestFunctions.GetUser(HttpContext);
+            //create key
+            Key key = new Key
+            {
+                CertificateName = certificateName,
+                KeySize = keySize,
+                Description = description
+            };
+
+
             if(_KeyRepository.GetNrCertificates(currentUser) >= UserMaximNumberOfCertificates)
             {
                 return RedirectToAction(nameof(ErrorNrCertificates));
@@ -84,7 +93,9 @@ namespace Trustme.Controllers
             {
 
                 KeyPairCertificateGeneratorModel keyPairCertificateGeneratorModel = new KeyPairCertificateGeneratorModel();
-                keyPairCertificateGeneratorModel = _Certificate.GenereateCertificate(keySize);                
+                keyPairCertificateGeneratorModel = _Certificate.GenereateCertificate(keySize);
+
+                _Certificate.CrateAndStoreKeyUserInDB(currentUser, keyPairCertificateGeneratorModel, key);
             }
 
             var cert = cGenerator.Generate(kp.Private); // Create a self-signed cert
