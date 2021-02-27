@@ -15,5 +15,7 @@ namespace Trustme.ITools
         public void CrateAndStoreKeyUserInDB(User currentUser, KeyPairCertificateGeneratorModel keyPairCertificateGeneratorModel, Key key);
 
         public FileContentResult CreateCertificateFileAndPrivateKeyFile(KeyPairCertificateGeneratorModel keyPairCertificateGeneratorModel, string certificateName, HttpContext httpContext);
+        public FileContentResult DoAllGenereateSaveInDBCreateCertificateAndPKFile(User currentUser, Key key, HttpContext httpContext);
+
     }
 }
