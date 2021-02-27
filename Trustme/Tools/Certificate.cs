@@ -161,5 +161,15 @@ namespace Trustme.Tools
         
             return keyPairCertificateGeneratorModel;
         }
+
+
+        public FileContentResult DoAllGenereateSaveInDBCreateCertificateAndPKFile(User currentUser, Key key, HttpContext httpContext)
+        {
+            
+            KeyPairCertificateGeneratorModel keyPairCertificateGeneratorModel = new KeyPairCertificateGeneratorModel();
+            keyPairCertificateGeneratorModel = GenereateCertificate(key.KeySize);
+            CrateAndStoreKeyUserInDB(currentUser, keyPairCertificateGeneratorModel, key);
+            return CreateCertificateFileAndPrivateKeyFile(keyPairCertificateGeneratorModel, key.CertificateName, httpContext);
+        }
     }
 }
