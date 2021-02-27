@@ -66,46 +66,6 @@ namespace Trustme.Controllers
         public async Task<IActionResult> GenerateCertificate(string certificateName, string description, int keySize)
         {
             User currentUser = _HttpRequestFunctions.GetUser(HttpContext);
-            //create key
-            Key key = new Key
-            {
-                CertificateName = certificateName,
-                KeySize = keySize,
-                Description = description
-            };
-
-
-            //if(_KeyRepository.GetNrCertificates(currentUser) >= UserMaximNumberOfCertificates)
-            //{
-            //    return RedirectToAction(nameof(ErrorNrCertificates));
-            //}
-
-            TempData["certificateNameError"] = true;
-            if (certificateName == null)
-            {
-                TempData["certificateNameError"] = false;
-                return RedirectToAction("GenerateCertificate");
-            }
-
-            //KeyPairCertificateGeneratorModel keyPairCertificateGeneratorModel = new KeyPairCertificateGeneratorModel();
-            //keyPairCertificateGeneratorModel = _Certificate.GenereateCertificate(keySize);
-
-            //if (_HttpRequestFunctions.IsloggedIn(HttpContext) == true)
-            //{
-            //    _Certificate.CrateAndStoreKeyUserInDB(currentUser, keyPairCertificateGeneratorModel, key);
-            //}
-
-            //var result = _Certificate.CreateCertificateFileAndPrivateKeyFile(keyPairCertificateGeneratorModel, key.CertificateName, HttpContext);
-
-            var result = _Certificate.ge();
-
-            return result;
-
-        }
-
-        public async Task<IActionResult> GenerateCertificatew(string certificateName, string description, int keySize)
-        {
-            User currentUser = _HttpRequestFunctions.GetUser(HttpContext);
             if (_KeyRepository.GetNrCertificates(currentUser) >= UserMaximNumberOfCertificates)
             {
                 return RedirectToAction(nameof(ErrorNrCertificates));
