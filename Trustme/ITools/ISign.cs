@@ -1,11 +1,14 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace Trustme.ITools
 {
-    interface ISign
+    public interface ISign
     {
+        public bool SignDoc(IFormFile pkfile, IFormFile docfile, int certificates);
+
     }
 }
