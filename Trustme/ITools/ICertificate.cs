@@ -16,6 +16,8 @@ namespace Trustme.ITools
 
         public FileContentResult CreateCertificateFileAndPrivateKeyFile(KeyPairCertificateGeneratorModel keyPairCertificateGeneratorModel, string certificateName, HttpContext httpContext);
         public FileContentResult DoAllGenereateSaveInDBCreateCertificateAndPKFile(User currentUser, Key key, HttpContext httpContext);
+        public FileContentResult GenerateCertificatePivateKey(string certificateName, string description, int keySize, HttpContext httpContext);
+
 
     }
 }
