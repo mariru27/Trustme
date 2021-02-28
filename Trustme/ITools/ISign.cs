@@ -8,7 +8,7 @@ namespace Trustme.ITools
 {
     public interface ISign
     {
-        public bool SignDoc(IFormFile pkfile, IFormFile docfile, int certificates);
+        public bool SignDoc(IFormFile pkfile, IFormFile docfile, int certificates, HttpContext httpContext);
 
     }
 }

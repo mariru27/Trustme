@@ -31,6 +31,8 @@ using Trustme.Service;
 using Trustme.Models;
 using Trustme.ViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Trustme.Tools;
+using Trustme.ITools;
 
 namespace Trustme.Controllers
 {
@@ -43,12 +45,14 @@ namespace Trustme.Controllers
         private IKeyRepository _KeyRepository;
         private IHttpRequestFunctions _HttpRequestFunctions;
         private IUnsignedDocumentRepository _UnsignedDocumentRepository;
+        private ISign _Sign;
 
-        public SignDocumentsController(IHostingEnvironment _environment, IKeyRepository keyRepository, IHttpRequestFunctions httpRequestFunctions, IUnsignedDocumentRepository unsignedDocumentRepository)
+        public SignDocumentsController(IHostingEnvironment _environment, IKeyRepository keyRepository, IHttpRequestFunctions httpRequestFunctions, IUnsignedDocumentRepository unsignedDocumentRepository, ISign sign)
         {
             Environment = _environment;
             _KeyRepository = keyRepository;
             _HttpRequestFunctions = httpRequestFunctions;
+            _Sign = sign;
             _UnsignedDocumentRepository = unsignedDocumentRepository;
         }
 
@@ -102,7 +106,7 @@ namespace Trustme.Controllers
             if (ModelState.IsValid && pkfile != null && docfile != null)
             {
 
-
+                bool verifytest = _Sign.SignDoc(pkfile,docfile,certificates,HttpContext);
 
                 TempData["signature"] = "";
                 TempData["testKey"] = true;
