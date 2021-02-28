@@ -23,7 +23,7 @@ namespace Trustme.Tools
         private IKeyRepository _KeyRepository;
         private IHttpRequestFunctions _HttpRequestFunctions;
         
-        public Sign(IHostingEnvironment hostingEnvironment, KeyRepository keyRepository, IHttpRequestFunctions httpRequestFunctions)
+        public Sign(IHostingEnvironment hostingEnvironment, IKeyRepository keyRepository, IHttpRequestFunctions httpRequestFunctions)
         {
             Environment = hostingEnvironment;
             _KeyRepository = keyRepository;
@@ -94,6 +94,7 @@ namespace Trustme.Tools
             signModel.keypath = keypath;
             signModel.privatekeyy = privatekeyy;
             signModel.reader = reader;
+            signModel.verifytest = verifytest;
             return signModel;
         }
     }
