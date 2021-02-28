@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using Trustme.ITools;
 using Trustme.IServices;
 using Trustme.Service;
+using Trustme.Tools.ToolsModels;
 
 namespace Trustme.Tools
 {
@@ -28,9 +29,9 @@ namespace Trustme.Tools
             _KeyRepository = keyRepository;
             _HttpRequestFunctions = httpRequestFunctions;
         }
-        public bool SignDoc(IFormFile pkfile, IFormFile docfile, int certificates, HttpContext httpContext)
+        public SignModel SignDoc(IFormFile pkfile, IFormFile docfile, int certificates, HttpContext httpContext)
         {
-
+            SignModel signModel = new SignModel();
             var wwwfilePath = this.Environment.WebRootPath; //we are using Temp file name just for the example. Add your own file path.c
             wwwfilePath = Path.Combine(wwwfilePath, "dirForPK");
             var filePath = Path.Combine(wwwfilePath, pkfile.FileName);
@@ -89,7 +90,11 @@ namespace Trustme.Tools
             var verifytest = signtest.VerifySignature(signaturetestbyte);
             //------end--test-----------------------------------------------------------------
 
-            return verifytest;
+            signModel.fileBytesdoc = fileBytesdoc;
+            signModel.keypath = keypath;
+            signModel.privatekeyy = privatekeyy;
+            signModel.reader = reader;
+            return signModel;
         }
     }
 }
