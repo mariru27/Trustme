@@ -14,5 +14,6 @@ namespace Trustme.Tools.ToolsModels
         public StreamReader reader { set; get; }
         public string keypath { set; get; }
         public bool verifytest { set; get; }
+        public bool validKey { set; get; }
     }
 }

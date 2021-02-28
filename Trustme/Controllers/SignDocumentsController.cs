@@ -108,6 +108,13 @@ namespace Trustme.Controllers
             {
 
                 SignModel signModel = _Sign.SignDoc(pkfile,docfile,certificates,HttpContext);
+                TempData["validKey"] = true;
+
+                if (signModel.validKey == false)
+                {
+                    TempData["validKey"] = false;
+                    return RedirectToAction("SignDocument");
+                }
 
                 TempData["signature"] = "";
                 TempData["testKey"] = true;

@@ -32,6 +32,7 @@ namespace Trustme.Tools
         public SignModel SignDoc(IFormFile pkfile, IFormFile docfile, int certificates, HttpContext httpContext)
         {
             SignModel signModel = new SignModel();
+            signModel.validKey = false;
             var wwwfilePath = this.Environment.WebRootPath; //we are using Temp file name just for the example. Add your own file path.c
             wwwfilePath = Path.Combine(wwwfilePath, "dirForPK");
             var filePath = Path.Combine(wwwfilePath, pkfile.FileName);
@@ -51,12 +52,11 @@ namespace Trustme.Tools
             var reader = System.IO.File.OpenText(keypath);
             var keypem = new PemReader(reader);
             var o = keypem.ReadObject();
-            //TempData["validKey"] = false;
-            //if (o == null)
-            //{
-            //    TempData["validKey"] = true;
-            //    return RedirectToAction("SignDocument");
-            //}
+            if (o == null)
+            {
+                signModel.validKey = true;
+                return signModel;
+            }
             AsymmetricCipherKeyPair keyPair = (AsymmetricCipherKeyPair)o;
             AsymmetricKeyParameter privatekeyy = keyPair.Private;
 
