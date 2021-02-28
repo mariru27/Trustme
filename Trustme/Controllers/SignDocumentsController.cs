@@ -33,6 +33,7 @@ using Trustme.ViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Trustme.Tools;
 using Trustme.ITools;
+using Trustme.Tools.ToolsModels;
 
 namespace Trustme.Controllers
 {
@@ -106,11 +107,12 @@ namespace Trustme.Controllers
             if (ModelState.IsValid && pkfile != null && docfile != null)
             {
 
-                bool verifytest = _Sign.SignDoc(pkfile,docfile,certificates,HttpContext);
+                SignModel signModel = _Sign.SignDoc(pkfile,docfile,certificates,HttpContext);
 
                 TempData["signature"] = "";
                 TempData["testKey"] = true;
-                if (verifytest == false)
+
+                if (signModel.verifytest == false)
                 {
                     TempData["testKey"] = false;
 
@@ -118,13 +120,13 @@ namespace Trustme.Controllers
                 else
                 {
                     ISigner sign = SignerUtilities.GetSigner(PkcsObjectIdentifiers.Sha256WithRsaEncryption.Id);
-                    sign.Init(true, privatekeyy);
-                    sign.BlockUpdate(fileBytesdoc, 0, fileBytesdoc.Length);
+                    sign.Init(true, signModel.privatekeyy);
+                    sign.BlockUpdate(signModel.fileBytesdoc, 0, signModel.fileBytesdoc.Length);
                     var signature = sign.GenerateSignature();
                     string signaturestring = Convert.ToBase64String(signature);
 
-                    reader.Close();
-                    System.IO.File.Delete(keypath);
+                    signModel.reader.Close();
+                    System.IO.File.Delete(signModel.keypath);
                     TempData["signature"] = signaturestring;
 
                 }
