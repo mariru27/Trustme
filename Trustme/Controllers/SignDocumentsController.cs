@@ -119,15 +119,7 @@ namespace Trustme.Controllers
                 }
                 else
                 {
-                    ISigner sign = SignerUtilities.GetSigner(PkcsObjectIdentifiers.Sha256WithRsaEncryption.Id);
-                    sign.Init(true, signModel.privatekeyy);
-                    sign.BlockUpdate(signModel.fileBytesdoc, 0, signModel.fileBytesdoc.Length);
-                    var signature = sign.GenerateSignature();
-                    string signaturestring = Convert.ToBase64String(signature);
-
-                    signModel.reader.Close();
-                    System.IO.File.Delete(signModel.keypath);
-                    TempData["signature"] = signaturestring;
+                    TempData["signature"] = _Sign.SignDocument(signModel);
 
                 }
             }
