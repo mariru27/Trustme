@@ -37,8 +37,6 @@
                 <input for="docfile" name="docfile" type="file">
             </div>
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="submit" value="Upload" class="btn btn-primary" />
-
             @{
                 if (signature != "" && signature != null)
                 {
@@ -50,6 +48,8 @@
 
                 }
             }
+            <input type="submit" value="Upload" class="btn btn-primary" />
+
             </div>
         </div>
 </form>
