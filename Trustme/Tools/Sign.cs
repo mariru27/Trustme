@@ -115,7 +115,32 @@ namespace Trustme.Tools
 
         public ISigner VerifySignature()
         {
-            throw new NotImplementedException();
+            //get public key by name from database, use key to decrypt
+
+            Key userKey = _KeyRepository.GetKeyByCertificateName(username, certificateName);
+            string publicKeystring = userKey.PublicKey;
+            //string publicKeystring = admin.getPublicKeyByCertificateName(username, certificateName);
+
+            byte[] publickeybyte = Encoding.ASCII.GetBytes(publicKeystring);
+
+            var reader = new StringReader(publicKeystring);
+            var keypem = new PemReader(reader);
+
+            var publickey = (Org.BouncyCastle.Crypto.AsymmetricKeyParameter)keypem.ReadObject();
+
+            reader.Close();
+
+            byte[] fileBytesdoc;
+
+            using (var ms = new MemoryStream())
+            {
+                document.CopyTo(ms);
+                fileBytesdoc = ms.ToArray();
+            }
+
+            ISigner sign = SignerUtilities.GetSigner(PkcsObjectIdentifiers.Sha256WithRsaEncryption.Id);
+            sign.Init(false, publickey);
+            sign.BlockUpdate(fileBytesdoc, 0, fileBytesdoc.Length);
         }
     }
 }
