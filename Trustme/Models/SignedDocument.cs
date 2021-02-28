@@ -15,6 +15,7 @@ namespace Trustme.Models
         public byte[] Document { get; set; }
         public string Signature { get; set; }
         public string Comment { get; set; }
-
+        public int KeyId { get; set; }
+        public Key Key { get; set; }
     }
 }
