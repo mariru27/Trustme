@@ -31,6 +31,9 @@ using Trustme.Service;
 using Trustme.Models;
 using Trustme.ViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Trustme.Tools;
+using Trustme.ITools;
+using Trustme.Tools.ToolsModels;
 
 namespace Trustme.Controllers
 {
@@ -43,12 +46,14 @@ namespace Trustme.Controllers
         private IKeyRepository _KeyRepository;
         private IHttpRequestFunctions _HttpRequestFunctions;
         private IUnsignedDocumentRepository _UnsignedDocumentRepository;
+        private ISign _Sign;
 
-        public SignDocumentsController(IHostingEnvironment _environment, IKeyRepository keyRepository, IHttpRequestFunctions httpRequestFunctions, IUnsignedDocumentRepository unsignedDocumentRepository)
+        public SignDocumentsController(IHostingEnvironment _environment, IKeyRepository keyRepository, IHttpRequestFunctions httpRequestFunctions, IUnsignedDocumentRepository unsignedDocumentRepository, ISign sign)
         {
             Environment = _environment;
             _KeyRepository = keyRepository;
             _HttpRequestFunctions = httpRequestFunctions;
+            _Sign = sign;
             _UnsignedDocumentRepository = unsignedDocumentRepository;
         }
 
@@ -87,7 +92,7 @@ namespace Trustme.Controllers
             {
                 ModelState.AddModelError("", "You are missing a file");
             }
-            if (TempData["validKey"] != null && (bool)TempData["validKey"] == true)
+            if (TempData["validKey"] != null && (bool)TempData["validKey"] == false)
             {
                 ModelState.AddModelError("", "Private key is not valid");
             }
@@ -102,83 +107,26 @@ namespace Trustme.Controllers
             if (ModelState.IsValid && pkfile != null && docfile != null)
             {
 
+                SignModel signModel = _Sign.SignDoc(pkfile,docfile,certificates,HttpContext);
+                TempData["validKey"] = true;
 
-                var wwwfilePath = this.Environment.WebRootPath; //we are using Temp file name just for the example. Add your own file path.c
-                wwwfilePath = Path.Combine(wwwfilePath, "dirForPK");
-                var filePath = Path.Combine(wwwfilePath, pkfile.FileName);
-                using (var stream = new FileStream(filePath, FileMode.Create, FileAccess.ReadWrite))
+                if (signModel.validKey == false)
                 {
-                    await pkfile.CopyToAsync(stream);
-                }
-
-                byte[] fileBytesdoc;
-                using (var ms = new MemoryStream())
-                {
-                    docfile.CopyTo(ms);
-                    fileBytesdoc = ms.ToArray();
-                }
-                //read private key and phrase
-                string keypath = Path.Combine(wwwfilePath, pkfile.FileName);
-                var reader = System.IO.File.OpenText(keypath);
-                var keypem = new PemReader(reader);
-                var o = keypem.ReadObject();
-                TempData["validKey"] = false;
-                if (o == null)
-                {
-                    TempData["validKey"] = true;
+                    TempData["validKey"] = false;
                     return RedirectToAction("SignDocument");
                 }
-                AsymmetricCipherKeyPair keyPair = (AsymmetricCipherKeyPair)o;
-                AsymmetricKeyParameter privatekeyy = keyPair.Private;
-
-                //just for test
-                //-------begin--test------------------------------------------------------
-                string testmessage = "this is a test message";
-                byte[] testmessagetyte = Encoding.ASCII.GetBytes(testmessage);
-
-                var currentKey = _KeyRepository.GetKey(_HttpRequestFunctions.GetUserId(HttpContext), certificates);
-
-                byte[] publickeybyte = Encoding.ASCII.GetBytes(currentKey.PublicKey);
-                //phrase public key
-                var readerPublickey = new StringReader(currentKey.PublicKey);
-                var pemPublicKey = new PemReader(readerPublickey);
-
-                var publickey = (Org.BouncyCastle.Crypto.AsymmetricKeyParameter)pemPublicKey.ReadObject();
-
-                reader.Close();
-
-                ISigner signtest = SignerUtilities.GetSigner(PkcsObjectIdentifiers.Sha256WithRsaEncryption.Id);
-                signtest.Init(true, privatekeyy);
-                signtest.BlockUpdate(testmessagetyte, 0, testmessagetyte.Length);
-                var signaturetest = signtest.GenerateSignature();
-                string signatureteststring = Convert.ToBase64String(signaturetest);
-
-                signtest.Init(false, publickey);
-                signtest.BlockUpdate(testmessagetyte, 0, testmessagetyte.Length);
-
-                byte[] signaturetestbyte = Convert.FromBase64String(signatureteststring);
-
-                var verifytest = signtest.VerifySignature(signaturetestbyte);
-                //------end--test-----------------------------------------------------------------
 
                 TempData["signature"] = "";
                 TempData["testKey"] = true;
-                if (verifytest == false)
+
+                if (signModel.verifytest == false)
                 {
                     TempData["testKey"] = false;
 
                 }
                 else
                 {
-                    ISigner sign = SignerUtilities.GetSigner(PkcsObjectIdentifiers.Sha256WithRsaEncryption.Id);
-                    sign.Init(true, privatekeyy);
-                    sign.BlockUpdate(fileBytesdoc, 0, fileBytesdoc.Length);
-                    var signature = sign.GenerateSignature();
-                    string signaturestring = Convert.ToBase64String(signature);
-
-                    reader.Close();
-                    System.IO.File.Delete(keypath);
-                    TempData["signature"] = signaturestring;
+                    TempData["signature"] = _Sign.SignDocument(signModel);
 
                 }
             }

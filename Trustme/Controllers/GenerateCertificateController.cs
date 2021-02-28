@@ -29,6 +29,9 @@ using Microsoft.EntityFrameworkCore;
 using Trustme.IServices;
 using Trustme.Service;
 using Trustme.ViewModels;
+using Trustme.Tools.ToolsModels;
+using Trustme.ITools;
+using Trustme.Tools;
 
 namespace Trustme.Controllers
 {
@@ -38,12 +41,14 @@ namespace Trustme.Controllers
         private IHostingEnvironment Environment;
         private IHttpRequestFunctions _HttpRequestFunctions;
         private IKeyRepository _KeyRepository;
+        private ICertificate _Certificate;
         private const int UserMaximNumberOfCertificates = 3;
-        public GenerateCertificateController( IHostingEnvironment _environment, IHttpRequestFunctions httpRequestFunctions, IKeyRepository keyRepository)
+        public GenerateCertificateController(ICertificate certificate, IHostingEnvironment _environment, IHttpRequestFunctions httpRequestFunctions, IKeyRepository keyRepository)
         {
             _HttpRequestFunctions = httpRequestFunctions;
             Environment = _environment;
             _KeyRepository = keyRepository;
+            _Certificate = certificate;
         }
         public IActionResult Index()
         {
@@ -61,7 +66,7 @@ namespace Trustme.Controllers
         public async Task<IActionResult> GenerateCertificate(string certificateName, string description, int keySize)
         {
             User currentUser = _HttpRequestFunctions.GetUser(HttpContext);
-            if(_KeyRepository.GetNrCertificates(currentUser) >= UserMaximNumberOfCertificates)
+            if (_KeyRepository.GetNrCertificates(currentUser) >= UserMaximNumberOfCertificates)
             {
                 return RedirectToAction(nameof(ErrorNrCertificates));
             }
@@ -109,14 +114,14 @@ namespace Trustme.Controllers
                 currentKey.Description = description;
                 currentKey.KeySize = keySize;
                 currentKey.PublicKey = publicKey;
-                
+
 
                 UserKeyModel userKeyModel = new UserKeyModel();
                 userKeyModel.User = currentUser;
                 userKeyModel.Key = currentKey;
 
                 _KeyRepository.AddKey(userKeyModel);
-                
+
             }
 
             var cert = cGenerator.Generate(kp.Private); // Create a self-signed cert
@@ -178,7 +183,6 @@ namespace Trustme.Controllers
             return result;
 
         }
-
 
 
         public IActionResult GenerateCertificate()
