@@ -114,11 +114,11 @@ namespace Trustme.Tools
 
         }
 
-        public ISigner VerifySignature()
+        public ISigner VerifySignature(VerifySignatureModel verifySignatureModel)
         {
             //get public key by name from database, use key to decrypt
 
-            Key userKey = _KeyRepository.GetKeyByCertificateName(username, certificateName);
+            Key userKey = _KeyRepository.GetKeyByCertificateName(verifySignatureModel.Username, verifySignatureModel.CertificateName);
             string publicKeystring = userKey.PublicKey;
             //string publicKeystring = admin.getPublicKeyByCertificateName(username, certificateName);
 
@@ -135,13 +135,14 @@ namespace Trustme.Tools
 
             using (var ms = new MemoryStream())
             {
-                document.CopyTo(ms);
+                verifySignatureModel.Document.CopyTo(ms);
                 fileBytesdoc = ms.ToArray();
             }
 
             ISigner sign = SignerUtilities.GetSigner(PkcsObjectIdentifiers.Sha256WithRsaEncryption.Id);
             sign.Init(false, publickey);
             sign.BlockUpdate(fileBytesdoc, 0, fileBytesdoc.Length);
+            return sign;
         }
     }
 }

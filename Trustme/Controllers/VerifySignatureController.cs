@@ -134,6 +134,8 @@ namespace Trustme.Controllers
                 //sign.Init(false, publickey);
                 //sign.BlockUpdate(fileBytesdoc, 0, fileBytesdoc.Length);
 
+                
+
                 TempData["validSignature"] = "invalid";
                 try
                 {
