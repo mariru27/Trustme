@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Org.BouncyCastle.Crypto;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,7 @@ namespace Trustme.ITools
     {
         public SignModel SignDoc(IFormFile pkfile, IFormFile docfile, int certificates, HttpContext httpContext);
         public string SignDocument(SignModel signModel);
+        public ISigner VerifySignature();
 
     }
 }

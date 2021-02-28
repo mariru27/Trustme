@@ -112,5 +112,10 @@ namespace Trustme.Tools
             return signaturestring;
 
         }
+
+        public ISigner VerifySignature()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
