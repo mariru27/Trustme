@@ -107,32 +107,32 @@ namespace Trustme.Controllers
                     return RedirectToAction("VerifySign", new { username = username });
                 }
 
-                //get public key by name from database, use key to decrypt
+                ////get public key by name from database, use key to decrypt
 
-                Key userKey = _KeyRepository.GetKeyByCertificateName(username, certificateName);
-                string publicKeystring = userKey.PublicKey;
-                //string publicKeystring = admin.getPublicKeyByCertificateName(username, certificateName);
+                //Key userKey = _KeyRepository.GetKeyByCertificateName(username, certificateName);
+                //string publicKeystring = userKey.PublicKey;
+                ////string publicKeystring = admin.getPublicKeyByCertificateName(username, certificateName);
 
-                byte[] publickeybyte = Encoding.ASCII.GetBytes(publicKeystring);
+                //byte[] publickeybyte = Encoding.ASCII.GetBytes(publicKeystring);
 
-                var reader = new StringReader(publicKeystring);
-                var keypem = new PemReader(reader);
+                //var reader = new StringReader(publicKeystring);
+                //var keypem = new PemReader(reader);
 
-                var publickey = (Org.BouncyCastle.Crypto.AsymmetricKeyParameter)keypem.ReadObject();
+                //var publickey = (Org.BouncyCastle.Crypto.AsymmetricKeyParameter)keypem.ReadObject();
 
-                reader.Close();
+                //reader.Close();
 
-                byte[] fileBytesdoc;
+                //byte[] fileBytesdoc;
 
-                using (var ms = new MemoryStream())
-                {
-                    document.CopyTo(ms);
-                    fileBytesdoc = ms.ToArray();
-                }
+                //using (var ms = new MemoryStream())
+                //{
+                //    document.CopyTo(ms);
+                //    fileBytesdoc = ms.ToArray();
+                //}
 
-                ISigner sign = SignerUtilities.GetSigner(PkcsObjectIdentifiers.Sha256WithRsaEncryption.Id);
-                sign.Init(false, publickey);
-                sign.BlockUpdate(fileBytesdoc, 0, fileBytesdoc.Length);
+                //ISigner sign = SignerUtilities.GetSigner(PkcsObjectIdentifiers.Sha256WithRsaEncryption.Id);
+                //sign.Init(false, publickey);
+                //sign.BlockUpdate(fileBytesdoc, 0, fileBytesdoc.Length);
 
                 TempData["validSignature"] = "invalid";
                 try
