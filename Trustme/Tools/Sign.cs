@@ -14,6 +14,7 @@ using Trustme.ITools;
 using Trustme.IServices;
 using Trustme.Service;
 using Trustme.Tools.ToolsModels;
+using Trustme.Models;
 
 namespace Trustme.Tools
 {
