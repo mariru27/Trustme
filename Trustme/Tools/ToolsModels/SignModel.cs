@@ -9,9 +9,9 @@ namespace Trustme.Tools.ToolsModels
 {
     public class SignModel
     {
-        AsymmetricKeyParameter privatekeyy;
-        byte[] fileBytesdoc;
-        StreamReader reader;
-        string keypath;
+        public AsymmetricKeyParameter privatekeyy { set; get; };
+        public byte[] fileBytesdoc { set; get; };
+        public StreamReader reader { set; get; };
+        public string keypath { set; get; };
     }
 }
