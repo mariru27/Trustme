@@ -61,7 +61,6 @@ namespace Trustme.Controllers
         [HttpPost]
         public IActionResult LoadDocumentToSign(string Username, string CertificateName, IFormFile Document)
         {
-
             UserUnsignedDocument userUnsignedDocument = new UserUnsignedDocument();
             UnsignedDocument unsignedDocument = new UnsignedDocument
             {
@@ -81,7 +80,17 @@ namespace Trustme.Controllers
             {
                 userUnsignedDocument.User = _UserRepository.GetUserbyUsername(Username);
                 userUnsignedDocument.UnsignedDocument = unsignedDocument;
-                _UnsignedDocumentRepository.AddUnsignedDocument(userUnsignedDocument);
+                //_UnsignedDocumentRepository.AddUnsignedDocument(userUnsignedDocument);
+
+                UnsignedDocumentUserKey unsignedDocumentUserKey = new UnsignedDocumentUserKey
+                {
+                    Key = key,
+                    UnsignedDocument = unsignedDocument,
+                    User = _UserRepository.GetUserbyUsername(Username)
+                };
+                //unsignedDocumentUserKey.Key = key;
+
+                _UnsignedDocumentRepository.AddUnsignedDocument(unsignedDocumentUserKey);
 
             }
             else
