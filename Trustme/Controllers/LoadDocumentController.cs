@@ -32,14 +32,18 @@ namespace Trustme.Controllers
             return View();
         }
 
+        public IActionResult SendDocumentToUser()
+        {
+            return View();
+        }
         
-
+        [HttpPost]
         public IActionResult VerifyUser(string username)
         {
            User user = _UserRepository.GetUserbyUsername(username);
            if(user == null)
             {
-                return View();
+                return RedirectToAction("SendDocumentToUser");
             }
            else
             {
