@@ -6,7 +6,7 @@ using Trustme.Models;
 
 namespace Trustme.ViewModels
 {
-    public class UploadDocument
+    public class UploadDocumentModel
     {
         public IEnumerable<Key> Keys;
         public string Username;
