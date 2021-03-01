@@ -10,15 +10,26 @@ namespace Trustme.Service
     public class UnsignedDocumentRepository : IUnsignedDocumentRepository
     {
         private AppContext _context;
-        public UnsignedDocumentRepository(AppContext context)
+        private IKeyRepository _KeyRepository;
+        private IUserRepository _UserRepository;
+       
+
+        public UnsignedDocumentRepository(AppContext context, IKeyRepository keyRepository, IUserRepository userRepository)
         {
+            _KeyRepository = keyRepository;
+            _UserRepository = userRepository;
             _context = context;
         }
         public void AddUnsignedDocument(UserUnsignedDocument userUnsignedDocument)
         {
+            User user = _UserRepository.GetUserById(userUnsignedDocument.UserId);
+            Key key = _KeyRepository.GetKeyByCertificateName(userUnsignedDocument.User.Username, userUnsignedDocument.UnsignedDocument.Key.CertificateName);
             UnsignedDocument unsignedDocument = new UnsignedDocument(userUnsignedDocument.UnsignedDocument);
+            
             _context.UnsignedDocuments.Add(unsignedDocument);
+
             _context.UserUnsignedDocuments.Add(userUnsignedDocument);
+            //UnsignedDocument unsignedDocument = new UnsignedDocument(userUnsignedDocument.UnsignedDocument);
             _context.SaveChanges();
         }
 
