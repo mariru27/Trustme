@@ -15,7 +15,6 @@ namespace Trustme.Data
 
         }
 
-
         public DbSet<User> User {set; get;}
         public DbSet<Key> Key { set; get; }
 

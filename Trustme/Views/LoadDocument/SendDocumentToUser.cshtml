@@ -1,0 +1,15 @@
+﻿
+
+<h1>Upload document to sign</h1>
+
+<form method="post" asp-action="VerifyUser">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="form-group">
+        <label for="Username" class="control-label">Username</label>
+        <input for="Username" name="Username" type="text" class="form-control" />
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Submit" class="btn btn-primary" />
+    </div>
+</form>
