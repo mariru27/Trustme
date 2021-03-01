@@ -72,7 +72,11 @@ namespace Trustme.Controllers
                 Document.CopyTo(target);
                 unsignedDocument.Document = target.ToArray();
             }
+            Key key = _KeyRepository.GetKeyByCertificateName(Username, CertificateName);
+
             unsignedDocument.KeyPreference = CertificateName;
+            unsignedDocument.Key = key;
+            unsignedDocument.KeyId = key.KeyId;
             if (_UserRepository.GetUserbyUsername(Username) != null)
             {
                 userUnsignedDocument.User = _UserRepository.GetUserbyUsername(Username);
