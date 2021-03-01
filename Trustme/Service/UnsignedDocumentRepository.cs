@@ -23,17 +23,18 @@ namespace Trustme.Service
         }
         public void AddUnsignedDocument(UnsignedDocumentUserKey unsignedDocumentUserKey)
         {
+            _context.UnsignedDocuments.Add(unsignedDocumentUserKey.UnsignedDocument);
 
-            UnsignedDocument unsignedDocument = new UnsignedDocument();
-            unsignedDocument = unsignedDocumentUserKey.UnsignedDocument;
+            //UnsignedDocument unsignedDocument = new UnsignedDocument();
+            //unsignedDocument = unsignedDocumentUserKey.UnsignedDocument;
 
-            _context.UnsignedDocuments.Add(unsignedDocument);
+            //_context.UnsignedDocuments.Add(unsignedDocument);
 
-            UserUnsignedDocument userUnsignedDocument = new UserUnsignedDocument();
-            userUnsignedDocument.User = unsignedDocumentUserKey.User;
-            userUnsignedDocument.UserId = unsignedDocumentUserKey.User.UserId;
-            userUnsignedDocument.UnsignedDocument = unsignedDocument;
-            _context.UserUnsignedDocuments.Add(userUnsignedDocument);
+            //UserUnsignedDocument userUnsignedDocument = new UserUnsignedDocument();
+            //userUnsignedDocument.User = unsignedDocumentUserKey.User;
+            //userUnsignedDocument.UserId = unsignedDocumentUserKey.User.UserId;
+            //userUnsignedDocument.UnsignedDocument = unsignedDocument;
+            //_context.UserUnsignedDocuments.Add(userUnsignedDocument);
             //UnsignedDocument unsignedDocument = new UnsignedDocument(userUnsignedDocument.UnsignedDocument);
             _context.SaveChanges();
         }
