@@ -74,7 +74,7 @@ namespace Trustme.Controllers
             Key key = _KeyRepository.GetKeyByCertificateName(Username, CertificateName);
 
             unsignedDocument.KeyPreference = CertificateName;
-            unsignedDocument.Key = key;
+            //unsignedDocument.Key = key;
             unsignedDocument.KeyId = key.KeyId;
             if (_UserRepository.GetUserbyUsername(Username) != null)
             {
