@@ -18,18 +18,20 @@ namespace Trustme.Controllers
         private IUserRepository _UserRepository;
         private IUnsignedDocumentRepository _UnsignedDocumentRepository;
         private IHttpRequestFunctions _HttpRequestFunctions;
+        private IKeyRepository _KeyRepository;
 
-        public LoadDocumentController(IUserRepository userRepository, IUnsignedDocumentRepository unsignedDocumentRepository, IHttpRequestFunctions httpRequestFunctions)
+        public LoadDocumentController(IKeyRepository keyRepository, IUserRepository userRepository, IUnsignedDocumentRepository unsignedDocumentRepository, IHttpRequestFunctions httpRequestFunctions)
         {
             _UserRepository = userRepository;
             _UnsignedDocumentRepository = unsignedDocumentRepository;
             _HttpRequestFunctions = httpRequestFunctions;
+            _KeyRepository = keyRepository;
         }
 
         [HttpGet]
-        public IActionResult LoadDocumentToSign()
+        public IActionResult LoadDocumentToSign(string username)
         {
-            return View();
+            return View(_KeyRepository.ListAllKeys(_UserRepository.GetUserbyUsername(username)));
         }
 
         public IActionResult SendDocumentToUser()
@@ -48,7 +50,7 @@ namespace Trustme.Controllers
             }
            else
             {
-                return RedirectToAction("LoadDocumentToSign");
+                return RedirectToAction("LoadDocumentToSign",new { username = username });
             }
         }
         [HttpPost]
