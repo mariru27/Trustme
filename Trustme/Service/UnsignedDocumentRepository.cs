@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Trustme.Data;
 using Trustme.Models;
 using Trustme.IServices;
+using Trustme.ViewModels;
 
 namespace Trustme.Service
 {
@@ -20,14 +21,18 @@ namespace Trustme.Service
             _UserRepository = userRepository;
             _context = context;
         }
-        public void AddUnsignedDocument(UserUnsignedDocument userUnsignedDocument)
+        public void AddUnsignedDocument(UnsignedDocumentUserKey unsignedDocumentUserKey)
         {
-            User user = _UserRepository.GetUserById(userUnsignedDocument.UserId);
-            Key key = _KeyRepository.GetKeyByCertificateName(userUnsignedDocument.User.Username, userUnsignedDocument.UnsignedDocument.Key.CertificateName);
-            UnsignedDocument unsignedDocument = new UnsignedDocument(userUnsignedDocument.UnsignedDocument);
-            
+
+            UnsignedDocument unsignedDocument = new UnsignedDocument();
+            unsignedDocument = unsignedDocumentUserKey.UnsignedDocument;
+
             _context.UnsignedDocuments.Add(unsignedDocument);
 
+            UserUnsignedDocument userUnsignedDocument = new UserUnsignedDocument();
+            userUnsignedDocument.User = unsignedDocumentUserKey.User;
+            userUnsignedDocument.UserId = unsignedDocumentUserKey.User.UserId;
+            userUnsignedDocument.UnsignedDocument = unsignedDocument;
             _context.UserUnsignedDocuments.Add(userUnsignedDocument);
             //UnsignedDocument unsignedDocument = new UnsignedDocument(userUnsignedDocument.UnsignedDocument);
             _context.SaveChanges();
