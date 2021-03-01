@@ -31,7 +31,12 @@ namespace Trustme.Controllers
         [HttpGet]
         public IActionResult LoadDocumentToSign(string username)
         {
-            return View(_KeyRepository.ListAllKeys(_UserRepository.GetUserbyUsername(username)));
+            UploadDocumentModel uploadDocumentModel = new UploadDocumentModel
+            {
+                Keys = _KeyRepository.ListAllKeys(_UserRepository.GetUserbyUsername(username)),
+                Username = username
+            };
+            return View(uploadDocumentModel);
         }
 
         public IActionResult SendDocumentToUser()
