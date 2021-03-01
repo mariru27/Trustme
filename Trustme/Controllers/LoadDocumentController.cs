@@ -32,7 +32,20 @@ namespace Trustme.Controllers
             return View();
         }
 
+        
 
+        public IActionResult VerifyUser(string username)
+        {
+           User user = _UserRepository.GetUserbyUsername(username);
+           if(user == null)
+            {
+                return View();
+            }
+           else
+            {
+                return RedirectToAction("LoadDocumentToSign");
+            }
+        }
         [HttpPost]
         public IActionResult LoadDocumentToSign(string Username, string CertificateName, IFormFile Document)
         {
