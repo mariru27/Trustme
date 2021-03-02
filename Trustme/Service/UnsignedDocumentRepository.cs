@@ -48,6 +48,16 @@ namespace Trustme.Service
             return _context.UnsignedDocuments.Where(u => u.IdUnsignedDocument == IdUnsignedDocument).SingleOrDefault();
         }
 
+        public UnsignedDocument GetUnsignedDocumentByUser(User user, int unsignedDocumentId)
+        {
+            UnsignedDocument unsignedDocument = _context.UserUnsignedDocuments.Where(u => u.UserId == user.UserId).Join(
+                _context.UnsignedDocuments,
+                u => u.UnsignedDocumentId,
+                d => d.IdUnsignedDocument,
+                (u, d) => new UnsignedDocument()
+                ).Where(a => a.IdUnsignedDocument == unsignedDocumentId).SingleOrDefault();
+            return unsignedDocument;
+        }
         public IEnumerable<UnsignedDocument> ListAllUsignedDocumentsByUser(User user)
         {
             IEnumerable<UnsignedDocument> unsignedDocuments = _context.UserUnsignedDocuments.Where(u => u.UserId == user.UserId).Join(
