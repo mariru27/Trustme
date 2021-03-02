@@ -25,21 +25,13 @@ namespace Trustme.Service
         {
             _context.UnsignedDocuments.Add(unsignedDocumentUserKey.UnsignedDocument);
 
-            //UnsignedDocument unsignedDocument = new UnsignedDocument();
-            //unsignedDocument = unsignedDocumentUserKey.UnsignedDocument;
-
-            //_context.UnsignedDocuments.Add(unsignedDocument);
-
             UserUnsignedDocument userUnsignedDocument = new UserUnsignedDocument();
             userUnsignedDocument.UserId = unsignedDocumentUserKey.User.UserId;
             userUnsignedDocument.User = unsignedDocumentUserKey.User;
             userUnsignedDocument.UnsignedDocumentId = unsignedDocumentUserKey.UnsignedDocument.IdUnsignedDocument;
             
             _context.UserUnsignedDocuments.Add(userUnsignedDocument);
-            //userUnsignedDocument.User = unsignedDocumentUserKey.User;
-            //userUnsignedDocument.UserId = unsignedDocumentUserKey.User.UserId;
-            //userUnsignedDocument.UnsignedDocument = unsignedDocument;
-            //UnsignedDocument unsignedDocument = new UnsignedDocument(userUnsignedDocument.UnsignedDocument);
+            
             _context.SaveChanges();
         }
 
@@ -48,14 +40,14 @@ namespace Trustme.Service
             return _context.UnsignedDocuments.Where(u => u.IdUnsignedDocument == IdUnsignedDocument).SingleOrDefault();
         }
 
-        public UnsignedDocument GetUnsignedDocumentByUser(User user, int unsignedDocumentId)
+        public UnsignedDocument GetUnsignedDocumentByUserDocumentName(User user, string unsignedDocumentName)
         {
             UnsignedDocument unsignedDocument = _context.UserUnsignedDocuments.Where(u => u.UserId == user.UserId).Join(
                 _context.UnsignedDocuments,
                 u => u.UnsignedDocumentId,
                 d => d.IdUnsignedDocument,
                 (u, d) => new UnsignedDocument()
-                ).Where(a => a.IdUnsignedDocument == unsignedDocumentId).SingleOrDefault();
+                ).Where(a => a.Name == unsignedDocumentName).SingleOrDefault();
             return unsignedDocument;
         }
         public IEnumerable<UnsignedDocument> ListAllUsignedDocumentsByUser(User user)
