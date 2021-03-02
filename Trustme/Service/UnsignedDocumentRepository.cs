@@ -30,11 +30,15 @@ namespace Trustme.Service
 
             //_context.UnsignedDocuments.Add(unsignedDocument);
 
-            //UserUnsignedDocument userUnsignedDocument = new UserUnsignedDocument();
+            UserUnsignedDocument userUnsignedDocument = new UserUnsignedDocument();
+            userUnsignedDocument.UserId = unsignedDocumentUserKey.User.UserId;
+            userUnsignedDocument.User = unsignedDocumentUserKey.User;
+            userUnsignedDocument.UnsignedDocumentId = unsignedDocumentUserKey.UnsignedDocument.IdUnsignedDocument;
+            
+            _context.UserUnsignedDocuments.Add(userUnsignedDocument);
             //userUnsignedDocument.User = unsignedDocumentUserKey.User;
             //userUnsignedDocument.UserId = unsignedDocumentUserKey.User.UserId;
             //userUnsignedDocument.UnsignedDocument = unsignedDocument;
-            //_context.UserUnsignedDocuments.Add(userUnsignedDocument);
             //UnsignedDocument unsignedDocument = new UnsignedDocument(userUnsignedDocument.UnsignedDocument);
             _context.SaveChanges();
         }
