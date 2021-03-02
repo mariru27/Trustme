@@ -81,10 +81,6 @@ namespace Trustme.Controllers
             UnsignedDocument unsignedDocument = _UnsignedDocumentRepository.GetUnsignedDocumentById(IdUnsignedDocument);
             _UnsignedDocumentRepository.MakeDocumentSigned(unsignedDocument);
 
-            unsignedDocument = _UnsignedDocumentRepository.GetUnsignedDocumentById(IdUnsignedDocument);
-
-
-
             return RedirectToAction("UnsignedDocuments");
         }
         public IActionResult SignDocument()
