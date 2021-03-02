@@ -91,13 +91,13 @@ namespace Trustme.Controllers
                 //unsignedDocumentUserKey.Key = key;
 
                 _UnsignedDocumentRepository.AddUnsignedDocument(unsignedDocumentUserKey);
-
+                TempData["Success"] = "Uploaded Successfully!";
             }
             else
             {
                 ModelState.AddModelError("", "This user do not exist");
             }
-            return View();
+            return RedirectToAction("LoadDocumentToSign", new { Username });
         }
     }
 }
