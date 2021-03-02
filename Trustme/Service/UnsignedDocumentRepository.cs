@@ -60,5 +60,12 @@ namespace Trustme.Service
                 (u, ud) => new UnsignedDocument(ud)).ToList();
             return unsignedDocuments;
         }
+
+        public UnsignedDocument MakeDocumentSigned(UnsignedDocument unsignedDocument)
+        {
+            unsignedDocument.Signed = true;
+            _context.UnsignedDocuments.Update(unsignedDocument);
+            _context.SaveChanges();
+        }
     }
 }
