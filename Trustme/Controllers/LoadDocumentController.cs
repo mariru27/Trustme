@@ -62,6 +62,12 @@ namespace Trustme.Controllers
         public IActionResult LoadDocumentToSign(string Username, string CertificateName, IFormFile Document)
         {
             UserUnsignedDocument userUnsignedDocument = new UserUnsignedDocument();
+            if(Document == null)
+            {
+                TempData["DocumentError"] = "You forgot to attach document!";
+                return RedirectToAction("LoadDocumentToSign", new { Username });
+
+            }
             UnsignedDocument unsignedDocument = new UnsignedDocument
             {
                 Name = Document.FileName
@@ -95,7 +101,7 @@ namespace Trustme.Controllers
             }
             else
             {
-                ModelState.AddModelError("", "This user do not exist");
+                TempData["UserError"] = "User do not extist!";
             }
             return RedirectToAction("LoadDocumentToSign", new { Username });
         }

@@ -24,6 +24,14 @@
     {
         <p class="alert alert-success" id="successMessage">@TempData["Success"]</p>
     }
+    @if (TempData["UserError"] != null)
+    {
+        <p class="alert alert-danger" id="userError">@TempData["UserError"]</p>
+    }
+    @if (TempData["DocumentError"] != null)
+    {
+        <p class="alert alert-danger" id="documentError">@TempData["DocumentError"]</p>
+    }
     <div class="form-group">
         <input type="submit" value="Submit" class="btn btn-primary" />
     </div>
