@@ -53,12 +53,32 @@ namespace Trustme.Service
         }
         public IEnumerable<UnsignedDocument> ListAllUsignedDocumentsByUser(User user)
         {
+
             IEnumerable<UnsignedDocument> unsignedDocuments = _context.UserUnsignedDocuments.Where(u => u.UserId == user.UserId).Join(
                 _context.UnsignedDocuments,
                 u => u.UnsignedDocumentId,
                 ud => ud.IdUnsignedDocument,
-                (u, ud) => new UnsignedDocument(ud)).ToList();
+                (u, ud) => new UnsignedDocument(ud)).ToList().Where(a => a.Signed == false);
             return unsignedDocuments;
+        }
+
+        public IEnumerable<UnsignedDocument> ListAllSignedDocumentsByUser(User user)
+        {
+
+            IEnumerable<UnsignedDocument> unsignedDocuments = _context.UserUnsignedDocuments.Where(u => u.UserId == user.UserId).Join(
+                _context.UnsignedDocuments,
+                u => u.UnsignedDocumentId,
+                ud => ud.IdUnsignedDocument,
+                (u, ud) => new UnsignedDocument(ud)).ToList().Where(a => a.Signed == false);
+            return unsignedDocuments;
+        }
+
+        public UnsignedDocument MakeDocumentSigned(UnsignedDocument unsignedDocument)
+        {
+            unsignedDocument.Signed = true;
+            _context.UnsignedDocuments.Update(unsignedDocument);
+            _context.SaveChanges();
+            return unsignedDocument;
         }
     }
 }

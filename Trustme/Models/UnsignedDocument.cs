@@ -9,7 +9,7 @@ namespace Trustme.Models
 {
     public class UnsignedDocument
     {
-        public UnsignedDocument() { }
+        public UnsignedDocument() { this.Signed = false; }
         public UnsignedDocument(UnsignedDocument unsignedDocument)
         {
             this.IdUnsignedDocument = unsignedDocument.IdUnsignedDocument;
@@ -18,6 +18,7 @@ namespace Trustme.Models
             this.Document = unsignedDocument.Document;
             this.KeyId = unsignedDocument.KeyId;
             this.Key = unsignedDocument.Key;
+            this.Signed = unsignedDocument.Signed;
         }
 
         [Key]
@@ -25,6 +26,7 @@ namespace Trustme.Models
         public string Name { get; set; }
         public byte[] Document { get; set; }
         public string KeyPreference { get; set; }
+        public bool Signed { get; set; }
         public int KeyId { get; set; }
         public Key Key { get; set; }
 
