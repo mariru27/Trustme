@@ -33,7 +33,6 @@ namespace Trustme.Service
             userUnsignedDocument.UnsignedDocumentId = unsignedDocumentUserKey.UnsignedDocument.IdUnsignedDocument;
             
             _context.UserUnsignedDocuments.Add(userUnsignedDocument);
-            
             _context.SaveChanges();
         }
 
