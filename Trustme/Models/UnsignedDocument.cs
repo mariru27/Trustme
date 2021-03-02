@@ -16,6 +16,8 @@ namespace Trustme.Models
             this.KeyPreference = unsignedDocument.KeyPreference;
             this.Name = unsignedDocument.Name;
             this.Document = unsignedDocument.Document;
+            this.KeyId = unsignedDocument.KeyId;
+            this.Key = unsignedDocument.Key;
         }
 
         [Key]
