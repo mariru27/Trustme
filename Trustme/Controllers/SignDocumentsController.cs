@@ -70,13 +70,13 @@ namespace Trustme.Controllers
             KeysUnsignedDocumentViewModel keysUnsignedDocumentViewModel = new KeysUnsignedDocumentViewModel
             {
                 UnsignedDocument = _UnsignedDocumentRepository.GetUnsignedDocumentById(IdUnsignedDocument),
-                Keys =_KeyRepository.ListAllKeys(_HttpRequestFunctions.GetUser(HttpContext))
+                Key = _KeyRepository.GetKeyById(_UnsignedDocumentRepository.GetUnsignedDocumentById(IdUnsignedDocument).KeyId)
             };
             
             return View(keysUnsignedDocumentViewModel);
         }
         
-        public IActionResult SignSentDocumentCard(int IdUnsignedDocument, int certificates, IFormFile PkFile)
+        public IActionResult SignSentDocumentCard(int IdUnsignedDocument, IFormFile PkFile)
         {
             
             return RedirectToAction("UnsignedDocuments");
@@ -127,7 +127,6 @@ namespace Trustme.Controllers
                 else
                 {
                     TempData["signature"] = _Sign.SignDocument(signModel);
-
                 }
             }
             else

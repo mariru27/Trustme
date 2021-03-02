@@ -11,6 +11,7 @@ namespace Trustme.ViewModels
     public class KeysUnsignedDocumentViewModel
     {
         public IEnumerable<Key> Keys { get; set; }
+        public Key Key { get; set; }
         public UnsignedDocument UnsignedDocument { get; set; }
         public IFormFile PkFile { get; set; }
 
