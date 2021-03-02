@@ -24,10 +24,12 @@ namespace Trustme.Service
         public void AddUnsignedDocument(UnsignedDocumentUserKey unsignedDocumentUserKey)
         {
             _context.UnsignedDocuments.Add(unsignedDocumentUserKey.UnsignedDocument);
+            _context.SaveChanges();
 
             UserUnsignedDocument userUnsignedDocument = new UserUnsignedDocument();
             userUnsignedDocument.UserId = unsignedDocumentUserKey.User.UserId;
             userUnsignedDocument.User = unsignedDocumentUserKey.User;
+            userUnsignedDocument.UnsignedDocument = unsignedDocumentUserKey.UnsignedDocument;
             userUnsignedDocument.UnsignedDocumentId = unsignedDocumentUserKey.UnsignedDocument.IdUnsignedDocument;
             
             _context.UserUnsignedDocuments.Add(userUnsignedDocument);
@@ -42,11 +44,11 @@ namespace Trustme.Service
 
         public UnsignedDocument GetUnsignedDocumentByUserDocumentName(User user, string unsignedDocumentName)
         {
-            UnsignedDocument unsignedDocument = _context.UserUnsignedDocuments.Where(u => u.UserId == user.UserId).Join(
+            var unsignedDocument = _context.UserUnsignedDocuments.Where(u => u.UserId == user.UserId).Join(
                 _context.UnsignedDocuments,
                 u => u.UnsignedDocumentId,
                 d => d.IdUnsignedDocument,
-                (u, d) => new UnsignedDocument()
+                (u, d) => new UnsignedDocument(d)
                 ).Where(a => a.Name == unsignedDocumentName).SingleOrDefault();
             return unsignedDocument;
         }
