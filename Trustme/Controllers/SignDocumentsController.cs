@@ -78,6 +78,7 @@ namespace Trustme.Controllers
         
         public IActionResult SignSentDocumentCard(int IdUnsignedDocument, IFormFile PkFile)
         {
+            UnsignedDocument unsignedDocument = _UnsignedDocumentRepository.GetUnsignedDocumentById(IdUnsignedDocument);
             
             return RedirectToAction("UnsignedDocuments");
         }
