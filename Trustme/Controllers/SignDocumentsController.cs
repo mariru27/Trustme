@@ -89,6 +89,11 @@ namespace Trustme.Controllers
             IFormFile documentFile = new FormFile(stream, 0, unsignedDocument.Document.Length, unsignedDocument.Name, unsignedDocument.Name);
             
             SignModel signModel = _Sign.SignDocumentTest(PkFile, documentFile, unsignedDocument.KeyId, HttpContext);
+            if(signModel.validKey == false || signModel.verifytest == false)
+            {
+                TempData["InvalidKey"] = "Invalid key!";
+                return RedirectToAction("SignSentDocument", new { IdUnsignedDocument = IdUnsignedDocument });
+            }
             string signature = _Sign.SignDocument(signModel);
 
             
