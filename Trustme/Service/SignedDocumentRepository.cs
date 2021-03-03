@@ -16,7 +16,8 @@ namespace Trustme.Service
         }
         public bool AddSignedDocument(SignedDocument signedDocument)
         {
-            
+            _context.SignedDocuments.Add(signedDocument);
+            _context.SaveChanges();
             return true;
         }
     }
