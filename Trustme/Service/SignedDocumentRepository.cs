@@ -4,19 +4,35 @@ using System.Threading.Tasks;
 using Trustme.IServices;
 using Trustme.Models;
 using Trustme.Data;
+using Microsoft.AspNetCore.Http;
+using Trustme.Service;
 
 namespace Trustme.Service
 {
     public class SignedDocumentRepository : ISignedDocumentRepository
     {
         private AppContext _context;
-        public SignedDocumentRepository(AppContext appContext)
+        private IHttpRequestFunctions _HttpRequestFunctions;
+        public SignedDocumentRepository(AppContext appContext, IHttpRequestFunctions httpRequestFunctions)
         {
             _context = appContext;
+            _HttpRequestFunctions = httpRequestFunctions;
         }
-        public bool AddSignedDocument(SignedDocument signedDocument)
+        public bool AddSignedDocument(SignedDocument signedDocument, HttpContext httpContext)
         {
+            User currentUser = _HttpRequestFunctions.GetUser(httpContext);
             _context.SignedDocuments.Add(signedDocument);
+            _context.SaveChanges();
+
+            UserSignedDocument userSignedDocument = new UserSignedDocument
+            {
+                SignedDocument = signedDocument,
+                SignedDocumentId = signedDocument.IdSignedDocument,
+                User = currentUser,
+                UserId = currentUser.UserId,
+            };
+
+            _context.UserSignedDocuments.Add(userSignedDocument);
             _context.SaveChanges();
             return true;
         }

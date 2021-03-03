@@ -98,7 +98,7 @@ namespace Trustme.Controllers
             string signature = _Sign.SignDocument(signModel);
 
             //Store in database SignedDocument
-            SignedDocument signedDocument = new SignedDocument();
+            SignedDocument signedDocument = new SignedDocument(unsignedDocument, signature);
             
             
             // _UnsignedDocumentRepository.MakeDocumentSigned(unsignedDocument);
