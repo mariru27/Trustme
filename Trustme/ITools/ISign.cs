@@ -10,7 +10,7 @@ namespace Trustme.ITools
 {
     public interface ISign
     {
-        public SignModel SignDoc(IFormFile pkfile, IFormFile docfile, int certificates, HttpContext httpContext);
+        public SignModel SignDocumentTest(IFormFile pkfile, IFormFile docfile, int certificates, HttpContext httpContext);
         public string SignDocument(SignModel signModel);
         public ISigner VerifySignature(VerifySignatureModel verifySignatureModel);
 

@@ -30,7 +30,7 @@ namespace Trustme.Tools
             _KeyRepository = keyRepository;
             _HttpRequestFunctions = httpRequestFunctions;
         }
-        public SignModel SignDoc(IFormFile pkfile, IFormFile docfile, int certificates, HttpContext httpContext)
+        public SignModel SignDocumentTest(IFormFile pkfile, IFormFile docfile, int certificates, HttpContext httpContext)
         {
             SignModel signModel = new SignModel();
             signModel.validKey = true;
