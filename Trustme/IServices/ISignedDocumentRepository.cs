@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Trustme.Models;
 
 namespace Trustme.IServices
 {
-    interface ISignedDocumentRepository
+    public interface ISignedDocumentRepository
     {
+        public bool AddSignedDocument(SignedDocument signedDocument);
     }
 }
