@@ -82,6 +82,7 @@ namespace Trustme.Controllers
             unsignedDocument.KeyPreference = CertificateName;
             //unsignedDocument.Key = key;
             unsignedDocument.KeyId = key.KeyId;
+            unsignedDocument.SentFromUsername = _HttpRequestFunctions.GetUser(HttpContext).Username;
             if (_UserRepository.GetUserbyUsername(Username) != null)
             {
                 userUnsignedDocument.User = _UserRepository.GetUserbyUsername(Username);
