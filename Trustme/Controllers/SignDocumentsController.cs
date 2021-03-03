@@ -65,12 +65,13 @@ namespace Trustme.Controllers
             return View(unsignedDocuments);
         }
 
-        public IActionResult SignSentDocument(int IdUnsignedDocument)
+        public IActionResult SignSentDocument(int IdUnsignedDocument, string Signature)
         {
             KeysUnsignedDocumentViewModel keysUnsignedDocumentViewModel = new KeysUnsignedDocumentViewModel
             {
                 UnsignedDocument = _UnsignedDocumentRepository.GetUnsignedDocumentById(IdUnsignedDocument),
-                Key = _KeyRepository.GetKeyById(_UnsignedDocumentRepository.GetUnsignedDocumentById(IdUnsignedDocument).KeyId)
+                Key = _KeyRepository.GetKeyById(_UnsignedDocumentRepository.GetUnsignedDocumentById(IdUnsignedDocument).KeyId),
+                Signature = Signature
             };
             return View(keysUnsignedDocumentViewModel);
         }
@@ -82,16 +83,19 @@ namespace Trustme.Controllers
                 TempData["PKNull"] = "You forgot to attach private key file!";
                 return RedirectToAction("SignSentDocument", new { IdUnsignedDocument = IdUnsignedDocument });
             }
+
             UnsignedDocument unsignedDocument = _UnsignedDocumentRepository.GetUnsignedDocumentById(IdUnsignedDocument);
-            // _UnsignedDocumentRepository.MakeDocumentSigned(unsignedDocument);
             var stream = new MemoryStream(unsignedDocument.Document);
-
             IFormFile documentFile = new FormFile(stream, 0, unsignedDocument.Document.Length, unsignedDocument.Name, unsignedDocument.Name);
-
+            
             SignModel signModel = _Sign.SignDocumentTest(PkFile, documentFile, unsignedDocument.KeyId, HttpContext);
             string signature = _Sign.SignDocument(signModel);
 
-            return RedirectToAction("UnsignedDocuments");
+            
+            // _UnsignedDocumentRepository.MakeDocumentSigned(unsignedDocument);
+
+
+            return RedirectToAction("SignSentDocument", new { IdUnsignedDocument = IdUnsignedDocument, Signature = signature });
         }
         public IActionResult SignDocument()
         {
