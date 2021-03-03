@@ -18,9 +18,9 @@ namespace Trustme.Service
             _context = appContext;
             _HttpRequestFunctions = httpRequestFunctions;
         }
-        public bool AddSignedDocument(SignedDocument signedDocument, HttpContext httpContext)
+        public bool AddSignedDocument(SignedDocument signedDocument, User user)
         {
-            User currentUser = _HttpRequestFunctions.GetUser(httpContext);
+            
             _context.SignedDocuments.Add(signedDocument);
             _context.SaveChanges();
 
@@ -28,8 +28,8 @@ namespace Trustme.Service
             {
                 SignedDocument = signedDocument,
                 SignedDocumentId = signedDocument.IdSignedDocument,
-                User = currentUser,
-                UserId = currentUser.UserId,
+                User = user,
+                UserId = user.UserId,
             };
 
             _context.UserSignedDocuments.Add(userSignedDocument);

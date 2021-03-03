@@ -50,7 +50,7 @@ namespace Trustme
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IHttpRequestFunctions, HttpRequestFunctions>();
             services.AddTransient<ICertificate, Certificate>();
-            services.AddTransient<ISignedDocumentRepository, ISignedDocumentRepository>();
+            services.AddTransient<ISignedDocumentRepository, SignedDocumentRepository>();
             services.AddTransient<ISign, Sign>();
 
             services.AddMvc().AddControllersAsServices();
