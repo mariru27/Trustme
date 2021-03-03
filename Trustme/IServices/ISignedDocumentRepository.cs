@@ -9,6 +9,6 @@ namespace Trustme.IServices
 {
     public interface ISignedDocumentRepository
     {
-        public bool AddSignedDocument(SignedDocument signedDocument, HttpContext httpContext);
+        public bool AddSignedDocument(SignedDocument signedDocument, User user);
     }
 }
