@@ -21,15 +21,17 @@ namespace Trustme.Models
             this.Name = signedDocument.Name;
             this.Signature = signedDocument.Signature;
             this.SignedByUsername = signedDocument.SignedByUsername;
+           
         }
 
-        public SignedDocument(UnsignedDocument unsignedDocument, string Signature)
+        public SignedDocument(UnsignedDocument unsignedDocument, string Signature, string Username)
         {
             this.Key = unsignedDocument.Key;
             this.KeyId = unsignedDocument.KeyId;
             this.Name = unsignedDocument.Name;
             this.Signature = Signature;
             this.Document = unsignedDocument.Document;
+            this.SignedByUsername = Username;
         }
 
         [Key]
