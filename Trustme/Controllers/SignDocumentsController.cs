@@ -47,14 +47,15 @@ namespace Trustme.Controllers
         private IHttpRequestFunctions _HttpRequestFunctions;
         private IUnsignedDocumentRepository _UnsignedDocumentRepository;
         private ISign _Sign;
-
-        public SignDocumentsController(IHostingEnvironment _environment, IKeyRepository keyRepository, IHttpRequestFunctions httpRequestFunctions, IUnsignedDocumentRepository unsignedDocumentRepository, ISign sign)
+        private ISignedDocumentRepository _SignedDocumentRepository;
+        public SignDocumentsController(IHostingEnvironment _environment, ISignedDocumentRepository signedDocumentRepository, IKeyRepository keyRepository, IHttpRequestFunctions httpRequestFunctions, IUnsignedDocumentRepository unsignedDocumentRepository, ISign sign)
         {
             Environment = _environment;
             _KeyRepository = keyRepository;
             _HttpRequestFunctions = httpRequestFunctions;
             _Sign = sign;
             _UnsignedDocumentRepository = unsignedDocumentRepository;
+            _SignedDocumentRepository = signedDocumentRepository;
         }
 
         public IActionResult UnsignedDocuments()
@@ -99,7 +100,7 @@ namespace Trustme.Controllers
 
             //Store in database SignedDocument
             SignedDocument signedDocument = new SignedDocument(unsignedDocument, signature);
-            
+            _SignedDocumentRepository.AddSignedDocument(signedDocument, HttpContext);
             
             // _UnsignedDocumentRepository.MakeDocumentSigned(unsignedDocument);
 
