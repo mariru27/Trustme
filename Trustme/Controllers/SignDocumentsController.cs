@@ -72,12 +72,16 @@ namespace Trustme.Controllers
                 UnsignedDocument = _UnsignedDocumentRepository.GetUnsignedDocumentById(IdUnsignedDocument),
                 Key = _KeyRepository.GetKeyById(_UnsignedDocumentRepository.GetUnsignedDocumentById(IdUnsignedDocument).KeyId)
             };
-            
             return View(keysUnsignedDocumentViewModel);
         }
         
         public IActionResult SignSentDocumentCard(int IdUnsignedDocument, IFormFile PkFile)
         {
+            if(PkFile == null)
+            {
+                TempData["PKNull"] = "You forgot to attach private key file!";
+                return RedirectToAction("SignSentDocument", new { IdUnsignedDocument = IdUnsignedDocument });
+            }
             UnsignedDocument unsignedDocument = _UnsignedDocumentRepository.GetUnsignedDocumentById(IdUnsignedDocument);
             // _UnsignedDocumentRepository.MakeDocumentSigned(unsignedDocument);
             var stream = new MemoryStream(unsignedDocument.Document);
