@@ -88,6 +88,7 @@ namespace Trustme.Controllers
             var stream = new MemoryStream(unsignedDocument.Document);
             IFormFile documentFile = new FormFile(stream, 0, unsignedDocument.Document.Length, unsignedDocument.Name, unsignedDocument.Name);
             
+            //Sign document
             SignModel signModel = _Sign.SignDocumentTest(PkFile, documentFile, unsignedDocument.KeyId, HttpContext);
             if(signModel.validKey == false || signModel.verifytest == false)
             {
@@ -95,6 +96,9 @@ namespace Trustme.Controllers
                 return RedirectToAction("SignSentDocument", new { IdUnsignedDocument = IdUnsignedDocument });
             }
             string signature = _Sign.SignDocument(signModel);
+
+            //Store in database SignedDocument
+            SignedDocument signedDocument = new SignedDocument();
 
             
             // _UnsignedDocumentRepository.MakeDocumentSigned(unsignedDocument);
