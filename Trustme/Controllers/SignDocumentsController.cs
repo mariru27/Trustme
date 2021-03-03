@@ -79,7 +79,12 @@ namespace Trustme.Controllers
         public IActionResult SignSentDocumentCard(int IdUnsignedDocument, IFormFile PkFile)
         {
             UnsignedDocument unsignedDocument = _UnsignedDocumentRepository.GetUnsignedDocumentById(IdUnsignedDocument);
-            _UnsignedDocumentRepository.MakeDocumentSigned(unsignedDocument);
+            // _UnsignedDocumentRepository.MakeDocumentSigned(unsignedDocument);
+            var stream = new MemoryStream(unsignedDocument.Document);
+
+            IFormFile documentFile = new FormFile(stream, 0, unsignedDocument.Document.Length, unsignedDocument.Name, unsignedDocument.Name);
+
+
 
             return RedirectToAction("UnsignedDocuments");
         }
@@ -109,7 +114,7 @@ namespace Trustme.Controllers
             if (ModelState.IsValid && pkfile != null && docfile != null)
             {
 
-                SignModel signModel = _Sign.SignDoc(pkfile,docfile,certificates,HttpContext);
+                SignModel signModel = _Sign.SignDocumentTest(pkfile,docfile,certificates,HttpContext);
                 TempData["validKey"] = true;
 
                 if (signModel.validKey == false)
