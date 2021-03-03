@@ -22,7 +22,17 @@
             {
                 <p class="alert alert-danger" id="userError">@TempData["PKNull"]</p>
             }
+            @{
+                if (Model.Signature != "" && Model.Signature != null)
+                {
+                    <div class="alert alert-success">
+                        <strong>Success!</strong> You signed your document.
+                    </div>
+                    <p class="font-weight-normal">Your signature:</p>
+                    <textarea class="form-control" name="signature">@Model.Signature</textarea>
 
+                }
+            }
             <div class="form-group">
                 <input type="submit" value="Sign" class="btn btn-primary" />
             </div>
