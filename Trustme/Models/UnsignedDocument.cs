@@ -19,11 +19,13 @@ namespace Trustme.Models
             this.KeyId = unsignedDocument.KeyId;
             this.Key = unsignedDocument.Key;
             this.Signed = unsignedDocument.Signed;
+            this.SentFromUsername = unsignedDocument.SentFromUsername;
         }
 
         [Key]
         public int IdUnsignedDocument { get; set; }
         public string Name { get; set; }
+        public string SentFromUsername { get; set; }
         public byte[] Document { get; set; }
         public string KeyPreference { get; set; }
         public bool Signed { get; set; }
