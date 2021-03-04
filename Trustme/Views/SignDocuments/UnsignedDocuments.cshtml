@@ -1,33 +1,39 @@
 ﻿@model IEnumerable<UnsignedDocument>
 
-    <h4 class="display-4">Unsigned Documents</h4>
+
+<nav class="navbar navbar-light bg-light">
+    <a class="navbar-brand" asp-area="" asp-controller="SignDocuments" asp-action="UnsignedDocuments">Unsign documents</a>
+    <a class="navbar-brand" asp-area="" asp-controller="SignedDocuments" asp-action="SignedDocumentsHistory">Signed documents</a>
+</nav>
+
+<h4 class="display-4">Unsigned Documents</h4>
 
 
-    <a class="btn btn-primary" style="margin-bottom:15px; margin-top:7px" asp-controller="SignDocuments" asp-action="SignDocument">Sign form disk</a>
+<a class="btn btn-primary" style="margin-bottom:15px; margin-top:7px" asp-controller="SignDocuments" asp-action="SignDocument">Sign form disk</a>
 
-    @{
-        foreach (var udoc in Model)
-        {
-            <form asp-action="SignSentDocument">
-                <input type="hidden" name="IdUnsignedDocument" value=@udoc.IdUnsignedDocument id="IdUnsignedDocument" />
-                <div class="card">
-                    <div class="card-header">
-                        Sent from username:
-                        @udoc.SentFromUsername
+@{
+    foreach (var udoc in Model)
+    {
+        <form asp-action="SignSentDocument">
+            <input type="hidden" name="IdUnsignedDocument" value=@udoc.IdUnsignedDocument id="IdUnsignedDocument" />
+            <div class="card">
+                <div class="card-header">
+                    Sent from username:
+                    @udoc.SentFromUsername
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        File Name:
+                        @udoc.Name
                     </div>
-                    <div class="card-body">
-                        <div class="form-group">
-                            File Name:
-                            @udoc.Name
-                        </div>
-                        <p class="card-text"><strong>Key you need to sign with: @udoc.KeyPreference </strong></p>
-                        <div class="form-group">
-                            <input type="submit" value="Sign" class="btn btn-primary" />
-                        </div>
+                    <p class="card-text"><strong>Key you need to sign with: @udoc.KeyPreference </strong></p>
+                    <div class="form-group">
+                        <input type="submit" value="Sign" class="btn btn-primary" />
                     </div>
                 </div>
-                <br>
+            </div>
+            <br>
 
-            </form>
-        }
+        </form>
     }
+}
