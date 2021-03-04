@@ -8,9 +8,10 @@ namespace Trustme.Controllers
 {
     public class SignedDocumentsController : Controller
     {
-        public IActionResult Index()
+        public IActionResult SignedDocumentsHistory()
         {
             return View();
         }
+
     }
 }
