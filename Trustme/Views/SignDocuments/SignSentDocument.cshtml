@@ -5,11 +5,16 @@
     <input type="hidden" name="IdUnsignedDocument" value=@Model.UnsignedDocument.IdUnsignedDocument id="IdUnsignedDocument" />
     <div class="card">
         <div class="card-header">
-            @Model.UnsignedDocument.Name
+            Sent from username:
+            @Model.UnsignedDocument.SentFromUsername
         </div>
         <div class="card-body">
             <div class="form-group">
-                <strong>Sign withh key:</strong>
+                File Name:
+                @Model.UnsignedDocument.Name
+            </div>
+            <div class="form-group">
+                <strong>Sign with key:</strong>
                 @Model.Key.CertificateName
             </div>
             <div class="form-group">

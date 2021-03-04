@@ -12,9 +12,14 @@
                 <input type="hidden" name="IdUnsignedDocument" value=@udoc.IdUnsignedDocument id="IdUnsignedDocument" />
                 <div class="card">
                     <div class="card-header">
-                        @udoc.Name
+                        Sent from username:
+                        @udoc.SentFromUsername
                     </div>
                     <div class="card-body">
+                        <div class="form-group">
+                            File Name:
+                            @udoc.Name
+                        </div>
                         <p class="card-text"><strong>Key Preference: @udoc.KeyPreference </strong></p>
                         <div class="form-group">
                             <input type="submit" value="Sign" class="btn btn-primary" />
