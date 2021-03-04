@@ -69,7 +69,7 @@ namespace Trustme.Service
                 _context.UnsignedDocuments,
                 u => u.UnsignedDocumentId,
                 ud => ud.IdUnsignedDocument,
-                (u, ud) => new UnsignedDocument(ud)).ToList().Where(a => a.Signed == false);
+                (u, ud) => new UnsignedDocument(ud)).ToList().Where(a => a.Signed == true);
             return unsignedDocuments;
         }
 
