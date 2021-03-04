@@ -12,5 +12,9 @@ namespace Trustme.Controllers
         {
             return View();
         }
+        public IActionResult UsersList()
+        {
+            return View();
+        }
     }
 }
