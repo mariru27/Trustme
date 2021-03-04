@@ -29,24 +29,33 @@ using Microsoft.EntityFrameworkCore;
 using Trustme.IServices;
 using Trustme.Service;
 using Trustme.ViewModels;
+using Trustme.Tools.ToolsModels;
+using Trustme.ITools;
+using Trustme.Tools;
 
 namespace Trustme.Controllers
 {
     public class GenerateCertificateController : Controller
     {
-        //public Administration admin;
         private const string SignatureAlgorithm = "sha1WithRSA";
         private IHostingEnvironment Environment;
         private IHttpRequestFunctions _HttpRequestFunctions;
         private IKeyRepository _KeyRepository;
-
-        public GenerateCertificateController( IHostingEnvironment _environment, IHttpRequestFunctions httpRequestFunctions, IKeyRepository keyRepository)
+        private ICertificate _Certificate;
+        private const int UserMaximNumberOfCertificates = 3;
+        public GenerateCertificateController(ICertificate certificate, IHostingEnvironment _environment, IHttpRequestFunctions httpRequestFunctions, IKeyRepository keyRepository)
         {
             _HttpRequestFunctions = httpRequestFunctions;
             Environment = _environment;
             _KeyRepository = keyRepository;
+            _Certificate = certificate;
         }
         public IActionResult Index()
+        {
+            return View();
+        }
+
+        public IActionResult ErrorNrCertificates()
         {
             return View();
         }
@@ -56,6 +65,12 @@ namespace Trustme.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> GenerateCertificate(string certificateName, string description, int keySize)
         {
+            User currentUser = _HttpRequestFunctions.GetUser(HttpContext);
+            if (_KeyRepository.GetNrCertificates(currentUser) >= UserMaximNumberOfCertificates)
+            {
+                return RedirectToAction(nameof(ErrorNrCertificates));
+            }
+
             TempData["certificateNameError"] = true;
             if (certificateName == null)
             {
@@ -94,21 +109,19 @@ namespace Trustme.Controllers
 
                 string publicKey = textWriter1.ToString();
 
-                User currentUser = _HttpRequestFunctions.GetUser(HttpContext);
-
                 Key currentKey = new Key();
                 currentKey.CertificateName = certificateName;
                 currentKey.Description = description;
                 currentKey.KeySize = keySize;
                 currentKey.PublicKey = publicKey;
-                
+
 
                 UserKeyModel userKeyModel = new UserKeyModel();
                 userKeyModel.User = currentUser;
                 userKeyModel.Key = currentKey;
 
                 _KeyRepository.AddKey(userKeyModel);
-                
+
             }
 
             var cert = cGenerator.Generate(kp.Private); // Create a self-signed cert
@@ -170,7 +183,6 @@ namespace Trustme.Controllers
             return result;
 
         }
-
 
 
         public IActionResult GenerateCertificate()

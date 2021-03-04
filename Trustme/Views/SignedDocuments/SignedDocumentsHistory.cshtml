@@ -1,0 +1,32 @@
+﻿@model IEnumerable<UnsignedDocument>
+
+<nav class="navbar navbar-light bg-light">
+    <a class="navbar-brand" asp-area="" asp-controller="SignDocuments" asp-action="UnsignedDocuments">Unsign documents</a>
+    <a class="navbar-brand" asp-area="" asp-controller="SignedDocuments" asp-action="SignedDocumentsHistory">Signed documents</a>
+</nav>
+
+<h4 class="display-4">Signed Documents</h4>
+
+
+
+@{
+    foreach (var udoc in Model)
+    {
+            <input type="hidden" name="IdUnsignedDocument" value=@udoc.IdUnsignedDocument id="IdUnsignedDocument" />
+            <div class="card">
+                <div class="card-header">
+                    Sent from username:
+                    @udoc.SentFromUsername
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        File Name:
+                        @udoc.Name
+                    </div>
+                    <p class="card-text"><strong>Key you need to sign with: @udoc.KeyPreference </strong></p>
+                </div>
+            </div>
+            <br>
+
+    }
+}

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,7 @@ using Trustme.Models;
 
 namespace Trustme.Service
 {
+    [Authorize]
     public class HttpRequestFunctions : IHttpRequestFunctions
     {
 
@@ -27,24 +29,6 @@ namespace Trustme.Service
             return appContext;
         }
 
-        //public string getPublicKey(HttpContext httpcontext)
-        //{
-        //    var username = this.getUsername(httpcontext);
-        //    //return key of a certain user 
-        //    User user = _UserRepository.GetUserbyUsername(username);
-        //    //Key key = _KeyRepository
-        //    Key key = _context.Key.Where(a => a.UserKeyId == user.UserId)?.SingleOrDefault();
-        //    return key.PublicKey;
-
-        //}
-
-        //public string getPublicKey(HttpContext httpcontext, int certificateId)
-        //{
-        //    var username = this.getUsername(httpcontext);
-        //    Key key = _context.Key.Where(a => a.UserKeyId == this.getUserId(httpcontext) && a.KeyId == certificateId).SingleOrDefault();
-        //    return key.PublicKey;
-
-        //}
 
         public bool IsloggedIn(HttpContext httpcontext)
         {

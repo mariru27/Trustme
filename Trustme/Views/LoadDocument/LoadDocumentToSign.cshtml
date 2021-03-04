@@ -1,0 +1,38 @@
+﻿@model UploadDocumentModel
+
+<h4 class="display-4">Upload document to sign</h4>
+
+<form method="post" enctype="multipart/form-data" asp-action="LoadDocumentToSign">
+    <input type="hidden" name="Username" value=@Model.Username id="Username" />
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <label for="certificateName">Choose a certifificate:</label>
+    <select class="form-control" name="certificateName" id="certificateName">
+        @{
+            if (Model != null)
+                foreach (var c in Model.Keys)
+                {
+                    <option value=@c.CertificateName>@c.CertificateName</option>
+                }
+        }
+    </select>
+    <br>
+    <div class="form-group">
+        <label for="Document"><strong>Document</strong></label>
+        <input for="Document" name="Document" type="file">
+    </div>
+    @if (TempData["Success"] != null)
+    {
+        <p class="alert alert-success" id="successMessage">@TempData["Success"]</p>
+    }
+    @if (TempData["PKNull"] != null)
+    {
+        <p class="alert alert-danger" id="userError">@TempData["PKNull"]</p>
+    }
+    @if (TempData["DocumentError"] != null)
+    {
+        <p class="alert alert-danger" id="documentError">@TempData["DocumentError"]</p>
+    }
+    <div class="form-group">
+        <input type="submit" value="Submit" class="btn btn-primary" />
+    </div>
+</form>

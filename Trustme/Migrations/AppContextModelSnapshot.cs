@@ -58,6 +58,70 @@ namespace Trustme.Migrations
                     b.ToTable("Role");
                 });
 
+            modelBuilder.Entity("Trustme.Models.SignedDocument", b =>
+                {
+                    b.Property<int>("IdSignedDocument")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Comment")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<byte[]>("Document")
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<int>("KeyId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Signature")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SignedByUsername")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("IdSignedDocument");
+
+                    b.HasIndex("KeyId");
+
+                    b.ToTable("SignedDocuments");
+                });
+
+            modelBuilder.Entity("Trustme.Models.UnsignedDocument", b =>
+                {
+                    b.Property<int>("IdUnsignedDocument")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<byte[]>("Document")
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<int>("KeyId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("KeyPreference")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SentFromUsername")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Signed")
+                        .HasColumnType("bit");
+
+                    b.HasKey("IdUnsignedDocument");
+
+                    b.HasIndex("KeyId");
+
+                    b.ToTable("UnsignedDocuments");
+                });
+
             modelBuilder.Entity("Trustme.Models.User", b =>
                 {
                     b.Property<int>("UserId")
@@ -115,6 +179,68 @@ namespace Trustme.Migrations
                     b.ToTable("UserKey");
                 });
 
+            modelBuilder.Entity("Trustme.Models.UserSignedDocument", b =>
+                {
+                    b.Property<int>("IdUserSignedDocument")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("SignedDocumentId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("IdUserSignedDocument");
+
+                    b.HasIndex("SignedDocumentId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserSignedDocuments");
+                });
+
+            modelBuilder.Entity("Trustme.Models.UserUnsignedDocument", b =>
+                {
+                    b.Property<int>("IdUserUnsignedDocument")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("UnsignedDocumentId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("IdUserUnsignedDocument");
+
+                    b.HasIndex("UnsignedDocumentId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserUnsignedDocuments");
+                });
+
+            modelBuilder.Entity("Trustme.Models.SignedDocument", b =>
+                {
+                    b.HasOne("Trustme.Models.Key", "Key")
+                        .WithMany()
+                        .HasForeignKey("KeyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Trustme.Models.UnsignedDocument", b =>
+                {
+                    b.HasOne("Trustme.Models.Key", "Key")
+                        .WithMany()
+                        .HasForeignKey("KeyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Trustme.Models.User", b =>
                 {
                     b.HasOne("Trustme.Models.Role", "Role")
@@ -130,6 +256,36 @@ namespace Trustme.Migrations
                         .WithOne("UserKey")
                         .HasForeignKey("Trustme.Models.UserKey", "IdUserKey")
                         .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
+
+                    b.HasOne("Trustme.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Trustme.Models.UserSignedDocument", b =>
+                {
+                    b.HasOne("Trustme.Models.SignedDocument", "SignedDocument")
+                        .WithMany()
+                        .HasForeignKey("SignedDocumentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Trustme.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Trustme.Models.UserUnsignedDocument", b =>
+                {
+                    b.HasOne("Trustme.Models.UnsignedDocument", "UnsignedDocument")
+                        .WithMany()
+                        .HasForeignKey("UnsignedDocumentId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Trustme.Models.User", "User")

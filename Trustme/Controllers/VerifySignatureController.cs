@@ -15,6 +15,9 @@ using Microsoft.AspNetCore.Hosting;
 using Trustme.Data;
 using Trustme.IServices;
 using Trustme.Service;
+using Trustme.ITools;
+using Trustme.Tools.ToolsModels;
+using Trustme.Tools;
 
 namespace Trustme.Controllers
 {
@@ -23,12 +26,13 @@ namespace Trustme.Controllers
         private IHostingEnvironment Environment;
         private IKeyRepository _KeyRepository;
         private IUserRepository _UserRepository;
-
-        public VerifySignatureController(IHostingEnvironment _environment, IKeyRepository keyRepository, IUserRepository userRepository)
+        private ISign _Sign;
+        public VerifySignatureController(IHostingEnvironment _environment, IKeyRepository keyRepository, IUserRepository userRepository, ISign sign)
         {
             _UserRepository = userRepository;
             _KeyRepository = keyRepository;
             Environment = _environment;
+            _Sign = sign;
         }
         public IActionResult VerifyUser()
         {
@@ -107,32 +111,13 @@ namespace Trustme.Controllers
                     return RedirectToAction("VerifySign", new { username = username });
                 }
 
-                //get public key by name from database, use key to decrypt
-
-                Key userKey = _KeyRepository.GetKeyByCertificateName(username, certificateName);
-                string publicKeystring = userKey.PublicKey;
-                //string publicKeystring = admin.getPublicKeyByCertificateName(username, certificateName);
-
-                byte[] publickeybyte = Encoding.ASCII.GetBytes(publicKeystring);
-
-                var reader = new StringReader(publicKeystring);
-                var keypem = new PemReader(reader);
-
-                var publickey = (Org.BouncyCastle.Crypto.AsymmetricKeyParameter)keypem.ReadObject();
-
-                reader.Close();
-
-                byte[] fileBytesdoc;
-
-                using (var ms = new MemoryStream())
+                VerifySignatureModel verifySignatureModel = new VerifySignatureModel
                 {
-                    document.CopyTo(ms);
-                    fileBytesdoc = ms.ToArray();
-                }
-
-                ISigner sign = SignerUtilities.GetSigner(PkcsObjectIdentifiers.Sha256WithRsaEncryption.Id);
-                sign.Init(false, publickey);
-                sign.BlockUpdate(fileBytesdoc, 0, fileBytesdoc.Length);
+                    CertificateName = certificateName,
+                    Document = document,
+                    Username = username
+                };
+                ISigner sign = _Sign.VerifySignature(verifySignatureModel);
 
                 TempData["validSignature"] = "invalid";
                 try
