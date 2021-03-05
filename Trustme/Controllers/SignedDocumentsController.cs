@@ -30,17 +30,21 @@ namespace Trustme.Controllers
         
         public IActionResult SignedDocumentsForUser()
         {
+            
             User currentUser = _HttpRequestFunctions.GetUser(HttpContext);
+
+            //Get all users signedDocuments
             IEnumerable<SignedDocument> signedDocuments = _SignedDocumentRepository.ListAllSignedDocuments(currentUser);
             List<SignedDocumentsViewModel> signedDocumentsViewModels = new List<SignedDocumentsViewModel>();
 
+            //Cast SignedDocument to SignedDocumentsViewModel
             foreach(var doc in signedDocuments)
             {
                 SignedDocumentsViewModel signedDocumentsViewModel = new SignedDocumentsViewModel(doc);
                 signedDocumentsViewModels.Add(signedDocumentsViewModel);
 
             }
-            return View();
+            return View(signedDocumentsViewModels);
 
         }
 
