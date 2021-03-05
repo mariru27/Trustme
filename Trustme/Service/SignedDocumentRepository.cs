@@ -36,5 +36,15 @@ namespace Trustme.Service
             _context.SaveChanges();
             return true;
         }
+
+        public IEnumerable<SignedDocument> ListAllSignedDocuments(User user)
+        {
+            IEnumerable<SignedDocument> signedDocuments = _context.UserSignedDocuments.Where(u => u.UserId == user.UserId).Join(
+            _context.SignedDocuments,
+            u => u.SignedDocumentId,
+            ud => ud.IdSignedDocument,
+            (u, ud) => new SignedDocument(ud)).ToList();
+            return signedDocuments;
+        }
     }
 }
