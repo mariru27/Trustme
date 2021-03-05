@@ -68,6 +68,8 @@ namespace Trustme.Controllers
             return View(unsignedDocuments);
         }
 
+
+
         public IActionResult SignSentDocument(int IdUnsignedDocument, string Signature)
         {
             KeysUnsignedDocumentViewModel keysUnsignedDocumentViewModel = new KeysUnsignedDocumentViewModel

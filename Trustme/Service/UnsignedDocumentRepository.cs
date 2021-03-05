@@ -35,7 +35,13 @@ namespace Trustme.Service
             _context.UserUnsignedDocuments.Add(userUnsignedDocument);
             _context.SaveChanges();
         }
+        
+        public void DeleteUnsignedDocument(int IdUnsignedDocument)
+        {
 
+            _context.UnsignedDocuments.Remove(this.GetUnsignedDocumentById(IdUnsignedDocument));
+            _context.SaveChanges();
+        }
         public UnsignedDocument GetUnsignedDocumentById(int IdUnsignedDocument)
         {
             return _context.UnsignedDocuments.Where(u => u.IdUnsignedDocument == IdUnsignedDocument).SingleOrDefault();
