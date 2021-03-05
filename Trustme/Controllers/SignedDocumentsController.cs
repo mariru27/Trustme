@@ -13,10 +13,12 @@ namespace Trustme.Controllers
     {
         private IUnsignedDocumentRepository _UnsignedDocumentRepository;
         private IHttpRequestFunctions _HttpRequestFunctions;
-        public SignedDocumentsController(IUnsignedDocumentRepository unsignedDocumentRepository, IHttpRequestFunctions httpRequestFunctions)
+        private ISignedDocumentRepository _SignedDocumentRepository;
+        public SignedDocumentsController(ISignedDocumentRepository signedDocumentRepository, IUnsignedDocumentRepository unsignedDocumentRepository, IHttpRequestFunctions httpRequestFunctions)
         {
             _UnsignedDocumentRepository = unsignedDocumentRepository;
             _HttpRequestFunctions = httpRequestFunctions;
+            _SignedDocumentRepository = signedDocumentRepository;
         }
         public IActionResult SignedDocumentsHistory()
         {
@@ -24,9 +26,12 @@ namespace Trustme.Controllers
             return View(signedDocuments);
         }
 
+        
         public IActionResult SignedDocumentsForUser()
         {
+           
             return View();
+
         }
 
     }
