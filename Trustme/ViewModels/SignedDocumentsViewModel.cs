@@ -8,7 +8,14 @@ namespace Trustme.ViewModels
 {
     public class SignedDocumentsViewModel
     {
-
+        public SignedDocumentsViewModel(SignedDocument signedDocument)
+        {
+            this.IdSignedDocument = signedDocument.IdSignedDocument;
+            this.KeyId = signedDocument.KeyId;
+            this.Key = signedDocument.Key;
+            this.Signature = signedDocument.Signature;
+            this.SignedByUsername = signedDocument.SignedByUsername;
+        }
         public int IdSignedDocument { get; set; }
         public string Name { get; set; }
         public string SignedByUsername { get; set; }
