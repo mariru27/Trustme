@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Trustme.IServices;
 using Trustme.Service;
 using Trustme.Models;
+using Trustme.ViewModels;
 
 namespace Trustme.Controllers
 {
@@ -29,7 +30,8 @@ namespace Trustme.Controllers
         
         public IActionResult SignedDocumentsForUser()
         {
-           
+            User currentUser = _HttpRequestFunctions.GetUser(HttpContext);
+            IEnumerable<SignedDocument> signedDocuments = _SignedDocumentRepository.ListAllSignedDocuments(currentUser);
             return View();
 
         }
