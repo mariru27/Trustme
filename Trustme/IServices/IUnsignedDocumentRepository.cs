@@ -16,6 +16,7 @@ namespace Trustme.IServices
         public UnsignedDocument GetUnsignedDocumentById(int IdUnsignedDocument);
         public UnsignedDocument GetUnsignedDocumentByUserDocumentName(User user, string unsignedDocumentName);
         public UnsignedDocument MakeDocumentSigned(UnsignedDocument unsignedDocument);
+        public void DeleteUnsignedDocument(int IdUnsignedDocument);
 
     }
 }
