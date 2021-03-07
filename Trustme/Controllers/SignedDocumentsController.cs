@@ -27,8 +27,15 @@ namespace Trustme.Controllers
             return View(signedDocuments);
         }
 
+        [HttpGet]
 
-        
+        public IActionResult DeleteDocument(int id)
+        {
+            _SignedDocumentRepository.DeleteSignedDocument(id);
+            return RedirectToAction("UnsignedDocuments");
+        }
+
+
         public IActionResult SignedDocumentsForUser()
         {
             
