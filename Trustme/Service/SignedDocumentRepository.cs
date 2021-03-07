@@ -46,5 +46,11 @@ namespace Trustme.Service
             (u, ud) => new SignedDocument(ud)).ToList();
             return signedDocuments;
         }
+
+
+        public SignedDocument GetSignedDocumentById(int IdSignedDocument)
+        {
+            return _context.SignedDocuments.Where(d => d.IdSignedDocument == IdSignedDocument).SingleOrDefault();
+        }
     }
 }
