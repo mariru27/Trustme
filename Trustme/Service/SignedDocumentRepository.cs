@@ -47,6 +47,11 @@ namespace Trustme.Service
             return signedDocuments;
         }
 
+        public void DeleteSignedDocument(int IdSignedDocument)
+        {
+            _context.SignedDocuments.Remove(this.GetSignedDocumentById(IdSignedDocument));
+            _context.SaveChanges();
+        }
 
         public SignedDocument GetSignedDocumentById(int IdSignedDocument)
         {
