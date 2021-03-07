@@ -11,6 +11,8 @@ namespace Trustme.IServices
     {
         public bool AddSignedDocument(SignedDocument signedDocument, User user);
         public IEnumerable<SignedDocument> ListAllSignedDocuments(User user);
+        public SignedDocument GetSignedDocumentById(int IdSignedDocument);
+        public void DeleteSignedDocument(int IdSignedDocument);
 
     }
 }

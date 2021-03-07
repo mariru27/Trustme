@@ -11,6 +11,9 @@
             <div class="card-header">
                 Signed by username:
                 @udoc.SignedByUsername
+                <a class="float-right" asp-controller="SignedDocuments" asp-action="DeleteDocument" asp-route-id="@udoc.IdSignedDocument">
+                    Delete
+                </a>
             </div>
             <div class="card-body">
                 <div class="form-group">
