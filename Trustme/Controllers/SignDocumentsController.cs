@@ -68,9 +68,11 @@ namespace Trustme.Controllers
             return View(unsignedDocuments);
         }
 
-        public IActionResult DeleteDocument(int IdUnsignedDocument)
+        [HttpGet]
+
+        public IActionResult DeleteDocument(int id)
         {
-            _UnsignedDocumentRepository.DeleteUnsignedDocument(IdUnsignedDocument);
+            _UnsignedDocumentRepository.DeleteUnsignedDocument(id);
             return RedirectToAction("UnsignedDocuments");
         }
 
