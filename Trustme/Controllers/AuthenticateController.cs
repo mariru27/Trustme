@@ -14,6 +14,7 @@ using Trustme.Service;
 using Trustme.IServices;
 using Trustme.Tools;
 using Trustme.ITools;
+using System.Security.Cryptography;
 
 namespace Trustme.Controllers
 {   
@@ -70,6 +71,8 @@ namespace Trustme.Controllers
 
             if (ModelState.IsValid && user.Password == user.ConfirmPassword)
             {
+                user.Password = _Tool.ComputeHash(user.Password, new SHA256CryptoServiceProvider());
+                user.ConfirmPassword = _Tool.ComputeHash(user.ConfirmPassword, new SHA256CryptoServiceProvider());
                 Role role = _RoleReporitory.GetRoleById(user.RoleId);
                 user.Role = role;
                 _UserRepository.AddUser(user);
