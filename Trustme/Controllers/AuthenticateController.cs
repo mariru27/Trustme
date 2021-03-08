@@ -12,6 +12,8 @@ using Microsoft.AspNetCore.Http;
 using Trustme.Data;
 using Trustme.Service;
 using Trustme.IServices;
+using Trustme.Tools;
+using Trustme.ITools;
 
 namespace Trustme.Controllers
 {   
@@ -22,12 +24,13 @@ namespace Trustme.Controllers
         private IKeyRepository _KeyRepository;
         private IRoleRepository _RoleReporitory;
         private IUserRepository _UserRepository;
-
-        public AuthenticateController(IKeyRepository keyRepository, IRoleRepository roleRepository, IUserRepository userRepository)
+        private ITool _Tool;
+        public AuthenticateController(IKeyRepository keyRepository, IRoleRepository roleRepository, IUserRepository userRepository, ITool tool)
         {
             _UserRepository = userRepository;
             _KeyRepository = keyRepository;
             _RoleReporitory = roleRepository;
+            _Tool = tool;
         }
 
         public IActionResult Register()

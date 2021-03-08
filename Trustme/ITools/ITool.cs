@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Trustme.ITools
 {
-    interface ITool
+    public interface ITool
     {
         public string ComputeHash(string input, HashAlgorithm algorithm);
 
