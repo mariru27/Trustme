@@ -46,6 +46,7 @@ namespace Trustme.Controllers
 
         public async Task<IActionResult> Register(User user)
         {
+            string password = user.Password;
             User usedUser = _UserRepository.GetUserbyUsername(user.Username);
             User usedMailUser = _UserRepository.GetUserbyMail(user.Mail);
 
@@ -76,7 +77,7 @@ namespace Trustme.Controllers
                 Role role = _RoleReporitory.GetRoleById(user.RoleId);
                 user.Role = role;
                 _UserRepository.AddUser(user);
-                return await LogIn(user.Username, user.Password);
+                return await LogIn(user.Username, password);
             }
             return View(userResult);
         }
