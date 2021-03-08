@@ -5,14 +5,10 @@ using Org.BouncyCastle.Crypto;
 using Org.BouncyCastle.OpenSsl;
 using Org.BouncyCastle.Security;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using Trustme.ITools;
 using Trustme.IServices;
-using Trustme.Service;
 using Trustme.Tools.ToolsModels;
 using Trustme.Models;
 
@@ -68,7 +64,6 @@ namespace Trustme.Tools
 
             var currentKey = _KeyRepository.GetKey(_HttpRequestFunctions.GetUserId(httpContext), certificates);
 
-            byte[] publickeybyte = Encoding.ASCII.GetBytes(currentKey.PublicKey);
             //phrase public key
             var readerPublickey = new StringReader(currentKey.PublicKey);
             var pemPublicKey = new PemReader(readerPublickey);
@@ -122,7 +117,6 @@ namespace Trustme.Tools
             string publicKeystring = userKey.PublicKey;
             //string publicKeystring = admin.getPublicKeyByCertificateName(username, certificateName);
 
-            byte[] publickeybyte = Encoding.ASCII.GetBytes(publicKeystring);
 
             var reader = new StringReader(publicKeystring);
             var keypem = new PemReader(reader);

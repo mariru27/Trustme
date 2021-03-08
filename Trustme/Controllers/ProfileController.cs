@@ -1,13 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Trustme.Data;
 using Trustme.IServices;
-using Trustme.Service;
 using Trustme.ViewModels;
 using Trustme.Models;
 using Microsoft.EntityFrameworkCore;

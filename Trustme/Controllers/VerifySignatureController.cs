@@ -1,23 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Trustme.Models;
-using Org.BouncyCastle.OpenSsl;
-using System.IO;
 using Org.BouncyCastle.Crypto;
-using Org.BouncyCastle.Security;
-using Org.BouncyCastle.Asn1.Pkcs;
-using System.Text;
 using Microsoft.AspNetCore.Hosting;
-using Trustme.Data;
 using Trustme.IServices;
-using Trustme.Service;
 using Trustme.ITools;
 using Trustme.Tools.ToolsModels;
-using Trustme.Tools;
 
 namespace Trustme.Controllers
 {

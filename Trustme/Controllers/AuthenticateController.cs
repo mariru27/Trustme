@@ -2,17 +2,13 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Trustme.Data;
 using Trustme.ViewModels;
 using Trustme.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
-using Trustme.Data;
-using Trustme.Service;
 using Trustme.IServices;
-using Trustme.Tools;
 using Trustme.ITools;
 using System.Security.Cryptography;
 
