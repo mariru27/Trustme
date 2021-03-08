@@ -1,5 +1,7 @@
 ﻿@model IEnumerable<UnsignedDocument>
-
+@{
+    ViewData["ShowSignButton"] = true;
+}
 
 <nav class="navbar navbar-light bg-light">
     <a class="navbar-brand" asp-area="" asp-controller="SignDocuments" asp-action="UnsignedDocuments">Unsign documents</a>
@@ -14,7 +16,7 @@
 @{
     foreach (var unsignedDocuments in Model)
     {
-    
-        <partial name="_UnsignedDocumentCard" model="unsignedDocuments" />
+
+        <partial name="_UnsignedDocumentCard" model="unsignedDocuments" view-data="ViewData" />
     }
 }

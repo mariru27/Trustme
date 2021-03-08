@@ -1,4 +1,7 @@
 ﻿@model UnsignedDocument 
+@{ 
+    bool showSignButton =(bool)ViewData["ShowSignButton"];
+}
 
 <form asp-action="SignSentDocument">
     <input type="hidden" name="IdUnsignedDocument" value=@Model.IdUnsignedDocument id="IdUnsignedDocument" />
@@ -19,9 +22,12 @@
                 @Model.Name
             </div>
             <p class="card-text"><strong>Key you need to sign with: @Model.KeyPreference </strong></p>
-            <div class="form-group">
-                <input type="submit" value="Sign" class="btn btn-primary" />
-            </div>
+            @if(showSignButton == true)
+            {
+                <div class="form-group">
+                    <input type="submit" value="Sign" class="btn btn-primary" />
+                </div>
+            }
         </div>
     </div>
     <br>
