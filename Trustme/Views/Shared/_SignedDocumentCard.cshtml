@@ -1,0 +1,23 @@
+﻿@model SignedDocumentsViewModel
+
+<div class="card">
+    <div class="card-header">
+        Signed by username:
+        @Model.SignedByUsername
+        <a class="float-right" asp-controller="SignedDocuments" asp-action="DeleteDocument" asp-route-id="@Model.IdSignedDocument">
+            Delete
+        </a>
+    </div>
+    <div class="card-body">
+        <div class="form-group">
+            File Name:
+            @Model.Name
+        </div>
+        <div class="form-group">
+            Signature:
+            <textarea class="form-control" name="Signature">@Model.Signature</textarea>
+
+        </div>
+    </div>
+</div>
+<br>
