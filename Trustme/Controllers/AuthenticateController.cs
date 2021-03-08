@@ -12,6 +12,9 @@ using Microsoft.AspNetCore.Http;
 using Trustme.Data;
 using Trustme.Service;
 using Trustme.IServices;
+using Trustme.Tools;
+using Trustme.ITools;
+using System.Security.Cryptography;
 
 namespace Trustme.Controllers
 {   
@@ -22,12 +25,13 @@ namespace Trustme.Controllers
         private IKeyRepository _KeyRepository;
         private IRoleRepository _RoleReporitory;
         private IUserRepository _UserRepository;
-
-        public AuthenticateController(IKeyRepository keyRepository, IRoleRepository roleRepository, IUserRepository userRepository)
+        private ITool _Tool;
+        public AuthenticateController(IKeyRepository keyRepository, IRoleRepository roleRepository, IUserRepository userRepository, ITool tool)
         {
             _UserRepository = userRepository;
             _KeyRepository = keyRepository;
             _RoleReporitory = roleRepository;
+            _Tool = tool;
         }
 
         public IActionResult Register()
@@ -42,6 +46,7 @@ namespace Trustme.Controllers
 
         public async Task<IActionResult> Register(User user)
         {
+            string password = user.Password;
             User usedUser = _UserRepository.GetUserbyUsername(user.Username);
             User usedMailUser = _UserRepository.GetUserbyMail(user.Mail);
 
@@ -62,12 +67,17 @@ namespace Trustme.Controllers
                 }
                 return View(userResult);
             }
+
+            //hash password 
+
             if (ModelState.IsValid && user.Password == user.ConfirmPassword)
             {
+                user.Password = _Tool.ComputeHash(user.Password, new SHA256CryptoServiceProvider());
+                user.ConfirmPassword = _Tool.ComputeHash(user.ConfirmPassword, new SHA256CryptoServiceProvider());
                 Role role = _RoleReporitory.GetRoleById(user.RoleId);
                 user.Role = role;
                 _UserRepository.AddUser(user);
-                return await LogIn(user.Username, user.Password);
+                return await LogIn(user.Username, password);
             }
             return View(userResult);
         }
@@ -86,7 +96,8 @@ namespace Trustme.Controllers
             if (isloggedIn(HttpContext) == true)
                 await LogOut();
             User user = _UserRepository.GetUserbyUsername(username);
-            if (user != null && password == user.Password)
+            string hashPassword = _Tool.ComputeHash(password, new SHA256CryptoServiceProvider());
+            if (user != null && hashPassword == user.Password)
             {
                 var userClaim = new List<Claim>()
                     {
