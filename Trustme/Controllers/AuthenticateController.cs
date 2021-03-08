@@ -62,6 +62,9 @@ namespace Trustme.Controllers
                 }
                 return View(userResult);
             }
+
+            //hash password 
+
             if (ModelState.IsValid && user.Password == user.ConfirmPassword)
             {
                 Role role = _RoleReporitory.GetRoleById(user.RoleId);
