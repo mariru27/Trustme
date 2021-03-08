@@ -95,7 +95,8 @@ namespace Trustme.Controllers
             if (isloggedIn(HttpContext) == true)
                 await LogOut();
             User user = _UserRepository.GetUserbyUsername(username);
-            if (user != null && password == user.Password)
+            string hashPassword = _Tool.ComputeHash(password, new SHA256CryptoServiceProvider());
+            if (user != null && hashPassword == user.Password)
             {
                 var userClaim = new List<Claim>()
                     {
