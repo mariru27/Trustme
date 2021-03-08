@@ -5,9 +5,10 @@
 
 
 @{
-    foreach (var udoc in Model)
+    foreach (var signedDocument in Model)
     {
-       
 
-        }
+        <partial name="_SignedDocumentCard" model="signedDocument" />
+
     }
+}
