@@ -12,34 +12,9 @@
 <a class="btn btn-primary" style="margin-bottom:15px; margin-top:7px" asp-controller="SignDocuments" asp-action="SignDocument">Sign form disk</a>
 
 @{
-    foreach (var udoc in Model)
+    foreach (var unsignedDocuments in Model)
     {
-        @*<form asp-action="SignSentDocument">
-            <input type="hidden" name="IdUnsignedDocument" value=@udoc.IdUnsignedDocument id="IdUnsignedDocument" />
-            <div class="card">
-
-                <div class="card-header">
-                    Sent from username:
-                    @udoc.SentFromUsername
-
-                        <a class="float-right" asp-controller="SignDocuments" asp-action="DeleteDocument" asp-route-id="@udoc.IdUnsignedDocument">
-                            Delete
-                        </a>
-
-                    </div>
-                    <div class="card-body">
-                        <div class="form-group">
-                            File Name:
-                            @udoc.Name
-                        </div>
-                        <p class="card-text"><strong>Key you need to sign with: @udoc.KeyPreference </strong></p>
-                        <div class="form-group">
-                            <input type="submit" value="Sign" class="btn btn-primary" />
-                        </div>
-                    </div>
-                </div>
-            <br>
-
-        </form>*@
+    
+        <partial name="_UnsignedDocumentCard" model="unsignedDocuments" />
     }
 }
