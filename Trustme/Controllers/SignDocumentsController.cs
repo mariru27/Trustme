@@ -86,9 +86,15 @@ namespace Trustme.Controllers
             string signature = _Sign.SignDocument(signModel);
 
             
-            //Store in database SignedDocument
+            //Store in database(for another user) SignedDocument
             SignedDocument signedDocument = new SignedDocument(unsignedDocument, signature, _HttpRequestFunctions.GetUser(HttpContext).Username);
             _SignedDocumentRepository.AddSignedDocument(signedDocument, _UserRepository.GetUserbyUsername(unsignedDocument.SentFromUsername));
+
+            //store in db signed document for current user
+            SignedDocument signedDocumentCurrentUser = new SignedDocument(unsignedDocument, signature, _HttpRequestFunctions.GetUser(HttpContext).Username);
+            _SignedDocumentRepository.AddSignedDocument(signedDocumentCurrentUser, _UserRepository.GetUserbyUsername(_HttpRequestFunctions.GetUser(HttpContext).Username));
+
+            //Add document in current user history
             _UnsignedDocumentRepository.MakeDocumentSigned(unsignedDocument);
 
 
