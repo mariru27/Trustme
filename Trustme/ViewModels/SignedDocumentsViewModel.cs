@@ -19,11 +19,13 @@ namespace Trustme.ViewModels
             this.Key = signedDocument.Key;
             this.Signature = signedDocument.Signature;
             this.SignedByUsername = signedDocument.SignedByUsername;
+            this.SentFromUsername = signedDocument.SentFromUsername;
             this.Name = signedDocument.Name;
         }
         public int IdSignedDocument { get; set; }
         public string Name { get; set; }
         public string SignedByUsername { get; set; }
+        public string SentFromUsername { get; set; }
         public string Signature { get; set; }
         public int KeyId { get; set; }
         public Key Key { get; set; }
