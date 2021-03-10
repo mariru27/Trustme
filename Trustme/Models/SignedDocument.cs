@@ -33,7 +33,7 @@ namespace Trustme.Models
             this.Signature = Signature;
             this.Document = unsignedDocument.Document;
             this.SignedByUsername = SignedByUsername;
-            this.SentFromUsername = SentFromUsername;
+            this.SentFromUsername = unsignedDocument.SentFromUsername;
         }
 
         [Key]
