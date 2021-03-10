@@ -28,7 +28,7 @@ namespace Trustme.Controllers
         public IActionResult DeleteDocument(int id)
         {
             _SignedDocumentRepository.DeleteSignedDocument(id);
-            return RedirectToAction("SignedDocumentsForUser");
+            return RedirectToAction("SignedDocumentsFromUsers");
         }
 
 
