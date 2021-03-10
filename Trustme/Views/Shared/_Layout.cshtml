@@ -10,9 +10,11 @@
         body {
             background: -webkit-linear-gradient(left, #d1f0f0, #a661fa);
         }
+
         input, select, textarea {
             color: #413f45;
         }
+
         .emp-profile {
             padding: 3%;
             margin-top: 3%;
@@ -158,14 +160,12 @@
                                         <a class="nav-link text-dark" asp-area="" asp-controller="LoadDocument" asp-action="SendDocumentToUser">Upload</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-controller="SignDocuments" asp-action="UnsignedDocuments">Sign</a>
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="SignDocuments" asp-action="UnsignedDocuments">Documents</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link text-dark" asp-area="" asp-controller="GenerateCertificate" asp-action="GenerateCertificate">Generate Certificate</a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-controller="SignedDocuments" asp-action="SignedDocumentsFromUsers">Signed documents</a>
-                                    </li>
+
                                 }
 
                             }

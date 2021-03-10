@@ -1,6 +1,9 @@
-﻿
-<nav class="navbar-nav">
-    <a  class="btn btn-outline-light" asp-area="" asp-controller="SignDocuments" asp-action="UnsignedDocuments">Unsign documents</a>
-    <br />
-    <a  class="btn btn-outline-light" asp-area="" asp-controller="SignedDocuments" asp-action="SignedDocumentsHistory">Signed documents by you</a>
-</nav>
+﻿<ul class="nav nav-tabs">
+    <li class="nav-item">
+        <a class="nav-link active" asp-controller="SignDocuments" asp-action="UnsignedDocuments">Unsigned</a>
+    </li>    
+    <li class="nav-item">
+        <a class="nav-link active" asp-controller="SignedDocuments" asp-action="SignedDocumentsHistory">Signed</a>
+    </li>
+
+</ul>
