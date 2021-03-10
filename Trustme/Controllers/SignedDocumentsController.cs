@@ -32,7 +32,7 @@ namespace Trustme.Controllers
         }
 
 
-        public IActionResult SignedDocumentsForUser()
+        public IActionResult SignedDocumentsFromUsers()
         {
             
             User currentUser = _HttpRequestFunctions.GetUser(HttpContext);

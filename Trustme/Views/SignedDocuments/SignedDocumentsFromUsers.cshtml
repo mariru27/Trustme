@@ -1,0 +1,14 @@
+﻿@model IEnumerable<SignedDocumentsViewModel>
+
+<h4 class="display-4">Signed documents</h4>
+
+
+
+@{
+    foreach (var signedDocument in Model)
+    {
+
+        <partial name="_SignedDocumentCard" model="signedDocument" />
+
+    }
+}

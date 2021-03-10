@@ -1,0 +1,35 @@
+﻿@model UnsignedDocument 
+@{ 
+    bool showSignButton =(bool)ViewData["ShowSignButton"];
+}
+
+<form asp-action="SignSentDocument">
+    <input type="hidden" name="IdUnsignedDocument" value=@Model.IdUnsignedDocument id="IdUnsignedDocument" />
+    <div class="card">
+
+        <div class="card-header">
+            Sent from username:
+            @Model.SentFromUsername
+
+            <a class="float-right" asp-controller="SignDocuments" asp-action="DeleteDocument" asp-route-id="@Model.IdUnsignedDocument">
+                Delete
+            </a>
+
+        </div>
+        <div class="card-body">
+            <div class="form-group">
+                File Name:
+                @Model.Name
+            </div>
+            <p class="card-text"><strong>Key you need to sign with: @Model.KeyPreference </strong></p>
+            @if(showSignButton == true)
+            {
+                <div class="form-group">
+                    <input type="submit" value="Sign" class="btn btn-primary" />
+                </div>
+            }
+        </div>
+    </div>
+    <br>
+
+</form>
