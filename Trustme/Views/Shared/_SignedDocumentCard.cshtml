@@ -4,6 +4,9 @@
     <div class="card-header">
         Signed by username:
         @Model.SignedByUsername
+        <br />
+        Sent from username:
+        @Model.SentFromUsername
         <a class="float-right" asp-controller="SignedDocuments" asp-action="DeleteDocument" asp-route-id="@Model.IdSignedDocument">
             Delete
         </a>

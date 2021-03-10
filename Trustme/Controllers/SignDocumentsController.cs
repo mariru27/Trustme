@@ -86,69 +86,21 @@ namespace Trustme.Controllers
             string signature = _Sign.SignDocument(signModel);
 
             
-            //Store in database SignedDocument
+            //Store in database(for another user) SignedDocument
             SignedDocument signedDocument = new SignedDocument(unsignedDocument, signature, _HttpRequestFunctions.GetUser(HttpContext).Username);
             _SignedDocumentRepository.AddSignedDocument(signedDocument, _UserRepository.GetUserbyUsername(unsignedDocument.SentFromUsername));
+
+            //store in db signed document for current user
+            SignedDocument signedDocumentCurrentUser = new SignedDocument(unsignedDocument, signature, _HttpRequestFunctions.GetUser(HttpContext).Username);
+            _SignedDocumentRepository.AddSignedDocument(signedDocumentCurrentUser, _UserRepository.GetUserbyUsername(_HttpRequestFunctions.GetUser(HttpContext).Username));
+
+            //Add document in current user history
             _UnsignedDocumentRepository.MakeDocumentSigned(unsignedDocument);
 
 
             return RedirectToAction("SignSentDocument", new { IdUnsignedDocument = IdUnsignedDocument, Signature = signature });
         }
-        public IActionResult SignDocument()
-        {
-
-            if (TempData["testKey"] != null && (bool)TempData["testKey"] == false)
-            {
-                ModelState.AddModelError("", "private key is not correct, you can generate another one if you lost it");
-            }
-            if (TempData["missingFiles"] != null && (bool)TempData["missingFiles"] == true)
-            {
-                ModelState.AddModelError("", "You are missing a file");
-            }
-            if (TempData["validKey"] != null && (bool)TempData["validKey"] == false)
-            {
-                ModelState.AddModelError("", "Private key is not valid");
-            }
-            User currentUser = _HttpRequestFunctions.GetUser(HttpContext);
-            var certificates = _KeyRepository.ListAllKeys(currentUser);
-            return View(certificates);
-        }
-        public async Task<IActionResult> SignDoc(IFormFile pkfile, IFormFile docfile, int certificates)
-        {
-            TempData["missingFiles"] = false;
-
-            if (ModelState.IsValid && pkfile != null && docfile != null)
-            {
-
-                SignModel signModel = _Sign.SignDocumentTest(pkfile,docfile,certificates,HttpContext);
-                TempData["validKey"] = true;
-
-                if (signModel.validKey == false)
-                {
-                    TempData["validKey"] = false;
-                    return RedirectToAction("SignDocument");
-                }
-
-                TempData["signature"] = "";
-                TempData["testKey"] = true;
-
-                if (signModel.verifytest == false)
-                {
-                    TempData["testKey"] = false;
-
-                }
-                else
-                {
-                    TempData["signature"] = _Sign.SignDocument(signModel);
-                }
-            }
-            else
-            {
-                //is not valid
-                TempData["missingFiles"] = true;
-            }
-
-            return RedirectToAction("SignDocument");
-        }
+        
+       
     }
 }
