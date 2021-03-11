@@ -1,4 +1,5 @@
-﻿@if (TempData["Error_MissingSignature"] != null)
+﻿@*Verify signature page*@
+@if (TempData["Error_MissingSignature"] != null)
 {
     <p class="alert alert-danger" id="documentError">@TempData["Error_MissingSignature"]</p>
 }
@@ -17,4 +18,13 @@
 @if (TempData["ValidSignature"] != null)
 {
     <p class="alert alert-success" id="successMessage">@TempData["ValidSignature"]</p>
+}
+@*Verify user page*@
+@if (TempData["Error_UsernameMissing"] != null)
+{
+    <p class="alert alert-danger" id="documentError">@TempData["Error_UsernameMissing"]</p>
+}
+@if (TempData["Error_UserDoNotExist"] != null)
+{
+    <p class="alert alert-danger" id="documentError">@TempData["Error_UserDoNotExist"]</p>
 }
