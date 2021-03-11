@@ -34,6 +34,7 @@ namespace Trustme.Models
             this.Document = unsignedDocument.Document;
             this.SignedByUsername = SignedByUsername;
             this.SentFromUsername = unsignedDocument.SentFromUsername;
+            
         }
 
         [Key]
@@ -47,5 +48,7 @@ namespace Trustme.Models
         public string Comment { get; set; }
         public int KeyId { get; set; }
         public Key Key { get; set; }
+        public DateTime SignedTime { get; set; }
+        public DataTime SentTime { get; set; }
     }
 }
