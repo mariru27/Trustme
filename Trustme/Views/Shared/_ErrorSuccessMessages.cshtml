@@ -53,3 +53,7 @@
 {
     <p class="alert alert-danger" id="userError">@TempData["InvalidKey"]</p>
 }
+@if (TempData["FileError"] != null)
+{
+    <p class="alert alert-danger" id="userError">@TempData["FileError"]</p>
+}
