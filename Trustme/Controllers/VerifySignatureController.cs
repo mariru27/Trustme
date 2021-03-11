@@ -47,12 +47,24 @@ namespace Trustme.Controllers
                 return RedirectToAction("VerifyUser");
 
             }
+
+            //get current user and verify if exist
             User currentUser = _UserRepository.GetUserbyUsername(username);
             if (currentUser == null)
             {
                 TempData["Error_UserDoNotExist"] = "User do not exist!";
+                return RedirectToAction("VerifyUser");
+
+            }
+            else
+            {
+                //pass users keys to view
+                var keyList = _KeyRepository.ListAllKeys(currentUser);
+                if (keyList != null)
+                    return View(keyList);
             }
             return RedirectToAction("VerifyUser");
+
 
 
         }
