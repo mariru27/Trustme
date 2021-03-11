@@ -124,9 +124,10 @@ namespace Trustme.Controllers
                 return RedirectToAction("VerifySign", new { Username = verifySignatureDocumentModel.Username });
 
             }
-            else
+            if(verifySignatureDocumentModel.Document == null)
             {
-
+                TempData["Error_MissingDocument"] = "Document is missing!";
+                return RedirectToAction("VerifySign", new { Username = verifySignatureDocumentModel.Username });
             }
 
             //if (ModelState.IsValid)
