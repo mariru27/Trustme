@@ -60,21 +60,5 @@
     </div>
 </div>
 
-
 <br />
-@*@{
-    if (validSignature != null && validSignature == "valid")
-    {
-        <div class="alert alert-success" role="alert">
-            Succes!!! This signature is valid!
-        </div>
-    }
-    if (validSignature != null && validSignature == "invalid")
-    {
-        <div class="alert alert-danger" role="alert">
-            This document was corrupted, this is an invalid signature!!!
-        </div>
-    }
-}*@
-
 <a asp-controller="VerifySignature" asp-action="VerifyUser">Back</a>
