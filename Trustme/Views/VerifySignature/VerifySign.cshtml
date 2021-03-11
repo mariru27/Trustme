@@ -1,10 +1,5 @@
-﻿@model IEnumerable<Key>
+﻿@model VerifySignModel
 
-@{
-    var validSignature = (string)TempData["validSignature"];
-    var username = (string)ViewData["username"];
-
-}
 
 <h4 class="display-4">Verify signature</h4>
 <hr />
@@ -13,14 +8,14 @@
         <form action="VerifySignatureDocument" enctype="multipart/form-data" method="post">
             <div class="card">
                 <div class="card-body">
-                    <input type="hidden" name="Username" value=@username id="username" />
+                    <input type="hidden" name="Username" value=@Model.Username id="username" />
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
                     <label for="certificateName">Choose a certifificate:</label>
                     <select class="form-control" name="certificateName" id="certificateName">
                         @{
                             if (Model != null)
-                                foreach (var c in Model)
+                                foreach (var c in Model.Keys)
                                 {
                                     <option value=@c.CertificateName>@c.CertificateName</option>
 
@@ -47,7 +42,7 @@
 
 
 <br />
-@{
+@*@{
     if (validSignature != null && validSignature == "valid")
     {
         <div class="alert alert-success" role="alert">
@@ -60,6 +55,6 @@
             This document was corrupted, this is an invalid signature!!!
         </div>
     }
-}
+}*@
 
 <a asp-controller="VerifySignature" asp-action="VerifyUser">Back</a>
