@@ -43,6 +43,10 @@
                     {
                         <p class="alert alert-danger" id="documentError">@TempData["Error_InvalidSignature"]</p>
                     }
+                    @if (TempData["ValidSignature"] != null)
+                    {
+                        <p class="alert alert-success" id="successMessage">@TempData["ValidSignature"]</p>
+                    }
                     <div class="form-group">
                         <input type="submit" value="Verify" class="btn btn-primary" />
                     </div>

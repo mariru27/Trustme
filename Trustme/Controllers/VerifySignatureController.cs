@@ -115,15 +115,15 @@ namespace Trustme.Controllers
         [HttpPost]
         public IActionResult VerifySignatureDocument(VerifySignatureDocumentModel verifySignatureDocumentModel)
         {
-            TempData["SignatureError"] = false;
-            TempData["documentError"] = false;
 
+            //validate signature
             if(verifySignatureDocumentModel.Signature == null)
             {
                 TempData["Error_MissingSignature"] = "Signature is missing!";
                 return RedirectToAction("VerifySign", new { Username = verifySignatureDocumentModel.Username });
 
             }
+            //validate document
             if(verifySignatureDocumentModel.Document == null)
             {
                 TempData["Error_MissingDocument"] = "Document is missing!";
@@ -137,6 +137,8 @@ namespace Trustme.Controllers
                 Document = verifySignatureDocumentModel.Document,
                 Username = verifySignatureDocumentModel.Username
             };
+
+            //verify signature
             ISigner sign = _Sign.VerifySignature(verifySignatureModel);
 
             try
@@ -150,9 +152,10 @@ namespace Trustme.Controllers
             };
             byte[] signaturebyte = Convert.FromBase64String(verifySignatureDocumentModel.Signature);
 
-
             if (sign.VerifySignature(signaturebyte) == false)
                 TempData["Error_InvalidSignature"] = "Invalid signature!";
+            else
+                TempData["ValidSignature"] = "Signature is valid!";
            
             return RedirectToAction("VerifySign", new { username = verifySignatureDocumentModel.Username});
         }
