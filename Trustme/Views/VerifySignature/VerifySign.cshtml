@@ -31,6 +31,10 @@
                         <label for="Document">Document:</label>
                         <input for="Document" name="Document" type="file" class="form-control-file" />
                     </div>
+                    @if (TempData["Error_MissingSignature"] != null)
+                    {
+                        <p class="alert alert-danger" id="documentError">@TempData["Error_MissingSignature"]</p>
+                    }
                     <div class="form-group">
                         <input type="submit" value="Verify" class="btn btn-primary" />
                     </div>

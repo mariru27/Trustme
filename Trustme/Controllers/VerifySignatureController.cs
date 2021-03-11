@@ -118,6 +118,17 @@ namespace Trustme.Controllers
             TempData["SignatureError"] = false;
             TempData["documentError"] = false;
 
+            if(verifySignatureDocumentModel.Signature == null)
+            {
+                TempData["Error_MissingSignature"] = "Signature is missing!";
+                return RedirectToAction("VerifySign", new { Username = verifySignatureDocumentModel.Username });
+
+            }
+            else
+            {
+
+            }
+
             //if (ModelState.IsValid)
             //{
             //    if (signature == null)
