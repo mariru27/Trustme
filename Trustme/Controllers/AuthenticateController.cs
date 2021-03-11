@@ -94,10 +94,12 @@ namespace Trustme.Controllers
             if(username == null)
             {
                 TempData["UsernameRequired"] = "Username field is required!";
+                RedirectToAction("LogIn");
             }
             if(password == null)
             {
                 TempData["PasswordRequired"] = "Password field is required";
+                RedirectToAction("LogIn");
             }
             User user = _UserRepository.GetUserbyUsername(username);
             string hashPassword = _Tool.ComputeHash(password, new SHA256CryptoServiceProvider());
