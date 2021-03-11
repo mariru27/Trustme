@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Trustme.IServices;
 using Trustme.ITools;
 using Trustme.Tools.ToolsModels;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace Trustme.Controllers
 {
@@ -39,7 +40,11 @@ namespace Trustme.Controllers
 
         public IActionResult VerifySign(string username)
         {
+
+            if (username == null)
+                TempData["Error_UsernameMissing"] = "Username is missing!";
             return RedirectToAction("VerifyUser");
+
 
         }
         //public IActionResult VerifySign(string username)
