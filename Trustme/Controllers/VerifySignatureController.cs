@@ -42,7 +42,16 @@ namespace Trustme.Controllers
         {
 
             if (username == null)
+            {
                 TempData["Error_UsernameMissing"] = "Username is missing!";
+                return RedirectToAction("VerifyUser");
+
+            }
+            User currentUser = _UserRepository.GetUserbyUsername(username);
+            if (currentUser == null)
+            {
+                TempData["Error_UserDoNotExist"] = "User do not exist!";
+            }
             return RedirectToAction("VerifyUser");
 
 
