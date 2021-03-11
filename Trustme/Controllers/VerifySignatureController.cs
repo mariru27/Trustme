@@ -8,6 +8,7 @@ using Trustme.IServices;
 using Trustme.ITools;
 using Trustme.Tools.ToolsModels;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Trustme.ViewModels;
 
 namespace Trustme.Controllers
 {
@@ -112,56 +113,57 @@ namespace Trustme.Controllers
 
 
         [HttpPost]
-        public IActionResult VerifySignatureDocument(string username, string certificateName, string signature, IFormFile document)
+        public IActionResult VerifySignatureDocument(VerifySignatureDocumentModel verifySignatureDocumentModel)
         {
             TempData["SignatureError"] = false;
             TempData["documentError"] = false;
 
-            if (ModelState.IsValid)
-            {
-                if (signature == null)
-                {
-                    TempData["SignatureError"] = true;
-                    return RedirectToAction("VerifySign", new { username = username });
-                }
-                string wwwPath = this.Environment.WebRootPath;
+            //if (ModelState.IsValid)
+            //{
+            //    if (signature == null)
+            //    {
+            //        TempData["SignatureError"] = true;
+            //        return RedirectToAction("VerifySign", new { username = username });
+            //    }
+            //    string wwwPath = this.Environment.WebRootPath;
 
-                if (document == null)
-                {
-                    TempData["documentError"] = true;
-                    return RedirectToAction("VerifySign", new { username = username });
-                }
+            //    if (document == null)
+            //    {
+            //        TempData["documentError"] = true;
+            //        return RedirectToAction("VerifySign", new { username = username });
+            //    }
 
-                VerifySignatureModel verifySignatureModel = new VerifySignatureModel
-                {
-                    CertificateName = certificateName,
-                    Document = document,
-                    Username = username
-                };
-                ISigner sign = _Sign.VerifySignature(verifySignatureModel);
+            //    VerifySignatureModel verifySignatureModel = new VerifySignatureModel
+            //    {
+            //        CertificateName = certificateName,
+            //        Document = document,
+            //        Username = username
+            //    };
+            //    ISigner sign = _Sign.VerifySignature(verifySignatureModel);
 
-                TempData["validSignature"] = "invalid";
-                try
-                {
-                    Convert.FromBase64String(signature);
+            //    TempData["validSignature"] = "invalid";
+            //    try
+            //    {
+            //        Convert.FromBase64String(signature);
 
-                }
-                catch (Exception e)
-                {
-                    return RedirectToAction("VerifySign", new { username = username });
-                };
-                byte[] signaturebyte = Convert.FromBase64String(signature);
-
-
-                if (sign.VerifySignature(signaturebyte))
-                    TempData["validSignature"] = "valid";
-                else
-                    TempData["validSignature"] = "invalid";
+            //    }
+            //    catch (Exception e)
+            //    {
+            //        return RedirectToAction("VerifySign", new { username = username });
+            //    };
+            //    byte[] signaturebyte = Convert.FromBase64String(signature);
 
 
-            }
-            TempData["validSignatrue"] = "invalid";
-            return RedirectToAction("VerifySign", new { username = username });
+            //    if (sign.VerifySignature(signaturebyte))
+            //        TempData["validSignature"] = "valid";
+            //    else
+            //        TempData["validSignature"] = "invalid";
+
+
+            //}
+            //TempData["validSignatrue"] = "invalid";
+            //return RedirectToAction("VerifySign", new { username = username });
+            return RedirectToAction("VerifySign", new { username = verifySignatureDocumentModel.Username});
         }
 
 
