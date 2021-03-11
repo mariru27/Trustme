@@ -69,48 +69,7 @@ namespace Trustme.Controllers
 
 
         }
-        //public IActionResult VerifySign(string username)
-        //{
-        //    ViewData["username"] = username;
-        //    TempData["error"] = false;
-        //    TempData["error2"] = false;
-
-        //    if (TempData["SignatureError"] != null && (bool)TempData["SignatureError"] == true)
-        //    {
-        //        ModelState.AddModelError("", "Require signature");
-
-        //        User currentUser = _UserRepository.GetUserbyUsername(username);
-        //        var keyList = _KeyRepository.ListAllKeys(currentUser);
-        //        if (keyList != null)
-        //            return View(keyList);
-        //    }
-        //    if (TempData["documentError"] != null && (bool)TempData["documentError"] == true)
-        //    {
-        //        TempData["documentError"] = false;
-        //        ModelState.AddModelError("", "Required file");
-
-        //        User currentUser = _UserRepository.GetUserbyUsername(username);
-        //        var keyList = _KeyRepository.ListAllKeys(currentUser);
-        //        if (keyList != null)
-        //            return View(keyList);
-        //    }
-        //    if (username != null)
-        //    {
-        //        User currentUser = _UserRepository.GetUserbyUsername(username);
-        //        var keyList = _KeyRepository.ListAllKeys(currentUser);
-        //        if (keyList != null)
-        //            return View(keyList);
-        //        else
-        //        {
-        //            TempData["error2"] = true;
-        //            return RedirectToAction("VerifyUser");
-        //        }
-        //    }
-        //    else
-        //        TempData["error"] = true;
-        //    return RedirectToAction("VerifyUser");
-        //}
-
+     
 
         [HttpPost]
         public IActionResult VerifySignatureDocument(VerifySignatureDocumentModel verifySignatureDocumentModel)
@@ -148,6 +107,7 @@ namespace Trustme.Controllers
             }
             catch (Exception e)
             {
+                TempData["Error_CorruptedSignature"] = "Signature was corrupted!";
                 return RedirectToAction("VerifySign", new { username = verifySignatureDocumentModel.Username });
             };
             byte[] signaturebyte = Convert.FromBase64String(verifySignatureDocumentModel.Signature);

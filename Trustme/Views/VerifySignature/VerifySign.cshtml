@@ -43,6 +43,10 @@
                     {
                         <p class="alert alert-danger" id="documentError">@TempData["Error_InvalidSignature"]</p>
                     }
+                    @if (TempData["Error_CorruptedSignature"] != null)
+                    {
+                        <p class="alert alert-danger" id="documentError">@TempData["Error_CorruptedSignature"]</p>
+                    }
                     @if (TempData["ValidSignature"] != null)
                     {
                         <p class="alert alert-success" id="successMessage">@TempData["ValidSignature"]</p>
