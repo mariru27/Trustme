@@ -91,6 +91,16 @@ namespace Trustme.Controllers
         {
             if (isloggedIn(HttpContext) == true)
                 await LogOut();
+            if(username == null)
+            {
+                TempData["UsernameRequired"] = "Username field is required!";
+                return RedirectToAction("LogIn");
+            }
+            if(password == null)
+            {
+                TempData["PasswordRequired"] = "Password field is required";
+                return RedirectToAction("LogIn");
+            }
             User user = _UserRepository.GetUserbyUsername(username);
             string hashPassword = _Tool.ComputeHash(password, new SHA256CryptoServiceProvider());
             if (user != null && hashPassword == user.Password)
@@ -108,6 +118,10 @@ namespace Trustme.Controllers
                 ViewData["username"] = user.Username;
 
                 return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                TempData["IncorrectUserOrPassword"] = "User or password are incorrect";
             }
             return RedirectToAction("LogIn");
         }
