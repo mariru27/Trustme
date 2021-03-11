@@ -23,14 +23,7 @@
             </div>
             <br />
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            @if (TempData["PKNull"] != null)
-            {
-                <p class="alert alert-danger" id="userError">@TempData["PKNull"]</p>
-            }
-            @if (TempData["InvalidKey"] != null)
-            {
-                <p class="alert alert-danger" id="userError">@TempData["InvalidKey"]</p>
-            }
+
             @{
                 if (Model.Signature != "" && Model.Signature != null)
                 {
@@ -42,6 +35,8 @@
 
                 }
             }
+            <partial name="_ErrorSuccessMessages" />
+
             <div class="form-group">
                 <input type="submit" value="Sign" class="btn btn-primary" />
             </div>

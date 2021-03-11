@@ -42,3 +42,18 @@
 {
     <p class="alert alert-danger" id="documentError">@TempData["IncorrectUserOrPassword"]</p>
 }
+
+@*SignSentDocument page*@
+
+@if (TempData["PKNull"] != null)
+{
+    <p class="alert alert-danger" id="userError">@TempData["PKNull"]</p>
+}
+@if (TempData["InvalidKey"] != null)
+{
+    <p class="alert alert-danger" id="userError">@TempData["InvalidKey"]</p>
+}
+@if (TempData["FileError"] != null)
+{
+    <p class="alert alert-danger" id="userError">@TempData["FileError"]</p>
+}
