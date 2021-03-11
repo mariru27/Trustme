@@ -26,57 +26,63 @@ namespace Trustme.Controllers
         public IActionResult VerifyUser()
         {
 
-            if (TempData["error"] != null && (bool)TempData["error"] == true)
-            {
-                ModelState.AddModelError("", "You forgot to enter a username");
-            }
-            if (TempData["error2"] != null && (bool)TempData["error2"] == true)
-            {
-                ModelState.AddModelError("", "User do not exist");
-            }
+            //if (TempData["error"] != null && (bool)TempData["error"] == true)
+            //{
+            //    ModelState.AddModelError("", "You forgot to enter a username");
+            //}
+            //if (TempData["error2"] != null && (bool)TempData["error2"] == true)
+            //{
+            //    ModelState.AddModelError("", "User do not exist");
+            //}
             return View();
         }
+
         public IActionResult VerifySign(string username)
         {
-            ViewData["username"] = username;
-            TempData["error"] = false;
-            TempData["error2"] = false;
-
-            if (TempData["SignatureError"] != null && (bool)TempData["SignatureError"] == true)
-            {
-                ModelState.AddModelError("", "Require signature");
-
-                User currentUser = _UserRepository.GetUserbyUsername(username);
-                var keyList = _KeyRepository.ListAllKeys(currentUser);
-                if (keyList != null)
-                    return View(keyList);
-            }
-            if (TempData["documentError"] != null && (bool)TempData["documentError"] == true)
-            {
-                TempData["documentError"] = false;
-                ModelState.AddModelError("", "Required file");
-
-                User currentUser = _UserRepository.GetUserbyUsername(username);
-                var keyList = _KeyRepository.ListAllKeys(currentUser);
-                if (keyList != null)
-                    return View(keyList);
-            }
-            if (username != null)
-            {
-                User currentUser = _UserRepository.GetUserbyUsername(username);
-                var keyList = _KeyRepository.ListAllKeys(currentUser);
-                if (keyList != null)
-                    return View(keyList);
-                else
-                {
-                    TempData["error2"] = true;
-                    return RedirectToAction("VerifyUser");
-                }
-            }
-            else
-                TempData["error"] = true;
             return RedirectToAction("VerifyUser");
+
         }
+        //public IActionResult VerifySign(string username)
+        //{
+        //    ViewData["username"] = username;
+        //    TempData["error"] = false;
+        //    TempData["error2"] = false;
+
+        //    if (TempData["SignatureError"] != null && (bool)TempData["SignatureError"] == true)
+        //    {
+        //        ModelState.AddModelError("", "Require signature");
+
+        //        User currentUser = _UserRepository.GetUserbyUsername(username);
+        //        var keyList = _KeyRepository.ListAllKeys(currentUser);
+        //        if (keyList != null)
+        //            return View(keyList);
+        //    }
+        //    if (TempData["documentError"] != null && (bool)TempData["documentError"] == true)
+        //    {
+        //        TempData["documentError"] = false;
+        //        ModelState.AddModelError("", "Required file");
+
+        //        User currentUser = _UserRepository.GetUserbyUsername(username);
+        //        var keyList = _KeyRepository.ListAllKeys(currentUser);
+        //        if (keyList != null)
+        //            return View(keyList);
+        //    }
+        //    if (username != null)
+        //    {
+        //        User currentUser = _UserRepository.GetUserbyUsername(username);
+        //        var keyList = _KeyRepository.ListAllKeys(currentUser);
+        //        if (keyList != null)
+        //            return View(keyList);
+        //        else
+        //        {
+        //            TempData["error2"] = true;
+        //            return RedirectToAction("VerifyUser");
+        //        }
+        //    }
+        //    else
+        //        TempData["error"] = true;
+        //    return RedirectToAction("VerifyUser");
+        //}
 
 
         [HttpPost]
