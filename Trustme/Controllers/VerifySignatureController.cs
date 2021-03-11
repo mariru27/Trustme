@@ -28,21 +28,13 @@ namespace Trustme.Controllers
         public IActionResult VerifyUser()
         {
 
-            //if (TempData["error"] != null && (bool)TempData["error"] == true)
-            //{
-            //    ModelState.AddModelError("", "You forgot to enter a username");
-            //}
-            //if (TempData["error2"] != null && (bool)TempData["error2"] == true)
-            //{
-            //    ModelState.AddModelError("", "User do not exist");
-            //}
             return View();
         }
 
-        public IActionResult VerifySign(string username)
+        public IActionResult VerifySign(string Username)
         {
 
-            if (username == null)
+            if (Username == null)
             {
                 TempData["Error_UsernameMissing"] = "Username is missing!";
                 return RedirectToAction("VerifyUser");
@@ -50,7 +42,7 @@ namespace Trustme.Controllers
             }
 
             //get current user and verify if exist
-            User currentUser = _UserRepository.GetUserbyUsername(username);
+            User currentUser = _UserRepository.GetUserbyUsername(Username);
             if (currentUser == null)
             {
                 TempData["Error_UserDoNotExist"] = "User do not exist!";
@@ -59,10 +51,18 @@ namespace Trustme.Controllers
             }
             else
             {
-                //pass users keys to view
                 var keyList = _KeyRepository.ListAllKeys(currentUser);
                 if (keyList != null)
-                    return View(keyList);
+                {
+                    VerifySignModel verifySignModel = new VerifySignModel
+                    {
+                        Username = Username,
+                        Keys = keyList
+                    };
+                    //pass to view keys and username
+                    return View(verifySignModel);
+
+                }
             }
             return RedirectToAction("VerifyUser");
 
