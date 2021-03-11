@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Hosting;
 using Trustme.IServices;
 using Trustme.ITools;
 using Trustme.Tools.ToolsModels;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Trustme.ViewModels;
 
 namespace Trustme.Controllers
 {
@@ -26,110 +28,96 @@ namespace Trustme.Controllers
         public IActionResult VerifyUser()
         {
 
-            if (TempData["error"] != null && (bool)TempData["error"] == true)
-            {
-                ModelState.AddModelError("", "You forgot to enter a username");
-            }
-            if (TempData["error2"] != null && (bool)TempData["error2"] == true)
-            {
-                ModelState.AddModelError("", "User do not exist");
-            }
             return View();
         }
-        public IActionResult VerifySign(string username)
+
+        public IActionResult VerifySign(string Username)
         {
-            ViewData["username"] = username;
-            TempData["error"] = false;
-            TempData["error2"] = false;
 
-            if (TempData["SignatureError"] != null && (bool)TempData["SignatureError"] == true)
+            if (Username == null)
             {
-                ModelState.AddModelError("", "Require signature");
+                TempData["Error_UsernameMissing"] = "Username is missing!";
+                return RedirectToAction("VerifyUser");
 
-                User currentUser = _UserRepository.GetUserbyUsername(username);
-                var keyList = _KeyRepository.ListAllKeys(currentUser);
-                if (keyList != null)
-                    return View(keyList);
             }
-            if (TempData["documentError"] != null && (bool)TempData["documentError"] == true)
-            {
-                TempData["documentError"] = false;
-                ModelState.AddModelError("", "Required file");
 
-                User currentUser = _UserRepository.GetUserbyUsername(username);
-                var keyList = _KeyRepository.ListAllKeys(currentUser);
-                if (keyList != null)
-                    return View(keyList);
-            }
-            if (username != null)
+            //get current user and verify if exist
+            User currentUser = _UserRepository.GetUserbyUsername(Username);
+            if (currentUser == null)
             {
-                User currentUser = _UserRepository.GetUserbyUsername(username);
-                var keyList = _KeyRepository.ListAllKeys(currentUser);
-                if (keyList != null)
-                    return View(keyList);
-                else
-                {
-                    TempData["error2"] = true;
-                    return RedirectToAction("VerifyUser");
-                }
+                TempData["Error_UserDoNotExist"] = "User do not exist!";
+                return RedirectToAction("VerifyUser");
+
             }
             else
-                TempData["error"] = true;
-            return RedirectToAction("VerifyUser");
-        }
+            {
+                var keyList = _KeyRepository.ListAllKeys(currentUser);
+                if (keyList != null)
+                {
+                    VerifySignModel verifySignModel = new VerifySignModel
+                    {
+                        Username = Username,
+                        Keys = keyList
+                    };
+                    //pass to view keys and username
+                    return View(verifySignModel);
 
+                }
+            }
+            return RedirectToAction("VerifyUser");
+
+
+
+        }
+     
 
         [HttpPost]
-        public IActionResult VerifySignatureDocument(string username, string certificateName, string signature, IFormFile document)
+        public IActionResult VerifySignatureDocument(VerifySignatureDocumentModel verifySignatureDocumentModel)
         {
-            TempData["SignatureError"] = false;
-            TempData["documentError"] = false;
 
-            if (ModelState.IsValid)
+            //validate signature
+            if(verifySignatureDocumentModel.Signature == null)
             {
-                if (signature == null)
-                {
-                    TempData["SignatureError"] = true;
-                    return RedirectToAction("VerifySign", new { username = username });
-                }
-                string wwwPath = this.Environment.WebRootPath;
-
-                if (document == null)
-                {
-                    TempData["documentError"] = true;
-                    return RedirectToAction("VerifySign", new { username = username });
-                }
-
-                VerifySignatureModel verifySignatureModel = new VerifySignatureModel
-                {
-                    CertificateName = certificateName,
-                    Document = document,
-                    Username = username
-                };
-                ISigner sign = _Sign.VerifySignature(verifySignatureModel);
-
-                TempData["validSignature"] = "invalid";
-                try
-                {
-                    Convert.FromBase64String(signature);
-
-                }
-                catch (Exception e)
-                {
-                    return RedirectToAction("VerifySign", new { username = username });
-                };
-                byte[] signaturebyte = Convert.FromBase64String(signature);
-
-
-                if (sign.VerifySignature(signaturebyte))
-                    TempData["validSignature"] = "valid";
-                else
-                    TempData["validSignature"] = "invalid";
-
+                TempData["Error_MissingSignature"] = "Signature is missing!";
+                return RedirectToAction("VerifySign", new { Username = verifySignatureDocumentModel.Username });
 
             }
-            TempData["validSignatrue"] = "invalid";
-            return RedirectToAction("VerifySign", new { username = username });
+            //validate document
+            if(verifySignatureDocumentModel.Document == null)
+            {
+                TempData["Error_MissingDocument"] = "Document is missing!";
+                return RedirectToAction("VerifySign", new { Username = verifySignatureDocumentModel.Username });
+            }
+
+
+            VerifySignatureModel verifySignatureModel = new VerifySignatureModel
+            {
+                CertificateName = verifySignatureDocumentModel.CertificateName,
+                Document = verifySignatureDocumentModel.Document,
+                Username = verifySignatureDocumentModel.Username
+            };
+
+            //verify signature
+            ISigner sign = _Sign.VerifySignature(verifySignatureModel);
+
+            try
+            {
+                Convert.FromBase64String(verifySignatureDocumentModel.Signature);
+
+            }
+            catch (Exception e)
+            {
+                TempData["Error_CorruptedSignature"] = "Signature was corrupted!";
+                return RedirectToAction("VerifySign", new { username = verifySignatureDocumentModel.Username });
+            };
+            byte[] signaturebyte = Convert.FromBase64String(verifySignatureDocumentModel.Signature);
+
+            if (sign.VerifySignature(signaturebyte) == false)
+                TempData["Error_InvalidSignature"] = "Invalid signature!";
+            else
+                TempData["ValidSignature"] = "Signature is valid!";
+           
+            return RedirectToAction("VerifySign", new { username = verifySignatureDocumentModel.Username});
         }
 
 

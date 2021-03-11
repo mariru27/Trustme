@@ -1,10 +1,5 @@
-﻿@model IEnumerable<Key>
+﻿@model VerifySignModel
 
-@{
-    var validSignature = (string)TempData["validSignature"];
-    var username = (string)ViewData["username"];
-
-}
 
 <h4 class="display-4">Verify signature</h4>
 <hr />
@@ -13,14 +8,14 @@
         <form action="VerifySignatureDocument" enctype="multipart/form-data" method="post">
             <div class="card">
                 <div class="card-body">
-                    <input type="hidden" name="username" value=@username id="username" />
+                    <input type="hidden" name="Username" value=@Model.Username id="username" />
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
                     <label for="certificateName">Choose a certifificate:</label>
                     <select class="form-control" name="certificateName" id="certificateName">
                         @{
                             if (Model != null)
-                                foreach (var c in Model)
+                                foreach (var c in Model.Keys)
                                 {
                                     <option value=@c.CertificateName>@c.CertificateName</option>
 
@@ -29,13 +24,33 @@
                     </select>
                     <br />
                     <div class="form-group">
-                        <label for="signature" class="control-label">User signature:</label>
-                        <textarea class="form-control" name="signature" rows="3"></textarea>
+                        <label for="Signature" class="control-label">User signature:</label>
+                        <textarea class="form-control" name="Signature" rows="3"></textarea>
                     </div>
                     <div class="form-group">
-                        <label for="document">Document:</label>
-                        <input for="document" name="document" type="file" class="form-control-file" />
+                        <label for="Document">Document:</label>
+                        <input for="Document" name="Document" type="file" class="form-control-file" />
                     </div>
+                    @if (TempData["Error_MissingSignature"] != null)
+                    {
+                        <p class="alert alert-danger" id="documentError">@TempData["Error_MissingSignature"]</p>
+                    }
+                    @if (TempData["Error_MissingDocument"] != null)
+                    {
+                        <p class="alert alert-danger" id="documentError">@TempData["Error_MissingDocument"]</p>
+                    }
+                    @if (TempData["Error_InvalidSignature"] != null)
+                    {
+                        <p class="alert alert-danger" id="documentError">@TempData["Error_InvalidSignature"]</p>
+                    }
+                    @if (TempData["Error_CorruptedSignature"] != null)
+                    {
+                        <p class="alert alert-danger" id="documentError">@TempData["Error_CorruptedSignature"]</p>
+                    }
+                    @if (TempData["ValidSignature"] != null)
+                    {
+                        <p class="alert alert-success" id="successMessage">@TempData["ValidSignature"]</p>
+                    }
                     <div class="form-group">
                         <input type="submit" value="Verify" class="btn btn-primary" />
                     </div>
@@ -45,21 +60,5 @@
     </div>
 </div>
 
-
 <br />
-@{
-    if (validSignature != null && validSignature == "valid")
-    {
-        <div class="alert alert-success" role="alert">
-            Succes!!! This signature is valid!
-        </div>
-    }
-    if (validSignature != null && validSignature == "invalid")
-    {
-        <div class="alert alert-danger" role="alert">
-            This document was corrupted, this is an invalid signature!!!
-        </div>
-    }
-}
-
 <a asp-controller="VerifySignature" asp-action="VerifyUser">Back</a>
