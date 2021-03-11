@@ -38,3 +38,7 @@
 {
     <p class="alert alert-danger" id="documentError">@TempData["PasswordRequired"]</p>
 }
+@if (TempData["IncorrectUserOrPassword"] != null)
+{
+    <p class="alert alert-danger" id="documentError">@TempData["IncorrectUserOrPassword"]</p>
+}
