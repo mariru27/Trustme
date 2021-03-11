@@ -12,14 +12,7 @@
                 <input fro="Username" name="Username" type="text" class="form-control" />
             </div>
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            @if (TempData["Error_UsernameMissing"] != null)
-            {
-                <p class="alert alert-danger" id="documentError">@TempData["Error_UsernameMissing"]</p>
-            }
-            @if (TempData["Error_UserDoNotExist"] != null)
-            {
-                <p class="alert alert-danger" id="documentError">@TempData["Error_UserDoNotExist"]</p>
-            }
+            <partial name="_ErrorSuccessMessages" />
             <div class="form-group">
                 <input type="submit" value="Verify" class="btn btn-primary" />
             </div>
