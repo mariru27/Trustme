@@ -28,3 +28,9 @@
 {
     <p class="alert alert-danger" id="documentError">@TempData["Error_UserDoNotExist"]</p>
 }
+
+@*Login page*@
+@if (TempData["UsernameRequired"] != null)
+{
+    <p class="alert alert-danger" id="documentError">@TempData["UsernameRequired"]</p>
+}
