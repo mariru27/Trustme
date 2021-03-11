@@ -130,51 +130,30 @@ namespace Trustme.Controllers
                 return RedirectToAction("VerifySign", new { Username = verifySignatureDocumentModel.Username });
             }
 
-            //if (ModelState.IsValid)
-            //{
-            //    if (signature == null)
-            //    {
-            //        TempData["SignatureError"] = true;
-            //        return RedirectToAction("VerifySign", new { username = username });
-            //    }
-            //    string wwwPath = this.Environment.WebRootPath;
 
-            //    if (document == null)
-            //    {
-            //        TempData["documentError"] = true;
-            //        return RedirectToAction("VerifySign", new { username = username });
-            //    }
+            VerifySignatureModel verifySignatureModel = new VerifySignatureModel
+            {
+                CertificateName = verifySignatureDocumentModel.CertificateName,
+                Document = verifySignatureDocumentModel.Document,
+                Username = verifySignatureDocumentModel.Username
+            };
+            ISigner sign = _Sign.VerifySignature(verifySignatureModel);
 
-            //    VerifySignatureModel verifySignatureModel = new VerifySignatureModel
-            //    {
-            //        CertificateName = certificateName,
-            //        Document = document,
-            //        Username = username
-            //    };
-            //    ISigner sign = _Sign.VerifySignature(verifySignatureModel);
+            try
+            {
+                Convert.FromBase64String(verifySignatureDocumentModel.Signature);
 
-            //    TempData["validSignature"] = "invalid";
-            //    try
-            //    {
-            //        Convert.FromBase64String(signature);
-
-            //    }
-            //    catch (Exception e)
-            //    {
-            //        return RedirectToAction("VerifySign", new { username = username });
-            //    };
-            //    byte[] signaturebyte = Convert.FromBase64String(signature);
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("VerifySign", new { username = verifySignatureDocumentModel.Username });
+            };
+            byte[] signaturebyte = Convert.FromBase64String(verifySignatureDocumentModel.Signature);
 
 
-            //    if (sign.VerifySignature(signaturebyte))
-            //        TempData["validSignature"] = "valid";
-            //    else
-            //        TempData["validSignature"] = "invalid";
-
-
-            //}
-            //TempData["validSignatrue"] = "invalid";
-            //return RedirectToAction("VerifySign", new { username = username });
+            if (sign.VerifySignature(signaturebyte) == false)
+                TempData["Error_InvalidSignature"] = "Invalid signature!";
+           
             return RedirectToAction("VerifySign", new { username = verifySignatureDocumentModel.Username});
         }
 
