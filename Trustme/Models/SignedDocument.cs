@@ -8,8 +8,10 @@ using Trustme.Models;
 
 namespace Trustme.Models
 {
+
     public class SignedDocument
     {
+
         public SignedDocument() 
         {
             this.SignedTime = DateTime.Now;
