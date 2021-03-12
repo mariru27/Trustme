@@ -10,7 +10,11 @@ namespace Trustme.Models
 {
     public class SignedDocument
     {
-        public SignedDocument() { }
+        public SignedDocument() 
+        {
+            this.SignedTime = DateTime.Now;
+
+        }
         public SignedDocument(SignedDocument signedDocument)
         {
             this.Comment = signedDocument.Comment;
@@ -22,6 +26,8 @@ namespace Trustme.Models
             this.Signature = signedDocument.Signature;
             this.SignedByUsername = signedDocument.SignedByUsername;
             this.SentFromUsername = signedDocument.SentFromUsername;
+            this.SentTime = signedDocument.SentTime;
+            this.SignedTime = DateTime.Now;
            
         }
 
@@ -34,7 +40,8 @@ namespace Trustme.Models
             this.Document = unsignedDocument.Document;
             this.SignedByUsername = SignedByUsername;
             this.SentFromUsername = unsignedDocument.SentFromUsername;
-            
+            this.SentTime = unsignedDocument.SentTime;
+            this.SignedTime = DateTime.Now;
         }
 
         [Key]
