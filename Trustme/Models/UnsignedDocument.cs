@@ -9,7 +9,11 @@ namespace Trustme.Models
 {
     public class UnsignedDocument
     {
-        public UnsignedDocument() { this.Signed = false; }
+        public UnsignedDocument()
+        { 
+            this.Signed = false;
+            this.SentTime = DateTime.Now;
+        }
         public UnsignedDocument(UnsignedDocument unsignedDocument)
         {
             this.IdUnsignedDocument = unsignedDocument.IdUnsignedDocument;
