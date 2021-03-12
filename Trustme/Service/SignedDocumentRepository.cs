@@ -22,6 +22,7 @@ namespace Trustme.Service
         {
             
             _context.SignedDocuments.Add(signedDocument);
+
             _context.SaveChanges();
 
             UserSignedDocument userSignedDocument = new UserSignedDocument
