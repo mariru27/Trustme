@@ -35,7 +35,8 @@ namespace Trustme.Models
         public bool Signed { get; set; }
         public int KeyId { get; set; }
         public Key Key { get; set; }
-        public DateTime SentTime { get; set; }
+
+        public DateTime? SentTime { get; set; }
 
     }
 }
