@@ -4,6 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Trustme.Models;
 
+//I use this model to pass data from controller to view,
+//Here I do not use document property
+//(document file will slow data transfer to view)
+
 namespace Trustme.ViewModels
 {
     public class SignedDocumentsViewModel
