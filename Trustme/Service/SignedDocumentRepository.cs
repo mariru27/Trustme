@@ -22,6 +22,7 @@ namespace Trustme.Service
         {
             
             _context.SignedDocuments.Add(signedDocument);
+
             _context.SaveChanges();
 
             UserSignedDocument userSignedDocument = new UserSignedDocument
@@ -57,5 +58,6 @@ namespace Trustme.Service
         {
             return _context.SignedDocuments.Where(d => d.IdSignedDocument == IdSignedDocument).SingleOrDefault();
         }
+
     }
 }

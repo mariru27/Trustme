@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Trustme.Data;
 
 namespace Trustme.Migrations
 {
     [DbContext(typeof(Data.AppContext))]
-    partial class AppContextModelSnapshot : ModelSnapshot
+    [Migration("20210312182035_nullableDatetime")]
+    partial class nullableDatetime
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -81,7 +83,7 @@ namespace Trustme.Migrations
                     b.Property<string>("SentFromUsername")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("SentTime")
+                    b.Property<DateTime?>("SentTime")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Signature")
@@ -90,7 +92,7 @@ namespace Trustme.Migrations
                     b.Property<string>("SignedByUsername")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("SignedTime")
+                    b.Property<DateTime?>("SignedTime")
                         .HasColumnType("datetime2");
 
                     b.HasKey("IdSignedDocument");
@@ -122,7 +124,7 @@ namespace Trustme.Migrations
                     b.Property<string>("SentFromUsername")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("SentTime")
+                    b.Property<DateTime?>("SentTime")
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("Signed")
