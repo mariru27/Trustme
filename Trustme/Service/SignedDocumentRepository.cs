@@ -58,5 +58,6 @@ namespace Trustme.Service
         {
             return _context.SignedDocuments.Where(d => d.IdSignedDocument == IdSignedDocument).SingleOrDefault();
         }
+
     }
 }

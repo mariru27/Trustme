@@ -21,6 +21,8 @@ namespace Trustme.ViewModels
             this.SignedByUsername = signedDocument.SignedByUsername;
             this.SentFromUsername = signedDocument.SentFromUsername;
             this.Name = signedDocument.Name;
+            this.SignedTime = signedDocument.SignedTime;
+            this.SentTime = signedDocument.SentTime;
         }
         public int IdSignedDocument { get; set; }
         public string Name { get; set; }
@@ -29,5 +31,8 @@ namespace Trustme.ViewModels
         public string Signature { get; set; }
         public int KeyId { get; set; }
         public Key Key { get; set; }
+        public DateTime SignedTime { get; set; }
+        public DateTime SentTime { get; set; }
+
     }
 }
