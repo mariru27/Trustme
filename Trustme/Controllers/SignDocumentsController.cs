@@ -35,7 +35,7 @@ namespace Trustme.Controllers
             _SignedDocumentRepository = signedDocumentRepository;
             _UserRepository = userRepository;
         }
-
+        [Authorize(Roles = "Admin")]
         public IActionResult UnsignedDocuments()
         {
             User user = new User();
