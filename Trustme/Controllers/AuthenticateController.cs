@@ -102,6 +102,7 @@ namespace Trustme.Controllers
                 return RedirectToAction("LogIn");
             }
             User user = _UserRepository.GetUserbyUsername(username);
+            Role userRole = _RoleReporitory.GetUserRole(user);
             string hashPassword = _Tool.ComputeHash(password, new SHA256CryptoServiceProvider());
             if (user != null && hashPassword == user.Password)
             {
@@ -109,6 +110,7 @@ namespace Trustme.Controllers
                     {
                         new Claim(ClaimTypes.NameIdentifier, user.Username),
                         new Claim(ClaimTypes.Email, user.Mail),
+                        new Claim(ClaimTypes.Role, userRole.RoleName)
                     };
                 var userIdentity = new ClaimsIdentity(userClaim, "user identity");
 
