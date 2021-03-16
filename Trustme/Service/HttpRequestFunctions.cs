@@ -53,6 +53,11 @@ namespace Trustme.Service
 
         }
 
+        public string GetUserRole(HttpContext httpContext)
+        {
+            return httpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role)?.Value;            
+        }
+
         public User GetUser(HttpContext httpContext)
         {
             int userId = this.GetUserId(httpContext);

@@ -15,5 +15,7 @@ namespace Trustme.IServices
         public int GetUserId(HttpContext httpcontext);
 
         public User GetUser(HttpContext httpContext);
+        public string GetUserRole(HttpContext httpContext)
+
     }
 }
