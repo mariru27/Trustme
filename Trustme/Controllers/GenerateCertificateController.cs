@@ -59,10 +59,9 @@ namespace Trustme.Controllers
                 return RedirectToAction(nameof(GenerateCertificate));
             }
 
-            TempData["certificateNameError"] = true;
             if (certificateName == null)
             {
-                TempData["certificateNameError"] = false;
+                TempData["CertificateNameError"] = "Required certificate name";
                 return RedirectToAction("GenerateCertificate");
             }
             string wwwPath = this.Environment.WebRootPath;
@@ -175,10 +174,7 @@ namespace Trustme.Controllers
 
         public IActionResult GenerateCertificate()
         {
-            if (TempData["certificateNameError"] != null && (bool)TempData["certificateNameError"] == false)
-            {
-                ModelState.AddModelError("", "Required certificate name");
-            }
+
             return View();
         }
 
