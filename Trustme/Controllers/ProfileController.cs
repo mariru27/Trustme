@@ -29,7 +29,6 @@ namespace Trustme.Controllers
         }
 
 
-        [Authorize]
         public IActionResult Profile()
         {
             string username = _HttpRequestFunctions.GetUsername(HttpContext);
