@@ -34,7 +34,10 @@ namespace Trustme.Data
             modelBuilder.Entity<User>().ToTable("User");
             modelBuilder.Entity<Key>().ToTable("Key");
             modelBuilder.Entity<Role>().ToTable("Role");
-            modelBuilder.Entity<UserKey>().ToTable("UserKey");
+            modelBuilder.Entity<UserSignedDocument>().ToTable("UserSignedDocument");
+            modelBuilder.Entity<UserUnsignedDocument>().ToTable("UserUnsignedDocument");
+            modelBuilder.Entity<SignedDocument>().ToTable("SignedDocument");
+            modelBuilder.Entity<UnsignedDocument>().ToTable("UnsignedDocument");
         }
 
     }

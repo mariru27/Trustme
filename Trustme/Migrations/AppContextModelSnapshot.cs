@@ -97,7 +97,7 @@ namespace Trustme.Migrations
 
                     b.HasIndex("KeyId");
 
-                    b.ToTable("SignedDocuments");
+                    b.ToTable("SignedDocument");
                 });
 
             modelBuilder.Entity("Trustme.Models.UnsignedDocument", b =>
@@ -132,7 +132,7 @@ namespace Trustme.Migrations
 
                     b.HasIndex("KeyId");
 
-                    b.ToTable("UnsignedDocuments");
+                    b.ToTable("UnsignedDocument");
                 });
 
             modelBuilder.Entity("Trustme.Models.User", b =>
@@ -210,7 +210,7 @@ namespace Trustme.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserSignedDocuments");
+                    b.ToTable("UserSignedDocument");
                 });
 
             modelBuilder.Entity("Trustme.Models.UserUnsignedDocument", b =>
@@ -232,7 +232,7 @@ namespace Trustme.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserUnsignedDocuments");
+                    b.ToTable("UserUnsignedDocument");
                 });
 
             modelBuilder.Entity("Trustme.Models.SignedDocument", b =>
