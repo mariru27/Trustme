@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using Trustme.IServices;
 using Trustme.Models;
@@ -6,6 +7,8 @@ using Trustme.ViewModels;
 
 namespace Trustme.Controllers
 {
+    [Authorize(Roles = "Pro, User, Free")]
+
     public class SignedDocumentsController : Controller
     {
         private IUnsignedDocumentRepository _UnsignedDocumentRepository;

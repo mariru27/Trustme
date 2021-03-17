@@ -13,7 +13,7 @@ using Trustme.Tools.ToolsModels;
 
 namespace Trustme.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Pro, User, Free")]
 
     public class SignDocumentsController : Controller
     {
@@ -35,7 +35,6 @@ namespace Trustme.Controllers
             _SignedDocumentRepository = signedDocumentRepository;
             _UserRepository = userRepository;
         }
-        [Authorize(Roles = "Admin")]
         public IActionResult UnsignedDocuments()
         {
             User user = new User();
