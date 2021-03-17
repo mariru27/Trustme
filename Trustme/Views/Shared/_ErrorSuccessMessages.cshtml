@@ -57,3 +57,8 @@
 {
     <p class="alert alert-danger" id="userError">@TempData["FileError"]</p>
 }
+@*Generate page*@
+@if (TempData["FileError"] != null)
+{
+    <p class="alert alert-danger" id="userError">@TempData["FileError"]</p>
+}
