@@ -62,3 +62,7 @@
 {
     <p class="alert alert-danger" id="userError">@TempData["CertificatesNrError"]</p>
 }
+@if (TempData["CertificateNameError"] != null)
+{
+    <p class="alert alert-danger" id="userError">@TempData["CertificateNameError"]</p>
+}
