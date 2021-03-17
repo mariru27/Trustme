@@ -53,17 +53,18 @@ namespace Trustme.Controllers
         public async Task<IActionResult> GenerateCertificate(string certificateName, string description, int keySize)
         {
             User currentUser = _HttpRequestFunctions.GetUser(HttpContext);
-            if (_KeyRepository.GetNrCertificates(currentUser) >= UserMaximNumberOfCertificates)
-            {
-                return RedirectToAction(nameof(ErrorNrCertificates));
-            }
 
-            TempData["certificateNameError"] = true;
             if (certificateName == null)
             {
-                TempData["certificateNameError"] = false;
+                TempData["CertificateNameError"] = "Required certificate name";
                 return RedirectToAction("GenerateCertificate");
             }
+            if (_KeyRepository.GetNrCertificates(currentUser) >= UserMaximNumberOfCertificates)
+            {
+                TempData["CertificatesNrError"] = "You cannot have more than three certificates, delete a certificate if you want to generate another!";
+                return RedirectToAction("GenerateCertificate");
+            }
+
             string wwwPath = this.Environment.WebRootPath;
 
             // Keypair Generator
@@ -174,10 +175,7 @@ namespace Trustme.Controllers
 
         public IActionResult GenerateCertificate()
         {
-            if (TempData["certificateNameError"] != null && (bool)TempData["certificateNameError"] == false)
-            {
-                ModelState.AddModelError("", "Required certificate name");
-            }
+
             return View();
         }
 
