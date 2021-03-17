@@ -9,9 +9,11 @@ using Trustme.ITools;
 using Trustme.Tools.ToolsModels;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Trustme.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Trustme.Controllers
 {
+    [Authorize(Roles = "Pro, User, Free")]
     public class VerifySignatureController : Controller
     {
         private IHostingEnvironment Environment;
