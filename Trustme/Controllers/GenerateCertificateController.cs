@@ -55,7 +55,8 @@ namespace Trustme.Controllers
             User currentUser = _HttpRequestFunctions.GetUser(HttpContext);
             if (_KeyRepository.GetNrCertificates(currentUser) >= UserMaximNumberOfCertificates)
             {
-                return RedirectToAction(nameof(ErrorNrCertificates));
+                TempData["CertificatesNrError"] = "You cannot have more than three certificates";
+                return RedirectToAction(nameof(GenerateCertificate));
             }
 
             TempData["certificateNameError"] = true;
