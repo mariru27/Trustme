@@ -59,8 +59,8 @@ namespace Trustme
             services.AddAuthentication("CookieAuth").AddCookie("CookieAuth", config =>
             {
                 config.Cookie.Name = "User.cookie";
-                config.LoginPath = "/Administration/LogIn";
-                config.LogoutPath = "/Administration/LogOut";
+                config.LoginPath = "/Authenticate/LogIn";
+                config.LogoutPath = "/Authenticate/LogOut";
             });
             services.AddControllersWithViews();
             services.AddMemoryCache();
