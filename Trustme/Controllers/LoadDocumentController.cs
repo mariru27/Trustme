@@ -4,10 +4,11 @@ using Trustme.ViewModels;
 using Trustme.IServices;
 using System.IO;
 using Microsoft.AspNetCore.Http;
-
+using Microsoft.AspNetCore.Authorization;
 
 namespace Trustme.Controllers
 {
+    [Authorize(Roles = "Pro, User, Free")]
     public class LoadDocumentController : Controller
     {
         private IUserRepository _UserRepository;

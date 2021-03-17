@@ -19,9 +19,12 @@ using Org.BouncyCastle.OpenSsl;
 using Trustme.IServices;
 using Trustme.ViewModels;
 using Trustme.ITools;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Trustme.Controllers
 {
+    [Authorize(Roles = "Pro, User, Free")]
+
     public class GenerateCertificateController : Controller
     {
         private const string SignatureAlgorithm = "sha1WithRSA";
