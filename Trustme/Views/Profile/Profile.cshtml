@@ -68,44 +68,48 @@
             </div>
         </div>
 
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>
-                        Certificate name
-                    </th>
-                    <th>
-                        Description
-                    </th>
-                    <th>
-                        Key Size
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model.Keys)
-                {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.CertificateName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Description)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.KeySize)
-                        </td>
-                        <td>
-                            <a asp-action="EditCertificate" asp-route-id="@item.KeyId">Edit</a> |
-                            <a asp-action="DeleteCertificate" asp-route-id="@item.KeyId">Delete</a>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </form>
+        @if (Model.Keys.Count() != 0 )
+        {
 
-    <a class="btn btn-info btn-lg" asp-controller="Authenticate" asp-action="LogOut">
-        <span class="glyphicon glyphicon-log-out"></span> Log out
-    </a>
-</div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            Certificate name
+                        </th>
+                        <th>
+                            Description
+                        </th>
+                        <th>
+                            Key Size
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Keys)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CertificateName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Description)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.KeySize)
+                            </td>
+                            <td>
+                                <a asp-action="EditCertificate" asp-route-id="@item.KeyId">Edit</a> |
+                                <a asp-action="DeleteCertificate" asp-route-id="@item.KeyId">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+    }
+        </form>
+
+        <a class="btn btn-info btn-lg" asp-controller="Authenticate" asp-action="LogOut">
+            <span class="glyphicon glyphicon-log-out"></span> Log out
+        </a>
+    </div>
