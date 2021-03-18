@@ -22,7 +22,7 @@ namespace Trustme.Controllers
         {
             return View();
         }
-        public IActionResult UsersList()
+        public IActionResult Users()
         {
 
             return View(_UserRepository.ListAllUsers());
