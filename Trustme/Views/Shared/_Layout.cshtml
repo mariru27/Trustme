@@ -155,7 +155,7 @@
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="VerifySignature" asp-action="VerifyUser">Verify</a>
                                 </li>
-                                if (username != null)
+                                if (username != null && userRole != "Admin")
                                 {
                                     <li class="nav-item">
                                         <a class="nav-link text-dark" asp-area="" asp-controller="LoadDocument" asp-action="SendDocumentToUser">Upload</a>
