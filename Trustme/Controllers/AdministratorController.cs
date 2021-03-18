@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Trustme.IServices;
+using Trustme.Service;
 
 namespace Trustme.Controllers
 {
@@ -11,13 +13,19 @@ namespace Trustme.Controllers
     [Authorize(Roles = "Admin")]
     public class AdministratorController : Controller
     {
+        private IUserRepository _UserRepository;
+        public AdministratorController(IUserRepository userRepository)
+        {
+            _UserRepository = userRepository;
+        }
         public IActionResult Index()
         {
             return View();
         }
         public IActionResult UsersList()
         {
-            return View();
+
+            return View(_UserRepository.ListAllUsers());
         }
     }
 }
