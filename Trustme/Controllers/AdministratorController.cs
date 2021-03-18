@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace Trustme.Controllers
 {
+    /// <summary>
+    /// Admin user type can delete, 
+    /// edit user info
+    /// </summary>
     public class AdministratorController : Controller
     {
         public IActionResult Index()
