@@ -1,8 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Trustme.Controllers
 {
@@ -10,6 +7,8 @@ namespace Trustme.Controllers
     /// Admin user type can delete, 
     /// edit user info
     /// </summary>
+    
+    [Authorize(Roles = "Admin")]
     public class AdministratorController : Controller
     {
         public IActionResult Index()
