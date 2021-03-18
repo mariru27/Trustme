@@ -6,9 +6,6 @@
     foreach (var user in Model)
     {
         <partial name="_UserList" model="user" view-data="ViewData" />
-        <td>
-            <a asp-action="Edit" asp-route-id="@user.UserId">Edit</a> |
-            <a asp-action="Delete" asp-route-id="@user.UserId">Delete</a>
-        </td>
+
     }
 }
