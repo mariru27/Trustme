@@ -62,7 +62,7 @@ namespace Trustme.Controllers
                 TempData["CertificateNameError"] = "Required certificate name";
                 return RedirectToAction("GenerateCertificate");
             }
-            if (_KeyRepository.GetNrCertificates(currentUser) >= UserMaximNumberOfCertificates)
+            if (_KeyRepository.GetNrCertificates(currentUser) >= UserMaximNumberOfCertificates && _HttpRequestFunctions.GetUserRole(HttpContext) == "User")
             {
                 TempData["CertificatesNrError"] = "You cannot have more than three certificates, delete a certificate if you want to generate another!";
                 return RedirectToAction("GenerateCertificate");
