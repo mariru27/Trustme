@@ -1,0 +1,11 @@
+﻿@model IEnumerable<User>
+
+<h1>Users</h1>
+
+@{
+    foreach (var user in Model)
+    {
+        <partial name="_UserList" model="user" view-data="ViewData" />
+
+    }
+}

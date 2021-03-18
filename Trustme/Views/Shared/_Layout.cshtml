@@ -158,7 +158,12 @@
                                         <a class="nav-link text-dark" asp-area="" asp-controller="VerifySignature" asp-action="VerifyUser">Verify</a>
                                     </li>
                                 }
-
+                                if (username != null && userRole == "Admin")
+                                {
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="Administrator" asp-action="Users">Users</a>
+                                    </li>
+                                }
                                 if (username != null && userRole != "Admin")
                                 {
                                     <li class="nav-item">
