@@ -27,6 +27,13 @@ namespace Trustme.Controllers
             return View(_UserRepository.ListAllUsers());
         }
 
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteConfirmed(int id)
+        {
+            User user = _UserRepository.GetUserById(id);
+            _UserRepository.DeleteUser(user);
+            return RedirectToAction(nameof(Users));
+        }
         public IActionResult DeleteUser(int? id)
         {
             if (id == null)
