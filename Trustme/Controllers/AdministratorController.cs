@@ -38,9 +38,16 @@ namespace Trustme.Controllers
         }
 
         [HttpGet]
-        public IActionResult EditUser()
+        public IActionResult EditUser(int? id)
         {
-            return View();
+            if(id == null)
+            {
+                return NotFound();
+            }
+            User user = _UserRepository.GetUserById((int)id);
+            if (user == null)
+                return NotFound();            
+            return View(user);
         }
         public IActionResult DeleteUser(int? id)
         {
