@@ -41,7 +41,13 @@ namespace Trustme.Controllers
         [HttpPost]
         public IActionResult EditUser(User user)
         {
+            User updateUser = _UserRepository.GetUserById(user.UserId);
+            updateUser.Username = user.Username;
+            updateUser.FirstName = user.FirstName;
+            updateUser.SecondName = user.SecondName;
+            updateUser.Mail = updateUser.Mail;
 
+            _UserRepository.EditUser(updateUser);
             return RedirectToAction("Users");
         }
 
@@ -54,9 +60,10 @@ namespace Trustme.Controllers
             }
             User user = _UserRepository.GetUserById((int)id);
             if (user == null)
-                return NotFound();            
+                return NotFound();
             return View(user);
         }
+
         public IActionResult DeleteUser(int? id)
         {
             if (id == null)
