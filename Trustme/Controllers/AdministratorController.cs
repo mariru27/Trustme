@@ -36,6 +36,12 @@ namespace Trustme.Controllers
             _UserRepository.DeleteUser(user);
             return RedirectToAction(nameof(Users));
         }
+
+        [HttpGet]
+        public IActionResult EditUser()
+        {
+            return View();
+        }
         public IActionResult DeleteUser(int? id)
         {
             if (id == null)
