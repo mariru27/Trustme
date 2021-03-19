@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Trustme.IServices;
-using Trustme.Service;
-
+using Trustme.Models;
 namespace Trustme.Controllers
 {
     /// <summary>
@@ -26,6 +25,29 @@ namespace Trustme.Controllers
         {
 
             return View(_UserRepository.ListAllUsers());
+        }
+
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteConfirmed(int? UserId)
+        {
+            if (UserId == null)
+                return NotFound();
+            User user = _UserRepository.GetUserById((int)UserId);
+            _UserRepository.DeleteUser(user);
+            return RedirectToAction(nameof(Users));
+        }
+        public IActionResult DeleteUser(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            User user = _UserRepository.GetUserById((int)id);
+            if(user == null)
+            {
+                return NotFound();
+            }
+            return View(user);
         }
     }
 }
