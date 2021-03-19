@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using Trustme.IServices;
 using Trustme.Models;
+using Trustme.ViewModels;
+
 namespace Trustme.Controllers
 {
     /// <summary>
@@ -13,8 +16,10 @@ namespace Trustme.Controllers
     public class AdministratorController : Controller
     {
         private IUserRepository _UserRepository;
-        public AdministratorController(IUserRepository userRepository)
+        private IRoleRepository _RoleRepository;
+        public AdministratorController(IUserRepository userRepository, IRoleRepository roleRepository)
         {
+            _RoleRepository = roleRepository;
             _UserRepository = userRepository;
         }
         public IActionResult Index()
@@ -23,8 +28,20 @@ namespace Trustme.Controllers
         }
         public IActionResult Users()
         {
+            IEnumerable<User> users = _UserRepository.ListAllUsers();
 
-            return View(_UserRepository.ListAllUsers());
+            //Add in list all users and role for every user
+            List<RoleUserModel> usersroles = new List<RoleUserModel>();
+            foreach(var u in users)
+            {
+                RoleUserModel roleUser = new RoleUserModel
+                {
+                    User = u,
+                    Role = _RoleRepository.GetUserRole(u)
+                };
+                usersroles.Add(roleUser);
+            }
+            return View(usersroles);
         }
 
         [ValidateAntiForgeryToken]
