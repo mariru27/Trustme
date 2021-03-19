@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Trustme.IServices;
-using Trustme.Service;
-
+using Trustme.Models;
 namespace Trustme.Controllers
 {
     /// <summary>
@@ -26,6 +25,17 @@ namespace Trustme.Controllers
         {
 
             return View(_UserRepository.ListAllUsers());
+        }
+
+        public IActionResult DeleteUser(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+
+            return View();
         }
     }
 }
