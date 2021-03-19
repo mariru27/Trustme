@@ -22,6 +22,11 @@ namespace Trustme.Service
             _context.User.Add(_User);
             _context.SaveChanges();
         }
+        public void EditUser(User _User)
+        {
+            _context.User.Update(_User);
+            _context.SaveChanges();
+        }
 
         public void DeleteUser(User _User)
         {

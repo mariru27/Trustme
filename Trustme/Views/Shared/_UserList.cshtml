@@ -1,43 +1,49 @@
-﻿@model User
+﻿@model RoleUserModel
 
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Username)
+                @Html.DisplayNameFor(model => model.User.Username)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FirstName)
+                @Html.DisplayNameFor(model => model.User.FirstName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.SecondName)
+                @Html.DisplayNameFor(model => model.User.SecondName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Mail)
+                @Html.DisplayNameFor(model => model.User.Mail)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Role.RoleName)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
 
-            <tr>
-                <td>
-                    @Html.DisplayFor(model => model.Username)
-                </td>
-                <td>
-                    @Html.DisplayFor(model => model.FirstName)
-                </td>
-                <td>
-                    @Html.DisplayFor(model => model.SecondName)
-                </td>
-                <td>
-                    @Html.DisplayFor(model => model.Mail)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@Model.UserId">Edit</a> |
-                    <a asp-action="DeleteUser" asp-route-id="@Model.UserId">Delete</a>
-                </td>
-            </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(model => model.User.Username)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.User.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.User.SecondName)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.User.Mail)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.Role.RoleName)
+            </td>
+            <td>
+                <a asp-action="EditUser" asp-route-id="@Model.User.UserId">Edit</a> |
+                <a asp-action="DeleteUser" asp-route-id="@Model.User.UserId">Delete</a>
+            </td>
+        </tr>
         
     </tbody>
 </table>
