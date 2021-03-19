@@ -78,7 +78,13 @@ namespace Trustme.Controllers
             User user = _UserRepository.GetUserById((int)id);
             if (user == null)
                 return NotFound();
-            return View(user);
+            RoleUserModel roleUser = new RoleUserModel
+            {
+                User = user,
+                Role = _RoleRepository.GetUserRole(user)
+            };
+
+            return View(roleUser);
         }
 
         public IActionResult DeleteUser(int? id)
