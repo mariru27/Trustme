@@ -33,9 +33,12 @@ namespace Trustme.Controllers
             {
                 return NotFound();
             }
-
-
-            return View();
+            User user = _UserRepository.GetUserById((int)id);
+            if(user == null)
+            {
+                return NotFound();
+            }
+            return View(user);
         }
     }
 }
