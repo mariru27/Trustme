@@ -37,6 +37,14 @@ namespace Trustme.Controllers
             return RedirectToAction(nameof(Users));
         }
 
+
+        [HttpPost]
+        public IActionResult EditUser(User user)
+        {
+
+            return RedirectToAction("Users");
+        }
+
         [HttpGet]
         public IActionResult EditUser(int? id)
         {
