@@ -63,7 +63,8 @@ namespace Trustme.Controllers
             updateUser.Username = user.Username;
             updateUser.FirstName = user.FirstName;
             updateUser.SecondName = user.SecondName;
-            updateUser.Mail = updateUser.Mail;
+            updateUser.Mail = user.Mail;
+            updateUser.RoleId = user.RoleId;
 
             _UserRepository.EditUser(updateUser);
             return RedirectToAction("Users");
