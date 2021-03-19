@@ -28,9 +28,11 @@ namespace Trustme.Controllers
         }
 
         [ValidateAntiForgeryToken]
-        public IActionResult DeleteConfirmed(int id)
+        public IActionResult DeleteConfirmed(int? UserId)
         {
-            User user = _UserRepository.GetUserById(id);
+            if (UserId == null)
+                return NotFound();
+            User user = _UserRepository.GetUserById((int)UserId);
             _UserRepository.DeleteUser(user);
             return RedirectToAction(nameof(Users));
         }

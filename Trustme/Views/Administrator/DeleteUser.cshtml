@@ -30,8 +30,8 @@
         </dd>
     </dl>
 
-    <form asp-action="DeleteCertificate">
-        <input type="hidden" asp-for="@Model.UserId" />
+    <form asp-action="DeleteConfirmed">
+        <input type="hidden" asp-for="@Model.UserId"/>
         <input type="submit" value="Delete" class="btn btn-danger" /> |
         <a asp-action="Users">Back to Users</a>
     </form>
