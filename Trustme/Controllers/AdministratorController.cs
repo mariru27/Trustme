@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
 using Trustme.IServices;
 using Trustme.Models;
@@ -78,10 +79,10 @@ namespace Trustme.Controllers
             User user = _UserRepository.GetUserById((int)id);
             if (user == null)
                 return NotFound();
-            RoleUserModel roleUser = new RoleUserModel
+            RolesUserViewModel roleUser = new RolesUserViewModel
             {
                 User = user,
-                Role = _RoleRepository.GetUserRole(user)
+                Roles = new SelectList(_RoleRepository.ListAllRoles(), "IdRole", "RoleName")
             };
 
             return View(roleUser);
