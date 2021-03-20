@@ -33,13 +33,14 @@ namespace Trustme.Controllers
         private IKeyRepository _KeyRepository;
         private ICertificate _Certificate;
         private const int UserMaximNumberOfCertificates = 3;
-         
-        public GenerateCertificateController(ICertificate certificate, IHostingEnvironment _environment, IHttpRequestFunctions httpRequestFunctions, IKeyRepository keyRepository)
+        private ITool _Tool;
+        public GenerateCertificateController(ICertificate certificate, ITool tool, IHostingEnvironment _environment, IHttpRequestFunctions httpRequestFunctions, IKeyRepository keyRepository)
         {
             _HttpRequestFunctions = httpRequestFunctions;
             Environment = _environment;
             _KeyRepository = keyRepository;
             _Certificate = certificate;
+            _Tool = tool;
         }
         public IActionResult Index()
         {
