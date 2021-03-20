@@ -50,7 +50,6 @@ namespace Trustme.Controllers
             return View();
         }
 
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> GenerateCertificate(string certificateName, string description, int keySize)
