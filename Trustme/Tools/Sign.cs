@@ -21,10 +21,12 @@ namespace Trustme.Tools
         private IKeyRepository _KeyRepository;
         private IHttpRequestFunctions _HttpRequestFunctions;
         private string wwwfilePath;
+        private ITool _Tool;
 
 
-        public Sign(IHostingEnvironment hostingEnvironment, IKeyRepository keyRepository, IHttpRequestFunctions httpRequestFunctions)
+        public Sign(IHostingEnvironment hostingEnvironment, ITool tool, IKeyRepository keyRepository, IHttpRequestFunctions httpRequestFunctions)
         {
+            _Tool = tool;
             Environment = hostingEnvironment;
             _KeyRepository = keyRepository;
             _HttpRequestFunctions = httpRequestFunctions;
