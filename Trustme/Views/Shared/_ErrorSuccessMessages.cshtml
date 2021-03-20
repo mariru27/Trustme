@@ -66,3 +66,24 @@
 {
     <p class="alert alert-danger" id="userError">@TempData["CertificateNameError"]</p>
 }
+@*Upload page*@
+@if (TempData["UserDontHaveCertificates"] != null)
+{
+    <p class="alert alert-danger" id="userError">@TempData["UserDontHaveCertificates"]</p>
+}
+@if (TempData["UserError"] != null)
+{
+    <p class="alert alert-danger" id="userError">@TempData["UserError"]</p>
+}
+@if (TempData["Success"] != null)
+{
+    <p class="alert alert-success" id="successMessage">@TempData["Success"]</p>
+}
+@if (TempData["PKNull"] != null)
+{
+    <p class="alert alert-danger" id="userError">@TempData["PKNull"]</p>
+}
+@if (TempData["DocumentError"] != null)
+{
+    <p class="alert alert-danger" id="documentError">@TempData["DocumentError"]</p>
+}

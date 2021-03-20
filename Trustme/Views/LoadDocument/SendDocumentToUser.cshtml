@@ -8,10 +8,7 @@
         <label for="Username" class="control-label">Username you want to send document</label>
         <input for="Username" name="Username" type="text" class="form-control" />
     </div>
-    @if (TempData["UserError"] != null)
-    {
-        <p class="alert alert-danger" id="userError">@TempData["UserError"]</p>
-    }
+    <partial name="_ErrorSuccessMessages" view-data="ViewData" />
     <div class="form-group">
         <input type="submit" value="Submit" class="btn btn-primary" />
     </div>

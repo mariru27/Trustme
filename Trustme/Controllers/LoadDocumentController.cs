@@ -43,6 +43,7 @@ namespace Trustme.Controllers
         [HttpPost]
         public IActionResult VerifyUser(string username)
         {
+            //check if user exist 
            User user = _UserRepository.GetUserbyUsername(username);
            if(user == null)
             {
@@ -51,6 +52,12 @@ namespace Trustme.Controllers
             }
            else
             {
+                //check if user that need to sign document have any certificates(keys)
+                if(_KeyRepository.GetNrCertificates(_UserRepository.GetUserbyUsername(username)) == 0)
+                {
+                    TempData["UserDontHaveCertificates"] = "User do not have any certificate! User need to generate a certificate!";
+                    return RedirectToAction("SendDocumentToUser");
+                }
                 return RedirectToAction("LoadDocumentToSign",new { username = username });
             }
         }
