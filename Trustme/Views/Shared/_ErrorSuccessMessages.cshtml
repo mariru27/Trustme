@@ -66,3 +66,8 @@
 {
     <p class="alert alert-danger" id="userError">@TempData["CertificateNameError"]</p>
 }
+@*Upload page*@
+@if (TempData["UserDontHaveCertificates"] != null)
+{
+    <p class="alert alert-danger" id="userError">@TempData["UserDontHaveCertificates"]</p>
+}
