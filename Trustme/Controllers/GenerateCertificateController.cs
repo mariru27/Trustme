@@ -33,12 +33,14 @@ namespace Trustme.Controllers
         private IKeyRepository _KeyRepository;
         private ICertificate _Certificate;
         private const int UserMaximNumberOfCertificates = 3;
-        public GenerateCertificateController(ICertificate certificate, IHostingEnvironment _environment, IHttpRequestFunctions httpRequestFunctions, IKeyRepository keyRepository)
+        private ITool _Tool;
+        public GenerateCertificateController(ICertificate certificate, ITool tool, IHostingEnvironment _environment, IHttpRequestFunctions httpRequestFunctions, IKeyRepository keyRepository)
         {
             _HttpRequestFunctions = httpRequestFunctions;
             Environment = _environment;
             _KeyRepository = keyRepository;
             _Certificate = certificate;
+            _Tool = tool;
         }
         public IActionResult Index()
         {
@@ -118,7 +120,8 @@ namespace Trustme.Controllers
 
             byte[] encoded = cert.GetEncoded();
 
-            string pathDir = Path.Combine(wwwPath, "Certificate_PKey");
+            string dirName = "Certificate_PKey_" + _Tool.RandomString(6);
+            string pathDir = Path.Combine(wwwPath, dirName);
             if (!Directory.Exists(pathDir))
             {
                 Directory.CreateDirectory(pathDir);

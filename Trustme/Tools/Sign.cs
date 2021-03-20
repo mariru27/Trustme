@@ -11,6 +11,7 @@ using Trustme.ITools;
 using Trustme.IServices;
 using Trustme.Tools.ToolsModels;
 using Trustme.Models;
+using System.Linq;
 
 namespace Trustme.Tools
 {
@@ -19,9 +20,13 @@ namespace Trustme.Tools
         private IHostingEnvironment Environment;
         private IKeyRepository _KeyRepository;
         private IHttpRequestFunctions _HttpRequestFunctions;
-        
-        public Sign(IHostingEnvironment hostingEnvironment, IKeyRepository keyRepository, IHttpRequestFunctions httpRequestFunctions)
+        private string wwwfilePath;
+        private ITool _Tool;
+
+
+        public Sign(IHostingEnvironment hostingEnvironment, ITool tool, IKeyRepository keyRepository, IHttpRequestFunctions httpRequestFunctions)
         {
+            _Tool = tool;
             Environment = hostingEnvironment;
             _KeyRepository = keyRepository;
             _HttpRequestFunctions = httpRequestFunctions;
@@ -31,8 +36,13 @@ namespace Trustme.Tools
 
             SignModel signModel = new SignModel();
             signModel.validKey = true;
-            var wwwfilePath = this.Environment.WebRootPath; //we are using Temp file name just for the example. Add your own file path.c
-            wwwfilePath = Path.Combine(wwwfilePath, "dirForPK");
+            wwwfilePath = this.Environment.WebRootPath; //we are using Temp file name just for the example. Add your own file path.c
+            string dirName = "DirForPK_" + _Tool.RandomString(6);
+            wwwfilePath = Path.Combine(wwwfilePath, dirName);
+
+            //create folder where to store key
+            if(!Directory.Exists(wwwfilePath))
+                Directory.CreateDirectory(wwwfilePath);
             var filePath = Path.Combine(wwwfilePath, pkfile.FileName);
             using (var stream = new FileStream(filePath, FileMode.Create, FileAccess.ReadWrite))
             {
@@ -92,8 +102,12 @@ namespace Trustme.Tools
             signModel.privatekeyy = privatekeyy;
             signModel.reader = reader;
             signModel.verifytest = verifytest;
+
+            
+
             return signModel;
         }
+
 
         public string SignDocument(SignModel signModel)
         {
@@ -105,6 +119,7 @@ namespace Trustme.Tools
 
             signModel.reader.Close();
             System.IO.File.Delete(signModel.keypath);
+            Directory.Delete(wwwfilePath);
             //TempData["signature"] = signaturestring;
             return signaturestring;
 
