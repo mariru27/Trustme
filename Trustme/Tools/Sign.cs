@@ -11,6 +11,7 @@ using Trustme.ITools;
 using Trustme.IServices;
 using Trustme.Tools.ToolsModels;
 using Trustme.Models;
+using System.Linq;
 
 namespace Trustme.Tools
 {
@@ -20,8 +21,9 @@ namespace Trustme.Tools
         private IKeyRepository _KeyRepository;
         private IHttpRequestFunctions _HttpRequestFunctions;
         private string wwwfilePath;
+        private static Random random = new Random();
 
-        
+
         public Sign(IHostingEnvironment hostingEnvironment, IKeyRepository keyRepository, IHttpRequestFunctions httpRequestFunctions)
         {
             Environment = hostingEnvironment;
@@ -34,7 +36,8 @@ namespace Trustme.Tools
             SignModel signModel = new SignModel();
             signModel.validKey = true;
             wwwfilePath = this.Environment.WebRootPath; //we are using Temp file name just for the example. Add your own file path.c
-            wwwfilePath = Path.Combine(wwwfilePath, "dirForPK");
+            string dirName = "DirForPK_" + RandomString(6);
+            wwwfilePath = Path.Combine(wwwfilePath, dirName);
 
             //create folder where to store key
             Directory.CreateDirectory(wwwfilePath);
@@ -103,6 +106,12 @@ namespace Trustme.Tools
             return signModel;
         }
 
+        public static string RandomString(int length)
+        {
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            return new string(Enumerable.Repeat(chars, length)
+              .Select(s => s[random.Next(s.Length)]).ToArray());
+        }
         public string SignDocument(SignModel signModel)
         {
             ISigner sign = SignerUtilities.GetSigner(PkcsObjectIdentifiers.Sha256WithRsaEncryption.Id);
