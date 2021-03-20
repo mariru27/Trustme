@@ -21,7 +21,6 @@ namespace Trustme.Tools
         private IKeyRepository _KeyRepository;
         private IHttpRequestFunctions _HttpRequestFunctions;
         private string wwwfilePath;
-        private static Random random = new Random();
 
 
         public Sign(IHostingEnvironment hostingEnvironment, IKeyRepository keyRepository, IHttpRequestFunctions httpRequestFunctions)
@@ -107,12 +106,7 @@ namespace Trustme.Tools
             return signModel;
         }
 
-        public static string RandomString(int length)
-        {
-            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-            return new string(Enumerable.Repeat(chars, length)
-              .Select(s => s[random.Next(s.Length)]).ToArray());
-        }
+
         public string SignDocument(SignModel signModel)
         {
             ISigner sign = SignerUtilities.GetSigner(PkcsObjectIdentifiers.Sha256WithRsaEncryption.Id);
