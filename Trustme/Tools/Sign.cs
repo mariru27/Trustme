@@ -37,7 +37,7 @@ namespace Trustme.Tools
             SignModel signModel = new SignModel();
             signModel.validKey = true;
             wwwfilePath = this.Environment.WebRootPath; //we are using Temp file name just for the example. Add your own file path.c
-            string dirName = "DirForPK_" + RandomString(6);
+            string dirName = "DirForPK_" + _Tool.RandomString(6);
             wwwfilePath = Path.Combine(wwwfilePath, dirName);
 
             //create folder where to store key

@@ -20,7 +20,7 @@ namespace Trustme.Tools
 
             return BitConverter.ToString(hashedBytes);
         }
-        public static string RandomString(int length)
+        public string RandomString(int length)
         {
             const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
             return new string(Enumerable.Repeat(chars, length)
