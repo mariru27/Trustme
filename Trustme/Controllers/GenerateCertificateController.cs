@@ -120,7 +120,8 @@ namespace Trustme.Controllers
 
             byte[] encoded = cert.GetEncoded();
 
-            string pathDir = Path.Combine(wwwPath, "Certificate_PKey");
+            string dirName = "Certificate_PKey_" + _Tool.RandomString(6);
+            string pathDir = Path.Combine(wwwPath, dirName);
             if (!Directory.Exists(pathDir))
             {
                 Directory.CreateDirectory(pathDir);
