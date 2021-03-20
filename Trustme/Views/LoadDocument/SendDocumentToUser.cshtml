@@ -12,6 +12,8 @@
     {
         <p class="alert alert-danger" id="userError">@TempData["UserError"]</p>
     }
+    <partial name="_ErrorSuccessMessages" view-data="ViewData" />
+
     <div class="form-group">
         <input type="submit" value="Submit" class="btn btn-primary" />
     </div>
