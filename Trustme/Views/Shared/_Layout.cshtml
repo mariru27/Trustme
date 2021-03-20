@@ -133,7 +133,13 @@
         @{
 
             @using System.Security.Claims;
+            @using Trustme.IServices;
+            @using Microsoft.AspNetCore.Http;
+
+            @inject IKeyRepository _KeyRepository
+            @inject IHttpRequestFunctions _IHttpRequestFunctions;
             @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
 
             var username = HttpContextAccessor.HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
             var userRole = HttpContextAccessor.HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role)?.Value;
@@ -148,7 +154,7 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav flex-grow-1">
-                       
+
 
                         <ul class="nav navbar-nav ml-auto">
                             @{
@@ -169,9 +175,13 @@
                                     <li class="nav-item">
                                         <a class="nav-link text-dark" asp-area="" asp-controller="LoadDocument" asp-action="SendDocumentToUser">Upload</a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-controller="SignDocuments" asp-action="UnsignedDocuments">Documents</a>
-                                    </li>
+                                    if (_KeyRepository.GetNrCertificates(_IHttpRequestFunctions.GetUser(HttpContextAccessor.HttpContext)) != 0)
+                                    {
+                                        <li class="nav-item">
+                                            <a class="nav-link text-dark" asp-area="" asp-controller="SignDocuments" asp-action="UnsignedDocuments">Documents</a>
+                                        </li>
+                                    }
+
                                     <li class="nav-item">
                                         <a class="nav-link text-dark" asp-area="" asp-controller="GenerateCertificate" asp-action="GenerateCertificate">Generate Certificate</a>
                                     </li>
