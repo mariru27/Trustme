@@ -53,6 +53,14 @@ namespace Trustme.Controllers
             }
             else
             {
+                //check if user that need to sign document have any certificates(keys)
+                if (_KeyRepository.GetNrCertificates(_UserRepository.GetUserbyUsername(Username)) == 0)
+                {
+                    TempData["UserDontHaveCertificates"] = "User do not have any certificate! User need to generate a certificate!";
+                    return RedirectToAction("VerifyUser");
+                }
+
+
                 var keyList = _KeyRepository.ListAllKeys(currentUser);
                 if (keyList != null)
                 {
