@@ -25,9 +25,11 @@ namespace Trustme.Controllers
         private ISign _Sign;
         private IUserRepository _UserRepository;
         private ISignedDocumentRepository _SignedDocumentRepository;
-        public SignDocumentsController(IHostingEnvironment _environment, IUserRepository userRepository,ISignedDocumentRepository signedDocumentRepository, IKeyRepository keyRepository, IHttpRequestFunctions httpRequestFunctions, IUnsignedDocumentRepository unsignedDocumentRepository, ISign sign)
+        private ITool _Tool;
+        public SignDocumentsController(IHostingEnvironment _environment, ITool tool, IUserRepository userRepository,ISignedDocumentRepository signedDocumentRepository, IKeyRepository keyRepository, IHttpRequestFunctions httpRequestFunctions, IUnsignedDocumentRepository unsignedDocumentRepository, ISign sign)
         {
             Environment = _environment;
+            _Tool = tool;
             _KeyRepository = keyRepository;
             _HttpRequestFunctions = httpRequestFunctions;
             _Sign = sign;
