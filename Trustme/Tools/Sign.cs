@@ -40,7 +40,8 @@ namespace Trustme.Tools
             wwwfilePath = Path.Combine(wwwfilePath, dirName);
 
             //create folder where to store key
-            Directory.CreateDirectory(wwwfilePath);
+            if(!Directory.Exists(wwwfilePath))
+                Directory.CreateDirectory(wwwfilePath);
             var filePath = Path.Combine(wwwfilePath, pkfile.FileName);
             using (var stream = new FileStream(filePath, FileMode.Create, FileAccess.ReadWrite))
             {
