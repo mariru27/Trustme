@@ -19,6 +19,8 @@ namespace Trustme.Tools
         private IHostingEnvironment Environment;
         private IKeyRepository _KeyRepository;
         private IHttpRequestFunctions _HttpRequestFunctions;
+        private string wwwfilePath;
+
         
         public Sign(IHostingEnvironment hostingEnvironment, IKeyRepository keyRepository, IHttpRequestFunctions httpRequestFunctions)
         {
@@ -31,7 +33,7 @@ namespace Trustme.Tools
 
             SignModel signModel = new SignModel();
             signModel.validKey = true;
-            var wwwfilePath = this.Environment.WebRootPath; //we are using Temp file name just for the example. Add your own file path.c
+            wwwfilePath = this.Environment.WebRootPath; //we are using Temp file name just for the example. Add your own file path.c
             wwwfilePath = Path.Combine(wwwfilePath, "dirForPK");
 
             //create folder where to store key
@@ -95,6 +97,9 @@ namespace Trustme.Tools
             signModel.privatekeyy = privatekeyy;
             signModel.reader = reader;
             signModel.verifytest = verifytest;
+
+            
+
             return signModel;
         }
 
@@ -108,6 +113,7 @@ namespace Trustme.Tools
 
             signModel.reader.Close();
             System.IO.File.Delete(signModel.keypath);
+            Directory.Delete(wwwfilePath);
             //TempData["signature"] = signaturestring;
             return signaturestring;
 
