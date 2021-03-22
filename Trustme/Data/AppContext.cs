@@ -28,8 +28,7 @@ namespace Trustme.Data
         public DbSet<UnsignedDocument> UnsignedDocuments { set; get; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Key>().HasOne(e => e.UserKey).WithOne(e => e.Key).OnDelete(DeleteBehavior.ClientCascade);
-            modelBuilder.Entity<Key>().HasOne(e => e.UserKey).WithOne(e => e.Key).HasForeignKey<UserKey>(e => e.IdUserKey);
+            modelBuilder.Entity<UserKey>().HasMany(e => e.Keys).WithOne(e => e.UserKey).OnDelete(DeleteBehavior.ClientCascade);
 
             modelBuilder.Entity<User>().ToTable("User");
             modelBuilder.Entity<Key>().ToTable("Key");

@@ -8,22 +8,6 @@ namespace Trustme.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Key",
-                columns: table => new
-                {
-                    KeyId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CertificateName = table.Column<string>(nullable: false),
-                    Description = table.Column<string>(nullable: true),
-                    PublicKey = table.Column<string>(nullable: true),
-                    KeySize = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Key", x => x.KeyId);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Role",
                 columns: table => new
                 {
@@ -34,6 +18,73 @@ namespace Trustme.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Role", x => x.IdRole);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "User",
+                columns: table => new
+                {
+                    UserId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FirstName = table.Column<string>(nullable: false),
+                    SecondName = table.Column<string>(nullable: false),
+                    Mail = table.Column<string>(nullable: false),
+                    Username = table.Column<string>(nullable: false),
+                    Password = table.Column<string>(nullable: false),
+                    ConfirmPassword = table.Column<string>(nullable: false),
+                    RoleId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_User", x => x.UserId);
+                    table.ForeignKey(
+                        name: "FK_User_Role_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "Role",
+                        principalColumn: "IdRole",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserKey",
+                columns: table => new
+                {
+                    IdUserKey = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserKey", x => x.IdUserKey);
+                    table.ForeignKey(
+                        name: "FK_UserKey_User_UserId",
+                        column: x => x.UserId,
+                        principalTable: "User",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Key",
+                columns: table => new
+                {
+                    KeyId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CertificateName = table.Column<string>(nullable: false),
+                    Description = table.Column<string>(nullable: true),
+                    PublicKey = table.Column<string>(nullable: true),
+                    KeySize = table.Column<int>(nullable: false),
+                    UserKeyIdUserKey = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Key", x => x.KeyId);
+                    table.ForeignKey(
+                        name: "FK_Key_UserKey_UserKeyIdUserKey",
+                        column: x => x.UserKeyIdUserKey,
+                        principalTable: "UserKey",
+                        principalColumn: "IdUserKey",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -85,55 +136,6 @@ namespace Trustme.Migrations
                         column: x => x.KeyId,
                         principalTable: "Key",
                         principalColumn: "KeyId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "User",
-                columns: table => new
-                {
-                    UserId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    FirstName = table.Column<string>(nullable: false),
-                    SecondName = table.Column<string>(nullable: false),
-                    Mail = table.Column<string>(nullable: false),
-                    Username = table.Column<string>(nullable: false),
-                    Password = table.Column<string>(nullable: false),
-                    ConfirmPassword = table.Column<string>(nullable: false),
-                    RoleId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_User", x => x.UserId);
-                    table.ForeignKey(
-                        name: "FK_User_Role_RoleId",
-                        column: x => x.RoleId,
-                        principalTable: "Role",
-                        principalColumn: "IdRole",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "UserKey",
-                columns: table => new
-                {
-                    IdUserKey = table.Column<int>(nullable: false),
-                    UserId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_UserKey", x => x.IdUserKey);
-                    table.ForeignKey(
-                        name: "FK_UserKey_Key_IdUserKey",
-                        column: x => x.IdUserKey,
-                        principalTable: "Key",
-                        principalColumn: "KeyId",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_UserKey_User_UserId",
-                        column: x => x.UserId,
-                        principalTable: "User",
-                        principalColumn: "UserId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -190,6 +192,11 @@ namespace Trustme.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Key_UserKeyIdUserKey",
+                table: "Key",
+                column: "UserKeyIdUserKey");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_SignedDocument_KeyId",
                 table: "SignedDocument",
                 column: "KeyId");
@@ -233,9 +240,6 @@ namespace Trustme.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "UserKey");
-
-            migrationBuilder.DropTable(
                 name: "UserSignedDocument");
 
             migrationBuilder.DropTable(
@@ -248,10 +252,13 @@ namespace Trustme.Migrations
                 name: "UnsignedDocument");
 
             migrationBuilder.DropTable(
-                name: "User");
+                name: "Key");
 
             migrationBuilder.DropTable(
-                name: "Key");
+                name: "UserKey");
+
+            migrationBuilder.DropTable(
+                name: "User");
 
             migrationBuilder.DropTable(
                 name: "Role");
