@@ -23,6 +23,7 @@ namespace Trustme.Models
         [Key]
         public int KeyId { set; get; }
         [Required]
+        
         public string CertificateName { set; get; }
         public string Description { set; get; }
         public string PublicKey { set; get; }

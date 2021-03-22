@@ -66,6 +66,11 @@
 {
     <p class="alert alert-danger" id="userError">@TempData["CertificateNameError"]</p>
 }
+@if (TempData["CertificateNameAlreadyExistError"] != null)
+{
+    <p class="alert alert-danger" id="userError">@TempData["CertificateNameAlreadyExistError"]</p>
+}
+
 @*Upload page*@
 @if (TempData["UserDontHaveCertificates"] != null)
 {

@@ -158,5 +158,20 @@ namespace Trustme.Service
                ).ToList();
             return KeysList.Count();
         }
+
+        public bool CheckCertificateSameName(User user, string KeyName)
+        {
+            IEnumerable<Key> KeysList = _context.User.
+               Join(_context.UserKey,
+               user => user.UserId,
+               userKey => userKey.UserId,
+               (user, userKey) => new { user, userKey }
+               ).Where(a => a.user.UserId == user.UserId).Join(_context.Key,
+               userKeyResult => userKeyResult.userKey.IdUserKey,
+               key => key.KeyId,
+               (userKeyResult, key) => new Key(key)
+               ).ToList().Where(k => k.CertificateName == KeyName);
+            return KeysList.Any();
+        }
     }
 }
