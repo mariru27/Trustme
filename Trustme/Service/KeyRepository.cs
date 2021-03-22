@@ -158,5 +158,10 @@ namespace Trustme.Service
                ).ToList();
             return KeysList.Count();
         }
+
+        public bool CheckCertificateSameName(User user, Key key)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

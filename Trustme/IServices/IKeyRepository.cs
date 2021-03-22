@@ -24,5 +24,7 @@ namespace Trustme.IServices
         public UserKey GetUserKeyById(int idUserKey);
 
         public int GetNrCertificates(User _User);
+        public bool CheckCertificateSameName(User user, Key key);
+
     }
 }
