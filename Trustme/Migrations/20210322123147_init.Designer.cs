@@ -10,7 +10,7 @@ using Trustme.Data;
 namespace Trustme.Migrations
 {
     [DbContext(typeof(Data.AppContext))]
-    [Migration("20210317090151_init")]
+    [Migration("20210322123147_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -41,7 +41,12 @@ namespace Trustme.Migrations
                     b.Property<string>("PublicKey")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("UserKeyIdUserKey")
+                        .HasColumnType("int");
+
                     b.HasKey("KeyId");
+
+                    b.HasIndex("UserKeyIdUserKey");
 
                     b.ToTable("Key");
                 });
@@ -181,7 +186,9 @@ namespace Trustme.Migrations
             modelBuilder.Entity("Trustme.Models.UserKey", b =>
                 {
                     b.Property<int>("IdUserKey")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
@@ -237,6 +244,14 @@ namespace Trustme.Migrations
                     b.ToTable("UserUnsignedDocument");
                 });
 
+            modelBuilder.Entity("Trustme.Models.Key", b =>
+                {
+                    b.HasOne("Trustme.Models.UserKey", "UserKey")
+                        .WithMany("Keys")
+                        .HasForeignKey("UserKeyIdUserKey")
+                        .OnDelete(DeleteBehavior.ClientCascade);
+                });
+
             modelBuilder.Entity("Trustme.Models.SignedDocument", b =>
                 {
                     b.HasOne("Trustme.Models.Key", "Key")
@@ -266,12 +281,6 @@ namespace Trustme.Migrations
 
             modelBuilder.Entity("Trustme.Models.UserKey", b =>
                 {
-                    b.HasOne("Trustme.Models.Key", "Key")
-                        .WithOne("UserKey")
-                        .HasForeignKey("Trustme.Models.UserKey", "IdUserKey")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
-
                     b.HasOne("Trustme.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
