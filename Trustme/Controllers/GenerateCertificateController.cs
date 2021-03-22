@@ -72,6 +72,8 @@ namespace Trustme.Controllers
             if (_KeyRepository.CheckCertificateSameName(currentUser, certificateName))
             {
                 TempData["CertificateNameAlreadyExistError"] = "Certificate name already exists, choose another one!";
+                return RedirectToAction("GenerateCertificate");
+
             }
             string wwwPath = this.Environment.WebRootPath;
 
