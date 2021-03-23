@@ -1,9 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Trustme.IServices;
 using Trustme.Models;
-using Trustme.ViewModels;
 using Trustme.Data;
 
 namespace Trustme.Service

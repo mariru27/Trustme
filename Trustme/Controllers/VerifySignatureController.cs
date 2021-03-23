@@ -1,5 +1,4 @@
 ﻿using System;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Trustme.Models;
 using Org.BouncyCastle.Crypto;
@@ -7,7 +6,6 @@ using Microsoft.AspNetCore.Hosting;
 using Trustme.IServices;
 using Trustme.ITools;
 using Trustme.Tools.ToolsModels;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Trustme.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 

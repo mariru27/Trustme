@@ -1,13 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Trustme.Models;
 using Trustme.IServices;
 using Trustme.Data;
 using Trustme.ViewModels;
-using System.Net.Http;
-using Microsoft.Extensions.Caching.Memory;
-using Microsoft.EntityFrameworkCore;
 
 namespace Trustme.Service
 {

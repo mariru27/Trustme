@@ -11,7 +11,6 @@ using Trustme.ITools;
 using Trustme.IServices;
 using Trustme.Tools.ToolsModels;
 using Trustme.Models;
-using System.Linq;
 
 namespace Trustme.Tools
 {

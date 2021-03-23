@@ -1,10 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using System.IO;
+using Trustme.IServices;
 using Trustme.Models;
 using Trustme.ViewModels;
-using Trustme.IServices;
-using System.IO;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Authorization;
 
 namespace Trustme.Controllers
 {
@@ -39,33 +39,33 @@ namespace Trustme.Controllers
         {
             return View();
         }
-        
+
         [HttpPost]
         public IActionResult VerifyUser(string username)
         {
             //check if user exist 
-           User user = _UserRepository.GetUserbyUsername(username);
-           if(user == null)
+            User user = _UserRepository.GetUserbyUsername(username);
+            if (user == null)
             {
                 TempData["UserError"] = "User do not extist!";
                 return RedirectToAction("SendDocumentToUser");
             }
-           else
+            else
             {
                 //check if user that need to sign document have any certificates(keys)
-                if(_KeyRepository.GetNrCertificates(_UserRepository.GetUserbyUsername(username)) == 0)
+                if (_KeyRepository.GetNrCertificates(user) == 0)
                 {
                     TempData["UserDontHaveCertificates"] = "User do not have any certificate! User need to generate a certificate!";
                     return RedirectToAction("SendDocumentToUser");
                 }
-                return RedirectToAction("LoadDocumentToSign",new { username = username });
+                return RedirectToAction("LoadDocumentToSign", new { username = username });
             }
         }
         [HttpPost]
         public IActionResult LoadDocumentToSign(string Username, string CertificateName, IFormFile Document)
         {
             UserUnsignedDocument userUnsignedDocument = new UserUnsignedDocument();
-            if(Document == null)
+            if (Document == null)
             {
                 TempData["DocumentError"] = "You forgot to attach document!";
                 return RedirectToAction("LoadDocumentToSign", new { Username });

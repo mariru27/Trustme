@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Trustme.Models;
+using System.Diagnostics;
 using Trustme.IServices;
+using Trustme.Models;
 
 namespace Trustme.Controllers
 {
@@ -29,7 +24,7 @@ namespace Trustme.Controllers
 
         public IActionResult Privacy()
         {
-            
+
             return View();
         }
 
