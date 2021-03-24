@@ -62,7 +62,7 @@ namespace Trustme.Controllers
         {
             User updateUser = _UserRepository.GetUserById(id);
 
-            updateUser.Update(updateUser);
+            updateUser.Update(user);
 
             _UserRepository.EditUser(updateUser);
             return RedirectToAction("Users");
