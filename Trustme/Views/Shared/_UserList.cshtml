@@ -41,7 +41,7 @@
             </td>
             <td>
                 <a asp-action="EditUser" asp-route-id="@Model.User.UserId">Edit</a> |
-                <a asp-action="" data-toggle="modal" data-target="#exampleModal">Delete</a>
+                <a asp-action="DeleteUser" asp-route-id="@Model.User.UserId" data-toggle="modal" data-target="#exampleModal">Delete</a>
 
             </td>
         </tr>
@@ -66,12 +66,15 @@
                 </button>
             </div>
             <div class="modal-body">
-                @TempData["ModalBody"]
-                user name
+                <form asp-action="DeleteUser">
+                    <input type="hidden" id="@Model.User.UserId" />
+                    @TempData["ModalBody"]
+                    user name
+                </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                <button asp-action="DeleteUser" asp-route-id="@Model.User.UserId" type="button" class="btn btn-primary">Yes</button>
+                <button id="@Model.User.UserId" href="@Url.Action("DeleteUser", "Administrator")" type="button" class="btn btn-primary">Yes</button>
             </div>
         </div>
     </div>
