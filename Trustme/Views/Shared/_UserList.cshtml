@@ -1,5 +1,8 @@
 ﻿@model RoleUserModel
 
+@{ 
+    var userId = Model.User.UserId;
+}
 <table class="table">
     <thead>
         <tr>
@@ -41,7 +44,7 @@
             </td>
             <td>
                 <a asp-action="EditUser" asp-route-id="@Model.User.UserId">Edit</a> |
-                <a asp-action="DeleteUser" asp-route-id="@Model.User.UserId" data-toggle="modal" data-target="#exampleModal">Delete</a>
+                <a asp-action="" data-toggle="modal" data-target="#exampleModal">Delete</a>
 
             </td>
         </tr>
@@ -51,7 +54,10 @@
 
 
 
-<form method="post" asp-action="DeleteConfirmed" asp-controller="Administrator">
+<form method="get" asp-action="DeleteConfirmed">
+    <input type="hidden" name="UserId" value=@Model.User.UserId id="UserId" />
+
+
     <div id="exampleModal" class="modal" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -62,11 +68,10 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <input type="hidden" asp-for="@Model.User.UserId" />
                     User :  @Model.User.Username
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary">Yes</button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="@Model.User.UserId">No</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
                     </div>
                 </div>
             </div>
