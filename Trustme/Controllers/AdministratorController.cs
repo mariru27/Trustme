@@ -61,11 +61,8 @@ namespace Trustme.Controllers
         public IActionResult EditUser(int id, User user)
         {
             User updateUser = _UserRepository.GetUserById(id);
-            updateUser.Username = user.Username;
-            updateUser.FirstName = user.FirstName;
-            updateUser.SecondName = user.SecondName;
-            updateUser.Mail = user.Mail;
-            updateUser.RoleId = user.RoleId;
+
+            updateUser.Update(updateUser);
 
             _UserRepository.EditUser(updateUser);
             return RedirectToAction("Users");
