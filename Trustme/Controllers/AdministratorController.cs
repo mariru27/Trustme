@@ -12,7 +12,7 @@ namespace Trustme.Controllers
     /// Admin user type can delete, 
     /// edit user info
     /// </summary>
-    
+
     [Authorize(Roles = "Admin")]
     public class AdministratorController : Controller
     {
@@ -33,7 +33,7 @@ namespace Trustme.Controllers
 
             //Add in list all users and role for every user
             List<RoleUserModel> usersroles = new List<RoleUserModel>();
-            foreach(var u in users)
+            foreach (var u in users)
             {
                 RoleUserModel roleUser = new RoleUserModel
                 {
@@ -73,7 +73,7 @@ namespace Trustme.Controllers
         [HttpGet]
         public IActionResult EditUser(int? id)
         {
-            if(id == null)
+            if (id == null)
             {
                 return NotFound();
             }
@@ -96,7 +96,7 @@ namespace Trustme.Controllers
                 return NotFound();
             }
             User user = _UserRepository.GetUserById((int)id);
-            if(user == null)
+            if (user == null)
             {
                 return NotFound();
             }

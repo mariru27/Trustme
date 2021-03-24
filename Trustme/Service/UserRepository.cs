@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Trustme.Models;
-using Trustme.IServices;
 using Trustme.Data;
+using Trustme.IServices;
+using Trustme.Models;
 
 namespace Trustme.Service
 {
@@ -52,7 +52,9 @@ namespace Trustme.Service
 
         public IEnumerable<User> ListAllUsers()
         {
-            return _context.User.ToList();
+            Role roleAdmin = _context.Role.Where(a => a.RoleName == "Admin").SingleOrDefault();
+            IEnumerable<User> users = _context.User.Where(u => u.RoleId != roleAdmin.IdRole).ToList();
+            return users;
         }
 
         public IEnumerable<User> ListAllUsers(Role _Role)
@@ -61,7 +63,7 @@ namespace Trustme.Service
             List<User> UsersList = (List<User>)_context.Role.Join(_context.User,
                 role => role.IdRole,
                 user => user.RoleId,
-                (role, user) => new User()) ; 
+                (role, user) => new User());
             return UsersList;
         }
 
