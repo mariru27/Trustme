@@ -58,9 +58,9 @@ namespace Trustme.Controllers
 
 
         [HttpPost]
-        public IActionResult EditUser(User user)
+        public IActionResult EditUser(int id, User user)
         {
-            User updateUser = _UserRepository.GetUserById(user.UserId);
+            User updateUser = _UserRepository.GetUserById(id);
             updateUser.Username = user.Username;
             updateUser.FirstName = user.FirstName;
             updateUser.SecondName = user.SecondName;
