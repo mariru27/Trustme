@@ -41,5 +41,14 @@ namespace Trustme.Models
 
         public Role Role { get; set; }
 
+        public void Update(User user)
+        {
+            Username = user.Username;
+            FirstName = user.FirstName;
+            SecondName = user.SecondName;
+            Mail = user.Mail;
+            RoleId = user.RoleId;
+        }
+
     }
 }
