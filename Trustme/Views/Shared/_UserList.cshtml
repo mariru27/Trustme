@@ -1,5 +1,8 @@
 ﻿@model RoleUserModel
 
+@{
+    var userId = Model.User.UserId;
+}
 <table class="table">
     <thead>
         <tr>
@@ -41,9 +44,11 @@
             </td>
             <td>
                 <a asp-action="EditUser" asp-route-id="@Model.User.UserId">Edit</a> |
-                <a asp-action="DeleteUser" asp-route-id="@Model.User.UserId">Delete</a>
+                <a asp-action="" data-toggle="modal" data-target="#DeleteUserModal">Delete</a>
             </td>
         </tr>
-        
+
     </tbody>
 </table>
+
+<partial name="_DeleteUserModal" model="Model" />
