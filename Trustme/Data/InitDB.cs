@@ -25,7 +25,6 @@ namespace Trustme.Data
                 var roles = new Role[]
                 {
                     new Role { RoleName = "Admin"},
-                    new Role { RoleName = "User"},
                     new Role { RoleName = "Pro"},
                     new Role { RoleName = "Free"},
                 };
