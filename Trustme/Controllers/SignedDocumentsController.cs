@@ -7,7 +7,7 @@ using Trustme.ViewModels;
 
 namespace Trustme.Controllers
 {
-    [Authorize(Roles = "Pro, User, Free")]
+    [Authorize(Roles = "Pro, Free")]
 
     public class SignedDocumentsController : Controller
     {

@@ -33,7 +33,7 @@ namespace Trustme.Controllers
         public IActionResult Register()
         {
             RolesUserViewModel rolesUserViewModel = new RolesUserViewModel();
-            rolesUserViewModel.Roles = new SelectList(_RoleReporitory.ListAllRoles(), "IdRole", "RoleName");
+            rolesUserViewModel.Roles = new SelectList(_RoleReporitory.ListAllRoles().Where(a => a.RoleName != "Admin").ToList(), "IdRole", "RoleName");
             return View(rolesUserViewModel);
         }
 
