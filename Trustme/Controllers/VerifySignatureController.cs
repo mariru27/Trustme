@@ -1,17 +1,15 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
-using Trustme.Models;
 using Org.BouncyCastle.Crypto;
-using Microsoft.AspNetCore.Hosting;
+using System;
 using Trustme.IServices;
 using Trustme.ITools;
+using Trustme.Models;
 using Trustme.Tools.ToolsModels;
 using Trustme.ViewModels;
-using Microsoft.AspNetCore.Authorization;
 
 namespace Trustme.Controllers
 {
-    [Authorize(Roles = "Pro, User, Free")]
     public class VerifySignatureController : Controller
     {
         private IHostingEnvironment Environment;
@@ -77,21 +75,21 @@ namespace Trustme.Controllers
 
 
         }
-     
+
 
         [HttpPost]
         public IActionResult VerifySignatureDocument(VerifySignatureDocumentModel verifySignatureDocumentModel)
         {
 
             //validate signature
-            if(verifySignatureDocumentModel.Signature == null)
+            if (verifySignatureDocumentModel.Signature == null)
             {
                 TempData["Error_MissingSignature"] = "Signature is missing!";
                 return RedirectToAction("VerifySign", new { Username = verifySignatureDocumentModel.Username });
 
             }
             //validate document
-            if(verifySignatureDocumentModel.Document == null)
+            if (verifySignatureDocumentModel.Document == null)
             {
                 TempData["Error_MissingDocument"] = "Document is missing!";
                 return RedirectToAction("VerifySign", new { Username = verifySignatureDocumentModel.Username });
@@ -124,8 +122,8 @@ namespace Trustme.Controllers
                 TempData["Error_InvalidSignature"] = "Invalid signature!";
             else
                 TempData["ValidSignature"] = "Signature is valid!";
-           
-            return RedirectToAction("VerifySign", new { username = verifySignatureDocumentModel.Username});
+
+            return RedirectToAction("VerifySign", new { username = verifySignatureDocumentModel.Username });
         }
 
 
