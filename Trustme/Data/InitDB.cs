@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using Trustme.Models;
 using Trustme.IServices;
+using Trustme.Controllers;
 
 namespace Trustme.Data
 {
@@ -8,14 +9,17 @@ namespace Trustme.Data
     public class InitDB
     {
         private readonly IHttpRequestFunctions _HttpRequestFunctions;
-        public InitDB (IHttpRequestFunctions httpRequestFunctions)
+        private  AuthenticateController _AuthenticateController;
+        public InitDB (IHttpRequestFunctions httpRequestFunctions, AuthenticateController authenticateController)
         {
             _HttpRequestFunctions = httpRequestFunctions;
+            _AuthenticateController = authenticateController;
         }
         public static void InitDb(AppContext context)
         {
             
             context.Database.EnsureCreated();
+
 
             if (context.Key.Any() && context.User.Any() && context.Role.Any())
             {

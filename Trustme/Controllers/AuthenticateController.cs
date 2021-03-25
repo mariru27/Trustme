@@ -140,5 +140,7 @@ namespace Trustme.Controllers
             await HttpContext.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
+
+
     }
 }

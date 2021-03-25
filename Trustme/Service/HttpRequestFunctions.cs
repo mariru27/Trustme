@@ -61,5 +61,7 @@ namespace Trustme.Service
             int userId = this.GetUserId(httpContext);
             return _UserRepository.GetUserById(userId);
         }
+
+
     }
 }
