@@ -11,7 +11,6 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Trustme.Controllers
 {
-    [Authorize(Roles = "Pro, User, Free")]
     public class VerifySignatureController : Controller
     {
         private IHostingEnvironment Environment;
