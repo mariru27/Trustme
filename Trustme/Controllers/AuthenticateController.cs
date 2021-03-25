@@ -1,19 +1,19 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Trustme.ViewModels;
-using Trustme.Models;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using System.Security.Claims;
-using Microsoft.AspNetCore.Authentication;
+﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Claims;
+using System.Security.Cryptography;
+using System.Threading.Tasks;
 using Trustme.IServices;
 using Trustme.ITools;
-using System.Security.Cryptography;
+using Trustme.Models;
+using Trustme.ViewModels;
 
 namespace Trustme.Controllers
-{   
+{
     //register, login
     public class AuthenticateController : Controller
     {
@@ -91,12 +91,12 @@ namespace Trustme.Controllers
         {
             if (isloggedIn(HttpContext) == true)
                 await LogOut();
-            if(username == null)
+            if (username == null)
             {
                 TempData["UsernameRequired"] = "Username field is required!";
                 return RedirectToAction("LogIn");
             }
-            if(password == null)
+            if (password == null)
             {
                 TempData["PasswordRequired"] = "Password field is required";
                 return RedirectToAction("LogIn");
