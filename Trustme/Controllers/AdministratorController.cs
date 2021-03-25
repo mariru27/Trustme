@@ -59,7 +59,7 @@ namespace Trustme.Controllers
         [Route("{id:int}")]
         [HttpPatch]
 
-        public string test(int id, [FromForm] User user)
+        public string test(int id, [FromForm]User user)
         {
             return "gg";
         }
