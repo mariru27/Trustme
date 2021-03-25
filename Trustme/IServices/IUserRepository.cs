@@ -16,6 +16,8 @@ namespace Trustme.IServices
         public void EditUser(User _User);
 
         public User GetUserById(int idUser);
+        public bool AnyUser();
+
 
     }
 }
