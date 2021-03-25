@@ -72,5 +72,9 @@ namespace Trustme.Service
             _context.User.Update(_User);
             _context.SaveChanges();
         }
+        public bool AnyUser()
+        {
+           return _context.User.Any();
+        }
     }
 }

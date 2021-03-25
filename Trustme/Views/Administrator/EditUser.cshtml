@@ -3,8 +3,9 @@
 <br />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="EditUser">
+        <form asp-action="test" method="patch" >
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" value="@Model.User.UserId" name="id" />
             <input type="hidden" asp-for="@Model.User.UserId" />
             <div class="form-group">
                 <label asp-for="@Model.User.Username" class="control-label"></label>

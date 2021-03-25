@@ -1,4 +1,7 @@
-﻿using System.Linq;
+﻿using Microsoft.AspNetCore.Http;
+using System.Linq;
+using Trustme.Controllers;
+using Trustme.IServices;
 using Trustme.Models;
 
 namespace Trustme.Data
@@ -6,14 +9,34 @@ namespace Trustme.Data
 
     public class InitDB
     {
+        private readonly IHttpRequestFunctions _HttpRequestFunctions;
+        private AuthenticateController _AuthenticateController;
+        public InitDB(IHttpRequestFunctions httpRequestFunctions, AuthenticateController authenticateController)
+        {
+            _HttpRequestFunctions = httpRequestFunctions;
+            _AuthenticateController = authenticateController;
+        }
+
+        public void DeleteCookie(AppContext context)
+        {
+            if (context.User.Any() == false)
+            {
+                _AuthenticateController.LogoutAsync();
+
+            }
+        }
         public static void InitDb(AppContext context)
         {
+
+            
             context.Database.EnsureCreated();
+
+
             if (context.Key.Any() && context.User.Any() && context.Role.Any())
             {
                 return;
             }
-            if(context.Role.Any() == false)
+            if (context.Role.Any() == false)
             {
 
                 var roles = new Role[]
