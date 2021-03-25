@@ -1,14 +1,22 @@
 ﻿using System.Linq;
 using Trustme.Models;
+using Trustme.IServices;
 
 namespace Trustme.Data
 {
 
     public class InitDB
     {
+        private readonly IHttpRequestFunctions _HttpRequestFunctions;
+        public InitDB (IHttpRequestFunctions httpRequestFunctions)
+        {
+            _HttpRequestFunctions = httpRequestFunctions;
+        }
         public static void InitDb(AppContext context)
         {
+            
             context.Database.EnsureCreated();
+
             if (context.Key.Any() && context.User.Any() && context.Role.Any())
             {
                 return;
