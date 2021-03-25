@@ -17,14 +17,7 @@ namespace Trustme.Data
             _AuthenticateController = authenticateController;
         }
 
-        public void DeleteCookie(AppContext context)
-        {
-            if (context.User.Any() == false)
-            {
-                _AuthenticateController.LogoutAsync();
 
-            }
-        }
         public static void InitDb(AppContext context)
         {
 
