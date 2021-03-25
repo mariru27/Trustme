@@ -56,11 +56,17 @@ namespace Trustme.Controllers
             return RedirectToAction(nameof(Users));
         }
 
+        [Route("{id:int}")]
+        [HttpPatch]
 
-        [HttpPost]
-        public IActionResult EditUser(int id, User user)
+        public string test(int id)
         {
-            User updateUser = _UserRepository.GetUserById(id);
+            return "gg";
+        }
+
+        public IActionResult EditUserM(int id,[FromForm]User user)
+        {
+            User updateUser = _UserRepository.GetUserById(user.UserId);
 
             updateUser.Update(user);
 
