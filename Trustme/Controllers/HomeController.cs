@@ -21,11 +21,15 @@ namespace Trustme.Controllers
             _KeyRepository = keyRepository;
         }
 
-        public async Task<IActionResult> IndexAsync()
+        public IActionResult Index()
         {
             if(_UserRepository.AnyUser() == false)
             {
-                await HttpContext.SignOutAsync();
+                foreach (var cookie in Request.Cookies.Keys)
+                {
+                    Response.Cookies.Delete(cookie);
+                }
+                return RedirectToAction("LogIn", "Authenticate");
             }
 
             return View();
