@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using Trustme.IServices;
 using Trustme.Models;
 
@@ -17,8 +19,11 @@ namespace Trustme.Controllers
             _KeyRepository = keyRepository;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> IndexAsync()
         {
+
+            await HttpContext.SignOutAsync();
+
             return View();
         }
 

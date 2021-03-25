@@ -20,6 +20,7 @@ namespace Trustme
                 {
                     var context = services.GetRequiredService<Data.AppContext>();
                     InitDB.InitDb(context);
+                    
                 }
                 catch(Exception ex)
                 {
