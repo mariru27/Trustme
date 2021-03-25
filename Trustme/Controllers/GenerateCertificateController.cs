@@ -23,7 +23,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Trustme.Controllers
 {
-    [Authorize(Roles = "Pro, User, Free")]
+    [Authorize(Roles = "Pro, Free")]
 
     public class GenerateCertificateController : Controller
     {
