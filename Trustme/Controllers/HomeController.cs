@@ -23,8 +23,10 @@ namespace Trustme.Controllers
 
         public async Task<IActionResult> IndexAsync()
         {
-
-            await HttpContext.SignOutAsync();
+            if(_UserRepository.AnyUser() == false)
+            {
+                await HttpContext.SignOutAsync();
+            }
 
             return View();
         }
