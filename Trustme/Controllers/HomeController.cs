@@ -1,8 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using System.Threading.Tasks;
 using Trustme.IServices;
 using Trustme.Models;
 
@@ -10,20 +7,16 @@ namespace Trustme.Controllers
 {
     public class HomeController : Controller
     {
-
-        private readonly ILogger<HomeController> _logger;
-        private IKeyRepository _KeyRepository;
-        private IUserRepository _UserRepository;
-        public HomeController(ILogger<HomeController> logger, IKeyRepository keyRepository, IUserRepository userRepository)
+        private readonly IUserRepository _UserRepository;
+        public HomeController(IUserRepository userRepository)
         {
             _UserRepository = userRepository;
-            _logger = logger;
-            _KeyRepository = keyRepository;
+
         }
 
         public IActionResult Index()
         {
-            if(_UserRepository.AnyUser() == false)
+            if (_UserRepository.AnyUser() == false)
             {
                 foreach (var cookie in Request.Cookies.Keys)
                 {
