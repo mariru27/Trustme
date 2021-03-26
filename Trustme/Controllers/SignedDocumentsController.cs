@@ -20,10 +20,6 @@ namespace Trustme.Controllers
             _HttpRequestFunctions = httpRequestFunctions;
             _SignedDocumentRepository = signedDocumentRepository;
         }
-        public IActionResult SignedDocumentsHistory()
-        {
-            return View(_UnsignedDocumentRepository.ListAllSignedDocumentsByUser(_HttpRequestFunctions.GetUser(HttpContext)));
-        }
 
         [HttpGet]
         public IActionResult DeleteDocument(int id)
@@ -35,8 +31,6 @@ namespace Trustme.Controllers
 
         public IActionResult SignedDocumentsFromUsers()
         {
-
-
             //Get all users signedDocuments
             IEnumerable<SignedDocument> signedDocuments = _SignedDocumentRepository.ListAllSignedDocuments(_HttpRequestFunctions.GetUser(HttpContext));
             List<SignedDocumentsViewModel> signedDocumentsViewModels = new List<SignedDocumentsViewModel>();
