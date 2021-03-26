@@ -112,8 +112,8 @@ namespace Trustme.Controllers
                 TempData["Error_CorruptedSignature"] = "Signature was corrupted!";
                 return RedirectToAction("VerifySign", new { username = verifySignatureDocumentModel.Username });
             };
-            byte[] signaturebyte = Convert.FromBase64String(verifySignatureDocumentModel.Signature);
 
+            byte[] signaturebyte = Convert.FromBase64String(verifySignatureDocumentModel.Signature);
             if (sign.VerifySignature(signaturebyte) == false)
                 TempData["Error_InvalidSignature"] = "Invalid signature!";
             else
