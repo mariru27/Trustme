@@ -7,29 +7,31 @@ using Org.BouncyCastle.Security;
 using System;
 using System.IO;
 using System.Text;
-using Trustme.ITools;
 using Trustme.IServices;
-using Trustme.Tools.ToolsModels;
+using Trustme.ITools;
 using Trustme.Models;
+using Trustme.Tools.ToolsModels;
 
 namespace Trustme.Tools
 {
     public class Sign : ISign
     {
-        private IHostingEnvironment Environment;
-        private IKeyRepository _KeyRepository;
-        private IHttpRequestFunctions _HttpRequestFunctions;
+        [Obsolete]
+        private readonly IHostingEnvironment Environment;
+        private readonly IKeyRepository _KeyRepository;
+        private readonly IHttpRequestFunctions _HttpRequestFunctions;
         private string wwwfilePath;
-        private ICrypto _Tool;
+        private readonly ICrypto _Tool;
 
-
+        [Obsolete]
         public Sign(IHostingEnvironment hostingEnvironment, ICrypto tool, IKeyRepository keyRepository, IHttpRequestFunctions httpRequestFunctions)
         {
-            _Tool = tool;
             Environment = hostingEnvironment;
             _KeyRepository = keyRepository;
             _HttpRequestFunctions = httpRequestFunctions;
         }
+
+        [Obsolete]
         public SignModel SignDocumentTest(IFormFile pkfile, IFormFile docfile, int certificates, HttpContext httpContext)
         {
 
@@ -40,7 +42,7 @@ namespace Trustme.Tools
             wwwfilePath = Path.Combine(wwwfilePath, dirName);
 
             //create folder where to store key
-            if(!Directory.Exists(wwwfilePath))
+            if (!Directory.Exists(wwwfilePath))
                 Directory.CreateDirectory(wwwfilePath);
             var filePath = Path.Combine(wwwfilePath, pkfile.FileName);
             using (var stream = new FileStream(filePath, FileMode.Create, FileAccess.ReadWrite))
@@ -102,7 +104,7 @@ namespace Trustme.Tools
             signModel.reader = reader;
             signModel.verifytest = verifytest;
 
-            
+
 
             return signModel;
         }
