@@ -1,6 +1,4 @@
 ﻿using System.Linq;
-using Trustme.Controllers;
-using Trustme.IServices;
 using Trustme.Models;
 
 namespace Trustme.Data
@@ -21,6 +19,7 @@ namespace Trustme.Data
             }
             if (context.Role.Any() == false)
             {
+
 
                 var roles = new Role[]
                 {

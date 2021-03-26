@@ -1,7 +1,5 @@
-﻿using System;
-using System.IO;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Org.BouncyCastle.Asn1.Pkcs;
@@ -9,17 +7,19 @@ using Org.BouncyCastle.Asn1.X509;
 using Org.BouncyCastle.Crypto;
 using Org.BouncyCastle.Crypto.Generators;
 using Org.BouncyCastle.Math;
+using Org.BouncyCastle.OpenSsl;
 using Org.BouncyCastle.Pkcs;
 using Org.BouncyCastle.Security;
 using Org.BouncyCastle.X509;
-using Trustme.Models;
+using System;
+using System.IO;
 using System.IO.Compression;
-using Microsoft.AspNetCore.Hosting;
-using Org.BouncyCastle.OpenSsl;
+using System.Text;
+using System.Threading.Tasks;
 using Trustme.IServices;
-using Trustme.ViewModels;
 using Trustme.ITools;
-using Microsoft.AspNetCore.Authorization;
+using Trustme.Models;
+using Trustme.ViewModels;
 
 namespace Trustme.Controllers
 {
