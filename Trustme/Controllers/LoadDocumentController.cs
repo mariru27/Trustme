@@ -11,10 +11,10 @@ namespace Trustme.Controllers
     [Authorize(Roles = "Pro, Free")]
     public class LoadDocumentController : Controller
     {
-        private IUserRepository _UserRepository;
-        private IUnsignedDocumentRepository _UnsignedDocumentRepository;
-        private IHttpRequestFunctions _HttpRequestFunctions;
-        private IKeyRepository _KeyRepository;
+        private readonly IUserRepository _UserRepository;
+        private readonly IUnsignedDocumentRepository _UnsignedDocumentRepository;
+        private readonly IHttpRequestFunctions _HttpRequestFunctions;
+        private readonly IKeyRepository _KeyRepository;
 
         public LoadDocumentController(IKeyRepository keyRepository, IUserRepository userRepository, IUnsignedDocumentRepository unsignedDocumentRepository, IHttpRequestFunctions httpRequestFunctions)
         {

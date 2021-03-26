@@ -17,9 +17,9 @@ namespace Trustme.Controllers
     //register, login
     public class AuthenticateController : Controller
     {
-        readonly private IRoleRepository _RoleReporitory;
-        readonly private IUserRepository _UserRepository;
-        readonly private ITool _Tool;
+        private readonly IRoleRepository _RoleReporitory;
+        private readonly IUserRepository _UserRepository;
+        private readonly ITool _Tool;
         public AuthenticateController(IRoleRepository roleRepository, IUserRepository userRepository, ITool tool)
         {
             _UserRepository = userRepository;

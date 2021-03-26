@@ -26,13 +26,13 @@ namespace Trustme.Controllers
 
     public class GenerateCertificateController : Controller
     {
-        readonly private string SignatureAlgorithm = "sha1WithRSA";
+        private readonly string SignatureAlgorithm = "sha1WithRSA";
         [Obsolete]
-        readonly private IHostingEnvironment Environment;
-        readonly private IHttpRequestFunctions _HttpRequestFunctions;
-        readonly private IKeyRepository _KeyRepository;
-        readonly private int UserMaximNumberOfCertificates = 3;
-        readonly private ITool _Tool;
+        private readonly IHostingEnvironment Environment;
+        private readonly IHttpRequestFunctions _HttpRequestFunctions;
+        private readonly IKeyRepository _KeyRepository;
+        private readonly int UserMaximNumberOfCertificates = 3;
+        private readonly ITool _Tool;
 
         [Obsolete]
         public GenerateCertificateController(ITool tool, IHostingEnvironment _environment, IHttpRequestFunctions httpRequestFunctions, IKeyRepository keyRepository)
