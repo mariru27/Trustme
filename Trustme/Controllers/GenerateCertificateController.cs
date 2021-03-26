@@ -172,7 +172,7 @@ namespace Trustme.Controllers
             return result;
         }
 
-        public IActionResult GenerateCertificate()
+        public IActionResult Generate()
         {
 
             return View();
