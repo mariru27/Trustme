@@ -42,15 +42,6 @@ namespace Trustme.Controllers
             _KeyRepository = keyRepository;
             _Tool = tool;
         }
-        public IActionResult Index()
-        {
-            return View();
-        }
-
-        public IActionResult ErrorNrCertificates()
-        {
-            return View();
-        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
