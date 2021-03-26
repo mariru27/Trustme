@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Trustme.IServices;
-using Trustme.ViewModels;
-using Trustme.Models;
 using Microsoft.EntityFrameworkCore;
+using Trustme.IServices;
+using Trustme.Models;
+using Trustme.ViewModels;
 
 namespace Trustme.Controllers
 {
@@ -11,32 +11,26 @@ namespace Trustme.Controllers
 
     public class ProfileController : Controller
     {
-        private IHttpRequestFunctions _HttpRequestFunctions;
-        private IUserRepository _UserRepository;
-        private IKeyRepository _KeyRepository;
-        private IRoleRepository _RoleRepository;
+        private readonly IHttpRequestFunctions _HttpRequestFunctions;
+        private readonly IUserRepository _UserRepository;
+        private readonly IKeyRepository _KeyRepository;
+        private readonly IRoleRepository _RoleRepository;
         public ProfileController(IHttpRequestFunctions httpRequestFunctions, IKeyRepository keyRepository, IUserRepository userRepository, IRoleRepository roleRepository)
         {
             _HttpRequestFunctions = httpRequestFunctions;
             _KeyRepository = keyRepository;
             _UserRepository = userRepository;
             _RoleRepository = roleRepository;
-            
-        }
-        public IActionResult Index()
-        {
-            return View();
-        }
 
-
-        public IActionResult Profile()
+        }
+        public IActionResult UserProfile()
         {
             string username = _HttpRequestFunctions.GetUsername(HttpContext);
             UserKeysRoleModel userKeysRoleModel = new UserKeysRoleModel
             {
                 User = _UserRepository.GetUserbyUsername(username),
                 Keys = _KeyRepository.ListAllKeys(_UserRepository.GetUserbyUsername(username)),
-                Role = _RoleRepository.GetUserRole(_UserRepository.GetUserbyUsername(username)) 
+                Role = _RoleRepository.GetUserRole(_UserRepository.GetUserbyUsername(username))
             };
             return View(userKeysRoleModel);
         }
@@ -68,7 +62,7 @@ namespace Trustme.Controllers
             };
 
             _KeyRepository.DeleteKey(userKeyModel);
-            return RedirectToAction(nameof(Profile));
+            return RedirectToAction(nameof(UserProfile));
         }
 
         [HttpPost]
@@ -99,12 +93,9 @@ namespace Trustme.Controllers
                     {
                         return NotFound();
                     }
-                    else
-                    {
-                        throw;
-                    }
+
                 }
-                return RedirectToAction(nameof(Profile));
+                return RedirectToAction(nameof(UserProfile));
             }
             return View(key);
         }
@@ -115,7 +106,7 @@ namespace Trustme.Controllers
             {
                 return NotFound();
             }
-            Key key = _KeyRepository.GetKey(_HttpRequestFunctions.GetUserId(HttpContext),(int) id);
+            Key key = _KeyRepository.GetKey(_HttpRequestFunctions.GetUserId(HttpContext), (int)id);
             if (key == null)
             {
                 return NotFound();

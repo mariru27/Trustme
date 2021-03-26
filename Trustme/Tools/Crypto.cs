@@ -6,7 +6,7 @@ using Trustme.ITools;
 
 namespace Trustme.Tools
 {
-    public class Tool : ITool
+    public class Crypto : ICrypto
     {
         private static Random random = new Random();
 

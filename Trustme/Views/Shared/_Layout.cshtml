@@ -175,7 +175,13 @@
                                     <li class="nav-item">
                                         <a class="nav-link text-dark" asp-area="" asp-controller="LoadDocument" asp-action="SendDocumentToUser">Upload</a>
                                     </li>
-                                    if (_KeyRepository.GetNrCertificates(_IHttpRequestFunctions.GetUser(HttpContextAccessor.HttpContext)) != 0)
+                                    if (_KeyRepository.GetNrCertificates(_IHttpRequestFunctions.GetUser(HttpContextAccessor.HttpContext)) == 0)
+                                    {
+                                        <li class="nav-item">
+                                            <a class="nav-link text-dark" asp-area="" asp-controller="LoadDocument" asp-action="SendDocumentToUser">Documents</a>
+                                        </li>
+                                    }
+                                    else
                                     {
                                         <li class="nav-item">
                                             <a class="nav-link text-dark" asp-area="" asp-controller="SignDocuments" asp-action="UnsignedDocuments">Documents</a>
@@ -183,7 +189,7 @@
                                     }
 
                                     <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-controller="GenerateCertificate" asp-action="GenerateCertificate">Generate Certificate</a>
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="GenerateCertificate" asp-action="Generate">Generate Certificate</a>
                                     </li>
 
                                 }
@@ -193,7 +199,7 @@
                                 if (username != null)
                                 {
                                     <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-controller="Profile" asp-action="Profile">Profile</a>
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="Profile" asp-action="UserProfile">Profile</a>
                                     </li>
                                 }
                                 else

@@ -11,23 +11,17 @@ namespace Trustme.Controllers
 
     public class SignedDocumentsController : Controller
     {
-        private IUnsignedDocumentRepository _UnsignedDocumentRepository;
-        private IHttpRequestFunctions _HttpRequestFunctions;
-        private ISignedDocumentRepository _SignedDocumentRepository;
+        private readonly IUnsignedDocumentRepository _UnsignedDocumentRepository;
+        private readonly IHttpRequestFunctions _HttpRequestFunctions;
+        private readonly ISignedDocumentRepository _SignedDocumentRepository;
         public SignedDocumentsController(ISignedDocumentRepository signedDocumentRepository, IUnsignedDocumentRepository unsignedDocumentRepository, IHttpRequestFunctions httpRequestFunctions)
         {
             _UnsignedDocumentRepository = unsignedDocumentRepository;
             _HttpRequestFunctions = httpRequestFunctions;
             _SignedDocumentRepository = signedDocumentRepository;
         }
-        public IActionResult SignedDocumentsHistory()
-        {
-            IEnumerable<UnsignedDocument> signedDocuments = _UnsignedDocumentRepository.ListAllSignedDocumentsByUser(_HttpRequestFunctions.GetUser(HttpContext));
-            return View(signedDocuments);
-        }
 
         [HttpGet]
-
         public IActionResult DeleteDocument(int id)
         {
             _SignedDocumentRepository.DeleteSignedDocument(id);
@@ -37,16 +31,12 @@ namespace Trustme.Controllers
 
         public IActionResult SignedDocumentsFromUsers()
         {
-
-
-            User currentUser = _HttpRequestFunctions.GetUser(HttpContext);
-
             //Get all users signedDocuments
-            IEnumerable<SignedDocument> signedDocuments = _SignedDocumentRepository.ListAllSignedDocuments(currentUser);
+            IEnumerable<SignedDocument> signedDocuments = _SignedDocumentRepository.ListAllSignedDocuments(_HttpRequestFunctions.GetUser(HttpContext));
             List<SignedDocumentsViewModel> signedDocumentsViewModels = new List<SignedDocumentsViewModel>();
 
             //Cast SignedDocument to SignedDocumentsViewModel
-            foreach(var doc in signedDocuments)
+            foreach (var doc in signedDocuments)
             {
                 SignedDocumentsViewModel signedDocumentsViewModel = new SignedDocumentsViewModel(doc);
                 signedDocumentsViewModels.Add(signedDocumentsViewModel);

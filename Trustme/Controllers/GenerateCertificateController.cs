@@ -1,7 +1,5 @@
-﻿using System;
-using System.IO;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Org.BouncyCastle.Asn1.Pkcs;
@@ -9,17 +7,18 @@ using Org.BouncyCastle.Asn1.X509;
 using Org.BouncyCastle.Crypto;
 using Org.BouncyCastle.Crypto.Generators;
 using Org.BouncyCastle.Math;
+using Org.BouncyCastle.OpenSsl;
 using Org.BouncyCastle.Pkcs;
 using Org.BouncyCastle.Security;
 using Org.BouncyCastle.X509;
-using Trustme.Models;
+using System;
+using System.IO;
 using System.IO.Compression;
-using Microsoft.AspNetCore.Hosting;
-using Org.BouncyCastle.OpenSsl;
+using System.Text;
 using Trustme.IServices;
-using Trustme.ViewModels;
 using Trustme.ITools;
-using Microsoft.AspNetCore.Authorization;
+using Trustme.Models;
+using Trustme.ViewModels;
 
 namespace Trustme.Controllers
 {
@@ -27,34 +26,27 @@ namespace Trustme.Controllers
 
     public class GenerateCertificateController : Controller
     {
-        private const string SignatureAlgorithm = "sha1WithRSA";
-        private IHostingEnvironment Environment;
-        private IHttpRequestFunctions _HttpRequestFunctions;
-        private IKeyRepository _KeyRepository;
-        private ICertificate _Certificate;
-        private const int UserMaximNumberOfCertificates = 3;
-        private ITool _Tool;
-        public GenerateCertificateController(ICertificate certificate, ITool tool, IHostingEnvironment _environment, IHttpRequestFunctions httpRequestFunctions, IKeyRepository keyRepository)
+        private readonly string SignatureAlgorithm = "sha1WithRSA";
+        [Obsolete]
+        private readonly IHostingEnvironment Environment;
+        private readonly IHttpRequestFunctions _HttpRequestFunctions;
+        private readonly IKeyRepository _KeyRepository;
+        private readonly int UserMaximNumberOfCertificates = 3;
+        private readonly ICrypto _Tool;
+
+        [Obsolete]
+        public GenerateCertificateController(ICrypto tool, IHostingEnvironment _environment, IHttpRequestFunctions httpRequestFunctions, IKeyRepository keyRepository)
         {
             _HttpRequestFunctions = httpRequestFunctions;
             Environment = _environment;
             _KeyRepository = keyRepository;
-            _Certificate = certificate;
             _Tool = tool;
-        }
-        public IActionResult Index()
-        {
-            return View();
-        }
-
-        public IActionResult ErrorNrCertificates()
-        {
-            return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> GenerateCertificate(string certificateName, string description, int keySize)
+        [Obsolete]
+        public IActionResult GenerateCertificate(string certificateName, string description, int keySize)
         {
             User currentUser = _HttpRequestFunctions.GetUser(HttpContext);
 
@@ -177,14 +169,10 @@ namespace Trustme.Controllers
             System.IO.File.Delete(pathDirectoryZip);
 
             result.FileDownloadName = certificateName + ".zip";
-
-
             return result;
-
         }
 
-
-        public IActionResult GenerateCertificate()
+        public IActionResult Generate()
         {
 
             return View();

@@ -17,23 +17,22 @@ namespace Trustme.Controllers
     //register, login
     public class AuthenticateController : Controller
     {
-        //private readonly AppContext _context;
-        private IKeyRepository _KeyRepository;
-        private IRoleRepository _RoleReporitory;
-        private IUserRepository _UserRepository;
-        private ITool _Tool;
-        public AuthenticateController(IKeyRepository keyRepository, IRoleRepository roleRepository, IUserRepository userRepository, ITool tool)
+        private readonly IRoleRepository _RoleReporitory;
+        private readonly IUserRepository _UserRepository;
+        private readonly ICrypto _Tool;
+        public AuthenticateController(IRoleRepository roleRepository, IUserRepository userRepository, ICrypto tool)
         {
             _UserRepository = userRepository;
-            _KeyRepository = keyRepository;
             _RoleReporitory = roleRepository;
             _Tool = tool;
         }
 
         public IActionResult Register()
         {
-            RolesUserViewModel rolesUserViewModel = new RolesUserViewModel();
-            rolesUserViewModel.Roles = new SelectList(_RoleReporitory.ListAllRoles().Where(a => a.RoleName != "Admin").ToList(), "IdRole", "RoleName");
+            RolesUserViewModel rolesUserViewModel = new RolesUserViewModel
+            {
+                Roles = new SelectList(_RoleReporitory.ListAllRoles().Where(a => a.RoleName != "Admin").ToList(), "IdRole", "RoleName")
+            };
             return View(rolesUserViewModel);
         }
 
@@ -46,9 +45,11 @@ namespace Trustme.Controllers
             User usedUser = _UserRepository.GetUserbyUsername(user.Username);
             User usedMailUser = _UserRepository.GetUserbyMail(user.Mail);
 
-            RolesUserViewModel userResult = new RolesUserViewModel();
-            userResult.User = user;
-            userResult.Roles = new SelectList(_RoleReporitory.ListAllRoles(), "IdRole", "RoleName");
+            RolesUserViewModel userResult = new RolesUserViewModel
+            {
+                User = user,
+                Roles = new SelectList(_RoleReporitory.ListAllRoles(), "IdRole", "RoleName")
+            };
 
             if (usedUser != null || usedMailUser != null)
             {

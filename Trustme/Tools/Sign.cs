@@ -7,40 +7,43 @@ using Org.BouncyCastle.Security;
 using System;
 using System.IO;
 using System.Text;
-using Trustme.ITools;
 using Trustme.IServices;
-using Trustme.Tools.ToolsModels;
+using Trustme.ITools;
 using Trustme.Models;
+using Trustme.Tools.ToolsModels;
 
 namespace Trustme.Tools
 {
     public class Sign : ISign
     {
-        private IHostingEnvironment Environment;
-        private IKeyRepository _KeyRepository;
-        private IHttpRequestFunctions _HttpRequestFunctions;
+        [Obsolete]
+        private readonly IHostingEnvironment Environment;
+        private readonly IKeyRepository _KeyRepository;
+        private readonly IHttpRequestFunctions _HttpRequestFunctions;
         private string wwwfilePath;
-        private ITool _Tool;
+        private readonly ICrypto _Crypto;
 
-
-        public Sign(IHostingEnvironment hostingEnvironment, ITool tool, IKeyRepository keyRepository, IHttpRequestFunctions httpRequestFunctions)
+        [Obsolete]
+        public Sign(IHostingEnvironment hostingEnvironment, ICrypto crypto, IKeyRepository keyRepository, IHttpRequestFunctions httpRequestFunctions)
         {
-            _Tool = tool;
             Environment = hostingEnvironment;
             _KeyRepository = keyRepository;
             _HttpRequestFunctions = httpRequestFunctions;
+            _Crypto = crypto;
         }
+
+        [Obsolete]
         public SignModel SignDocumentTest(IFormFile pkfile, IFormFile docfile, int certificates, HttpContext httpContext)
         {
 
             SignModel signModel = new SignModel();
             signModel.validKey = true;
             wwwfilePath = this.Environment.WebRootPath; //we are using Temp file name just for the example. Add your own file path.c
-            string dirName = "DirForPK_" + _Tool.RandomString(6);
+            string dirName = "DirForPK_" + _Crypto.RandomString(6);
             wwwfilePath = Path.Combine(wwwfilePath, dirName);
 
             //create folder where to store key
-            if(!Directory.Exists(wwwfilePath))
+            if (!Directory.Exists(wwwfilePath))
                 Directory.CreateDirectory(wwwfilePath);
             var filePath = Path.Combine(wwwfilePath, pkfile.FileName);
             using (var stream = new FileStream(filePath, FileMode.Create, FileAccess.ReadWrite))
@@ -102,7 +105,7 @@ namespace Trustme.Tools
             signModel.reader = reader;
             signModel.verifytest = verifytest;
 
-            
+
 
             return signModel;
         }

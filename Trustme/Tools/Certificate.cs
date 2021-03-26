@@ -1,6 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Text;
+﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Org.BouncyCastle.Asn1.Pkcs;
@@ -8,29 +6,34 @@ using Org.BouncyCastle.Asn1.X509;
 using Org.BouncyCastle.Crypto;
 using Org.BouncyCastle.Crypto.Generators;
 using Org.BouncyCastle.Math;
+using Org.BouncyCastle.OpenSsl;
 using Org.BouncyCastle.Pkcs;
 using Org.BouncyCastle.Security;
 using Org.BouncyCastle.X509;
-using Trustme.Models;
+using System;
+using System.IO;
 using System.IO.Compression;
-using Microsoft.AspNetCore.Hosting;
-using Org.BouncyCastle.OpenSsl;
+using System.Text;
 using Trustme.IServices;
-using Trustme.ViewModels;
 using Trustme.ITools;
+using Trustme.Models;
 using Trustme.Tools.ToolsModels;
+using Trustme.ViewModels;
 
 namespace Trustme.Tools
 {
     public class Certificate : ICertificate
     {
         private const string SignatureAlgorithm = "sha1WithRSA";
-        private IHttpRequestFunctions _HttpRequestFunctions;
-        private IKeyRepository _KeyRepository;
-        private IHostingEnvironment Environment;
+        private readonly IHttpRequestFunctions _HttpRequestFunctions;
+        private readonly IKeyRepository _KeyRepository;
+        [Obsolete]
+        private readonly IHostingEnvironment Environment;
 
-        public Certificate(IKeyRepository keyRepository, IHostingEnvironment environment)
+        [Obsolete]
+        public Certificate(IKeyRepository keyRepository, IHostingEnvironment environment, IHttpRequestFunctions httpRequestFunctions)
         {
+            _HttpRequestFunctions = httpRequestFunctions;
             _KeyRepository = keyRepository;
             Environment = environment;
 
@@ -61,6 +64,7 @@ namespace Trustme.Tools
 
         }
 
+        [Obsolete]
         public FileContentResult CreateCertificateFileAndPrivateKeyFile(KeyPairCertificateGeneratorModel keyPairCertificateGeneratorModel, string certificateName, HttpContext httpContext)
         {
             string wwwPath = this.Environment.WebRootPath;
@@ -106,7 +110,7 @@ namespace Trustme.Tools
             ZipFile.CreateFromDirectory(pathDir, pathDirectoryZip, System.IO.Compression.CompressionLevel.Optimal, false);
 
             const string contentType = "application/zip";
-            
+
             httpContext.Response.ContentType = contentType;
             var result = new FileContentResult(System.IO.File.ReadAllBytes(pathDirectoryZip), contentType);
 
@@ -123,6 +127,7 @@ namespace Trustme.Tools
             return result;
         }
 
+        [Obsolete]
         public KeyPairCertificateGeneratorModel GenereateCertificate(int keySize)
         {
             // Keypair Generator
@@ -146,20 +151,20 @@ namespace Trustme.Tools
                 CertificateGenerator = cGenerator,
                 KeyPair = kp
             };
-        
+
             return keyPairCertificateGeneratorModel;
         }
 
-
+        [Obsolete]
         public FileContentResult DoAllGenereateSaveInDBCreateCertificateAndPKFile(User currentUser, Key key, HttpContext httpContext)
         {
-            
-            KeyPairCertificateGeneratorModel keyPairCertificateGeneratorModel = new KeyPairCertificateGeneratorModel();
-            keyPairCertificateGeneratorModel = GenereateCertificate(key.KeySize);
+
+            KeyPairCertificateGeneratorModel keyPairCertificateGeneratorModel = GenereateCertificate(key.KeySize);
             CrateAndStoreKeyUserInDB(currentUser, keyPairCertificateGeneratorModel, key);
             return CreateCertificateFileAndPrivateKeyFile(keyPairCertificateGeneratorModel, key.CertificateName, httpContext);
         }
 
+        [Obsolete]
         public FileContentResult GenerateCertificatePivateKey(string certificateName, string description, int keySize, HttpContext httpContext)
         {
             User currentUser = _HttpRequestFunctions.GetUser(httpContext);
