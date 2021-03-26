@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Trustme.IServices;
-using Trustme.ViewModels;
-using Trustme.Models;
 using Microsoft.EntityFrameworkCore;
+using Trustme.IServices;
+using Trustme.Models;
+using Trustme.ViewModels;
 
 namespace Trustme.Controllers
 {
@@ -21,7 +21,7 @@ namespace Trustme.Controllers
             _KeyRepository = keyRepository;
             _UserRepository = userRepository;
             _RoleRepository = roleRepository;
-            
+
         }
         public IActionResult Index()
         {
@@ -36,7 +36,7 @@ namespace Trustme.Controllers
             {
                 User = _UserRepository.GetUserbyUsername(username),
                 Keys = _KeyRepository.ListAllKeys(_UserRepository.GetUserbyUsername(username)),
-                Role = _RoleRepository.GetUserRole(_UserRepository.GetUserbyUsername(username)) 
+                Role = _RoleRepository.GetUserRole(_UserRepository.GetUserbyUsername(username))
             };
             return View(userKeysRoleModel);
         }
@@ -99,10 +99,7 @@ namespace Trustme.Controllers
                     {
                         return NotFound();
                     }
-                    else
-                    {
-                        throw;
-                    }
+
                 }
                 return RedirectToAction(nameof(Profile));
             }
@@ -115,7 +112,7 @@ namespace Trustme.Controllers
             {
                 return NotFound();
             }
-            Key key = _KeyRepository.GetKey(_HttpRequestFunctions.GetUserId(HttpContext),(int) id);
+            Key key = _KeyRepository.GetKey(_HttpRequestFunctions.GetUserId(HttpContext), (int)id);
             if (key == null)
             {
                 return NotFound();
