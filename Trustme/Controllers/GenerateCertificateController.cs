@@ -15,7 +15,6 @@ using System;
 using System.IO;
 using System.IO.Compression;
 using System.Text;
-using System.Threading.Tasks;
 using Trustme.IServices;
 using Trustme.ITools;
 using Trustme.Models;
@@ -27,19 +26,20 @@ namespace Trustme.Controllers
 
     public class GenerateCertificateController : Controller
     {
-        private const string SignatureAlgorithm = "sha1WithRSA";
-        private IHostingEnvironment Environment;
-        private IHttpRequestFunctions _HttpRequestFunctions;
-        private IKeyRepository _KeyRepository;
-        private ICertificate _Certificate;
-        private const int UserMaximNumberOfCertificates = 3;
-        private ITool _Tool;
-        public GenerateCertificateController(ICertificate certificate, ITool tool, IHostingEnvironment _environment, IHttpRequestFunctions httpRequestFunctions, IKeyRepository keyRepository)
+        readonly private string SignatureAlgorithm = "sha1WithRSA";
+        [Obsolete]
+        readonly private IHostingEnvironment Environment;
+        readonly private IHttpRequestFunctions _HttpRequestFunctions;
+        readonly private IKeyRepository _KeyRepository;
+        readonly private int UserMaximNumberOfCertificates = 3;
+        readonly private ITool _Tool;
+
+        [Obsolete]
+        public GenerateCertificateController(ITool tool, IHostingEnvironment _environment, IHttpRequestFunctions httpRequestFunctions, IKeyRepository keyRepository)
         {
             _HttpRequestFunctions = httpRequestFunctions;
             Environment = _environment;
             _KeyRepository = keyRepository;
-            _Certificate = certificate;
             _Tool = tool;
         }
         public IActionResult Index()
@@ -54,7 +54,8 @@ namespace Trustme.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> GenerateCertificate(string certificateName, string description, int keySize)
+        [Obsolete]
+        public IActionResult GenerateCertificate(string certificateName, string description, int keySize)
         {
             User currentUser = _HttpRequestFunctions.GetUser(HttpContext);
 
@@ -177,12 +178,8 @@ namespace Trustme.Controllers
             System.IO.File.Delete(pathDirectoryZip);
 
             result.FileDownloadName = certificateName + ".zip";
-
-
             return result;
-
         }
-
 
         public IActionResult GenerateCertificate()
         {
