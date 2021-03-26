@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Org.BouncyCastle.Crypto;
 using System;
 using Trustme.IServices;
@@ -12,15 +11,13 @@ namespace Trustme.Controllers
 {
     public class VerifySignatureController : Controller
     {
-        private IHostingEnvironment Environment;
-        private IKeyRepository _KeyRepository;
-        private IUserRepository _UserRepository;
-        private ISign _Sign;
-        public VerifySignatureController(IHostingEnvironment _environment, IKeyRepository keyRepository, IUserRepository userRepository, ISign sign)
+        private readonly IKeyRepository _KeyRepository;
+        private readonly IUserRepository _UserRepository;
+        private readonly ISign _Sign;
+        public VerifySignatureController(IKeyRepository keyRepository, IUserRepository userRepository, ISign sign)
         {
             _UserRepository = userRepository;
             _KeyRepository = keyRepository;
-            Environment = _environment;
             _Sign = sign;
         }
         public IActionResult VerifyUser()
@@ -105,13 +102,12 @@ namespace Trustme.Controllers
 
             //verify signature
             ISigner sign = _Sign.VerifySignature(verifySignatureModel);
-
             try
             {
                 Convert.FromBase64String(verifySignatureDocumentModel.Signature);
 
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 TempData["Error_CorruptedSignature"] = "Signature was corrupted!";
                 return RedirectToAction("VerifySign", new { username = verifySignatureDocumentModel.Username });
