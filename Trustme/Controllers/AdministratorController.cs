@@ -16,8 +16,8 @@ namespace Trustme.Controllers
     [Authorize(Roles = "Admin")]
     public class AdministratorController : Controller
     {
-        private IUserRepository _UserRepository;
-        private IRoleRepository _RoleRepository;
+        readonly private IUserRepository _UserRepository;
+        readonly private IRoleRepository _RoleRepository;
         public AdministratorController(IUserRepository userRepository, IRoleRepository roleRepository)
         {
             _RoleRepository = roleRepository;
