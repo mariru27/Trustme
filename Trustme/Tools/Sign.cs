@@ -21,14 +21,15 @@ namespace Trustme.Tools
         private readonly IKeyRepository _KeyRepository;
         private readonly IHttpRequestFunctions _HttpRequestFunctions;
         private string wwwfilePath;
-        private readonly ICrypto _Tool;
+        private readonly ICrypto _Crypto;
 
         [Obsolete]
-        public Sign(IHostingEnvironment hostingEnvironment, ICrypto tool, IKeyRepository keyRepository, IHttpRequestFunctions httpRequestFunctions)
+        public Sign(IHostingEnvironment hostingEnvironment, ICrypto crypto, IKeyRepository keyRepository, IHttpRequestFunctions httpRequestFunctions)
         {
             Environment = hostingEnvironment;
             _KeyRepository = keyRepository;
             _HttpRequestFunctions = httpRequestFunctions;
+            _Crypto = crypto;
         }
 
         [Obsolete]
@@ -38,7 +39,7 @@ namespace Trustme.Tools
             SignModel signModel = new SignModel();
             signModel.validKey = true;
             wwwfilePath = this.Environment.WebRootPath; //we are using Temp file name just for the example. Add your own file path.c
-            string dirName = "DirForPK_" + _Tool.RandomString(6);
+            string dirName = "DirForPK_" + _Crypto.RandomString(6);
             wwwfilePath = Path.Combine(wwwfilePath, dirName);
 
             //create folder where to store key
