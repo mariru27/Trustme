@@ -11,10 +11,10 @@ namespace Trustme.Controllers
 
     public class ProfileController : Controller
     {
-        private IHttpRequestFunctions _HttpRequestFunctions;
-        private IUserRepository _UserRepository;
-        private IKeyRepository _KeyRepository;
-        private IRoleRepository _RoleRepository;
+        private readonly IHttpRequestFunctions _HttpRequestFunctions;
+        private readonly IUserRepository _UserRepository;
+        private readonly IKeyRepository _KeyRepository;
+        private readonly IRoleRepository _RoleRepository;
         public ProfileController(IHttpRequestFunctions httpRequestFunctions, IKeyRepository keyRepository, IUserRepository userRepository, IRoleRepository roleRepository)
         {
             _HttpRequestFunctions = httpRequestFunctions;
@@ -23,12 +23,6 @@ namespace Trustme.Controllers
             _RoleRepository = roleRepository;
 
         }
-        public IActionResult Index()
-        {
-            return View();
-        }
-
-
         public IActionResult Profile()
         {
             string username = _HttpRequestFunctions.GetUsername(HttpContext);
