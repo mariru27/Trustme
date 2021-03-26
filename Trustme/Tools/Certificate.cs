@@ -25,12 +25,15 @@ namespace Trustme.Tools
     public class Certificate : ICertificate
     {
         private const string SignatureAlgorithm = "sha1WithRSA";
-        private IHttpRequestFunctions _HttpRequestFunctions;
-        private IKeyRepository _KeyRepository;
-        private IHostingEnvironment Environment;
+        private readonly IHttpRequestFunctions _HttpRequestFunctions;
+        private readonly IKeyRepository _KeyRepository;
+        [Obsolete]
+        private readonly IHostingEnvironment Environment;
 
-        public Certificate(IKeyRepository keyRepository, IHostingEnvironment environment)
+        [Obsolete]
+        public Certificate(IKeyRepository keyRepository, IHostingEnvironment environment, IHttpRequestFunctions httpRequestFunctions)
         {
+            _HttpRequestFunctions = httpRequestFunctions;
             _KeyRepository = keyRepository;
             Environment = environment;
 
@@ -61,6 +64,7 @@ namespace Trustme.Tools
 
         }
 
+        [Obsolete]
         public FileContentResult CreateCertificateFileAndPrivateKeyFile(KeyPairCertificateGeneratorModel keyPairCertificateGeneratorModel, string certificateName, HttpContext httpContext)
         {
             string wwwPath = this.Environment.WebRootPath;
@@ -123,6 +127,7 @@ namespace Trustme.Tools
             return result;
         }
 
+        [Obsolete]
         public KeyPairCertificateGeneratorModel GenereateCertificate(int keySize)
         {
             // Keypair Generator
@@ -150,16 +155,16 @@ namespace Trustme.Tools
             return keyPairCertificateGeneratorModel;
         }
 
-
+        [Obsolete]
         public FileContentResult DoAllGenereateSaveInDBCreateCertificateAndPKFile(User currentUser, Key key, HttpContext httpContext)
         {
 
-            KeyPairCertificateGeneratorModel keyPairCertificateGeneratorModel = new KeyPairCertificateGeneratorModel();
-            keyPairCertificateGeneratorModel = GenereateCertificate(key.KeySize);
+            KeyPairCertificateGeneratorModel keyPairCertificateGeneratorModel = GenereateCertificate(key.KeySize);
             CrateAndStoreKeyUserInDB(currentUser, keyPairCertificateGeneratorModel, key);
             return CreateCertificateFileAndPrivateKeyFile(keyPairCertificateGeneratorModel, key.CertificateName, httpContext);
         }
 
+        [Obsolete]
         public FileContentResult GenerateCertificatePivateKey(string certificateName, string description, int keySize, HttpContext httpContext)
         {
             User currentUser = _HttpRequestFunctions.GetUser(httpContext);

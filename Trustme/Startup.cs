@@ -41,7 +41,7 @@ namespace Trustme
             services.AddTransient<ICertificate, Certificate>();
             services.AddTransient<ISignedDocumentRepository, SignedDocumentRepository>();
             services.AddTransient<ISign, Sign>();
-            services.AddSingleton<ICrypto, Tool>();
+            services.AddSingleton<ICrypto, Crypto>();
 
             services.AddMvc().AddControllersAsServices();
 

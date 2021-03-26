@@ -32,10 +32,10 @@ namespace Trustme.Controllers
         private readonly IHttpRequestFunctions _HttpRequestFunctions;
         private readonly IKeyRepository _KeyRepository;
         private readonly int UserMaximNumberOfCertificates = 3;
-        private readonly ITool _Tool;
+        private readonly ICrypto _Tool;
 
         [Obsolete]
-        public GenerateCertificateController(ITool tool, IHostingEnvironment _environment, IHttpRequestFunctions httpRequestFunctions, IKeyRepository keyRepository)
+        public GenerateCertificateController(ICrypto tool, IHostingEnvironment _environment, IHttpRequestFunctions httpRequestFunctions, IKeyRepository keyRepository)
         {
             _HttpRequestFunctions = httpRequestFunctions;
             Environment = _environment;
