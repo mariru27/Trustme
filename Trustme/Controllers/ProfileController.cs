@@ -23,7 +23,7 @@ namespace Trustme.Controllers
             _RoleRepository = roleRepository;
 
         }
-        public IActionResult Profile()
+        public IActionResult UserProfile()
         {
             string username = _HttpRequestFunctions.GetUsername(HttpContext);
             UserKeysRoleModel userKeysRoleModel = new UserKeysRoleModel
@@ -62,7 +62,7 @@ namespace Trustme.Controllers
             };
 
             _KeyRepository.DeleteKey(userKeyModel);
-            return RedirectToAction(nameof(Profile));
+            return RedirectToAction(nameof(UserProfile));
         }
 
         [HttpPost]
@@ -95,7 +95,7 @@ namespace Trustme.Controllers
                     }
 
                 }
-                return RedirectToAction(nameof(Profile));
+                return RedirectToAction(nameof(UserProfile));
             }
             return View(key);
         }
