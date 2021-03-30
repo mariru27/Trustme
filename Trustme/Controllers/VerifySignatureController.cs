@@ -20,6 +20,14 @@ namespace Trustme.Controllers
             _KeyRepository = keyRepository;
             _Sign = sign;
         }
+
+        [HttpGet]
+        public IActionResult VerifySign(VerifySignModel verifySignModel)
+        {
+
+            return View(verifySignModel);
+        }
+
         [HttpGet]
         public IActionResult VerifyUser()
         {
@@ -30,7 +38,6 @@ namespace Trustme.Controllers
         [HttpPost]
         public IActionResult VerifyUser(VerifyUserModel verifyUserModel)
         {
-
             //get current user and verify if exist
             if (!ModelState.IsValid)
             {
@@ -41,7 +48,6 @@ namespace Trustme.Controllers
             {
                 ModelState.AddModelError("", "User do not exist!");
                 return View();
-
             }
             else
             {
@@ -61,13 +67,10 @@ namespace Trustme.Controllers
                         Keys = keyList
                     };
                     //pass to view keys and username
-                    return RedirectToAction("VerifySignatureDocument", verifySignModel);
+                    return RedirectToAction("VerifySign", verifySignModel);
                 }
             }
             return View();
-
-
-
         }
 
 
