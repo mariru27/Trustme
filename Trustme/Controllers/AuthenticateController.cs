@@ -117,9 +117,9 @@ namespace Trustme.Controllers
             }
             else
             {
-                TempData["IncorrectUserOrPassword"] = "User or password are incorrect";
+                ModelState.AddModelError("", "User or password are incorrect");
             }
-            return RedirectToAction("LogIn");
+            return View();
 
         }
 
