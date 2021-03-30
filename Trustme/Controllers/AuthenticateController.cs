@@ -88,25 +88,25 @@ namespace Trustme.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
 
-        public async Task<IActionResult> LogIn(string username, string password)
+        public async Task<IActionResult> LogIn(Login login)
         {
             if (isloggedIn(HttpContext) == true)
                 await LogOut();
             if (ModelState.IsValid)
             {
 
-                if (username == null)
+                if (login.Username == null)
                 {
                     TempData["UsernameRequired"] = "Username field is required!";
                     return RedirectToAction("LogIn");
                 }
-                if (password == null)
+                if (login.Password == null)
                 {
                     TempData["PasswordRequired"] = "Password field is required";
                     return RedirectToAction("LogIn");
                 }
-                User user = _UserRepository.GetUserbyUsername(username);
-                string hashPassword = _Tool.ComputeHash(password, new SHA256CryptoServiceProvider());
+                User user = _UserRepository.GetUserbyUsername(login.Password);
+                string hashPassword = _Tool.ComputeHash(login.Password, new SHA256CryptoServiceProvider());
                 if (user != null && hashPassword == user.Password)
                 {
                     Role userRole = _RoleReporitory.GetUserRole(user);
