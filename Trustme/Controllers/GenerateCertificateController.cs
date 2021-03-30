@@ -53,18 +53,18 @@ namespace Trustme.Controllers
             if (certificateName == null)
             {
                 TempData["CertificateNameError"] = "Required certificate name";
-                return RedirectToAction("GenerateCertificate");
+                return RedirectToAction("Generate");
             }
             if (_KeyRepository.GetNrCertificates(currentUser) >= UserMaximNumberOfCertificates && _HttpRequestFunctions.GetUserRole(HttpContext) == "Free")
             {
                 TempData["CertificatesNrError"] = "You cannot have more than three certificates, delete a certificate if you want to generate another!";
-                return RedirectToAction("GenerateCertificate");
+                return RedirectToAction("Generate");
             }
 
             if (_KeyRepository.CheckCertificateSameName(currentUser, certificateName))
             {
                 TempData["CertificateNameAlreadyExistError"] = "Certificate name already exists, choose another one!";
-                return RedirectToAction("GenerateCertificate");
+                return RedirectToAction("Generate");
 
             }
             string wwwPath = this.Environment.WebRootPath;
