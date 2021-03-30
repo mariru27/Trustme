@@ -41,7 +41,6 @@ namespace Trustme.Controllers
 
         public async Task<IActionResult> Register(User user)
         {
-            string password = user.Password;
             User usedUser = _UserRepository.GetUserbyUsername(user.Username);
             User usedMailUser = _UserRepository.GetUserbyMail(user.Mail);
 
@@ -66,7 +65,6 @@ namespace Trustme.Controllers
             }
 
             //hash password 
-
             if (ModelState.IsValid && user.Password == user.ConfirmPassword)
             {
                 user.Password = _Tool.ComputeHash(user.Password, new SHA256CryptoServiceProvider());
@@ -95,47 +93,34 @@ namespace Trustme.Controllers
                 await LogOut();
             if (!ModelState.IsValid) { return View(); }
 
-            if (ModelState.IsValid)
+
+            User user = _UserRepository.GetUserbyUsername(login.Password);
+            string hashPassword = _Tool.ComputeHash(login.Password, new SHA256CryptoServiceProvider());
+            if (user != null && hashPassword == user.Password)
             {
+                Role userRole = _RoleReporitory.GetUserRole(user);
 
-                //if (login.Username == null)
-                //{
-                //    TempData["UsernameRequired"] = "Username field is required!";
-                //    return RedirectToAction("LogIn");
-                //}
-                //if (login.Password == null)
-                //{
-                //    TempData["PasswordRequired"] = "Password field is required";
-                //    return RedirectToAction("LogIn");
-                //}
-                User user = _UserRepository.GetUserbyUsername(login.Password);
-                string hashPassword = _Tool.ComputeHash(login.Password, new SHA256CryptoServiceProvider());
-                if (user != null && hashPassword == user.Password)
-                {
-                    Role userRole = _RoleReporitory.GetUserRole(user);
-
-                    var userClaim = new List<Claim>()
+                var userClaim = new List<Claim>()
                     {
                         new Claim(ClaimTypes.NameIdentifier, user.Username),
                         new Claim(ClaimTypes.Email, user.Mail),
                         new Claim(ClaimTypes.Role, userRole.RoleName)
                     };
-                    var userIdentity = new ClaimsIdentity(userClaim, "user identity");
+                var userIdentity = new ClaimsIdentity(userClaim, "user identity");
 
-                    var userPrinciple = new ClaimsPrincipal(new[] { userIdentity });
+                var userPrinciple = new ClaimsPrincipal(new[] { userIdentity });
 
-                    await HttpContext.SignInAsync(userPrinciple);
-                    ViewData["username"] = user.Username;
+                await HttpContext.SignInAsync(userPrinciple);
+                ViewData["username"] = user.Username;
 
-                    return RedirectToAction("Index", "Home");
-                }
-                else
-                {
-                    TempData["IncorrectUserOrPassword"] = "User or password are incorrect";
-                }
-                return RedirectToAction("LogIn");
+                return RedirectToAction("Index", "Home");
             }
-            return View();
+            else
+            {
+                TempData["IncorrectUserOrPassword"] = "User or password are incorrect";
+            }
+            return RedirectToAction("LogIn");
+
         }
 
         public bool isloggedIn(HttpContext httpcontext)
