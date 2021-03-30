@@ -74,7 +74,8 @@ namespace Trustme.Controllers
                 Role role = _RoleReporitory.GetRoleById(user.RoleId);
                 user.Role = role;
                 _UserRepository.AddUser(user);
-                return await LogIn(user.Username, password);
+                Login login = new Login { Username = user.Username, Password = user.Password };
+                return await LogIn(login);
             }
             return View(userResult);
         }
