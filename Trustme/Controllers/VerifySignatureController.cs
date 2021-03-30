@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Routing;
 using Org.BouncyCastle.Crypto;
 using System;
 using Trustme.IServices;
@@ -68,7 +67,7 @@ namespace Trustme.Controllers
                         Keys = keyList
                     };
                     //pass to view keys and username
-                    return RedirectToAction("VerifySign", new RouteValueDictionary(verifySignModel));
+                    return RedirectToAction("VerifySign", verifySignModel);
                     //return RedirectToAction("VerifySign", verifySignModel);
                 }
             }

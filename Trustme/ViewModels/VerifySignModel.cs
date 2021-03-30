@@ -8,7 +8,7 @@ namespace Trustme.ViewModels
     {
         [Required]
         public string Username { get; set; }
-        public IEnumerable<Key> Keys { get; set; }
+        public List<Key> Keys { get; set; }
 
     }
 }
