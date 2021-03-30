@@ -92,42 +92,47 @@ namespace Trustme.Controllers
         {
             if (isloggedIn(HttpContext) == true)
                 await LogOut();
-            if (username == null)
+            if (ModelState.IsValid)
             {
-                TempData["UsernameRequired"] = "Username field is required!";
-                return RedirectToAction("LogIn");
-            }
-            if (password == null)
-            {
-                TempData["PasswordRequired"] = "Password field is required";
-                return RedirectToAction("LogIn");
-            }
-            User user = _UserRepository.GetUserbyUsername(username);
-            string hashPassword = _Tool.ComputeHash(password, new SHA256CryptoServiceProvider());
-            if (user != null && hashPassword == user.Password)
-            {
-                Role userRole = _RoleReporitory.GetUserRole(user);
 
-                var userClaim = new List<Claim>()
+                if (username == null)
+                {
+                    TempData["UsernameRequired"] = "Username field is required!";
+                    return RedirectToAction("LogIn");
+                }
+                if (password == null)
+                {
+                    TempData["PasswordRequired"] = "Password field is required";
+                    return RedirectToAction("LogIn");
+                }
+                User user = _UserRepository.GetUserbyUsername(username);
+                string hashPassword = _Tool.ComputeHash(password, new SHA256CryptoServiceProvider());
+                if (user != null && hashPassword == user.Password)
+                {
+                    Role userRole = _RoleReporitory.GetUserRole(user);
+
+                    var userClaim = new List<Claim>()
                     {
                         new Claim(ClaimTypes.NameIdentifier, user.Username),
                         new Claim(ClaimTypes.Email, user.Mail),
                         new Claim(ClaimTypes.Role, userRole.RoleName)
                     };
-                var userIdentity = new ClaimsIdentity(userClaim, "user identity");
+                    var userIdentity = new ClaimsIdentity(userClaim, "user identity");
 
-                var userPrinciple = new ClaimsPrincipal(new[] { userIdentity });
+                    var userPrinciple = new ClaimsPrincipal(new[] { userIdentity });
 
-                await HttpContext.SignInAsync(userPrinciple);
-                ViewData["username"] = user.Username;
+                    await HttpContext.SignInAsync(userPrinciple);
+                    ViewData["username"] = user.Username;
 
-                return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    TempData["IncorrectUserOrPassword"] = "User or password are incorrect";
+                }
+                return RedirectToAction("LogIn");
             }
-            else
-            {
-                TempData["IncorrectUserOrPassword"] = "User or password are incorrect";
-            }
-            return RedirectToAction("LogIn");
+            return View();
         }
 
         public bool isloggedIn(HttpContext httpcontext)
