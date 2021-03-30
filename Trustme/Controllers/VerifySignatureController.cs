@@ -20,54 +20,51 @@ namespace Trustme.Controllers
             _KeyRepository = keyRepository;
             _Sign = sign;
         }
+        [HttpGet]
         public IActionResult VerifyUser()
         {
 
             return View();
         }
 
-        public IActionResult VerifySign(string Username)
+        [HttpPost]
+        public IActionResult VerifyUser(VerifyUserModel verifyUserModel)
         {
 
-            if (Username == null)
-            {
-                TempData["Error_UsernameMissing"] = "Username is missing!";
-                return RedirectToAction("VerifyUser");
-
-            }
-
             //get current user and verify if exist
-            User currentUser = _UserRepository.GetUserbyUsername(Username);
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+            User currentUser = _UserRepository.GetUserbyUsername(verifyUserModel.Username);
             if (currentUser == null)
             {
-                TempData["Error_UserDoNotExist"] = "User do not exist!";
-                return RedirectToAction("VerifyUser");
+                ModelState.AddModelError("", "User do not exist!");
+                return View();
 
             }
             else
             {
                 //check if user that need to sign document have any certificates(keys)
-                if (_KeyRepository.GetNrCertificates(_UserRepository.GetUserbyUsername(Username)) == 0)
+                if (_KeyRepository.GetNrCertificates(_UserRepository.GetUserbyUsername(verifyUserModel.Username)) == 0)
                 {
-                    TempData["UserDontHaveCertificates"] = "User do not have any certificate! User need to generate a certificate!";
-                    return RedirectToAction("VerifyUser");
+                    ModelState.AddModelError("", "User do not have any certificate! User need to generate a certificate!");
+                    return View();
                 }
-
 
                 var keyList = _KeyRepository.ListAllKeys(currentUser);
                 if (keyList != null)
                 {
                     VerifySignModel verifySignModel = new VerifySignModel
                     {
-                        Username = Username,
+                        Username = verifyUserModel.Username,
                         Keys = keyList
                     };
                     //pass to view keys and username
-                    return View(verifySignModel);
-
+                    return RedirectToAction("VerifySignatureDocument", verifySignModel);
                 }
             }
-            return RedirectToAction("VerifyUser");
+            return View();
 
 
 
@@ -91,7 +88,6 @@ namespace Trustme.Controllers
                 TempData["Error_MissingDocument"] = "Document is missing!";
                 return RedirectToAction("VerifySign", new { Username = verifySignatureDocumentModel.Username });
             }
-
 
             VerifySignatureModel verifySignatureModel = new VerifySignatureModel
             {
