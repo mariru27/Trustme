@@ -44,6 +44,10 @@ namespace Trustme.Controllers
         [HttpPost]
         public IActionResult UploadUser(VerifyUserModel verifyUserModel)
         {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
             //check if user exist 
             User user = _UserRepository.GetUserbyUsername(verifyUserModel.Username);
             if (user == null)
