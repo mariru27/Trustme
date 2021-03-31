@@ -98,7 +98,7 @@ namespace Trustme.Controllers
             if (!ModelState.IsValid) { return View(); }
 
 
-            User user = _UserRepository.GetUserbyUsername(login.Password);
+            User user = _UserRepository.GetUserbyUsername(login.Username);
             string hashPassword = _Tool.ComputeHash(login.Password, new SHA256CryptoServiceProvider());
             if (user != null && hashPassword == user.Password)
             {
