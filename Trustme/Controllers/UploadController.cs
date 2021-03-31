@@ -103,8 +103,6 @@ namespace Trustme.Controllers
                     UnsignedDocument = unsignedDocument,
                     User = _UserRepository.GetUserbyUsername(uploadDocumentModel.Username)
                 };
-                //unsignedDocumentUserKey.Key = key;
-
                 _UnsignedDocumentRepository.AddUnsignedDocument(unsignedDocumentUserKey);
                 TempData["SuccessUpload"] = "Uploaded Successfully!";
             }

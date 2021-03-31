@@ -4,6 +4,11 @@
 <hr />
 <div asp-validation-summary="All" class="text-danger"></div>
 
+@if (TempData["SuccessUpload"] != null)
+{
+    <p class="alert alert-success" id="successMessage">@TempData["SuccessUpload"]</p>
+}
+
 <form method="post" enctype="multipart/form-data" asp-action="UploadDocument">
     <input type="hidden" asp-for="Username" value=@Model.Username />
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -20,7 +25,7 @@
     <br>
     <div class="form-group">
         <label asp-for="Document"><strong>Document</strong></label>
-        <input asp-for="Document"  type="file">
+        <input asp-for="Document" type="file">
     </div>
     <div class="form-group">
         <input type="submit" value="Submit" class="btn btn-primary" />
