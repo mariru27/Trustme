@@ -10,8 +10,8 @@
     <div class="col-md-4">
         <form action="VerifyUser" enctype="multipart/form-data" method="post">
             <div class="form-group">
-                <label for="Username" class="control-label">Username that signed document:</label>
-                <input fro="Username" name="Username" type="text" class="form-control" />
+                <label asp-for="Username" class="control-label">Username that signed document:</label>
+                <input asp-for="Username" type="text" style="width: 80vw;" class="form-control" />
             </div>
             <div class="form-group">
                 <input type="submit" value="Verify" class="btn btn-primary" />
