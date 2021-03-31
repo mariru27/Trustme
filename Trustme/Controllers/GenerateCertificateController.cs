@@ -2,13 +2,11 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Org.BouncyCastle.Asn1.Pkcs;
 using Org.BouncyCastle.Asn1.X509;
 using Org.BouncyCastle.Crypto;
 using Org.BouncyCastle.Crypto.Generators;
 using Org.BouncyCastle.Math;
 using Org.BouncyCastle.OpenSsl;
-using Org.BouncyCastle.Pkcs;
 using Org.BouncyCastle.Security;
 using Org.BouncyCastle.X509;
 using System;
@@ -46,35 +44,30 @@ namespace Trustme.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Obsolete]
-        public IActionResult GenerateCertificate(string certificateName, string description, int keySize)
+        public IActionResult Generate(Key key)
         {
             if (ModelState.IsValid)
             {
 
                 User currentUser = _HttpRequestFunctions.GetUser(HttpContext);
 
-                if (certificateName == null)
-                {
-                    TempData["CertificateNameError"] = "Required certificate name";
-                    return RedirectToAction("Generate");
-                }
                 if (_KeyRepository.GetNrCertificates(currentUser) >= UserMaximNumberOfCertificates && _HttpRequestFunctions.GetUserRole(HttpContext) == "Free")
                 {
-                    TempData["CertificatesNrError"] = "You cannot have more than three certificates, delete a certificate if you want to generate another!";
-                    return RedirectToAction("Generate");
+                    ModelState.AddModelError("", "You cannot have more than three certificates, delete a certificate if you want to generate another!");
+                    return View();
                 }
 
-                if (_KeyRepository.CheckCertificateSameName(currentUser, certificateName))
+                if (_KeyRepository.CheckCertificateSameName(currentUser, key.CertificateName))
                 {
-                    TempData["CertificateNameAlreadyExistError"] = "Certificate name already exists, choose another one!";
-                    return RedirectToAction("Generate");
+                    ModelState.AddModelError("", "Certificate name already exists, choose another one!");
+                    return View();
 
                 }
                 string wwwPath = this.Environment.WebRootPath;
 
                 // Keypair Generator
                 RsaKeyPairGenerator kpGenerator = new RsaKeyPairGenerator();
-                kpGenerator.Init(new KeyGenerationParameters(new SecureRandom(), keySize));
+                kpGenerator.Init(new KeyGenerationParameters(new SecureRandom(), key.KeySize));
 
                 // Create a keypair
                 AsymmetricCipherKeyPair kp = kpGenerator.GenerateKeyPair();
@@ -103,9 +96,9 @@ namespace Trustme.Controllers
                     string publicKey = textWriter1.ToString();
 
                     Key currentKey = new Key();
-                    currentKey.CertificateName = certificateName;
-                    currentKey.Description = description;
-                    currentKey.KeySize = keySize;
+                    currentKey.CertificateName = key.CertificateName;
+                    currentKey.Description = key.Description;
+                    currentKey.KeySize = key.KeySize;
                     currentKey.PublicKey = publicKey;
 
 
@@ -134,10 +127,6 @@ namespace Trustme.Controllers
                 {
                     outStream.Write(encoded, 0, encoded.Length);
                 }
-
-                PrivateKeyInfo pkInfo = PrivateKeyInfoFactory.CreatePrivateKeyInfo(kp.Private);
-                string privatekey = Convert.ToBase64String(pkInfo.GetDerEncoded());
-
 
                 TextWriter textWriter = new StringWriter();
                 PemWriter pemWriter = new PemWriter(textWriter);
@@ -171,12 +160,14 @@ namespace Trustme.Controllers
                 Directory.Delete(pathDir);
                 System.IO.File.Delete(pathDirectoryZip);
 
-                result.FileDownloadName = certificateName + ".zip";
+                result.FileDownloadName = key.CertificateName + ".zip";
+
                 return result;
             }
-            return RedirectToAction("Generate");
+            return View();
         }
 
+        [HttpGet]
         public IActionResult Generate()
         {
 

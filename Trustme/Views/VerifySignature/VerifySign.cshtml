@@ -6,6 +6,7 @@
 <hr />
 
 <div asp-validation-summary="All" class="text-danger"></div>
+
 @if (TempData["ValidSignature"] != null)
 {
     <p class="alert alert-success" id="successMessage">@TempData["ValidSignature"]</p>
