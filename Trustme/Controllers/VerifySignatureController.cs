@@ -78,50 +78,54 @@ namespace Trustme.Controllers
 
 
         [HttpPost]
-        public IActionResult VerifySign(VerifySignatureDocumentModel verifySignatureDocumentModel)
+        public IActionResult VerifySign(VerifySignModel verifySignModel)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(verifySignModel);
+            }
 
             //validate signature
-            if (verifySignatureDocumentModel.Signature == null)
+            if (verifySignModel.Signature == null)
             {
                 TempData["Error_MissingSignature"] = "Signature is missing!";
-                return RedirectToAction("VerifySign", new { Username = verifySignatureDocumentModel.Username });
+                return RedirectToAction("VerifySign", new { Username = verifySignModel.Username });
 
             }
             //validate document
-            if (verifySignatureDocumentModel.Document == null)
+            if (verifySignModel.Document == null)
             {
                 TempData["Error_MissingDocument"] = "Document is missing!";
-                return RedirectToAction("VerifySign", new { Username = verifySignatureDocumentModel.Username });
+                return RedirectToAction("VerifySign", new { Username = verifySignModel.Username });
             }
 
             VerifySignatureModel verifySignatureModel = new VerifySignatureModel
             {
-                CertificateName = verifySignatureDocumentModel.CertificateName,
-                Document = verifySignatureDocumentModel.Document,
-                Username = verifySignatureDocumentModel.Username
+                CertificateName = verifySignModel.CertificateName,
+                Document = verifySignModel.Document,
+                Username = verifySignModel.Username
             };
 
             //verify signature
             ISigner sign = _Sign.VerifySignature(verifySignatureModel);
             try
             {
-                Convert.FromBase64String(verifySignatureDocumentModel.Signature);
+                Convert.FromBase64String(verifySignModel.Signature);
 
             }
             catch (Exception)
             {
                 TempData["Error_CorruptedSignature"] = "Signature was corrupted!";
-                return RedirectToAction("VerifySign", new { username = verifySignatureDocumentModel.Username });
+                return RedirectToAction("VerifySign", new { username = verifySignModel.Username });
             };
 
-            byte[] signaturebyte = Convert.FromBase64String(verifySignatureDocumentModel.Signature);
+            byte[] signaturebyte = Convert.FromBase64String(verifySignModel.Signature);
             if (sign.VerifySignature(signaturebyte) == false)
                 TempData["Error_InvalidSignature"] = "Invalid signature!";
             else
                 TempData["ValidSignature"] = "Signature is valid!";
 
-            return RedirectToAction("VerifySign", new { username = verifySignatureDocumentModel.Username });
+            return RedirectToAction("VerifySign", new { username = verifySignModel.Username });
         }
 
 
