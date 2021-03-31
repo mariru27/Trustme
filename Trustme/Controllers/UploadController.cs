@@ -71,14 +71,12 @@ namespace Trustme.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View(uploadDocumentModel.Username);
-            }
-            UserUnsignedDocument userUnsignedDocument = new UserUnsignedDocument();
-            if (uploadDocumentModel.Document == null)
-            {
-                TempData["DocumentError"] = "You forgot to attach document!";
-                return RedirectToAction("LoadDocumentToSign", new { uploadDocumentModel.Username });
-
+                UploadDocumentModel uploadDocument = new UploadDocumentModel
+                {
+                    Keys = _KeyRepository.ListAllKeys(_UserRepository.GetUserbyUsername(uploadDocumentModel.Username)),
+                    Username = uploadDocumentModel.Username
+                };
+                return View(uploadDocument);
             }
             UnsignedDocument unsignedDocument = new UnsignedDocument
             {
@@ -90,17 +88,15 @@ namespace Trustme.Controllers
                 unsignedDocument.Document = target.ToArray();
             }
             Key key = _KeyRepository.GetKeyByCertificateName(uploadDocumentModel.Username, uploadDocumentModel.CertificateName);
-
             unsignedDocument.KeyPreference = uploadDocumentModel.CertificateName;
-            //unsignedDocument.Key = key;
             unsignedDocument.KeyId = key.KeyId;
             unsignedDocument.SentFromUsername = _HttpRequestFunctions.GetUser(HttpContext).Username;
+
+            UserUnsignedDocument userUnsignedDocument = new UserUnsignedDocument();
             if (_UserRepository.GetUserbyUsername(uploadDocumentModel.Username) != null)
             {
                 userUnsignedDocument.User = _UserRepository.GetUserbyUsername(uploadDocumentModel.Username);
                 userUnsignedDocument.UnsignedDocument = unsignedDocument;
-                //_UnsignedDocumentRepository.AddUnsignedDocument(userUnsignedDocument);
-
                 UnsignedDocumentUserKey unsignedDocumentUserKey = new UnsignedDocumentUserKey
                 {
                     Key = key,
