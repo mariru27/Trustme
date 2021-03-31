@@ -82,6 +82,7 @@ namespace Trustme.Controllers
         {
             if (!ModelState.IsValid)
             {
+                verifySignModel.Keys = _KeyRepository.ListAllKeys(_UserRepository.GetUserbyUsername(verifySignModel.Username));
                 return View(verifySignModel);
             }
 
