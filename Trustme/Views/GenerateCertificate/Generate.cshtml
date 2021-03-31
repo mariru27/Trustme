@@ -3,7 +3,7 @@
 <h4 class="display-4">Generate certificates</h4>
 
 <hr />
-<partial name="_ErrorSuccessMessages" />
+@*<partial name="_ErrorSuccessMessages" />*@
 
 
 <form asp-action="GenerateCertificate">
@@ -20,6 +20,7 @@
         <option value=2048>2048</option>
         <option value=4096>4096</option>
     </select>
+
     <div class="form-group">
         <label asp-for="Description" class="control-label">Description</label>
         <textarea class="form-control" name="description" rows="3"></textarea>

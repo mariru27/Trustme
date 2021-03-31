@@ -41,14 +41,21 @@ namespace Trustme.Controllers
 
         public async Task<IActionResult> Register(User user)
         {
-            string password = user.Password;
+            if (!ModelState.IsValid)
+            {
+                RolesUserViewModel rolesUserViewModel = new RolesUserViewModel
+                {
+                    Roles = new SelectList(_RoleReporitory.ListAllRoles().Where(a => a.RoleName != "Admin").ToList(), "IdRole", "RoleName")
+                };
+                return View(rolesUserViewModel);
+            }
             User usedUser = _UserRepository.GetUserbyUsername(user.Username);
             User usedMailUser = _UserRepository.GetUserbyMail(user.Mail);
 
             RolesUserViewModel userResult = new RolesUserViewModel
             {
                 User = user,
-                Roles = new SelectList(_RoleReporitory.ListAllRoles(), "IdRole", "RoleName")
+                Roles = new SelectList(_RoleReporitory.ListAllRoles().Where(a => a.RoleName != "Admin").ToList(), "IdRole", "RoleName")
             };
 
             if (usedUser != null || usedMailUser != null)
@@ -66,15 +73,15 @@ namespace Trustme.Controllers
             }
 
             //hash password 
-
             if (ModelState.IsValid && user.Password == user.ConfirmPassword)
             {
+                Login login = new Login { Username = user.Username, Password = user.Password };
                 user.Password = _Tool.ComputeHash(user.Password, new SHA256CryptoServiceProvider());
                 user.ConfirmPassword = _Tool.ComputeHash(user.ConfirmPassword, new SHA256CryptoServiceProvider());
                 Role role = _RoleReporitory.GetRoleById(user.RoleId);
                 user.Role = role;
                 _UserRepository.AddUser(user);
-                return await LogIn(user.Username, password);
+                return await LogIn(login);
             }
             return View(userResult);
         }
@@ -88,22 +95,15 @@ namespace Trustme.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
 
-        public async Task<IActionResult> LogIn(string username, string password)
+        public async Task<IActionResult> LogIn(Login login)
         {
             if (isloggedIn(HttpContext) == true)
                 await LogOut();
-            if (username == null)
-            {
-                TempData["UsernameRequired"] = "Username field is required!";
-                return RedirectToAction("LogIn");
-            }
-            if (password == null)
-            {
-                TempData["PasswordRequired"] = "Password field is required";
-                return RedirectToAction("LogIn");
-            }
-            User user = _UserRepository.GetUserbyUsername(username);
-            string hashPassword = _Tool.ComputeHash(password, new SHA256CryptoServiceProvider());
+            if (!ModelState.IsValid) { return View(); }
+
+
+            User user = _UserRepository.GetUserbyUsername(login.Username);
+            string hashPassword = _Tool.ComputeHash(login.Password, new SHA256CryptoServiceProvider());
             if (user != null && hashPassword == user.Password)
             {
                 Role userRole = _RoleReporitory.GetUserRole(user);
@@ -125,9 +125,10 @@ namespace Trustme.Controllers
             }
             else
             {
-                TempData["IncorrectUserOrPassword"] = "User or password are incorrect";
+                ModelState.AddModelError("", "User or password are incorrect");
             }
-            return RedirectToAction("LogIn");
+            return View();
+
         }
 
         public bool isloggedIn(HttpContext httpcontext)

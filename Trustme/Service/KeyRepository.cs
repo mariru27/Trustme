@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Trustme.Models;
-using Trustme.IServices;
 using Trustme.Data;
+using Trustme.IServices;
+using Trustme.Models;
 using Trustme.ViewModels;
 
 namespace Trustme.Service
@@ -22,7 +22,7 @@ namespace Trustme.Service
 
             Key userKey = _context.Key.Where(a => a.KeyId == user.UserId && a.CertificateName == _UserKeyModel.Key.CertificateName)?.SingleOrDefault();
 
-            if(userKey == null)
+            if (userKey == null)
             {
                 // add key 
                 _context.Key.Add(_UserKeyModel.Key);
@@ -35,7 +35,7 @@ namespace Trustme.Service
 
                 // add UserKey
                 _context.UserKey.Add(_UserKey);
-            
+
                 //save
                 _context.SaveChanges();
             }
@@ -74,9 +74,9 @@ namespace Trustme.Service
             return userKeyModel;
         }
 
-        public IEnumerable<Key> ListAllKeys(User _User)
+        public List<Key> ListAllKeys(User _User)
         {
-            IEnumerable<Key> KeysList = _context.User.
+            List<Key> KeysList = _context.User.
                 Join(_context.UserKey,
                 user => user.UserId,
                 userKey => userKey.UserId,
@@ -123,7 +123,7 @@ namespace Trustme.Service
         {
             User user = _context.User.Where(u => u.Username == username).SingleOrDefault();
 
-            if(user != null)
+            if (user != null)
             {
                 Key key = _context.UserKey.Where(uk => uk.UserId == user.UserId).Join(
                     _context.Key.Where(k => k.CertificateName == name),

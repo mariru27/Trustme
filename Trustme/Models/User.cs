@@ -7,9 +7,9 @@ namespace Trustme.Models
     {
         [Key]
         public int UserId { set; get; }
-        
+
         [Required]
-        [RegularExpression(@"^[a-zA-Z\s]+$", ErrorMessage ="Name must contain just letters")]
+        [RegularExpression(@"^[a-zA-Z\s]+$", ErrorMessage = "Name must contain just letters")]
         [Display(Name = "First Name")]
 
         public string FirstName { set; get; }
@@ -18,18 +18,19 @@ namespace Trustme.Models
         [RegularExpression(@"^[a-zA-Z\s]+$", ErrorMessage = "Name must contain just letters")]
         [Display(Name = "Second Name")]
         public string SecondName { set; get; }
-    
+
         [Required]
-        [RegularExpression(@"^[^@\s]+@[^@\s]+\.[^@\s]+$", ErrorMessage= "This is not a valid mail")]
+        [RegularExpression(@"^[^@\s]+@[^@\s]+\.[^@\s]+$", ErrorMessage = "This is not a valid mail")]
         [Display(Name = "Mail")]
         public string Mail { set; get; }
-        
+
         [Required]
         [RegularExpression("^(?!.{26})[a-zA-Z0-9]+?$", ErrorMessage = "In username field is allowing just letters or numbers")]
         [Display(Name = "Username")]
         public string Username { set; get; }
 
         [Required]
+        [StringLength(50, ErrorMessage = "Password must have more then 6 characters", MinimumLength = 6)]
         [Display(Name = "Password")]
         public string Password { get; set; }
 

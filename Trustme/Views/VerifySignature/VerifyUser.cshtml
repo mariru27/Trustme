@@ -1,18 +1,18 @@
-﻿
+﻿@model VerifyUserModel
+
 <h4 class="display-4">Verify signature</h4>
 
 <hr />
 
+<div asp-validation-summary="All" class="text-danger"></div>
 
 <div class="row">
     <div class="col-md-4">
-        <form action="VerifySign" enctype="multipart/form-data" method="post">
+        <form action="VerifyUser" enctype="multipart/form-data" method="post">
             <div class="form-group">
-                <label for="Username" class="control-label">Username that signed document:</label>
-                <input fro="Username" name="Username" type="text" class="form-control" />
+                <label asp-for="Username" class="control-label">Username that signed document:</label>
+                <input asp-for="Username" type="text" style="width: 80vw;" class="form-control" />
             </div>
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <partial name="_ErrorSuccessMessages" />
             <div class="form-group">
                 <input type="submit" value="Verify" class="btn btn-primary" />
             </div>
