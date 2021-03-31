@@ -2,7 +2,7 @@
 
 namespace Trustme.ViewModels
 {
-    public class SignModel
+    public class SignViewModel
     {
         public int IdUnsignedDocument { get; set; }
         public IFormFile PkFile { get; set; }

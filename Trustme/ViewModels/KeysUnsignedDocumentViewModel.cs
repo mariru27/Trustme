@@ -11,6 +11,7 @@ namespace Trustme.ViewModels
         public UnsignedDocument UnsignedDocument { get; set; }
         public IFormFile PkFile { get; set; }
         public string Signature { get; set; }
+        public int IdUnsignedDocument { get; set; }
 
     }
 }

@@ -4,7 +4,7 @@
 <div asp-validation-summary="All" class="text-danger"></div>
 
 <form asp-action="Sign" enctype="multipart/form-data" method="post">
-    <input type="hidden" asp-for=@Model.UnsignedDocument.IdUnsignedDocument id="IdUnsignedDocument" />
+    <input type="hidden" asp-for="@Model.IdUnsignedDocument" value="@Model.UnsignedDocument.IdUnsignedDocument"/>
     <div class="card">
         <div class="card-header">
             Sent from username:
@@ -32,7 +32,7 @@
                         <strong>Success!</strong> You signed your document.
                     </div>
                     <p class="font-weight-normal">Your signature:</p>
-                    <textarea class="form-control" name="signature">@Model.Signature</textarea>
+                    <textarea class="form-control" asp-for="Signature">@Model.Signature</textarea>
 
                 }
             }
