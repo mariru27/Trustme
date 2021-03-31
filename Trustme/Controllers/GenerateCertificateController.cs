@@ -161,6 +161,7 @@ namespace Trustme.Controllers
                 System.IO.File.Delete(pathDirectoryZip);
 
                 result.FileDownloadName = key.CertificateName + ".zip";
+
                 return result;
             }
             return View();

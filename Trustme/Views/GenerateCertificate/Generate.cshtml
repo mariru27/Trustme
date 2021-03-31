@@ -6,6 +6,10 @@
 
 <div asp-validation-summary="All" class="text-danger"></div>
 
+@if (TempData["SuccessGenerated"] != null)
+{
+    <p class="alert alert-success" id="successMessage">@TempData["SuccessGenerated"]</p>
+}
 
 <form asp-action="Generate">
     <div class="form-group">
