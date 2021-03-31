@@ -69,6 +69,10 @@ namespace Trustme.Controllers
         [HttpPost]
         public IActionResult UploadDocument(UploadDocumentModel uploadDocumentModel)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(uploadDocumentModel.Username);
+            }
             UserUnsignedDocument userUnsignedDocument = new UserUnsignedDocument();
             if (uploadDocumentModel.Document == null)
             {
