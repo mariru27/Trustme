@@ -104,7 +104,7 @@ namespace Trustme.Controllers
             catch (Exception)
             {
                 ModelState.AddModelError("", "Signature was corrupted!");
-                return View();
+                return View(verifySignModel);
             };
 
             byte[] signaturebyte = Convert.FromBase64String(verifySignModel.Signature);
