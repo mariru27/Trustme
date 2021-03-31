@@ -68,12 +68,6 @@ namespace Trustme.Controllers
                 return View(keysUnsignedDocumentViewModelPass);
             }
 
-            if (keysUnsignedDocumentViewModel.PkFile == null)
-            {
-                ModelState.AddModelError("", "You forgot to attach private key file!");
-                return View(keysUnsignedDocumentViewModelPass);
-            }
-
             string fileExtension = System.IO.Path.GetExtension(keysUnsignedDocumentViewModel.PkFile.FileName);
             if (fileExtension != ".pem")
             {
@@ -89,8 +83,8 @@ namespace Trustme.Controllers
             SignModel signModel = _Sign.SignDocumentTest(keysUnsignedDocumentViewModel.PkFile, documentFile, unsignedDocument.KeyId, HttpContext);
             if (signModel.validKey == false || signModel.verifytest == false)
             {
-                TempData["InvalidKey"] = "Invalid key!";
-                return RedirectToAction("SignSentDocument", new { IdUnsignedDocument = keysUnsignedDocumentViewModel.IdUnsignedDocument });
+                ModelState.AddModelError("", "Invalid key!");
+                return View(keysUnsignedDocumentViewModelPass);
             }
             string signature = _Sign.SignDocument(signModel);
 
@@ -100,14 +94,17 @@ namespace Trustme.Controllers
             _SignedDocumentRepository.AddSignedDocument(signedDocument, _UserRepository.GetUserbyUsername(unsignedDocument.SentFromUsername));
 
             //store in db signed document for current user
-            SignedDocument signedDocumentCurrentUser = new SignedDocument(unsignedDocument, signature, _HttpRequestFunctions.GetUser(HttpContext).Username);
-            _SignedDocumentRepository.AddSignedDocument(signedDocumentCurrentUser, _UserRepository.GetUserbyUsername(_HttpRequestFunctions.GetUser(HttpContext).Username));
+            if (signedDocument.SentFromUsername != signedDocument.SignedByUsername)
+            {
+                SignedDocument signedDocumentCurrentUser = new SignedDocument(unsignedDocument, signature, _HttpRequestFunctions.GetUser(HttpContext).Username);
+                _SignedDocumentRepository.AddSignedDocument(signedDocumentCurrentUser, _UserRepository.GetUserbyUsername(_HttpRequestFunctions.GetUser(HttpContext).Username));
+            }
 
             //Add document in current user history
             _UnsignedDocumentRepository.MakeDocumentSigned(unsignedDocument);
+            keysUnsignedDocumentViewModelPass.Signature = signature;
 
-
-            return RedirectToAction("SignSentDocument", new { IdUnsignedDocument = keysUnsignedDocumentViewModel.IdUnsignedDocument, Signature = signature });
+            return View(keysUnsignedDocumentViewModelPass);
         }
 
 
