@@ -9,14 +9,14 @@ using Trustme.ViewModels;
 namespace Trustme.Controllers
 {
     [Authorize(Roles = "Pro, Free")]
-    public class LoadDocumentController : Controller
+    public class UploadDocumentController : Controller
     {
         private readonly IUserRepository _UserRepository;
         private readonly IUnsignedDocumentRepository _UnsignedDocumentRepository;
         private readonly IHttpRequestFunctions _HttpRequestFunctions;
         private readonly IKeyRepository _KeyRepository;
 
-        public LoadDocumentController(IKeyRepository keyRepository, IUserRepository userRepository, IUnsignedDocumentRepository unsignedDocumentRepository, IHttpRequestFunctions httpRequestFunctions)
+        public UploadDocumentController(IKeyRepository keyRepository, IUserRepository userRepository, IUnsignedDocumentRepository unsignedDocumentRepository, IHttpRequestFunctions httpRequestFunctions)
         {
             _UserRepository = userRepository;
             _UnsignedDocumentRepository = unsignedDocumentRepository;
