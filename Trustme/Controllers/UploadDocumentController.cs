@@ -61,8 +61,8 @@ namespace Trustme.Controllers
                 //check if user that need to sign document have any certificates(keys)
                 if (_KeyRepository.GetNrCertificates(user) == 0)
                 {
-                    TempData["UserDontHaveCertificates"] = "User do not have any certificate! User need to generate a certificate!";
-                    return RedirectToAction("SendDocumentToUser");
+                    ModelState.AddModelError("", "User do not have any certificate! User need to generate a certificate!");
+                    return View();
                 }
                 return RedirectToAction("LoadDocumentToSign", new { Username = verifyUserModel.Username });
             }
