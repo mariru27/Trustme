@@ -69,13 +69,13 @@ namespace Trustme.Controllers
         [HttpPost]
         public IActionResult UploadDocument(UploadDocumentModel uploadDocumentModel)
         {
+            UploadDocumentModel uploadDocument = new UploadDocumentModel
+            {
+                Keys = _KeyRepository.ListAllKeys(_UserRepository.GetUserbyUsername(uploadDocumentModel.Username)),
+                Username = uploadDocumentModel.Username
+            };
             if (!ModelState.IsValid)
             {
-                UploadDocumentModel uploadDocument = new UploadDocumentModel
-                {
-                    Keys = _KeyRepository.ListAllKeys(_UserRepository.GetUserbyUsername(uploadDocumentModel.Username)),
-                    Username = uploadDocumentModel.Username
-                };
                 return View(uploadDocument);
             }
             UnsignedDocument unsignedDocument = new UnsignedDocument
@@ -106,13 +106,13 @@ namespace Trustme.Controllers
                 //unsignedDocumentUserKey.Key = key;
 
                 _UnsignedDocumentRepository.AddUnsignedDocument(unsignedDocumentUserKey);
-                TempData["Success"] = "Uploaded Successfully!";
+                TempData["SuccessUpload"] = "Uploaded Successfully!";
             }
             else
             {
-                TempData["UserError"] = "User do not extist!";
+                ModelState.AddModelError("", "User do not extist!");
             }
-            return RedirectToAction("LoadDocumentToSign", new { uploadDocumentModel.Username });
+            return View(uploadDocument);
         }
     }
 }
