@@ -86,20 +86,6 @@ namespace Trustme.Controllers
                 return View(verifySignModel);
             }
 
-            //validate signature
-            if (verifySignModel.Signature == null)
-            {
-                TempData["Error_MissingSignature"] = "Signature is missing!";
-                return RedirectToAction("VerifySign", new { Username = verifySignModel.Username });
-
-            }
-            //validate document
-            if (verifySignModel.Document == null)
-            {
-                TempData["Error_MissingDocument"] = "Document is missing!";
-                return RedirectToAction("VerifySign", new { Username = verifySignModel.Username });
-            }
-
             VerifySignatureModel verifySignatureModel = new VerifySignatureModel
             {
                 CertificateName = verifySignModel.CertificateName,
