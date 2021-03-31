@@ -2,7 +2,7 @@
 
 <h4 class="display-4">Upload document to sign</h4>
 
-<form method="post" enctype="multipart/form-data" asp-action="LoadDocumentToSign">
+<form method="post" enctype="multipart/form-data" asp-action="UploadDocument">
     <input type="hidden" name="Username" value=@Model.Username id="Username" />
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <label for="certificateName">Choose a certifificate:</label>

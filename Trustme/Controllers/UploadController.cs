@@ -9,14 +9,14 @@ using Trustme.ViewModels;
 namespace Trustme.Controllers
 {
     [Authorize(Roles = "Pro, Free")]
-    public class UploadDocumentController : Controller
+    public class UploadController : Controller
     {
         private readonly IUserRepository _UserRepository;
         private readonly IUnsignedDocumentRepository _UnsignedDocumentRepository;
         private readonly IHttpRequestFunctions _HttpRequestFunctions;
         private readonly IKeyRepository _KeyRepository;
 
-        public UploadDocumentController(IKeyRepository keyRepository, IUserRepository userRepository, IUnsignedDocumentRepository unsignedDocumentRepository, IHttpRequestFunctions httpRequestFunctions)
+        public UploadController(IKeyRepository keyRepository, IUserRepository userRepository, IUnsignedDocumentRepository unsignedDocumentRepository, IHttpRequestFunctions httpRequestFunctions)
         {
             _UserRepository = userRepository;
             _UnsignedDocumentRepository = unsignedDocumentRepository;
@@ -25,7 +25,7 @@ namespace Trustme.Controllers
         }
 
         [HttpGet]
-        public IActionResult LoadDocumentToSign(string Username)
+        public IActionResult UploadDocument(string Username)
         {
             UploadDocumentModel uploadDocumentModel = new UploadDocumentModel
             {
@@ -68,7 +68,7 @@ namespace Trustme.Controllers
             }
         }
         [HttpPost]
-        public IActionResult LoadDocumentToSign(string Username, string CertificateName, IFormFile Document)
+        public IActionResult UploadDocument(string Username, string CertificateName, IFormFile Document)
         {
             UserUnsignedDocument userUnsignedDocument = new UserUnsignedDocument();
             if (Document == null)
