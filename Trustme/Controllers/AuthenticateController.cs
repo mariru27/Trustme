@@ -71,12 +71,12 @@ namespace Trustme.Controllers
             //hash password 
             if (ModelState.IsValid && user.Password == user.ConfirmPassword)
             {
+                Login login = new Login { Username = user.Username, Password = user.Password };
                 user.Password = _Tool.ComputeHash(user.Password, new SHA256CryptoServiceProvider());
                 user.ConfirmPassword = _Tool.ComputeHash(user.ConfirmPassword, new SHA256CryptoServiceProvider());
                 Role role = _RoleReporitory.GetRoleById(user.RoleId);
                 user.Role = role;
                 _UserRepository.AddUser(user);
-                Login login = new Login { Username = user.Username, Password = user.Password };
                 return await LogIn(login);
             }
             return View(userResult);
