@@ -64,7 +64,7 @@ namespace Trustme.Controllers
                     ModelState.AddModelError("", "User do not have any certificate! User need to generate a certificate!");
                     return View();
                 }
-                return RedirectToAction("LoadDocumentToSign", new { Username = verifyUserModel.Username });
+                return RedirectToAction("UploadDocument", new { Username = verifyUserModel.Username });
             }
         }
         [HttpPost]
