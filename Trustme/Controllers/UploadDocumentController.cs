@@ -48,6 +48,7 @@ namespace Trustme.Controllers
             {
                 return View();
             }
+
             //check if user exist 
             User user = _UserRepository.GetUserbyUsername(verifyUserModel.Username);
             if (user == null)
