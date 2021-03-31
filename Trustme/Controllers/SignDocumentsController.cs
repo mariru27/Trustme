@@ -57,6 +57,16 @@ namespace Trustme.Controllers
         [HttpPost]
         public IActionResult Sign(KeysUnsignedDocumentViewModel keysUnsignedDocumentViewModel)
         {
+            KeysUnsignedDocumentViewModel keysUnsignedDocumentViewModelPass = new KeysUnsignedDocumentViewModel
+            {
+                UnsignedDocument = _UnsignedDocumentRepository.GetUnsignedDocumentById(keysUnsignedDocumentViewModel.IdUnsignedDocument),
+                Key = _KeyRepository.GetKeyById(_UnsignedDocumentRepository.GetUnsignedDocumentById(keysUnsignedDocumentViewModel.IdUnsignedDocument).KeyId),
+                Signature = keysUnsignedDocumentViewModel.Signature
+            };
+            if (!ModelState.IsValid)
+            {
+                return View(keysUnsignedDocumentViewModelPass);
+            }
 
             if (keysUnsignedDocumentViewModel.PkFile == null)
             {
