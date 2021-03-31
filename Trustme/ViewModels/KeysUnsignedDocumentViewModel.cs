@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using Trustme.Models;
 
 namespace Trustme.ViewModels
@@ -9,6 +10,7 @@ namespace Trustme.ViewModels
         public IEnumerable<Key> Keys { get; set; }
         public Key Key { get; set; }
         public UnsignedDocument UnsignedDocument { get; set; }
+        [Required]
         public IFormFile PkFile { get; set; }
         public string Signature { get; set; }
         public int IdUnsignedDocument { get; set; }
