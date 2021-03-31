@@ -1,17 +1,20 @@
 ﻿@model VerifySignModel
 
 
+
 <h4 class="display-4">Verify signature</h4>
 <hr />
+
+<div asp-validation-summary="All" class="text-danger"></div>
+
 <div class="row">
     <div class="col-md-4">
         <form action="VerifySign" enctype="multipart/form-data" method="post">
             <div class="card">
                 <div class="card-body">
-                    <input type="hidden" name="Username" value=@Model.Username id="username" />
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <label for="certificateName">Choose a certifificate:</label>
-                    <select class="form-control" name="certificateName" id="certificateName">
+                    <input type="hidden" asp-for="Username" value=@Model.Username id="username" />
+                    <label asp-for="CertificateName">Choose a certifificate:</label>
+                    <select class="form-control" asp-for="CertificateName">
                         @{
                             if (Model != null)
                                 foreach (var c in Model.Keys)
@@ -22,14 +25,13 @@
                     </select>
                     <br />
                     <div class="form-group">
-                        <label for="Signature" class="control-label">User signature:</label>
-                        <textarea class="form-control" name="Signature" rows="3"></textarea>
+                        <label asp-for="Signature" class="control-label">User signature:</label>
+                        <textarea class="form-control" asp-for="Signature" rows="3"></textarea>
                     </div>
                     <div class="form-group">
-                        <label for="Document">Document:</label>
-                        <input for="Document" name="Document" type="file" class="form-control-file" />
+                        <label asp-for="Document">Document:</label>
+                        <input asp-for="Document" type="file" class="form-control-file" />
                     </div>
-                    <partial name="_ErrorSuccessMessages" />
                     <div class="form-group">
                         <input type="submit" value="Verify" class="btn btn-primary" />
                     </div>
