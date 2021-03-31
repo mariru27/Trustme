@@ -78,7 +78,7 @@ namespace Trustme.Controllers
 
 
         [HttpPost]
-        public IActionResult VerifySignatureDocument(VerifySignatureDocumentModel verifySignatureDocumentModel)
+        public IActionResult VerifySign(VerifySignatureDocumentModel verifySignatureDocumentModel)
         {
 
             //validate signature
