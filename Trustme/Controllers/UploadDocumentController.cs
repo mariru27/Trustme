@@ -53,8 +53,8 @@ namespace Trustme.Controllers
             User user = _UserRepository.GetUserbyUsername(verifyUserModel.Username);
             if (user == null)
             {
-                TempData["UserError"] = "User do not extist!";
-                return RedirectToAction("SendDocumentToUser");
+                ModelState.AddModelError("", "User do not exist!");
+                return View();
             }
             else
             {
