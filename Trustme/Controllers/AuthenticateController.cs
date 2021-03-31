@@ -41,6 +41,10 @@ namespace Trustme.Controllers
 
         public async Task<IActionResult> Register(User user)
         {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
             User usedUser = _UserRepository.GetUserbyUsername(user.Username);
             User usedMailUser = _UserRepository.GetUserbyMail(user.Mail);
 
