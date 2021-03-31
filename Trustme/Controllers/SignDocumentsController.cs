@@ -43,6 +43,7 @@ namespace Trustme.Controllers
             _UnsignedDocumentRepository.DeleteUnsignedDocument(id);
             return RedirectToAction("UnsignedDocuments");
         }
+        [HttpGet]
         public IActionResult Sign(int IdUnsignedDocument, string Signature)
         {
             KeysUnsignedDocumentViewModel keysUnsignedDocumentViewModel = new KeysUnsignedDocumentViewModel
@@ -53,8 +54,8 @@ namespace Trustme.Controllers
             };
             return View(keysUnsignedDocumentViewModel);
         }
-
-        public IActionResult SignSentDocumentCard(int IdUnsignedDocument, IFormFile PkFile)
+        [HttpPost]
+        public IActionResult Sign(int IdUnsignedDocument, IFormFile PkFile)
         {
             if (PkFile == null)
             {

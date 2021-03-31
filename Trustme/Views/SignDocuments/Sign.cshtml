@@ -1,8 +1,10 @@
 ﻿@model KeysUnsignedDocumentViewModel
 
 <h1>Sign documet</h1>
-<form asp-action="SignSentDocumentCard" enctype="multipart/form-data" method="post">
-    <input type="hidden" name="IdUnsignedDocument" value=@Model.UnsignedDocument.IdUnsignedDocument id="IdUnsignedDocument" />
+<div asp-validation-summary="All" class="text-danger"></div>
+
+<form asp-action="Sign" enctype="multipart/form-data" method="post">
+    <input type="hidden" asp-for=@Model.UnsignedDocument.IdUnsignedDocument id="IdUnsignedDocument" />
     <div class="card">
         <div class="card-header">
             Sent from username:
@@ -22,7 +24,6 @@
                 <input asp-for="@Model.PkFile" type="file">
             </div>
             <br />
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
             @{
                 if (Model.Signature != "" && Model.Signature != null)
