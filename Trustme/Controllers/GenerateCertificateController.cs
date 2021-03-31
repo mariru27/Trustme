@@ -61,13 +61,13 @@ namespace Trustme.Controllers
                 if (_KeyRepository.GetNrCertificates(currentUser) >= UserMaximNumberOfCertificates && _HttpRequestFunctions.GetUserRole(HttpContext) == "Free")
                 {
                     TempData["CertificatesNrError"] = "You cannot have more than three certificates, delete a certificate if you want to generate another!";
-                    return RedirectToAction("Generate");
+                    return View();
                 }
 
                 if (_KeyRepository.CheckCertificateSameName(currentUser, key.CertificateName))
                 {
                     TempData["CertificateNameAlreadyExistError"] = "Certificate name already exists, choose another one!";
-                    return RedirectToAction("Generate");
+                    return View();
 
                 }
                 string wwwPath = this.Environment.WebRootPath;
@@ -174,7 +174,7 @@ namespace Trustme.Controllers
                 result.FileDownloadName = key.CertificateName + ".zip";
                 return result;
             }
-            return RedirectToAction("Generate");
+            return View();
         }
 
         [HttpGet]
