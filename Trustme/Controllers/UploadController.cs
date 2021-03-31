@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.IO;
 using Trustme.IServices;
@@ -68,33 +67,33 @@ namespace Trustme.Controllers
             }
         }
         [HttpPost]
-        public IActionResult UploadDocument(string Username, string CertificateName, IFormFile Document)
+        public IActionResult UploadDocument(UploadDocumentModel uploadDocumentModel)
         {
             UserUnsignedDocument userUnsignedDocument = new UserUnsignedDocument();
-            if (Document == null)
+            if (uploadDocumentModel.Document == null)
             {
                 TempData["DocumentError"] = "You forgot to attach document!";
-                return RedirectToAction("LoadDocumentToSign", new { Username });
+                return RedirectToAction("LoadDocumentToSign", new { uploadDocumentModel.Username });
 
             }
             UnsignedDocument unsignedDocument = new UnsignedDocument
             {
-                Name = Document.FileName
+                Name = uploadDocumentModel.Document.FileName
             };
             using (var target = new MemoryStream())
             {
-                Document.CopyTo(target);
+                uploadDocumentModel.Document.CopyTo(target);
                 unsignedDocument.Document = target.ToArray();
             }
-            Key key = _KeyRepository.GetKeyByCertificateName(Username, CertificateName);
+            Key key = _KeyRepository.GetKeyByCertificateName(uploadDocumentModel.Username, uploadDocumentModel.CertificateName);
 
-            unsignedDocument.KeyPreference = CertificateName;
+            unsignedDocument.KeyPreference = uploadDocumentModel.CertificateName;
             //unsignedDocument.Key = key;
             unsignedDocument.KeyId = key.KeyId;
             unsignedDocument.SentFromUsername = _HttpRequestFunctions.GetUser(HttpContext).Username;
-            if (_UserRepository.GetUserbyUsername(Username) != null)
+            if (_UserRepository.GetUserbyUsername(uploadDocumentModel.Username) != null)
             {
-                userUnsignedDocument.User = _UserRepository.GetUserbyUsername(Username);
+                userUnsignedDocument.User = _UserRepository.GetUserbyUsername(uploadDocumentModel.Username);
                 userUnsignedDocument.UnsignedDocument = unsignedDocument;
                 //_UnsignedDocumentRepository.AddUnsignedDocument(userUnsignedDocument);
 
@@ -102,7 +101,7 @@ namespace Trustme.Controllers
                 {
                     Key = key,
                     UnsignedDocument = unsignedDocument,
-                    User = _UserRepository.GetUserbyUsername(Username)
+                    User = _UserRepository.GetUserbyUsername(uploadDocumentModel.Username)
                 };
                 //unsignedDocumentUserKey.Key = key;
 
@@ -113,7 +112,7 @@ namespace Trustme.Controllers
             {
                 TempData["UserError"] = "User do not extist!";
             }
-            return RedirectToAction("LoadDocumentToSign", new { Username });
+            return RedirectToAction("LoadDocumentToSign", new { uploadDocumentModel.Username });
         }
     }
 }
