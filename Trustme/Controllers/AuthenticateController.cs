@@ -43,7 +43,11 @@ namespace Trustme.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View();
+                RolesUserViewModel rolesUserViewModel = new RolesUserViewModel
+                {
+                    Roles = new SelectList(_RoleReporitory.ListAllRoles().Where(a => a.RoleName != "Admin").ToList(), "IdRole", "RoleName")
+                };
+                return View(rolesUserViewModel);
             }
             User usedUser = _UserRepository.GetUserbyUsername(user.Username);
             User usedMailUser = _UserRepository.GetUserbyMail(user.Mail);
@@ -51,7 +55,7 @@ namespace Trustme.Controllers
             RolesUserViewModel userResult = new RolesUserViewModel
             {
                 User = user,
-                Roles = new SelectList(_RoleReporitory.ListAllRoles(), "IdRole", "RoleName")
+                Roles = new SelectList(_RoleReporitory.ListAllRoles().Where(a => a.RoleName != "Admin").ToList(), "IdRole", "RoleName")
             };
 
             if (usedUser != null || usedMailUser != null)
