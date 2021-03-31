@@ -46,7 +46,7 @@ namespace Trustme.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Obsolete]
-        public IActionResult GenerateCertificate(string certificateName, string description, int keySize)
+        public IActionResult Generate(string certificateName, string description, int keySize)
         {
             if (ModelState.IsValid)
             {
@@ -177,6 +177,7 @@ namespace Trustme.Controllers
             return RedirectToAction("Generate");
         }
 
+        [HttpGet]
         public IActionResult Generate()
         {
 

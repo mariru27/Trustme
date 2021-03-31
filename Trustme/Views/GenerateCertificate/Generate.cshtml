@@ -3,10 +3,9 @@
 <h4 class="display-4">Generate certificates</h4>
 
 <hr />
-@*<partial name="_ErrorSuccessMessages" />*@
 
 
-<form asp-action="GenerateCertificate">
+<form asp-action="Generate">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div class="form-group">
         <label asp-for="CertificateName" class="control-label">Certificate name</label>
