@@ -3,13 +3,14 @@
 <h4 class="display-4">Upload document to sign</h4>
 <hr />
 
+<div asp-validation-summary="All" class="text-danger"></div>
+
 <form method="post" asp-action="UploadUser">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div class="form-group">
         <label for="Username" class="control-label">Username you want to send document</label>
         <input for="Username" name="Username" type="text" class="form-control" />
     </div>
-    <partial name="_ErrorSuccessMessages" view-data="ViewData" />
     <div class="form-group">
         <input type="submit" value="Submit" class="btn btn-primary" />
     </div>
