@@ -42,10 +42,10 @@ namespace Trustme.Controllers
         }
 
         [HttpPost]
-        public IActionResult VerifyUser(string username)
+        public IActionResult UploadUser(VerifyUserModel verifyUserModel)
         {
             //check if user exist 
-            User user = _UserRepository.GetUserbyUsername(username);
+            User user = _UserRepository.GetUserbyUsername(verifyUserModel.Username);
             if (user == null)
             {
                 TempData["UserError"] = "User do not extist!";
@@ -59,7 +59,7 @@ namespace Trustme.Controllers
                     TempData["UserDontHaveCertificates"] = "User do not have any certificate! User need to generate a certificate!";
                     return RedirectToAction("SendDocumentToUser");
                 }
-                return RedirectToAction("LoadDocumentToSign", new { username = username });
+                return RedirectToAction("LoadDocumentToSign", new { Username = verifyUserModel.Username });
             }
         }
         [HttpPost]
