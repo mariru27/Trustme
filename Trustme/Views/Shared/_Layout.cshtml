@@ -173,7 +173,7 @@
                                 if (username != null && userRole != "Admin")
                                 {
                                     <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-controller="LoadDocument" asp-action="SendDocumentToUser">Upload</a>
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="Upload" asp-action="UploadUser">Upload</a>
                                     </li>
                                     if (_KeyRepository.GetNrCertificates(_IHttpRequestFunctions.GetUser(HttpContextAccessor.HttpContext)) == 0)
                                     {

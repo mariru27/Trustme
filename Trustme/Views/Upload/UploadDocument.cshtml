@@ -1,11 +1,18 @@
 ﻿@model UploadDocumentModel
 
 <h4 class="display-4">Upload document to sign</h4>
+<hr />
+<div asp-validation-summary="All" class="text-danger"></div>
 
-<form method="post" enctype="multipart/form-data" asp-action="LoadDocumentToSign">
-    <input type="hidden" name="Username" value=@Model.Username id="Username" />
+@if (TempData["SuccessUpload"] != null)
+{
+    <p class="alert alert-success" id="successMessage">@TempData["SuccessUpload"]</p>
+}
+
+<form method="post" enctype="multipart/form-data" asp-action="UploadDocument">
+    <input type="hidden" asp-for="Username" value=@Model.Username />
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-    <label for="certificateName">Choose a certifificate:</label>
+    <label asp-for="CertificateName">Choose a certifificate:</label>
     <select class="form-control" name="certificateName" id="certificateName">
         @{
             if (Model != null)
@@ -17,10 +24,9 @@
     </select>
     <br>
     <div class="form-group">
-        <label for="Document"><strong>Document</strong></label>
-        <input for="Document" name="Document" type="file">
+        <label asp-for="Document"><strong>Document</strong></label>
+        <input asp-for="Document" type="file">
     </div>
-    <partial name="_ErrorSuccessMessages" view-data="ViewData" />
     <div class="form-group">
         <input type="submit" value="Submit" class="btn btn-primary" />
     </div>
