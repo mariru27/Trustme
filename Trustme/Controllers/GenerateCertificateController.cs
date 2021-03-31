@@ -46,14 +46,14 @@ namespace Trustme.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Obsolete]
-        public IActionResult Generate(string certificateName, string description, int keySize)
+        public IActionResult Generate(Key key)
         {
             if (ModelState.IsValid)
             {
 
                 User currentUser = _HttpRequestFunctions.GetUser(HttpContext);
 
-                if (certificateName == null)
+                if (key.CertificateName == null)
                 {
                     TempData["CertificateNameError"] = "Required certificate name";
                     return RedirectToAction("Generate");
@@ -64,7 +64,7 @@ namespace Trustme.Controllers
                     return RedirectToAction("Generate");
                 }
 
-                if (_KeyRepository.CheckCertificateSameName(currentUser, certificateName))
+                if (_KeyRepository.CheckCertificateSameName(currentUser, key.CertificateName))
                 {
                     TempData["CertificateNameAlreadyExistError"] = "Certificate name already exists, choose another one!";
                     return RedirectToAction("Generate");
@@ -74,7 +74,7 @@ namespace Trustme.Controllers
 
                 // Keypair Generator
                 RsaKeyPairGenerator kpGenerator = new RsaKeyPairGenerator();
-                kpGenerator.Init(new KeyGenerationParameters(new SecureRandom(), keySize));
+                kpGenerator.Init(new KeyGenerationParameters(new SecureRandom(), key.KeySize));
 
                 // Create a keypair
                 AsymmetricCipherKeyPair kp = kpGenerator.GenerateKeyPair();
@@ -103,9 +103,9 @@ namespace Trustme.Controllers
                     string publicKey = textWriter1.ToString();
 
                     Key currentKey = new Key();
-                    currentKey.CertificateName = certificateName;
-                    currentKey.Description = description;
-                    currentKey.KeySize = keySize;
+                    currentKey.CertificateName = key.CertificateName;
+                    currentKey.Description = key.Description;
+                    currentKey.KeySize = key.KeySize;
                     currentKey.PublicKey = publicKey;
 
 
@@ -171,7 +171,7 @@ namespace Trustme.Controllers
                 Directory.Delete(pathDir);
                 System.IO.File.Delete(pathDirectoryZip);
 
-                result.FileDownloadName = certificateName + ".zip";
+                result.FileDownloadName = key.CertificateName + ".zip";
                 return result;
             }
             return RedirectToAction("Generate");
