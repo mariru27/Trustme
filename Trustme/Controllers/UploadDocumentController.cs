@@ -35,7 +35,8 @@ namespace Trustme.Controllers
             return View(uploadDocumentModel);
         }
 
-        public IActionResult SendDocumentToUser()
+        [HttpGet]
+        public IActionResult UploadUser()
         {
             return View();
         }
