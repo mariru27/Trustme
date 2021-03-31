@@ -80,9 +80,10 @@ namespace Trustme.Controllers
         [HttpPost]
         public IActionResult VerifySign(VerifySignModel verifySignModel)
         {
+            verifySignModel.Keys = _KeyRepository.ListAllKeys(_UserRepository.GetUserbyUsername(verifySignModel.Username));
+
             if (!ModelState.IsValid)
             {
-                verifySignModel.Keys = _KeyRepository.ListAllKeys(_UserRepository.GetUserbyUsername(verifySignModel.Username));
                 return View(verifySignModel);
             }
 
@@ -102,8 +103,8 @@ namespace Trustme.Controllers
             }
             catch (Exception)
             {
-                TempData["Error_CorruptedSignature"] = "Signature was corrupted!";
-                return RedirectToAction("VerifySign", new { username = verifySignModel.Username });
+                ModelState.AddModelError("", "Signature was corrupted!");
+                return View();
             };
 
             byte[] signaturebyte = Convert.FromBase64String(verifySignModel.Signature);
