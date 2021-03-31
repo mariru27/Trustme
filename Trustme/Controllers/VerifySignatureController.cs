@@ -22,9 +22,16 @@ namespace Trustme.Controllers
         }
 
         [HttpGet]
-        public IActionResult VerifySign(VerifySignModel verifySignModel)
+        public IActionResult VerifySign(string Username)
         {
-
+            //get users keys
+            var keyList = _KeyRepository.ListAllKeys(_UserRepository.GetUserbyUsername(Username));
+            //populate VerifySignModel with username and users keys
+            VerifySignModel verifySignModel = new VerifySignModel
+            {
+                Username = Username,
+                Keys = keyList
+            };
             return View(verifySignModel);
         }
 
@@ -61,14 +68,9 @@ namespace Trustme.Controllers
                 var keyList = _KeyRepository.ListAllKeys(currentUser);
                 if (keyList != null)
                 {
-                    VerifySignModel verifySignModel = new VerifySignModel
-                    {
-                        Username = verifyUserModel.Username,
-                        Keys = keyList
-                    };
+
                     //pass to view keys and username
-                    return RedirectToAction("VerifySign", verifySignModel);
-                    //return RedirectToAction("VerifySign", verifySignModel);
+                    return RedirectToAction("VerifySign", new { Username = verifyUserModel.Username });
                 }
             }
             return View();
