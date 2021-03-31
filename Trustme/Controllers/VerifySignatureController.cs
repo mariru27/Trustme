@@ -109,9 +109,10 @@ namespace Trustme.Controllers
 
             byte[] signaturebyte = Convert.FromBase64String(verifySignModel.Signature);
             if (sign.VerifySignature(signaturebyte) == false)
-                TempData["Error_InvalidSignature"] = "Invalid signature!";
+                ModelState.AddModelError("", "Invalid signature!");
             else
-                TempData["ValidSignature"] = "Signature is valid!";
+                ModelState.AddModelError("", "Signature is valid!");
+
 
             return RedirectToAction("VerifySign", new { username = verifySignModel.Username });
         }
