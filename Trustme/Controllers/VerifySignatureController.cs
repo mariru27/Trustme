@@ -114,7 +114,7 @@ namespace Trustme.Controllers
                 ModelState.AddModelError("", "Signature is valid!");
 
 
-            return RedirectToAction("VerifySign", new { username = verifySignModel.Username });
+            return View(verifySignModel);
         }
 
 
