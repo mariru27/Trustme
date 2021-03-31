@@ -53,20 +53,15 @@ namespace Trustme.Controllers
 
                 User currentUser = _HttpRequestFunctions.GetUser(HttpContext);
 
-                if (key.CertificateName == null)
-                {
-                    TempData["CertificateNameError"] = "Required certificate name";
-                    return RedirectToAction("Generate");
-                }
                 if (_KeyRepository.GetNrCertificates(currentUser) >= UserMaximNumberOfCertificates && _HttpRequestFunctions.GetUserRole(HttpContext) == "Free")
                 {
-                    TempData["CertificatesNrError"] = "You cannot have more than three certificates, delete a certificate if you want to generate another!";
+                    ModelState.AddModelError("", "You cannot have more than three certificates, delete a certificate if you want to generate another!");
                     return View();
                 }
 
                 if (_KeyRepository.CheckCertificateSameName(currentUser, key.CertificateName))
                 {
-                    TempData["CertificateNameAlreadyExistError"] = "Certificate name already exists, choose another one!";
+                    ModelState.AddModelError("", "Certificate name already exists, choose another one!");
                     return View();
 
                 }
