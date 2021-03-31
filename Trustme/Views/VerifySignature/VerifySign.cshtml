@@ -6,7 +6,10 @@
 <hr />
 
 <div asp-validation-summary="All" class="text-danger"></div>
-
+@if (TempData["ValidSignature"] != null)
+{
+    <p class="alert alert-success" id="successMessage">@TempData["ValidSignature"]</p>
+}
 <div class="row">
     <div class="col-md-4">
         <form action="VerifySign" enctype="multipart/form-data" method="post">
@@ -32,6 +35,7 @@
                         <label asp-for="Document">Document:</label>
                         <input asp-for="Document" type="file" class="form-control-file" />
                     </div>
+
                     <div class="form-group">
                         <input type="submit" value="Verify" class="btn btn-primary" />
                     </div>
