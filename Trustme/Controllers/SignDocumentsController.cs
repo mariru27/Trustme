@@ -70,8 +70,8 @@ namespace Trustme.Controllers
 
             if (keysUnsignedDocumentViewModel.PkFile == null)
             {
-                TempData["PKNull"] = "You forgot to attach private key file!";
-                return RedirectToAction("SignSentDocument", new { IdUnsignedDocument = keysUnsignedDocumentViewModel.IdUnsignedDocument });
+                ModelState.AddModelError("", "You forgot to attach private key file!");
+                return View(keysUnsignedDocumentViewModelPass);
             }
             string fileExtension = System.IO.Path.GetExtension(keysUnsignedDocumentViewModel.PkFile.FileName);
             if (fileExtension != ".pem")
