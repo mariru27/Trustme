@@ -42,11 +42,7 @@
             </td>
             <td>
                 <a asp-action="EditUser" asp-route-id="@Model.User.UserId">Edit</a> |
-                <a class="btn-danger delete" 
-                   data-id="@Model.User.UserId"
-                   data-controller="Administrator"
-                   data-action="delete"
-                   data-body-message="Are you sure you want to delete this user?">Delete</a>
+                <a class="btn-danger" onclick="ConfirmDelete(@Model.User.UserId)"> @Model.User.UserId Delete</a>
                 @*<partial name="_DeleteUserModal" model="Model.User" />*@
 
 
