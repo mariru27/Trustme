@@ -1,7 +1,11 @@
 ﻿@model RoleUserModel
-@{ 
+@{
     var id = Model.User.UserId;
 }
+
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="~/lib/bootstrap/dist/js/bootstrap.js" />
+<link rel="stylesheet" href="~/lib/jquery/jquery.min.js" />
 
 <table class="table">
     <thead>
@@ -78,21 +82,18 @@
 </form>
 
 <script>
-    var ConfirmDelete = function (id)
-    {
+    var ConfirmDelete = function (id) {
         $("hiddenId").val(id);
-        $("#DeleteUserModal").modal(show);
+        $("#DeleteUserModal").modal("show");
     }
-    var DeleteUser = function ()
-    {
+    var DeleteUser = function () {
         $("loaderDiv").show('show');
         var Id = $("#hiddenId").val();
         $.ajax({
             type: "POST",
             url: "/Administrator/Delete",
             data: { UserId: Id },
-            success: function (result)
-            {
+            success: function (result) {
                 $("#loaderDiv").hide();
                 $("#DeleteUserModal").modal("hide");
                 $("#row_" + Id).remove().remove();
