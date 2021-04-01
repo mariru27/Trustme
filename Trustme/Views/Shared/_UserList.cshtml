@@ -1,8 +1,6 @@
 ﻿@model RoleUserModel
 
-@{
-    var userId = Model.User.UserId;
-}
+
 <table class="table">
     <thead>
         <tr>
@@ -44,8 +42,9 @@
             </td>
             <td>
                 <a asp-action="EditUser" asp-route-id="@Model.User.UserId">Edit</a> |
-                <a asp-action="" data-toggle="modal" data-target="#DeleteUserModal">Delete</a>
-                <partial name="_DeleteUserModal" model="Model.User" />
+                <a asp-route-id="@Model.User.UserId" data-toggle="modal" data-target="#DeleteUserModal">Delete</a>
+                @*<partial name="_DeleteUserModal" model="Model.User" />*@
+                
 
             </td>
         </tr>
@@ -53,3 +52,72 @@
     </tbody>
 </table>
 
+
+
+
+
+<form method="post" asp-action="DeleteConfirmed">
+    <input type="hidden" name="UserId" value=@Model.User.UserId id="UserId" />
+    <div id="DeleteUserModal" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Are you sure you want to delete this user?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    User :  @Model.User.Username
+
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Yes</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+
+@section scripts{
+    <script>
+
+
+
+        var ConfirmDelete = function (UserId) {
+
+            $("#UserId").val(UserId);
+            $("#myModal").modal('show');
+
+        }
+
+        var DeleteUser = function () {
+
+
+
+            var UserId = $("#UserId").val();
+
+            $.ajax({
+
+                type: "POST",
+                url: "/Administrator/ConfirmDelete",
+                data: { Id: UserId },
+                success: function (result) {
+
+                    $("#DeleteUserModal").modal("hide");
+                    $("#row_" + UserId).remove();
+
+                }
+
+            })
+
+        }
+
+
+
+    </script>
+
+}
