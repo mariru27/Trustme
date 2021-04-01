@@ -42,7 +42,7 @@
             </td>
             <td>
                 <a asp-action="EditUser" asp-route-id="@Model.User.UserId">Edit</a> |
-                <a onclick="ConfirmDelete(@Model.User.UserId)" >Delete</a>
+                <a asp-action="" onclick="ConfirmDelete(@Model.User.UserId)" >Delete</a>
                 @*<partial name="_DeleteUserModal" model="Model.User" />*@
 
 
