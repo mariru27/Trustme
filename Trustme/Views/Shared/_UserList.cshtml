@@ -42,7 +42,7 @@
             </td>
             <td>
                 <a asp-action="EditUser" asp-route-id="@Model.User.UserId">Edit</a> |
-                <a asp-route-id="@Model.User.UserId" data-toggle="modal" data-target="#DeleteUserModal">Delete</a>
+                <a onclick="ConfirmDelete(@Model.User.UserId)" data-toggle="modal" data-target="#DeleteUserModal" >Delete</a>
                 @*<partial name="_DeleteUserModal" model="Model.User" />*@
                 
 
@@ -69,9 +69,8 @@
                 </div>
                 <div class="modal-body">
                     User :  @Model.User.Username
-
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Yes</button>
+                        <button type="submit" class="btn btn-primary" onclick="DeleteEmployee()">Yes</button>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
                     </div>
                 </div>
