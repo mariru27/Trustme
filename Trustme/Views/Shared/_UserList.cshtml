@@ -59,46 +59,41 @@
 </table>
 
 
-<form method="post" asp-action="DeleteConfirmed">
-    <input type="hidden" name="hiddenId" id="hiddenId" />
-    <div id="DeleteUserModal" class="modal" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Are you sure you want to delete this user? @id</h5>
-                    <h5 class="modal-title">username @Model.User.Username</h5>
-                    <input type="text" id="test"/>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary" onclick="">Yes</button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="DeleteUser()">No</button>
-                    </div>
+<div id="DeleteUserModal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Are you sure you want to delete this user?</h5>
+
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" onclick="">Yes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="DeleteUser()">No</button>
                 </div>
             </div>
         </div>
     </div>
-</form>
+    <input type="hidden" id="hiddenId" />
+</div>
 
 <script>
-    var ConfirmDelete = function (id) {
-        $("test").val(id);
+    var ConfirmDelete = function (UserId) {
+        $("hiddenId").val(UserId);
         $("#DeleteUserModal").modal("show");
     }
     var DeleteUser = function () {
-        $("loaderDiv").show('show');
-        var Id = $("#hiddenId").val();
+        var IdUser = $("#hiddenId").val();
         $.ajax({
             type: "POST",
             url: "/Administrator/Delete",
-            data: { UserId: Id },
+            data: { UserId: IdUser },
             success: function (result) {
-                $("#loaderDiv").hide();
                 $("#DeleteUserModal").modal("hide");
-                $("#row_" + Id).remove().remove();
+                $("#row_" + Id).remove();
             }
         })
     }
