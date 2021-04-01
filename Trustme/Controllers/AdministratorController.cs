@@ -57,7 +57,7 @@ namespace Trustme.Controllers
 
         [ValidateAntiForgeryToken]
         [HttpPost]
-        public IActionResult DeleteConfirmed(int? UserId)
+        public IActionResult Delete(int? UserId)
         {
             if (UserId == null)
                 return NotFound();
