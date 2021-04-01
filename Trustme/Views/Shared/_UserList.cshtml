@@ -89,9 +89,11 @@
         var IdUser = $("#hiddenId").val();
         $.ajax({
             type: "POST",
-            url: "/Administrator/Delete",
+            url: "@Url.Action("Delete")",
             data: { UserId: IdUser },
+            dataType: "text",
             success: function (result) {
+                console.log("success");
                 $("#DeleteUserModal").modal("hide");
                 $("#row_" + Id).remove();
             }
