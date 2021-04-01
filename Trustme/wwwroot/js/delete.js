@@ -33,7 +33,7 @@
         var bodyMessage = $(target).data('body-message');
         redirectUrl = $(target).data('redirect-url');
 
-        url = "/" + controller + "/" + action + "?Id=" + Id;
+        url = "/" + controller + "/" + action + "?UserId=" + Id;
         $(".delete-modal-body").text(bodyMessage);
         $("#deleteModal").modal('show');
     });

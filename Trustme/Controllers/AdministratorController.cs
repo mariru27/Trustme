@@ -24,10 +24,10 @@ namespace Trustme.Controllers
             _RoleRepository = roleRepository;
             _UserRepository = userRepository;
         }
-        public IActionResult Index()
-        {
-            return View();
-        }
+        //public IActionResult Index()
+        //{
+        //    return View();
+        //}
         public IActionResult Users()
         {
             IEnumerable<User> users = _UserRepository.ListAllUsers();
@@ -44,6 +44,15 @@ namespace Trustme.Controllers
                 usersroles.Add(roleUser);
             }
             return View(usersroles);
+        }
+        [HttpPost]
+        public IActionResult Index(int? UserId)
+        {
+            if (UserId == null)
+                return NotFound();
+            User user = _UserRepository.GetUserById((int)UserId);
+            _UserRepository.DeleteUser(user);
+            return RedirectToAction(nameof(Users));
         }
 
         [ValidateAntiForgeryToken]
