@@ -42,9 +42,9 @@
             </td>
             <td>
                 <a asp-action="EditUser" asp-route-id="@Model.User.UserId">Edit</a> |
-                <a onclick="ConfirmDelete(@Model.User.UserId)" data-toggle="modal" data-target="#DeleteUserModal" >Delete</a>
+                <a onclick="ConfirmDelete(@Model.User.UserId)" >Delete</a>
                 @*<partial name="_DeleteUserModal" model="Model.User" />*@
-                
+
 
             </td>
         </tr>
@@ -70,7 +70,7 @@
                 <div class="modal-body">
                     User :  @Model.User.Username
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary" onclick="DeleteEmployee()">Yes</button>
+                        <button type="submit" class="btn btn-primary" onclick="DeleteUser()">Yes</button>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
                     </div>
                 </div>
@@ -78,6 +78,8 @@
         </div>
     </div>
 </form>
+
+<input type="hidden" id="UserId" />
 
 
 
@@ -89,7 +91,7 @@
         var ConfirmDelete = function (UserId) {
 
             $("#UserId").val(UserId);
-            $("#myModal").modal('show');
+            $("#DeleteUserModal").modal('show');
 
         }
 
