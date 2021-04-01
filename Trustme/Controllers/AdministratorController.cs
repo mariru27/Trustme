@@ -66,6 +66,19 @@ namespace Trustme.Controllers
             return RedirectToAction(nameof(Users));
         }
 
+        public JsonResult Deletee(int? UserId)
+        {
+            bool result = false;
+            if (UserId != null)
+            {
+                User user = _UserRepository.GetUserById((int)UserId);
+                _UserRepository.DeleteUser(user);
+                result = true;
+            }
+
+            return JsonResult(result, System.Web.Mvc.JsonRequestBehavior.AllowGet);
+        }
+
         [HttpPost]
         public IActionResult EditUser(EditUserModel user)
         {
