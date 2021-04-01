@@ -56,7 +56,7 @@
 
 
 <form method="post" asp-action="DeleteConfirmed">
-    <input type="hidden" name="UserId" value=@id id="hiddenId" />
+    <input type="hidden" name="hiddenId" value=@id id="hiddenId" />
     <div id="DeleteUserModal" class="modal" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -82,5 +82,21 @@
     {
         $("hiddenId").val(id);
         $("#DeleteUserModal").modal(show);
+    }
+    var DeleteUser = function ()
+    {
+        $("loaderDiv").show('show');
+        var Id = $("#hiddenId").val();
+        $.ajax({
+            type: "POST",
+            url: "/Administrator/Delete",
+            data: { UserId: Id },
+            success: function (result)
+            {
+                $("#loaderDiv").hide();
+                $("#DeleteUserModal").modal("hide");
+                $("#row_" + Id).remove().remove();
+            }
+        })
     }
 </script>
