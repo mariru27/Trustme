@@ -123,18 +123,6 @@ namespace Trustme.Controllers
             return View(roleUser);
         }
 
-        public IActionResult DeleteUser(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-            User user = _UserRepository.GetUserById((int)id);
-            if (user == null)
-            {
-                return NotFound();
-            }
-            return View(user);
-        }
+
     }
 }
