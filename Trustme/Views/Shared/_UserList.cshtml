@@ -69,7 +69,7 @@
                 <div class="modal-body">
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary" onclick="">Yes</button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="DeleteUser()">No</button>
                     </div>
                 </div>
             </div>
@@ -80,6 +80,7 @@
 <script>
     var ConfirmDelete = function (id)
     {
-
+        $("hiddenId").val(id);
+        $("#DeleteUserModal").modal(show);
     }
 </script>
