@@ -1,9 +1,12 @@
 ﻿@model RolesUserViewModel
 <h1>Edit User</h1>
 <br />
+
+<div asp-validation-summary="All" class="text-danger"></div>
+
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="EditUser" method="post" >
+        <form asp-action="EditUser" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" value="@Model.User.UserId" name="id" />
             <input type="hidden" asp-for="@Model.User.UserId" />
