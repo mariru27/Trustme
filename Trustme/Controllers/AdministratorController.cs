@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
+using System.Linq;
 using Trustme.IServices;
 using Trustme.Models;
 using Trustme.ViewModels;
@@ -57,8 +58,44 @@ namespace Trustme.Controllers
         }
 
         [HttpPost]
-        public IActionResult EditUser(User user)
+        public IActionResult EditUser(EditUserModel user)
         {
+            EditUserRolesModel roleUser = new EditUserRolesModel
+            {
+                User = user,
+                Roles = new SelectList(_RoleRepository.ListAllRoles().Where(a => a.RoleName != "Admin").ToList(), "IdRole", "RoleName")
+            };
+            //Verify model state
+            if (!ModelState.IsValid)
+            {
+                return View(roleUser);
+            }
+            User userFromDatabase = _UserRepository.GetUserById(user.UserId);
+
+            //Verify if username or mail is already used, if yes - display error
+            if ((_UserRepository.UsernameExist(user.Username) == true && userFromDatabase.Username != user.Username) || (_UserRepository.MailExist(user.Mail) == true && userFromDatabase.Mail != user.Mail))
+            {
+                //Verify if username already exist, and if this is different from previous username(from database)
+                if (_UserRepository.UsernameExist(user.Username) == true && userFromDatabase.Username != user.Username)
+                {
+                    //When username is already used, return model with the previous username(got from database)
+                    roleUser.User.Username = userFromDatabase.Username;
+                    ModelState.AddModelError("", "Username is already used");
+                }
+
+                //Verify if mail already exist, and if this is different from previous mail(from database)
+                if (_UserRepository.MailExist(user.Mail) == true && userFromDatabase.Mail != user.Mail)
+                {
+                    //When mail is already used, return model with the previous mail(got from database)
+                    roleUser.User.Mail = userFromDatabase.Mail;
+                    ModelState.AddModelError("", "Mail is already used");
+                }
+                return View(roleUser);
+
+            }
+
+
+
             User updateUser = _UserRepository.GetUserById(user.UserId);
 
             updateUser.Update(user);
@@ -77,10 +114,10 @@ namespace Trustme.Controllers
             User user = _UserRepository.GetUserById((int)id);
             if (user == null)
                 return NotFound();
-            RolesUserViewModel roleUser = new RolesUserViewModel
+            EditUserRolesModel roleUser = new EditUserRolesModel
             {
-                User = user,
-                Roles = new SelectList(_RoleRepository.ListAllRoles(), "IdRole", "RoleName")
+                User = new EditUserModel(user),
+                Roles = new SelectList(_RoleRepository.ListAllRoles().Where(a => a.RoleName != "Admin").ToList(), "IdRole", "RoleName")
             };
 
             return View(roleUser);

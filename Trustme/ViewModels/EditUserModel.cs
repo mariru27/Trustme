@@ -1,12 +1,24 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Trustme.ViewModels;
+using Trustme.Models;
 
-namespace Trustme.Models
+namespace Trustme.ViewModels
 {
-
-    public class User
+    public class EditUserModel
     {
-        [Key]
+        public EditUserModel()
+        {
+
+        }
+        public EditUserModel(User user)
+        {
+            UserId = user.UserId;
+            FirstName = user.FirstName;
+            SecondName = user.SecondName;
+            Mail = user.Mail;
+            Username = user.Username;
+            Role = user.Role;
+            RoleId = user.RoleId;
+        }
         public int UserId { set; get; }
 
         [Required]
@@ -29,28 +41,10 @@ namespace Trustme.Models
         [RegularExpression("^(?!.{26})[a-zA-Z0-9]+?$", ErrorMessage = "In username field is allowing just letters or numbers")]
         [Display(Name = "Username")]
         public string Username { set; get; }
-
-        [Required]
-        [StringLength(50, ErrorMessage = "Password must have more then 6 characters", MinimumLength = 6)]
-        [Display(Name = "Password")]
-        public string Password { get; set; }
-
-        [Required]
-        [Compare("Password", ErrorMessage = "Confirm password doesn't match, Type again !")]
-        [Display(Name = "Confirm Password")]
-        public string ConfirmPassword { get; set; }
         public int RoleId { get; set; }
 
         public Role Role { get; set; }
 
-        public void Update(EditUserModel user)
-        {
-            Username = user.Username;
-            FirstName = user.FirstName;
-            SecondName = user.SecondName;
-            Mail = user.Mail;
-            RoleId = user.RoleId;
-        }
 
     }
 }
