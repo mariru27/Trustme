@@ -74,6 +74,7 @@ namespace Trustme.Controllers
             //Verify if username already exist, and if this is different from previous username(from database)
             if (_UserRepository.UsernameExist(user.Username) == true && userFromDatabase.Username != user.Username)
             {
+                roleUser.User.Username = userFromDatabase.Username;
                 ModelState.AddModelError("", "Username is already used");
                 return View(roleUser);
             }
