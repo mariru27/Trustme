@@ -59,6 +59,10 @@ namespace Trustme.Controllers
         [HttpPost]
         public IActionResult EditUser(User user)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(user.UserId);
+            }
             User updateUser = _UserRepository.GetUserById(user.UserId);
 
             updateUser.Update(user);
