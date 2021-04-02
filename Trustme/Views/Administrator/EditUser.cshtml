@@ -8,27 +8,22 @@
     <div class="col-md-4">
         <form asp-action="EditUser" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" value="@Model.User.UserId" name="id" />
             <input type="hidden" asp-for="@Model.User.UserId" />
             <div class="form-group">
                 <label asp-for="@Model.User.Username" class="control-label"></label>
                 <input asp-for="@Model.User.Username" class="form-control" />
-                <span asp-validation-for="@Model.User.Username" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="@Model.User.FirstName" class="control-label"></label>
                 <input asp-for="@Model.User.FirstName" class="form-control" />
-                <span asp-validation-for="@Model.User.FirstName" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="@Model.User.SecondName" class="control-label"></label>
                 <input asp-for="@Model.User.SecondName" class="form-control" />
-                <span asp-validation-for="@Model.User.SecondName" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="@Model.User.Mail" class="control-label"></label>
                 <input asp-for="@Model.User.Mail" class="form-control" />
-                <span asp-validation-for="@Model.User.Mail" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="@Model.User.RoleId" class="control-label"></label>
