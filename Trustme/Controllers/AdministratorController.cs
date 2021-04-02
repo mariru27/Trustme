@@ -61,7 +61,12 @@ namespace Trustme.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View(user.UserId);
+                RolesUserViewModel roleUser = new RolesUserViewModel
+                {
+                    User = user,
+                    Roles = new SelectList(_RoleRepository.ListAllRoles(), "IdRole", "RoleName")
+                };
+                return View(roleUser);
             }
             User updateUser = _UserRepository.GetUserById(user.UserId);
 
