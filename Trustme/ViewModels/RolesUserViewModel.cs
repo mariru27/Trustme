@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using Trustme.Models;
 
 namespace Trustme.ViewModels
 {

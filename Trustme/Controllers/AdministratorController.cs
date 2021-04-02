@@ -61,7 +61,7 @@ namespace Trustme.Controllers
         {
             if (!ModelState.IsValid)
             {
-                EditUserModel roleUser = new RolesUserViewModel
+                EditUserRolesModel roleUser = new EditUserRolesModel
                 {
                     User = user,
                     Roles = new SelectList(_RoleRepository.ListAllRoles(), "IdRole", "RoleName")
@@ -86,9 +86,9 @@ namespace Trustme.Controllers
             User user = _UserRepository.GetUserById((int)id);
             if (user == null)
                 return NotFound();
-            RolesUserViewModel roleUser = new RolesUserViewModel
+            EditUserRolesModel roleUser = new EditUserRolesModel
             {
-                User = user,
+                User = new EditUserModel(user),
                 Roles = new SelectList(_RoleRepository.ListAllRoles(), "IdRole", "RoleName")
             };
 
