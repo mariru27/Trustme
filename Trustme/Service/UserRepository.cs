@@ -79,14 +79,14 @@ namespace Trustme.Service
 
         public bool UsernameExist(string Username)
         {
-            if (_context.User.Where(u => u.Username == Username).SingleOrDefault() == null)
+            if (_context.User.Where(u => u.Username == Username).SingleOrDefault() != null)
                 return true;
             return false;
 
         }
         public bool MailExist(string Mail)
         {
-            if (_context.User.Where(u => u.Mail == Mail).SingleOrDefault() == null)
+            if (_context.User.Where(u => u.Mail == Mail).SingleOrDefault() != null)
                 return true;
             return false;
 
