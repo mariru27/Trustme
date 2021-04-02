@@ -9,8 +9,8 @@
         <form asp-action="EditUser" method="post">
             <input type="hidden" asp-for="@Model.User.UserId" />
             <div class="form-group">
-                <label asp-for="@Model.User.Username" class="control-label"></label>
-                <input asp-for="@Model.User.Username" class="form-control" />
+                <label asp-for="@Model.User.Username" class="control-label" ></label>
+                <input asp-for="@Model.User.Username" value="@Model.User.Username" class="form-control" />
             </div>
             <div class="form-group">
                 <label asp-for="@Model.User.FirstName" class="control-label"></label>
@@ -22,7 +22,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="@Model.User.Mail" class="control-label"></label>
-                <input asp-for="@Model.User.Mail" class="form-control" />
+                <input asp-for="@Model.User.Mail" value="@Model.User.Mail" class="form-control" />
             </div>
             <div class="form-group">
                 <label asp-for="@Model.User.RoleId" class="control-label"></label>
