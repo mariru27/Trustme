@@ -2,9 +2,9 @@
 
 namespace Trustme.ViewModels
 {
-    public class RolesUserViewModel
+    public class EditUserRolesModel
     {
-        public User User { get; set; }
+        public EditUserModel User { get; set; }
         public SelectList Roles { get; set; }
     }
 }
