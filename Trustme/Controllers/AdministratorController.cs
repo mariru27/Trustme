@@ -70,8 +70,13 @@ namespace Trustme.Controllers
             {
                 return View(roleUser);
             }
+            User userFromDatabase = _UserRepository.GetUserById(user.UserId);
             //Verify if user already exist
-            //-----------
+            if (_UserRepository.UsernameExist(user.Username) == true && userFromDatabase.Username != user.Username)
+            {
+                ModelState.AddModelError("", "Username is already used");
+                return View(roleUser);
+            }
 
             User updateUser = _UserRepository.GetUserById(user.UserId);
 
