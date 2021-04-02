@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
+using System.Linq;
 using Trustme.IServices;
 using Trustme.Models;
 using Trustme.ViewModels;
@@ -59,15 +60,19 @@ namespace Trustme.Controllers
         [HttpPost]
         public IActionResult EditUser(EditUserModel user)
         {
+            EditUserRolesModel roleUser = new EditUserRolesModel
+            {
+                User = user,
+                Roles = new SelectList(_RoleRepository.ListAllRoles().Where(a => a.RoleName != "Admin").ToList(), "IdRole", "RoleName")
+            };
+            //Verify model state
             if (!ModelState.IsValid)
             {
-                EditUserRolesModel roleUser = new EditUserRolesModel
-                {
-                    User = user,
-                    Roles = new SelectList(_RoleRepository.ListAllRoles(), "IdRole", "RoleName")
-                };
                 return View(roleUser);
             }
+            //Verify if user already exist
+            //-----------
+
             User updateUser = _UserRepository.GetUserById(user.UserId);
 
             updateUser.Update(user);
@@ -89,7 +94,7 @@ namespace Trustme.Controllers
             EditUserRolesModel roleUser = new EditUserRolesModel
             {
                 User = new EditUserModel(user),
-                Roles = new SelectList(_RoleRepository.ListAllRoles(), "IdRole", "RoleName")
+                Roles = new SelectList(_RoleRepository.ListAllRoles().Where(a => a.RoleName != "Admin").ToList(), "IdRole", "RoleName")
             };
 
             return View(roleUser);

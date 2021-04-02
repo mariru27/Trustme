@@ -74,7 +74,15 @@ namespace Trustme.Service
         }
         public bool AnyUser()
         {
-           return _context.User.Any();
+            return _context.User.Any();
+        }
+
+        public bool UsernameExist(string Username)
+        {
+            if (_context.User.Where(u => u.Username == Username).SingleOrDefault() == null)
+                return true;
+            return false;
+
         }
     }
 }
