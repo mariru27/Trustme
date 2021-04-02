@@ -57,11 +57,11 @@ namespace Trustme.Controllers
         }
 
         [HttpPost]
-        public IActionResult EditUser(User user)
+        public IActionResult EditUser(EditUserModel user)
         {
             if (!ModelState.IsValid)
             {
-                RolesUserViewModel roleUser = new RolesUserViewModel
+                EditUserModel roleUser = new RolesUserViewModel
                 {
                     User = user,
                     Roles = new SelectList(_RoleRepository.ListAllRoles(), "IdRole", "RoleName")

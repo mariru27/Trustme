@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Trustme.ViewModels;
 
 namespace Trustme.Models
 {
@@ -42,7 +43,7 @@ namespace Trustme.Models
 
         public Role Role { get; set; }
 
-        public void Update(User user)
+        public void Update(EditUserModel user)
         {
             Username = user.Username;
             FirstName = user.FirstName;
