@@ -74,6 +74,7 @@ namespace Trustme.Controllers
             //Verify if username already exist, and if this is different from previous username(from database)
             if (_UserRepository.UsernameExist(user.Username) == true && userFromDatabase.Username != user.Username)
             {
+                //When username is already used, return model with the previous username(got from database)
                 roleUser.User.Username = userFromDatabase.Username;
                 ModelState.AddModelError("", "Username is already used");
                 return View(roleUser);
@@ -82,6 +83,8 @@ namespace Trustme.Controllers
             //Verify if mail already exist, and if this is different from previous mail(from database)
             if (_UserRepository.MailExist(user.Mail) == true && userFromDatabase.Mail != user.Mail)
             {
+                //When mail is already used, return model with the previous mail(got from database)
+                roleUser.User.Mail = userFromDatabase.Mail;
                 ModelState.AddModelError("", "Mail is already used");
                 return View(roleUser);
             }
