@@ -3,8 +3,18 @@ using Trustme.Models;
 
 namespace Trustme.ViewModels
 {
-    public class EditModel
+    public class EditUserModel
     {
+        public EditUserModel(User user)
+        {
+            UserId = user.UserId;
+            FirstName = user.FirstName;
+            SecondName = user.SecondName;
+            Mail = user.Mail;
+            Username = user.Username;
+            Role = user.Role;
+            RoleId = user.RoleId;
+        }
         public int UserId { set; get; }
 
         [Required]
