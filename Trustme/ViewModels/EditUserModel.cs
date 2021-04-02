@@ -5,6 +5,10 @@ namespace Trustme.ViewModels
 {
     public class EditUserModel
     {
+        public EditUserModel()
+        {
+
+        }
         public EditUserModel(User user)
         {
             UserId = user.UserId;
