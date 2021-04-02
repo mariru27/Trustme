@@ -71,23 +71,30 @@ namespace Trustme.Controllers
                 return View(roleUser);
             }
             User userFromDatabase = _UserRepository.GetUserById(user.UserId);
-            //Verify if username already exist, and if this is different from previous username(from database)
-            if (_UserRepository.UsernameExist(user.Username) == true && userFromDatabase.Username != user.Username)
+
+            //Verify if username or mail is already used, if yes - display error
+            if ((_UserRepository.UsernameExist(user.Username) == true && userFromDatabase.Username != user.Username) || (_UserRepository.MailExist(user.Mail) == true && userFromDatabase.Mail != user.Mail))
             {
-                //When username is already used, return model with the previous username(got from database)
-                roleUser.User.Username = userFromDatabase.Username;
-                ModelState.AddModelError("", "Username is already used");
+                //Verify if username already exist, and if this is different from previous username(from database)
+                if (_UserRepository.UsernameExist(user.Username) == true && userFromDatabase.Username != user.Username)
+                {
+                    //When username is already used, return model with the previous username(got from database)
+                    roleUser.User.Username = userFromDatabase.Username;
+                    ModelState.AddModelError("", "Username is already used");
+                }
+
+                //Verify if mail already exist, and if this is different from previous mail(from database)
+                if (_UserRepository.MailExist(user.Mail) == true && userFromDatabase.Mail != user.Mail)
+                {
+                    //When mail is already used, return model with the previous mail(got from database)
+                    roleUser.User.Mail = userFromDatabase.Mail;
+                    ModelState.AddModelError("", "Mail is already used");
+                }
                 return View(roleUser);
+
             }
 
-            //Verify if mail already exist, and if this is different from previous mail(from database)
-            if (_UserRepository.MailExist(user.Mail) == true && userFromDatabase.Mail != user.Mail)
-            {
-                //When mail is already used, return model with the previous mail(got from database)
-                roleUser.User.Mail = userFromDatabase.Mail;
-                ModelState.AddModelError("", "Mail is already used");
-                return View(roleUser);
-            }
+
 
             User updateUser = _UserRepository.GetUserById(user.UserId);
 
