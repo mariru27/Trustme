@@ -84,5 +84,12 @@ namespace Trustme.Service
             return false;
 
         }
+        public bool MailExist(string Mail)
+        {
+            if (_context.User.Where(u => u.Mail == Mail).SingleOrDefault() == null)
+                return true;
+            return false;
+
+        }
     }
 }

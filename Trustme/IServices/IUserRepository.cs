@@ -18,6 +18,7 @@ namespace Trustme.IServices
         public User GetUserById(int idUser);
         public bool AnyUser();
         public bool UsernameExist(string Username);
+        public bool MailExist(string Mail);
 
 
     }
