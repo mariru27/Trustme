@@ -55,7 +55,6 @@ namespace Trustme.Controllers
             return RedirectToAction(nameof(Users));
         }
 
-        [ValidateAntiForgeryToken]
         [HttpPost]
         public IActionResult Delete(int? UserId)
         {
