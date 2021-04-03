@@ -1,9 +1,4 @@
 ﻿@model RoleUserModel
-@{
-    var id = Model.User.UserId;
-}
-
-
 
 <table class="table">
     <thead>
@@ -28,7 +23,7 @@
     </thead>
     <tbody>
 
-        <tr id="row_@id">
+        <tr id="row_@Model.User.UserId">
             <td>
                 @Html.DisplayFor(model => model.User.Username)
             </td>
@@ -46,8 +41,7 @@
             </td>
             <td>
                 <a asp-action="EditUser" asp-route-id="@Model.User.UserId">Edit</a> |
-                <a class="btn-danger" onclick="ConfirmDelete(@id)"> @id Delete</a>
-
+                <a class="btn-danger" onclick="ConfirmDelete(@Model.User.UserId, @Model.User.UseUsername)"> @id Delete</a>
 
             </td>
         </tr>
