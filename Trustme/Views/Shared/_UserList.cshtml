@@ -1,8 +1,5 @@
 ﻿@model RoleUserModel
 
-@{
-    var userId = Model.User.UserId;
-}
 <table class="table">
     <thead>
         <tr>
@@ -26,7 +23,7 @@
     </thead>
     <tbody>
 
-        <tr>
+        <tr id="row_@Model.User.UserId">
             <td>
                 @Html.DisplayFor(model => model.User.Username)
             </td>
@@ -43,12 +40,11 @@
                 @Html.DisplayFor(model => model.Role.RoleName)
             </td>
             <td>
-                <a asp-action="EditUser" asp-route-id="@Model.User.UserId">Edit</a> |
-                <a asp-action="" data-toggle="modal" data-target="#DeleteUserModal">Delete</a>
+                <a class="btn btn-primary" asp-action="EditUser" asp-route-id="@Model.User.UserId">Edit</a>
+                <button type="button" class="btn btn-primary" onclick="ConfirmDelete(@Model.User.UserId, '@Model.User.Username')">Delete</button>
             </td>
         </tr>
 
     </tbody>
 </table>
 
-<partial name="_DeleteUserModal" model="Model" />
