@@ -41,7 +41,7 @@
             </td>
             <td>
                 <a asp-action="EditUser" asp-route-id="@Model.User.UserId">Edit</a> |
-                <a class="btn-danger" onclick="ConfirmDelete(@Model.User.UserId, '@Model.User.Username')">  Delete</a>
+                <a asp-action="" onclick="ConfirmDelete(@Model.User.UserId, '@Model.User.Username')">  Delete</a>
 
             </td>
         </tr>
