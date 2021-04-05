@@ -52,7 +52,6 @@ namespace Trustme.Controllers
         }
 
         [HttpPost, ActionName("DeleteCertificate")]
-        [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int id)
         {
             UserKeyModel userKeyModel = new UserKeyModel

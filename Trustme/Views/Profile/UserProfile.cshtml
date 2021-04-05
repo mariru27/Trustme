@@ -1,6 +1,27 @@
 ﻿@model UserKeysRoleModel
 
 
+<script>
+    function ConfirmDelete( KeyId,  CertificateName) {
+        $("#KeyId").val(KeyId);
+        document.getElementById("CertificateName").innerHTML = CertificateName  ;
+        $("#DeleteKeyModal").modal("show");
+    }
+    function DeleteKey() {
+        var KeyId = $("#KeyId").val();
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("DeleteCertificate")",
+            data: { id: KeyId },
+            dataType: "text",
+            success: function (result) {
+                $("#DeleteKeyModal").modal("hide");
+                location.reload();
+            }
+        })
+    }
+</script>
+
 <div class="container emp-profile">
     <form method="post">
         <div class="row">
@@ -99,8 +120,8 @@
                                 @Html.DisplayFor(modelItem => item.KeySize)
                             </td>
                             <td>
-                                <a asp-action="EditCertificate" asp-route-id="@item.KeyId">Edit</a> |
-                                <a asp-action="DeleteCertificate" asp-route-id="@item.KeyId">Delete</a>
+                                <a class="btn btn-primary" asp-action="EditCertificate" asp-route-id="@item.KeyId">Edit</a> 
+                                <button type="button" class="btn btn-primary" onclick="ConfirmDelete(@item.KeyId, '@item.CertificateName')">Delete</button>
                             </td>
                         </tr>
                     }
@@ -113,3 +134,26 @@
             <span class="glyphicon glyphicon-log-out"></span> Log out
         </a>
     </div>
+
+
+<div id="DeleteKeyModal" class="modal" tabindex="-1" role="dialog">
+    <input type="hidden" id="KeyId" />
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5>
+                    Are you sure you want to delete key :
+                    <span id="CertificateName"></span>
+                </h5>
+            </div>
+            <div class="modal-body">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <button type="submit" class="btn btn-primary" onclick="DeleteKey()">Yes</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+            </div>
+        </div>
+    </div>
+
+</div>
