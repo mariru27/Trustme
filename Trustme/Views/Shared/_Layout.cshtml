@@ -183,7 +183,7 @@
                                     if (_KeyRepository.GetNrCertificates(_IHttpRequestFunctions.GetUser(HttpContextAccessor.HttpContext)) == 0)
                                     {
                                         <li class="nav-item">
-                                            <a class="nav-link text-dark" asp-area="" asp-controller="LoadDocument" asp-action="SendDocumentToUser">Documents</a>
+                                            <a class="nav-link text-dark" asp-area="" asp-controller="Upload" asp-action="UploadUser">Documents</a>
                                         </li>
                                     }
                                     else
