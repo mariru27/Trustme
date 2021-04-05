@@ -59,11 +59,17 @@ namespace Trustme.Controllers
 
             if (ModelState.IsValid)
             {
+                User currentUser = _HttpRequestFunctions.GetUser(HttpContext);
+                if (_KeyRepository.KeyExists(currentUser.UserId, key.KeyId))
+                {
+                    ModelState.AddModelError("", "This key name is already used, choose another one!");
+                }
+
                 try
                 {
                     UserKeyModel userKeyModel = new UserKeyModel
                     {
-                        User = _HttpRequestFunctions.GetUser(HttpContext),
+                        User = currentUser,
                         Key = key
                     };
 
@@ -72,11 +78,7 @@ namespace Trustme.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!_KeyRepository.KeyExists(key.KeyId, key.KeyId))
-                    {
-                        return NotFound();
-                    }
-
+                    return NotFound();
                 }
                 return RedirectToAction(nameof(UserProfile));
             }
