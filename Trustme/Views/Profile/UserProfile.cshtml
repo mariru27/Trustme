@@ -7,6 +7,19 @@
         document.getElementById("CertificateName").innerHTML = CertificateName  ;
         $("#DeleteKeyModal").modal("show");
     }
+    function DeleteKey() {
+        var KeyId = $("#KeyId").val();
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("DeleteCertificate")",
+            data: { id: KeyId },
+            dataType: "text",
+            success: function (result) {
+                $("#DeleteKeyModal").modal("hide");
+                location.reload();
+            }
+        })
+    }
 </script>
 
 <div class="container emp-profile">
