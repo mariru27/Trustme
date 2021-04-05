@@ -7,10 +7,10 @@
 <h1>Edit certificate</h1>
 
 <hr />
+<div asp-validation-summary="All" class="text-danger"></div>
 <div class="row">
     <div class="col-md-4">
         <form asp-action="EditCertificate">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="KeyId" />
             <input type="hidden" asp-for="PublicKey" />
             <input type="hidden" asp-for="KeySize" />
