@@ -22,6 +22,8 @@ namespace Trustme.IServices
 
         public int GetNrCertificates(User _User);
         public bool CheckCertificateSameName(User user, string KeyName);
+        public bool KeyExist(string keyName);
+
 
     }
 }

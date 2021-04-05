@@ -169,5 +169,10 @@ namespace Trustme.Service
                ).ToList().Where(k => k.CertificateName == KeyName);
             return KeysList.Any();
         }
+
+        public bool KeyExist(string keyName)
+        {
+            return _context.Key.Where(u => u.CertificateName == keyName).Any();
+        }
     }
 }
