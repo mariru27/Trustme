@@ -63,6 +63,8 @@ namespace Trustme.Controllers
                 if (_KeyRepository.KeyExists(currentUser.UserId, key.KeyId))
                 {
                     ModelState.AddModelError("", "This key name is already used, choose another one!");
+                    return View(key);
+
                 }
 
                 try
