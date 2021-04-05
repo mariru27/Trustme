@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Linq;
 using Trustme.Data;
 using Trustme.IServices;
@@ -90,7 +91,6 @@ namespace Trustme.Service
         }
         public void UpdateKey(UserKeyModel _UserKeyModel)
         {
-
             _context.User.Update(_UserKeyModel.User);
             _context.Key.Update(_UserKeyModel.Key);
 
@@ -126,7 +126,8 @@ namespace Trustme.Service
             return _context.UserKey.Where(uk => uk.UserId == userId && uk.IdUserKey == keyId).Join(_context.Key,
                 user => user.IdUserKey,
                 key => key.KeyId,
-                (user, key) => new Key(key)).SingleOrDefault();
+                (user, key) => new Key(key)).AsNoTracking().SingleOrDefault();
+
         }
 
         public Key GetKeyByCertificateName(string username, string name)

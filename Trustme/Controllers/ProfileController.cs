@@ -57,16 +57,18 @@ namespace Trustme.Controllers
                 return NotFound();
             }
 
+            User currentUser = _HttpRequestFunctions.GetUser(HttpContext);
+
+
+
             if (ModelState.IsValid)
             {
-                User currentUser = _HttpRequestFunctions.GetUser(HttpContext);
-                if (_KeyRepository.KeyExists(currentUser.UserId, key.KeyId))
+                if (_KeyRepository.CertitifateNameExist(currentUser.UserId, key.CertificateName) == true && key.CertificateName != _KeyRepository.GetKey(currentUser.UserId, key.KeyId).CertificateName)
                 {
                     ModelState.AddModelError("", "This key name is already used, choose another one!");
-                    return View(key);
+                    return View(_KeyRepository.GetKey(currentUser.UserId, key.KeyId));
 
                 }
-
                 try
                 {
                     UserKeyModel userKeyModel = new UserKeyModel
