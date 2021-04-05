@@ -1,6 +1,14 @@
 ﻿@model UserKeysRoleModel
 
 
+<script>
+    function ConfirmDelete( KeyId,  CertificateName) {
+        $("#KeyId").val(KeyId);
+        document.getElementById("CertificateName").innerHTML = CertificateName  ;
+        $("#DeleteKeyModal").modal("show");
+    }
+</script>
+
 <div class="container emp-profile">
     <form method="post">
         <div class="row">
