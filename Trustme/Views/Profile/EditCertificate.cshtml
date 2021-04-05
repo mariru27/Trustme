@@ -1,6 +1,7 @@
 ﻿@{
     @model Key
     ViewData["Title"] = "Edit";
+    var CName = Model.CertificateName;
 }
 
 
@@ -15,6 +16,7 @@
             <input type="hidden" asp-for="KeyId" />
             <input type="hidden" asp-for="PublicKey" />
             <input type="hidden" asp-for="KeySize" />
+            <input type="hidden" id="CertificateNameFromDB" name="CertificateNameFromDB" value="@CName" />
             <div class="form-group">
                 <label asp-for="CertificateName" class="control-label"></label>
                 <input asp-for="CertificateName" class="form-control" />

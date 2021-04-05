@@ -50,12 +50,8 @@ namespace Trustme.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult EditCertificate(int id, Key key)
+        public IActionResult EditCertificate(string CertificateNameFromDB, Key key)
         {
-            if (id != key.KeyId)
-            {
-                return NotFound();
-            }
 
             User currentUser = _HttpRequestFunctions.GetUser(HttpContext);
 
@@ -63,12 +59,12 @@ namespace Trustme.Controllers
 
             if (ModelState.IsValid)
             {
-                if (_KeyRepository.CertitifateNameExist(currentUser.UserId, key.CertificateName) == true && key.CertificateName != _KeyRepository.GetKey(currentUser.UserId, key.KeyId).CertificateName)
-                {
-                    ModelState.AddModelError("", "This key name is already used, choose another one!");
-                    return View(_KeyRepository.GetKey(currentUser.UserId, key.KeyId));
+                //if (_KeyRepository.CertitifateNameExist(currentUser.UserId, key.CertificateName) == true && key.CertificateName != _KeyRepository.GetKey(currentUser.UserId, key.KeyId).CertificateName)
+                //{
+                //    ModelState.AddModelError("", "This key name is already used, choose another one!");
+                //    return View(_KeyRepository.GetKey(currentUser.UserId, key.KeyId));
 
-                }
+                //}
                 try
                 {
                     UserKeyModel userKeyModel = new UserKeyModel
