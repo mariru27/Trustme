@@ -36,23 +36,10 @@ namespace Trustme.Controllers
         }
 
 
-        public IActionResult DeleteCertificate(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-            var key = _KeyRepository.GetKey(_HttpRequestFunctions.GetUserId(HttpContext), (int)id);
-            if (key == null)
-            {
-                return NotFound();
-            }
 
-            return View(key);
-        }
 
-        [HttpPost, ActionName("DeleteCertificate")]
-        public IActionResult DeleteConfirmed(int id)
+        [HttpPost]
+        public IActionResult DeleteCertificate(int id)
         {
             UserKeyModel userKeyModel = new UserKeyModel
             {
