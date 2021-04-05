@@ -35,9 +35,6 @@ namespace Trustme.Controllers
             return View(userKeysRoleModel);
         }
 
-
-
-
         [HttpPost]
         public IActionResult DeleteCertificate(int id)
         {
