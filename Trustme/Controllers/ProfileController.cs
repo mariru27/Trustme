@@ -59,12 +59,12 @@ namespace Trustme.Controllers
 
             if (ModelState.IsValid)
             {
-                //if (_KeyRepository.CertitifateNameExist(currentUser.UserId, key.CertificateName) == true && key.CertificateName != _KeyRepository.GetKey(currentUser.UserId, key.KeyId).CertificateName)
-                //{
-                //    ModelState.AddModelError("", "This key name is already used, choose another one!");
-                //    return View(_KeyRepository.GetKey(currentUser.UserId, key.KeyId));
+                if (_KeyRepository.CertitifateNameExist(currentUser.UserId, key.CertificateName))
+                {
+                    ModelState.AddModelError("", "This key name is already used, choose another one!");
+                    return View();
 
-                //}
+                }
                 try
                 {
                     UserKeyModel userKeyModel = new UserKeyModel
