@@ -45,7 +45,8 @@ namespace Trustme.Controllers
             {
                 RolesUserViewModel rolesUserViewModel = new RolesUserViewModel
                 {
-                    Roles = new SelectList(_RoleReporitory.ListAllRoles().Where(a => a.RoleName != "Admin").ToList(), "IdRole", "RoleName")
+                    Roles = new SelectList(_RoleReporitory.ListAllRoles().Where(a => a.RoleName != "Admin").ToList(), "IdRole", "RoleName"),
+                    User = new User()
                 };
                 return View(rolesUserViewModel);
             }
