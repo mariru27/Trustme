@@ -113,7 +113,7 @@ namespace Trustme.Service
 
         public bool CertitifateNameExist(int idUser, string name)
         {
-            var res = _context.UserKey.Where(uk => uk.UserId == idUser).Join(_context.Key,
+            var res = _context.UserKey.AsNoTracking().Where(uk => uk.UserId == idUser).Join(_context.Key,
                 user => user.IdUserKey,
                 key => key.KeyId,
                 (user, key) => new Key(key)).ToList().Where(a => a.CertificateName == name).Any();

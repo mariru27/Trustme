@@ -50,7 +50,7 @@ namespace Trustme.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult EditCertificate(string CertificateNameFromDB, Key key)
+        public IActionResult EditCertificate(Key key)
         {
 
             User currentUser = _HttpRequestFunctions.GetUser(HttpContext);
@@ -63,7 +63,6 @@ namespace Trustme.Controllers
                 {
                     ModelState.AddModelError("", "This key name is already used, choose another one!");
                     return View();
-
                 }
                 try
                 {
