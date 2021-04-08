@@ -55,7 +55,7 @@ namespace Trustme.Controllers
 
             User currentUser = _HttpRequestFunctions.GetUser(HttpContext);
 
-
+            Key currentKey = _KeyRepository.GetKey(currentUser.UserId, key.KeyId);
 
             if (ModelState.IsValid)
             {

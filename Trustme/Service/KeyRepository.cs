@@ -123,11 +123,10 @@ namespace Trustme.Service
 
         public Key GetKey(int userId, int keyId)
         {
-            Key key = _context.UserKey.Where(uk => uk.UserId == userId && uk.IdUserKey == keyId).Join(_context.Key,
+            Key key = _context.UserKey.AsNoTracking().Where(uk => uk.UserId == userId && uk.IdUserKey == keyId).Join(_context.Key,
                 user => user.IdUserKey,
                 key => key.KeyId,
                 (user, key) => new Key(key)).SingleOrDefault();
-            _context.Entry(key).State = EntityState.Detached;
             return key;
 
 
