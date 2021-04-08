@@ -54,15 +54,14 @@ namespace Trustme.Controllers
         {
 
             User currentUser = _HttpRequestFunctions.GetUser(HttpContext);
-
-            Key currentKey = _KeyRepository.GetKey(currentUser.UserId, key.KeyId);
+            Key keyFromDB = _KeyRepository.GetKey(currentUser.UserId, key.KeyId);
 
             if (ModelState.IsValid)
             {
-                if (_KeyRepository.CertitifateNameExist(currentUser.UserId, key.CertificateName))
+                if (_KeyRepository.CertitifateNameExist(currentUser.UserId, key.CertificateName) && keyFromDB.CertificateName != key.CertificateName)
                 {
                     ModelState.AddModelError("", "This key name is already used, choose another one!");
-                    return View();
+                    return View(keyFromDB);
                 }
                 try
                 {
