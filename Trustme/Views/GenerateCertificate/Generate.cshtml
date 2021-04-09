@@ -8,7 +8,11 @@
     <ul>
         <li>Your private key will be generated on server and deleted after you receive it, <strong>keep</strong> your <strong>private key to sign</strong> documents!</li>
         <li>After you genereted certificate, you can <strong>edit certificate</strong> and delete <strong>from profile</strong>!</li>
-        <li>You can not have more than <strong>three certificates</strong>, update to <strong>pro</strong> to have unlimited!</li>
+        @if(TempData["FreeUser"] != null )
+        {
+
+            <li>You can not have more than <strong>three certificates</strong>, update to <strong>pro</strong> to have unlimited!</li>
+        }
     </ul>
 </div>
 
@@ -26,7 +30,6 @@
         <option value=2048>2048</option>
         <option value=4096>4096</option>
     </select>
-
     <div class="form-group">
         <label asp-for="Description" class="control-label">Description</label>
         <textarea class="form-control" asp-for="Description" rows="3"></textarea>

@@ -172,7 +172,7 @@ namespace Trustme.Controllers
         {
             if (_HttpRequestFunctions.GetUserRole(HttpContext) == "Free")
             {
-                TempData["Free"] = true;
+                TempData["FreeUser"] = true;
             }
             return View();
         }
