@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Linq;
 using Trustme.IServices;
 using Trustme.Models;
 using Trustme.ViewModels;
@@ -11,12 +12,10 @@ namespace Trustme.Controllers
 
     public class SignedDocumentsController : Controller
     {
-        private readonly IUnsignedDocumentRepository _UnsignedDocumentRepository;
         private readonly IHttpRequestFunctions _HttpRequestFunctions;
         private readonly ISignedDocumentRepository _SignedDocumentRepository;
-        public SignedDocumentsController(ISignedDocumentRepository signedDocumentRepository, IUnsignedDocumentRepository unsignedDocumentRepository, IHttpRequestFunctions httpRequestFunctions)
+        public SignedDocumentsController(ISignedDocumentRepository signedDocumentRepository, IHttpRequestFunctions httpRequestFunctions)
         {
-            _UnsignedDocumentRepository = unsignedDocumentRepository;
             _HttpRequestFunctions = httpRequestFunctions;
             _SignedDocumentRepository = signedDocumentRepository;
         }
@@ -33,6 +32,10 @@ namespace Trustme.Controllers
         {
             //Get all users signedDocuments
             IEnumerable<SignedDocument> signedDocuments = _SignedDocumentRepository.ListAllSignedDocuments(_HttpRequestFunctions.GetUser(HttpContext));
+            if (signedDocuments.Count() == 0)
+            {
+                TempData["DoNotHaveAnySignedDocuments"] = "You do not have any signed documents";
+            }
             List<SignedDocumentsViewModel> signedDocumentsViewModels = new List<SignedDocumentsViewModel>();
 
             //Cast SignedDocument to SignedDocumentsViewModel
