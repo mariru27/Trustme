@@ -5,6 +5,11 @@
 
 <h4 class="display-4">Unsigned Documents</h4>
 
+@if (TempData["DoNotHaveAnyUnsignedDocuments"] != null)
+{
+    <p class="alert alert-warning" id="successMessage">@TempData["DoNotHaveAnyUnsignedDocuments"]</p>
+}
+
 @{
     foreach (var unsignedDocuments in Model)
     {

@@ -60,19 +60,9 @@
                                     <li class="nav-item">
                                         <a class="nav-link text-dark" asp-area="" asp-controller="Upload" asp-action="UploadUser">Upload</a>
                                     </li>
-                                    if (_KeyRepository.GetNrCertificates(_IHttpRequestFunctions.GetUser(HttpContextAccessor.HttpContext)) == 0)
-                                    {
-                                        <li class="nav-item">
-                                            <a class="nav-link text-dark" asp-area="" asp-controller="Upload" asp-action="UploadUser">Documents</a>
-                                        </li>
-                                    }
-                                    else
-                                    {
-                                        <li class="nav-item">
-                                            <a class="nav-link text-dark" asp-area="" asp-controller="SignDocuments" asp-action="UnsignedDocuments">Documents</a>
-                                        </li>
-                                    }
-
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="SignDocuments" asp-action="UnsignedDocuments">Documents</a>
+                                    </li>
                                     <li class="nav-item">
                                         <a class="nav-link text-dark" asp-area="" asp-controller="GenerateCertificate" asp-action="Generate">Generate Certificate</a>
                                     </li>
