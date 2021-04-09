@@ -53,7 +53,7 @@ namespace Trustme.Controllers
 
                 if (_KeyRepository.GetNrCertificates(currentUser) >= UserMaximNumberOfCertificates && _HttpRequestFunctions.GetUserRole(HttpContext) == "Free")
                 {
-                    ModelState.AddModelError("", "You cannot have more than three certificates, delete a certificate if you want to generate another!");
+                    ModelState.AddModelError("", "You cannot have more than three certificates, delete a certificate if you want to generate another or update to pro!");
                     return View();
                 }
 
