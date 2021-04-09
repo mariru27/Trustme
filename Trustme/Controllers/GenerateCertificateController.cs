@@ -162,6 +162,11 @@ namespace Trustme.Controllers
 
                 result.FileDownloadName = key.CertificateName + ".zip";
 
+                if (_HttpRequestFunctions.GetUserRole(HttpContext) == "Free")
+                {
+                    TempData["FreeUser"] = true;
+                }
+
                 return result;
             }
             return View();
