@@ -1,10 +1,14 @@
 ﻿@model IEnumerable<SignedDocumentsViewModel>
 
-<partial name="_Sign-Unsign_Nav-bar" /> 
+<partial name="_Sign-Unsign_Nav-bar" />
 
 
 <h4 class="display-4">Signed documents</h4>
 
+@if (TempData["DoNotHaveAnySignedDocuments"] != null)
+{
+    <p class="alert alert-warning" id="successMessage">@TempData["DoNotHaveAnySignedDocuments"]</p>
+}
 
 @{
     foreach (var signedDocument in Model)
