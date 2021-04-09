@@ -170,7 +170,10 @@ namespace Trustme.Controllers
         [HttpGet]
         public IActionResult Generate()
         {
-
+            if (_HttpRequestFunctions.GetUserRole(HttpContext) == "Free")
+            {
+                TempData["Free"] = true;
+            }
             return View();
         }
 
