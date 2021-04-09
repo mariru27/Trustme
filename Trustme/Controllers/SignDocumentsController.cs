@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Trustme.IServices;
 using Trustme.ITools;
 using Trustme.Models;
@@ -34,7 +35,7 @@ namespace Trustme.Controllers
         {
 
             IEnumerable<UnsignedDocument> unsignedDocuments = _UnsignedDocumentRepository.ListAllUsignedDocumentsByUser(_HttpRequestFunctions.GetUser(HttpContext));
-            if (unsignedDocuments == null)
+            if (unsignedDocuments.Count() == 0)
                 TempData["DoNotHaveAnyUnsignedDocuments"] = "You do not have any documents to sign. You can upload one if you already generated a key";
             return View(unsignedDocuments);
         }
