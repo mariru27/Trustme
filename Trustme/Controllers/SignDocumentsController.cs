@@ -34,6 +34,8 @@ namespace Trustme.Controllers
         {
 
             IEnumerable<UnsignedDocument> unsignedDocuments = _UnsignedDocumentRepository.ListAllUsignedDocumentsByUser(_HttpRequestFunctions.GetUser(HttpContext));
+            if (unsignedDocuments == null)
+                TempData["DoNotHaveAnyUnsignedDocuments"] = "You do not have any documents to sign. You can upload one if you already generated a key";
             return View(unsignedDocuments);
         }
 
