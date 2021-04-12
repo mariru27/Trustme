@@ -11,39 +11,36 @@
 {
     <p class="alert alert-success" id="successMessage">@TempData["ValidSignature"]</p>
 }
-<div class="row">
-    <div class="col-md-4">
-        <form action="VerifySign" enctype="multipart/form-data" method="post">
-            <div class="card" style="width: 80vw;">
-                <div class="card-body">
-                    <input type="hidden" asp-for="Username" value=@Model.Username id="username" />
-                    <label asp-for="CertificateName">Choose a certifificate:</label>
-                    <select class="form-control" asp-for="CertificateName">
-                        @{
-                            if (Model != null)
-                                foreach (var c in Model.Keys)
-                                {
-                                    <option value=@c.CertificateName>@c.CertificateName</option>
-                                }
-                        }
-                    </select>
-                    <br />
-                    <div class="form-group">
-                        <label asp-for="Signature" class="control-label">User signature:</label>
-                        <textarea class="form-control" asp-for="Signature" rows="3"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Document">Document:</label>
-                        <input asp-for="Document" type="file" class="form-control-file" />
-                    </div>
 
-                    <div class="form-group">
-                        <input type="submit" value="Verify" class="btn btn-primary" />
-                    </div>
-                </div>
+<form action="VerifySign" enctype="multipart/form-data" method="post">
+    <div class="card">
+        <div class="card-body">
+            <input type="hidden" asp-for="Username" value=@Model.Username id="username" />
+            <label asp-for="CertificateName">Choose a certifificate:</label>
+            <select class="form-control" asp-for="CertificateName">
+                @{
+                    if (Model != null)
+                        foreach (var c in Model.Keys)
+                        {
+                            <option value=@c.CertificateName>@c.CertificateName</option>
+                        }
+                }
+            </select>
+            <br />
+            <div class="form-group">
+                <label asp-for="Signature" class="control-label">User signature:</label>
+                <textarea class="form-control" asp-for="Signature" rows="3"></textarea>
             </div>
-        </form>
+            <div class="form-group">
+                <label asp-for="Document">Document:</label>
+                <input asp-for="Document" type="file" class="form-control-file" />
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Verify" class="btn btn-primary" />
+            </div>
+        </div>
     </div>
-</div>
+</form>
 
 
