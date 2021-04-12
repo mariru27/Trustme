@@ -8,7 +8,7 @@
     <ul>
         <li>Your private key will be generated on server and deleted after you receive it, <strong>keep</strong> your <strong>private key to sign</strong> documents!</li>
         <li>After you genereted certificate, you can <strong>edit certificate</strong> and delete <strong>from profile</strong>!</li>
-        @if(TempData["FreeUser"] != null )
+        @if (TempData["FreeUser"] != null)
         {
 
             <li>You can not have more than <strong>three certificates</strong>, update to <strong>pro</strong> to have unlimited!</li>
@@ -17,25 +17,27 @@
 </div>
 
 <div asp-validation-summary="All" class="text-danger"></div>
-
-<form asp-action="Generate">
-    <div class="form-group">
-        <label asp-for="CertificateName" class="control-label">Certificate name</label>
-        <input asp-for="CertificateName" class="form-control" name="certificateName" type="text">
+<div class="card">
+    <div class="card-body">
+        <form asp-action="Generate">
+            <div class="form-group">
+                <label asp-for="CertificateName" class="control-label">Certificate name</label>
+                <input asp-for="CertificateName" class="form-control" name="certificateName" type="text">
+            </div>
+            <label for="keySize">Choose key size:</label>
+            <select class="form-control" name="keySize" id="keySize">
+                <option value=512>512</option>
+                <option value=1024>1024</option>
+                <option value=2048>2048</option>
+                <option value=4096>4096</option>
+            </select>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label">Description</label>
+                <textarea class="form-control" asp-for="Description" rows="3"></textarea>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Generate" class="btn btn-primary" />
+            </div>
+        </form>
     </div>
-    <label for="keySize">Choose key size:</label>
-    <select class="form-control" name="keySize" id="keySize">
-        <option value=512>512</option>
-        <option value=1024>1024</option>
-        <option value=2048>2048</option>
-        <option value=4096>4096</option>
-    </select>
-    <div class="form-group">
-        <label asp-for="Description" class="control-label">Description</label>
-        <textarea class="form-control" asp-for="Description" rows="3"></textarea>
-    </div>
-    <div class="form-group">
-        <input type="submit" value="Generate" class="btn btn-primary" />
-    </div>
-</form>
-<br />
+</div>

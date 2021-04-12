@@ -6,9 +6,8 @@
 
 <div asp-validation-summary="All" class="text-danger"></div>
 
-
-<div class="row">
-    <div class="col-4md-4">
+<div class="card">
+    <div class="card-body">
         <form asp-action="Register" method="post">
             <div class="form-group">
                 <label asp-for="@Model.User.FirstName" class="control-label"></label>

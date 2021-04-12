@@ -10,23 +10,27 @@
 }
 
 <form method="post" enctype="multipart/form-data" asp-action="UploadDocument">
-    <input type="hidden" asp-for="Username" value=@Model.Username />
-    <label asp-for="CertificateName">Choose a certifificate:</label>
-    <select class="form-control" name="certificateName" id="certificateName">
-        @{
-            if (Model != null)
-                foreach (var c in Model.Keys)
-                {
-                    <option value=@c.CertificateName>@c.CertificateName</option>
+    <div class="card">
+        <div class="card-body">
+            <input type="hidden" asp-for="Username" value=@Model.Username />
+            <label asp-for="CertificateName">Choose a certifificate:</label>
+            <select class="form-control" name="certificateName" id="certificateName">
+                @{
+                    if (Model != null)
+                        foreach (var c in Model.Keys)
+                        {
+                            <option value=@c.CertificateName>@c.CertificateName</option>
+                        }
                 }
-        }
-    </select>
-    <br>
-    <div class="form-group">
-        <label asp-for="Document"><strong>Document</strong></label>
-        <input asp-for="Document" type="file">
-    </div>
-    <div class="form-group">
-        <input type="submit" value="Upload" class="btn btn-primary" />
+            </select>
+            <br>
+            <div class="form-group">
+                <label asp-for="Document"><strong>Document</strong></label>
+                <input asp-for="Document" type="file">
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Upload" class="btn btn-primary" />
+            </div>
+        </div>
     </div>
 </form>
