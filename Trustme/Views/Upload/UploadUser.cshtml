@@ -14,11 +14,15 @@
 <div asp-validation-summary="All" class="text-danger"></div>
 
 <form method="post" asp-action="UploadUser">
-    <div class="form-group">
-        <label for="Username" class="control-label">Upload document for username:</label>
-        <input for="Username" name="Username" type="text" class="form-control" />
-    </div>
-    <div class="form-group">
-        <input type="submit" value="Upload" class="btn btn-primary" />
+    <div class="card">
+        <div class="card-body">
+            <div class="form-group">
+                <label for="Username" class="control-label">Upload document for username:</label>
+                <input for="Username" name="Username" type="text" class="form-control" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Upload" class="btn btn-primary" />
+            </div>
+        </div>
     </div>
 </form>
