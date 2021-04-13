@@ -4,13 +4,13 @@
 }
 
 
-<h1>Edit certificate</h1>
+<h4 class="display-4">Edit certificate</h4>
+
 
 <hr />
 <div asp-validation-summary="All" class="text-danger"></div>
-
-<div class="row">
-    <div class="col-md-4">
+<div class="card border-secondary mb-3">
+    <div class="card-body text-secondary">
         <form asp-action="EditCertificate">
             <input type="hidden" asp-for="KeyId" />
             <input type="hidden" asp-for="PublicKey" />

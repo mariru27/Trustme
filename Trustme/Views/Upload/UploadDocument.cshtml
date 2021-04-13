@@ -10,8 +10,8 @@
 }
 
 <form method="post" enctype="multipart/form-data" asp-action="UploadDocument">
-    <div class="card">
-        <div class="card-body">
+    <div class="card border-secondary mb-3">
+        <div class="card-body text-secondary">
             <input type="hidden" asp-for="Username" value=@Model.Username />
             <label asp-for="CertificateName">Choose a certifificate:</label>
             <select class="form-control" name="certificateName" id="certificateName">
