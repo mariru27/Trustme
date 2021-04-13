@@ -2,16 +2,23 @@
 
 <div class="card border-secondary mb-3">
     <div class="card-header text-secondary">
-        Signed by username:
-        @Model.SignedByUsername
-        <br />
-        Sent from username:
-        @Model.SentFromUsername
+        <a class="float-left" asp-controller="SignedDocuments" asp-action="DeleteDocument" asp-route-id="@Model.IdSignedDocument">
+            Download
+        </a>
         <a class="float-right" asp-controller="SignedDocuments" asp-action="DeleteDocument" asp-route-id="@Model.IdSignedDocument">
             Delete
         </a>
     </div>
-    <div class="card-body text-secondary">
+    <div class="card-body">
+        <div class="form-group">
+            Signed by username:
+            @Model.SignedByUsername
+        </div>
+        <div class="form-group">
+            Sent from username:
+            @Model.SentFromUsername
+        </div>
+
         <div class="form-group">
             File Name:
             @Model.Name
