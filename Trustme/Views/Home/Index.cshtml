@@ -3,11 +3,11 @@
 }
 
 
-<div class="text-white bg-info mb-3">
+<div class="card border-info mb-3">
     <div class="card-header">
-        <strong>Application reason</strong>
+        Application reason
     </div>
-    <div class="card-body ">
+    <div class="card-body text-info">
         <p>Proves information integrity and message authentication</p>
         <ul>
             <li><strong>Integrity:</strong> Messages have not been modified in transit.</li>
@@ -16,26 +16,26 @@
     </div>
 </div>
 
-<div class="text-white bg-info mb-3">
+<div class="card border-info mb-3">
     <div class="card-header">
-        <strong>How to use application?</strong>
+        How to use application?
     </div>
-    <div class="card-body ">
+    <div class="card-body text-info">
         <p>Three steps:</p>
         <ol>
-            <li>Generate </li>
-            <li>Upload</li>
-            <li>Sign </li>
-            <li>Verify signature if you don't Trustme (optional) </li>
+            <li><strong>Generate</strong> certificate if you do not have one</li>
+            <li><strong>Upload</strong> a document for you or for another user to sign</li>
+            <li><strong>Sign</strong> document</li>
+            <li><strong>Verify</strong> signature if you don't Trustme (optional) </li>
         </ol>
     </div>
 </div>
 
-<div class="text-white bg-info mb-3">
+<div class="card border-info mb-3">
     <div class="card-header">
-        <strong>How application works?</strong>
+        How application works?
     </div>
-    <div class="card-body ">
+    <div class="card-body text-info">
         <p>We generate a public and private key for you, we keep your public key on our server and give you the private one.</p>
         <p>When we sign document, we apply a hash function(sha256) and encrypt hash result with your private key that you will give it when you sign.</p>
         <p>When user will want to verify integrity of a document, we will try to decrypt signature, hash document and compare the result hashes</p>
