@@ -16,11 +16,11 @@
                 @Model.UnsignedDocument.Name
             </div>
             <div class="form-group">
-                <strong>Sign with key:</strong>
-                @Model.Key.CertificateName
+                Sign with key:
+                <strong>@Model.Key.CertificateName</strong>
             </div>
             <div class="form-group">
-                <label asp-for="@Model.PkFile"><strong>Private key</strong></label>
+                <label asp-for="@Model.PkFile">Private key</label>
                 <input asp-for="@Model.PkFile" type="file">
             </div>
             <br />
