@@ -46,6 +46,10 @@ namespace Trustme.Controllers
         [Obsolete]
         public IActionResult Generate(Key key)
         {
+            if (_HttpRequestFunctions.GetUserRole(HttpContext) == "Free")
+            {
+                TempData["FreeUser"] = true;
+            }
             if (ModelState.IsValid)
             {
 
