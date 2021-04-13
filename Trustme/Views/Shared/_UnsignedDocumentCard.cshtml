@@ -4,17 +4,19 @@
 <form asp-action="Sign" method="get">
     <input type="hidden" name="IdUnsignedDocument" value=@Model.IdUnsignedDocument id="IdUnsignedDocument" />
     <div class="card border-secondary mb-3">
-
         <div class="card-header text-secondary">
-            Sent from username:
-            @Model.SentFromUsername
-
+            <a class="float-left" asp-controller="SignDocuments" asp-action="" asp-route-id="@Model.IdUnsignedDocument">
+                Download
+            </a>
             <a class="float-right" asp-controller="SignDocuments" asp-action="DeleteDocument" asp-route-id="@Model.IdUnsignedDocument">
                 Delete
             </a>
-
         </div>
         <div class="card-body">
+            <div class="form-group">
+                Sent from username:
+                @Model.SentFromUsername
+            </div>
             <div class="form-group">
                 File Name:
                 @Model.Name
@@ -24,7 +26,7 @@
                 @Model.SentTime
             </div>
 
-            <p class="card-text"><strong>Key you need to sign with: @Model.KeyPreference </strong></p>
+            <p class="card-text">Key you need to sign with: <strong>@Model.KeyPreference</strong> </p>
             <div class="form-group">
                 <input type="submit" value="Sign" class="btn btn-primary" />
             </div>
