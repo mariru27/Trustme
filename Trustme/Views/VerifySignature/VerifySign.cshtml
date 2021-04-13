@@ -1,7 +1,9 @@
 ﻿@model VerifySignModel
 
 
-
+@{
+    ViewData["Title"] = "Verify Sigature";
+}
 <h4 class="display-4">Verify signature</h4>
 
 <br />
@@ -14,7 +16,7 @@
 }
 
 <form action="VerifySign" enctype="multipart/form-data" method="post">
-    <div class="card border-secondary mb-3" >
+    <div class="card border-secondary mb-3">
         <div class="card-body text-secondary">
             <input type="hidden" asp-for="Username" value=@Model.Username id="username" />
             <label asp-for="CertificateName">Choose a certifificate:</label>

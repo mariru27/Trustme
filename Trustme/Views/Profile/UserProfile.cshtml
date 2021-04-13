@@ -1,5 +1,7 @@
 ﻿@model UserKeysRoleModel
-
+@{
+    ViewData["Title"] = "User";
+}
 
 <script>
     function ConfirmDelete( KeyId,  CertificateName) {
@@ -85,7 +87,7 @@
             </div>
         </div>
 
-        @if (Model.Keys.Count() != 0 )
+        @if (Model.Keys.Count() != 0)
         {
 
             <table class="table">
@@ -116,20 +118,20 @@
                                 @Html.DisplayFor(modelItem => item.KeySize)
                             </td>
                             <td>
-                                <a class="btn btn-primary" asp-action="EditCertificate" asp-route-id="@item.KeyId">Edit</a> 
+                                <a class="btn btn-primary" asp-action="EditCertificate" asp-route-id="@item.KeyId">Edit</a>
                                 <button type="button" class="btn btn-primary" onclick="ConfirmDelete(@item.KeyId, '@item.CertificateName')">Delete</button>
                             </td>
                         </tr>
                     }
                 </tbody>
             </table>
-    }
-        </form>
+        }
+    </form>
 
-        <a class="btn btn-info btn-lg" asp-controller="Authenticate" asp-action="LogOut">
-            <span class="glyphicon glyphicon-log-out"></span> Log out
-        </a>
-    </div>
+    <a class="btn btn-info btn-lg" asp-controller="Authenticate" asp-action="LogOut">
+        <span class="glyphicon glyphicon-log-out"></span> Log out
+    </a>
+</div>
 
 
 <div id="DeleteKeyModal" class="modal" tabindex="-1" role="dialog">
