@@ -5,8 +5,8 @@
 
 <form asp-action="Sign" enctype="multipart/form-data" method="post">
     <input type="hidden" asp-for="@Model.IdUnsignedDocument" value="@Model.UnsignedDocument.IdUnsignedDocument"/>
-    <div class="card">
-        <div class="card-header">
+    <div class="card border-secondary mb-3">
+        <div class="card-header text-secondary">
             Sent from username:
             @Model.UnsignedDocument.SentFromUsername
         </div>
