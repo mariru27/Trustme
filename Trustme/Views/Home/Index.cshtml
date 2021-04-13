@@ -3,26 +3,43 @@
 }
 
 
-<div class="card">
-    <div class="card-header text-info">
+<div class="text-white bg-info mb-3">
+    <div class="card-header">
         <strong>Application reason</strong>
     </div>
-    <div class="card-body text-info">
-        <p>Keep information integrity and proves authentication</p>
+    <div class="card-body ">
+        <p>Proves information integrity and message authentication</p>
+        <ul>
+            <li><strong>Integrity:</strong> Messages have not been modified in transit.</li>
+            <li><strong>Message Authentication:</strong> The sender of a message is authentic. An alternative term is data origin authentication.</li>
+        </ul>
     </div>
 </div>
 
-<div class="card">
-    <div class="card-header text-info">
+<div class="text-white bg-info mb-3">
+    <div class="card-header">
         <strong>How to use application?</strong>
     </div>
-    <div class="card-body text-info">
-        <p>Three steps</p>
-        <ul>
-            <li>Generate Certificate</li>
+    <div class="card-body ">
+        <p>Three steps:</p>
+        <ol>
+            <li>Login </li>
+            <li>Generate </li>
             <li>Upload</li>
-            <li>Sign Document</li>
-        </ul>
+            <li>Sign </li>
+            <li>Verify signature if you don't Trustme (optional) </li>
+        </ol>
+    </div>
+</div>
+
+<div class="text-white bg-info mb-3">
+    <div class="card-header">
+        <strong>How application works?</strong>
+    </div>
+    <div class="card-body ">
+        <p>We generate a public and private key for you, we keep your public key on our server and give you the private one.</p>
+        <p>When we sign document, we apply a hash function(sha256) and encrypt hash result with your private key that you will give it when you sign.</p>
+        <p>When user will want to verify integrity of a document, we will try to decrypt signature, hash document and compare the result hashes</p>
     </div>
 </div>
 
