@@ -1,10 +1,14 @@
 ﻿@model KeysUnsignedDocumentViewModel
 
-<h1>Sign documet</h1>
+
+<h4 class="display-4">Sign Document</h4>
+
+<br />
+
 <div asp-validation-summary="All" class="text-danger"></div>
 
 <form asp-action="Sign" enctype="multipart/form-data" method="post">
-    <input type="hidden" asp-for="@Model.IdUnsignedDocument" value="@Model.UnsignedDocument.IdUnsignedDocument"/>
+    <input type="hidden" asp-for="@Model.IdUnsignedDocument" value="@Model.UnsignedDocument.IdUnsignedDocument" />
     <div class="card border-secondary mb-3">
         <div class="card-header text-secondary">
             Sent from username:

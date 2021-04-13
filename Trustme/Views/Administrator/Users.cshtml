@@ -1,11 +1,12 @@
 ﻿@model IEnumerable<RoleUserModel>
+    <h4 class="display-4">Users</h4>
 
-<h1>Users</h1>
+    <br />
 
-<script>
+    <script>
     function ConfirmDelete( UserId,  Username) {
         $("#hiddenId").val(UserId);
-        document.getElementById("Username").innerHTML = Username;   
+        document.getElementById("Username").innerHTML = Username;
         $("#DeleteUserModal").modal("show");
     }
     var DeleteUser = function () {
@@ -22,46 +23,46 @@
         })
     }
 
-</script>
+    </script>
 
 
 
-@{
+    @{
 
 
-    foreach (var user in Model)
-    {
-        <div class="card">
+        foreach (var user in Model)
+        {
+            <div class="card">
 
-            <div class="card-body">
-                <partial name="_UserList" model="user" view-data="ViewData" />
+                <div class="card-body">
+                    <partial name="_UserList" model="user" view-data="ViewData" />
+                </div>
+
+            </div>
+            <br />
+
+        }
+
+        <div id="DeleteUserModal" class="modal" tabindex="-1" role="dialog">
+            <input type="hidden" id="hiddenId" />
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5>
+                            Are you sure you want to delete user :
+                            <span id="Username"></span>?
+                        </h5>
+                    </div>
+                    <div class="modal-body">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <button type="submit" class="btn btn-primary" onclick="DeleteUser()">Yes</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                    </div>
+                </div>
             </div>
 
         </div>
-        <br />
 
     }
-
-<div id="DeleteUserModal" class="modal" tabindex="-1" role="dialog">
-    <input type="hidden" id="hiddenId" />
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5>
-                    Are you sure you want to delete user :
-                    <span id="Username"></span>?
-                </h5>
-            </div>
-            <div class="modal-body">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                <button type="submit" class="btn btn-primary" onclick="DeleteUser()">Yes</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-            </div>
-        </div>
-    </div>
-
-</div>
-
-}
