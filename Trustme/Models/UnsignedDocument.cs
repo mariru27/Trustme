@@ -21,6 +21,7 @@ namespace Trustme.Models
             this.Signed = unsignedDocument.Signed;
             this.SentFromUsername = unsignedDocument.SentFromUsername;
             this.SentTime = unsignedDocument.SentTime;
+            this.ContentType = unsignedDocument.ContentType;
         }
 
         [Key]

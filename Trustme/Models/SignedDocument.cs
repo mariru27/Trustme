@@ -25,6 +25,7 @@ namespace Trustme.Models
             this.SentFromUsername = signedDocument.SentFromUsername;
             this.SentTime = signedDocument.SentTime;
             this.SignedTime = DateTime.Now;
+            this.ContentType = signedDocument.ContentType;
 
         }
 
@@ -39,6 +40,7 @@ namespace Trustme.Models
             this.SentFromUsername = unsignedDocument.SentFromUsername;
             this.SentTime = unsignedDocument.SentTime;
             this.SignedTime = DateTime.Now;
+            this.ContentType = unsignedDocument.ContentType;
         }
 
         [Key]
