@@ -10,7 +10,7 @@ using Trustme.Data;
 namespace Trustme.Migrations
 {
     [DbContext(typeof(Data.AppContext))]
-    [Migration("20210322123147_init")]
+    [Migration("20210415133331_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -76,6 +76,9 @@ namespace Trustme.Migrations
                     b.Property<string>("Comment")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ContentType")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<byte[]>("Document")
                         .HasColumnType("varbinary(max)");
 
@@ -113,6 +116,9 @@ namespace Trustme.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ContentType")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<byte[]>("Document")
                         .HasColumnType("varbinary(max)");
@@ -163,7 +169,8 @@ namespace Trustme.Migrations
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(20)")
+                        .HasMaxLength(20);
 
                     b.Property<int>("RoleId")
                         .HasColumnType("int");

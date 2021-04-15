@@ -10,8 +10,8 @@ using Trustme.Data;
 namespace Trustme.Migrations
 {
     [DbContext(typeof(Data.AppContext))]
-    [Migration("20210415123310_contentType")]
-    partial class contentType
+    [Migration("20210415133819_password")]
+    partial class password
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -169,8 +169,7 @@ namespace Trustme.Migrations
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasColumnType("nvarchar(50)")
-                        .HasMaxLength(50);
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("RoleId")
                         .HasColumnType("int");

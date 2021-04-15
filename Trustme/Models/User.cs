@@ -31,12 +31,12 @@ namespace Trustme.Models
         public string Username { set; get; }
 
         [Required]
-        //[StringLength(50, ErrorMessage = "Password must have more then 6 characters", MinimumLength = 6)]
+        //[StringLength(20, MinimumLength = 5, ErrorMessage = "Password must have more then 5 characters")]
         [Display(Name = "Password")]
         public string Password { get; set; }
 
         [Required]
-        [Compare("Password", ErrorMessage = "Confirm password doesn't match, Type again !")]
+        [Compare("Password", ErrorMessage = "Confirm password doesn't match, type again !")]
         [Display(Name = "Confirm Password")]
         public string ConfirmPassword { get; set; }
         [Display(Name = "Role")]
