@@ -151,6 +151,7 @@ namespace Trustme.Controllers
 
                 ZipFile.CreateFromDirectory(pathDir, pathDirectoryZip, System.IO.Compression.CompressionLevel.Optimal, false);
 
+                //MIME
                 const string contentType = "application/zip";
                 HttpContext.Response.ContentType = contentType;
                 var result = new FileContentResult(System.IO.File.ReadAllBytes(pathDirectoryZip), contentType);
