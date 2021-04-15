@@ -7,7 +7,7 @@ namespace Trustme.Models
     public class SignedDocument
     {
 
-        public SignedDocument() 
+        public SignedDocument()
         {
             this.SignedTime = DateTime.Now;
 
@@ -25,7 +25,7 @@ namespace Trustme.Models
             this.SentFromUsername = signedDocument.SentFromUsername;
             this.SentTime = signedDocument.SentTime;
             this.SignedTime = DateTime.Now;
-           
+
         }
 
         public SignedDocument(UnsignedDocument unsignedDocument, string Signature, string SignedByUsername)
@@ -45,7 +45,7 @@ namespace Trustme.Models
         public int IdSignedDocument { get; set; }
         public string Name { get; set; }
         public string SentFromUsername { get; set; }
-
+        public string ContentType { get; set; }
         public string SignedByUsername { get; set; }
         public byte[] Document { get; set; }
         public string Signature { get; set; }

@@ -6,7 +6,7 @@ namespace Trustme.Models
     public class UnsignedDocument
     {
         public UnsignedDocument()
-        { 
+        {
             this.Signed = false;
             this.SentTime = DateTime.Now;
         }
@@ -29,6 +29,8 @@ namespace Trustme.Models
         public string SentFromUsername { get; set; }
         public byte[] Document { get; set; }
         public string KeyPreference { get; set; }
+        public string ContentType { get; set; }
+
         public bool Signed { get; set; }
         public int KeyId { get; set; }
         public Key Key { get; set; }
