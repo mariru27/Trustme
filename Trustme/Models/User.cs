@@ -31,7 +31,7 @@ namespace Trustme.Models
         public string Username { set; get; }
 
         [Required]
-        [StringLength(50, ErrorMessage = "Password must have more then 6 characters", MinimumLength = 6)]
+        //[StringLength(50, ErrorMessage = "Password must have more then 6 characters", MinimumLength = 6)]
         [Display(Name = "Password")]
         public string Password { get; set; }
 
