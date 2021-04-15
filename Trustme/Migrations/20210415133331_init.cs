@@ -30,7 +30,7 @@ namespace Trustme.Migrations
                     SecondName = table.Column<string>(nullable: false),
                     Mail = table.Column<string>(nullable: false),
                     Username = table.Column<string>(nullable: false),
-                    Password = table.Column<string>(nullable: false),
+                    Password = table.Column<string>(maxLength: 20, nullable: false),
                     ConfirmPassword = table.Column<string>(nullable: false),
                     RoleId = table.Column<int>(nullable: false)
                 },
@@ -95,6 +95,7 @@ namespace Trustme.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(nullable: true),
                     SentFromUsername = table.Column<string>(nullable: true),
+                    ContentType = table.Column<string>(nullable: true),
                     SignedByUsername = table.Column<string>(nullable: true),
                     Document = table.Column<byte[]>(nullable: true),
                     Signature = table.Column<string>(nullable: true),
@@ -124,6 +125,7 @@ namespace Trustme.Migrations
                     SentFromUsername = table.Column<string>(nullable: true),
                     Document = table.Column<byte[]>(nullable: true),
                     KeyPreference = table.Column<string>(nullable: true),
+                    ContentType = table.Column<string>(nullable: true),
                     Signed = table.Column<bool>(nullable: false),
                     KeyId = table.Column<int>(nullable: false),
                     SentTime = table.Column<DateTime>(nullable: false)
