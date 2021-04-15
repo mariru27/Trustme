@@ -43,6 +43,7 @@ namespace Trustme.Controllers
         public IActionResult Download(int id)
         {
             var document = _UnsignedDocumentRepository.GetUnsignedDocumentById(id);
+
             var result = new FileContentResult(document.Document, "text/plain");
 
             return result;
