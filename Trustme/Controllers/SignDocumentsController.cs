@@ -40,6 +40,12 @@ namespace Trustme.Controllers
             return View(unsignedDocuments);
         }
 
+        public IActionResult Download(int id)
+        {
+            var document = _UnsignedDocumentRepository.GetUnsignedDocumentById(id);
+            return File(document.Document, document.ContentType, document.Name);
+        }
+
         [HttpGet]
         public IActionResult DeleteDocument(int id)
         {

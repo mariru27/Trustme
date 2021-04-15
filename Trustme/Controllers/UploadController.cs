@@ -92,6 +92,7 @@ namespace Trustme.Controllers
             unsignedDocument.KeyPreference = uploadDocumentModel.CertificateName;
             unsignedDocument.KeyId = key.KeyId;
             unsignedDocument.SentFromUsername = _HttpRequestFunctions.GetUser(HttpContext).Username;
+            unsignedDocument.ContentType = uploadDocumentModel.Document.ContentType;
 
             UserUnsignedDocument userUnsignedDocument = new UserUnsignedDocument();
             if (_UserRepository.GetUserbyUsername(uploadDocumentModel.Username) != null)
