@@ -2,7 +2,7 @@
 
 <div class="card border-secondary mb-3">
     <div class="card-header text-secondary">
-        <a class="float-left" asp-controller="SignedDocuments" asp-action="" asp-route-id="@Model.IdSignedDocument">
+        <a class="float-left" asp-controller="SignedDocuments" asp-action="Download" asp-route-id="@Model.IdSignedDocument">
             Download
         </a>
         <a class="float-right" asp-controller="SignedDocuments" asp-action="DeleteDocument" asp-route-id="@Model.IdSignedDocument">

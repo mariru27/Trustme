@@ -30,6 +30,12 @@ namespace Trustme.Controllers
         }
 
 
+        public IActionResult Download(int id)
+        {
+            var document = _SignedDocumentRepository.GetSignedDocumentById(id);
+            return File(document.Document, document.ContentType, document.Name);
+        }
+
         public IActionResult SignedDocumentsFromUsers()
         {
             //Get all users signedDocuments
