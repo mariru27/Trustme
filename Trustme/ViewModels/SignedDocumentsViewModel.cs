@@ -28,6 +28,7 @@ namespace Trustme.ViewModels
             this.SignedTime = signedDocument.SignedTime;
             this.SentTime = signedDocument.SentTime;
 
+
         }
         public int IdSignedDocument { get; set; }
         public string Name { get; set; }
