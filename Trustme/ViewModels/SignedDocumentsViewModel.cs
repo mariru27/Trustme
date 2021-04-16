@@ -1,17 +1,20 @@
 ﻿using System;
-using Trustme.Models;
-
 //I use this model to pass data from controller to view,
 //Here I do not use document property
 //(document file will slow data transfer to view)
+using Trustme.IServices;
+using Trustme.Models;
 
 namespace Trustme.ViewModels
 {
     public class SignedDocumentsViewModel
     {
-        public SignedDocumentsViewModel()
+        public readonly IKeyRepository _KeyRepository;
+        public readonly IUserRepository _UserRepository;
+        public SignedDocumentsViewModel(IKeyRepository keyRepository, IUserRepository userRepository)
         {
-
+            _KeyRepository = keyRepository;
+            _UserRepository = userRepository;
         }
         public SignedDocumentsViewModel(SignedDocument signedDocument)
         {
@@ -24,13 +27,17 @@ namespace Trustme.ViewModels
             this.Name = signedDocument.Name;
             this.SignedTime = signedDocument.SignedTime;
             this.SentTime = signedDocument.SentTime;
+
+
         }
         public int IdSignedDocument { get; set; }
         public string Name { get; set; }
+
         public string SignedByUsername { get; set; }
         public string SentFromUsername { get; set; }
         public string Signature { get; set; }
         public int KeyId { get; set; }
+        public string KeyName { get; set; }
         public Key Key { get; set; }
         public DateTime SignedTime { get; set; }
         public DateTime SentTime { get; set; }

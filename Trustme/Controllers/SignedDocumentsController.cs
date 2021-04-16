@@ -14,10 +14,12 @@ namespace Trustme.Controllers
     {
         private readonly IHttpRequestFunctions _HttpRequestFunctions;
         private readonly ISignedDocumentRepository _SignedDocumentRepository;
-        public SignedDocumentsController(ISignedDocumentRepository signedDocumentRepository, IHttpRequestFunctions httpRequestFunctions)
+        private readonly IKeyRepository _KeyRepository;
+        public SignedDocumentsController(IKeyRepository keyRepository, ISignedDocumentRepository signedDocumentRepository, IHttpRequestFunctions httpRequestFunctions)
         {
             _HttpRequestFunctions = httpRequestFunctions;
             _SignedDocumentRepository = signedDocumentRepository;
+            _KeyRepository = keyRepository;
         }
 
         [HttpGet]
@@ -42,6 +44,7 @@ namespace Trustme.Controllers
             foreach (var doc in signedDocuments)
             {
                 SignedDocumentsViewModel signedDocumentsViewModel = new SignedDocumentsViewModel(doc);
+                signedDocumentsViewModel.KeyName = _KeyRepository.GetKeyById(doc.KeyId).CertificateName;
                 signedDocumentsViewModels.Add(signedDocumentsViewModel);
 
             }
