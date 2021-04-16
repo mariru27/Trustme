@@ -18,7 +18,6 @@
             Sent from username:
             @Model.SentFromUsername
         </div>
-
         <div class="form-group">
             File Name:
             @Model.Name
@@ -31,7 +30,10 @@
             Signed time:
             @Model.SignedTime
         </div>
-
+        <div class="form-group">
+            Signed with key:
+            <strong>@Model.KeyName</strong>
+        </div>
         <div class="form-group">
             Signature:
             <textarea class="form-control" name="Signature">@Model.Signature</textarea>
