@@ -21,7 +21,6 @@ namespace Trustme.Models
 
         [Required]
         [Display(Name = "Certificate Name")]
-
         public string CertificateName { set; get; }
         public string Description { set; get; }
 

@@ -21,28 +21,31 @@
     </div>
  }
 
-        <div asp-validation-summary="All" class="text-danger"></div>
-        <div class="card border-secondary mb-3">
-            <div class="card-body text-secondary">
-                <form asp-action="Generate">
-                    <div class="form-group">
-                        <label asp-for="CertificateName" class="control-label">Certificate name</label>
-                        <input asp-for="CertificateName" class="form-control" name="certificateName" type="text">
-                    </div>
-                    <label for="keySize">Choose key size:</label>
-                    <select class="form-control" name="keySize" id="keySize">
-                        <option value=512>512</option>
-                        <option value=1024>1024</option>
-                        <option value=2048>2048</option>
-                        <option value=4096>4096</option>
-                    </select>
-                    <div class="form-group">
-                        <label asp-for="Description" class="control-label">Description</label>
-                        <textarea class="form-control" asp-for="Description" rows="3"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <input type="submit" value="Generate" class="btn btn-primary" />
-                    </div>
-                </form>
+<div class="card border-secondary mb-3">
+    <div class="card-body text-secondary">
+        <form asp-action="Generate">
+            <div asp-validation-summary="ModelOnly" class="text-danger">
+                <span>Please correct the following errors</span>
             </div>
-        </div>
+            <div class="form-group">
+                <label asp-for="CertificateName" class="control-label">Certificate name</label>
+                <input asp-for="CertificateName" class="form-control" name="certificateName" type="text">
+                <span asp-validation-for="CertificateName" class="text-danger"></span>
+            </div>
+            <label for="keySize">Choose key size:</label>
+            <select class="form-control" name="keySize" id="keySize">
+                <option value=512>512</option>
+                <option value=1024>1024</option>
+                <option value=2048>2048</option>
+                <option value=4096>4096</option>
+            </select>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label">Description</label>
+                <textarea class="form-control" asp-for="Description" rows="3"></textarea>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Generate" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
