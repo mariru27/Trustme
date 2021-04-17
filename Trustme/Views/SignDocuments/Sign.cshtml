@@ -7,7 +7,6 @@
 
 <br />
 
-<div asp-validation-summary="All" class="text-danger"></div>
 
 <form asp-action="Sign" enctype="multipart/form-data" method="post">
     <input type="hidden" asp-for="@Model.IdUnsignedDocument" value="@Model.UnsignedDocument.IdUnsignedDocument" />
@@ -17,6 +16,9 @@
             @Model.UnsignedDocument.SentFromUsername
         </div>
         <div class="card-body">
+            <div asp-validation-summary="ModelOnly" class="text-danger">
+                <span>Please correct the following errors</span>
+            </div>
             <div class="form-group">
                 File Name:
                 @Model.UnsignedDocument.Name
@@ -28,9 +30,9 @@
             <div class="form-group">
                 <label asp-for="@Model.PkFile">Private key</label>
                 <input asp-for="@Model.PkFile" type="file">
+                <span asp-validation-for="@Model.PkFile" class="text-danger"></span>
             </div>
             <br />
-
             @{
                 if (Model.Signature != "" && Model.Signature != null)
                 {
@@ -42,7 +44,6 @@
 
                 }
             }
-
             <div class="form-group">
                 <input type="submit" value="Sign" class="btn btn-primary" />
             </div>
