@@ -8,7 +8,6 @@
 
 <br />
 
-<div asp-validation-summary="All" class="text-danger"></div>
 
 @if (TempData["ValidSignature"] != null)
 {
@@ -18,6 +17,9 @@
 <form action="VerifySign" enctype="multipart/form-data" method="post">
     <div class="card border-secondary mb-3">
         <div class="card-body text-secondary">
+            <div asp-validation-summary="ModelOnly" class="text-danger">
+                <span>Please correct the following errors</span>
+            </div>
             <input type="hidden" asp-for="Username" value=@Model.Username id="username" />
             <label asp-for="CertificateName">Choose a certifificate:</label>
             <select class="form-control" asp-for="CertificateName">
@@ -33,10 +35,12 @@
             <div class="form-group">
                 <label asp-for="Signature" class="control-label">User signature:</label>
                 <textarea class="form-control" asp-for="Signature" rows="3"></textarea>
+                <span asp-validation-for="Signature" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Document">Document:</label>
                 <input asp-for="Document" type="file" class="form-control-file" />
+                <span asp-validation-for="Document" class="text-danger"></span>
             </div>
 
             <div class="form-group">
