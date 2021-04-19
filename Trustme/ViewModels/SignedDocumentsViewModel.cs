@@ -11,6 +11,7 @@ namespace Trustme.ViewModels
     {
         public readonly IKeyRepository _KeyRepository;
         public readonly IUserRepository _UserRepository;
+        public SignedDocumentsViewModel() { }
         public SignedDocumentsViewModel(IKeyRepository keyRepository, IUserRepository userRepository)
         {
             _KeyRepository = keyRepository;
@@ -38,7 +39,7 @@ namespace Trustme.ViewModels
         public string Signature { get; set; }
         public int KeyId { get; set; }
         public string KeyName { get; set; }
-        public Key Key { get; set; }
+        public Key Key = new Key();
         public DateTime SignedTime { get; set; }
         public DateTime SentTime { get; set; }
 

@@ -1,13 +1,20 @@
 ﻿@model SignedDocumentsViewModel
 
+<partial name="_Sign-Unsign_Nav-bar" />
+
+@{
+    ViewData["Title"] = "Signed Document Details";
+}
+<h4 class="display-4">Signed document details</h4>
+
+<br />
+
 <div class="card border-secondary mb-3">
     <div class="card-header text-secondary">
         <a class="float-left" asp-controller="SignedDocuments" asp-action="Download" asp-route-id="@Model.IdSignedDocument">
             Download
         </a>
-        <a class="float-right" asp-controller="SignedDocuments" asp-action="DeleteDocument" asp-route-id="@Model.IdSignedDocument">
-            Delete
-        </a>
+
     </div>
     <div class="card-body">
         <div class="form-group">
@@ -23,10 +30,21 @@
             @Model.Name
         </div>
         <div class="form-group">
+            Upload time:
+            @Model.SentTime
+        </div>
+        <div class="form-group">
+            Signed time:
+            @Model.SignedTime
+        </div>
+        <div class="form-group">
             Signed with key:
             <strong>@Model.KeyName</strong>
         </div>
-        <a asp-controller="SignedDocuments" asp-action="SignedDocumentDetails" asp-route-id="@Model.IdSignedDocument">Details</a>
+        <div class="form-group">
+            Signature:
+            <textarea class="form-control" name="Signature">@Model.Signature</textarea>
+        </div>
     </div>
 </div>
 <br>

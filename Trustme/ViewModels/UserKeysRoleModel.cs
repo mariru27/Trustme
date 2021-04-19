@@ -6,7 +6,7 @@ namespace Trustme.ViewModels
     public class UserKeysRoleModel
     {
         public IEnumerable<Key> Keys;
-        public User User;
-        public Role Role;
+        public User User = new User();
+        public Role Role = new Role();
     }
 }

@@ -4,7 +4,7 @@ namespace Trustme.ViewModels
 {
     public class RoleUserModel
     {
-        public User User;
-        public Role Role;
+        public User User = new User();
+        public Role Role = new Role();
     }
 }

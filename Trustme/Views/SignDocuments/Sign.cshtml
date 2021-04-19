@@ -42,6 +42,8 @@
                     <p class="font-weight-normal">Your signature:</p>
                     <textarea class="form-control" asp-for="Signature">@Model.Signature</textarea>
 
+                    <a class="float-right" asp-controller="SignedDocuments" asp-action="SignedDocumentsFromUsers">Signed Documents</a>
+                    <br />
                 }
             }
             <div class="form-group">

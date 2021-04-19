@@ -8,7 +8,7 @@ namespace Trustme.ViewModels
     public class KeysUnsignedDocumentViewModel
     {
         public IEnumerable<Key> Keys { get; set; }
-        public Key Key { get; set; }
+        public Key Key = new Key();
         public UnsignedDocument UnsignedDocument { get; set; }
         [Required]
         [Display(Name = "Private Key")]
