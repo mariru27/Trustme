@@ -16,6 +16,9 @@
 <form method="post" enctype="multipart/form-data" asp-action="UploadDocument">
     <div class="card border-secondary mb-3">
         <div class="card-body text-secondary">
+            <div asp-validation-summary="ModelOnly" class="text-danger">
+                <span>Please correct the following errors</span>
+            </div>
             <input type="hidden" asp-for="Username" value=@Model.Username />
             <label asp-for="CertificateName">Choose a certifificate:</label>
             <select class="form-control" name="certificateName" id="certificateName">
@@ -30,7 +33,8 @@
             <br>
             <div class="form-group">
                 <label asp-for="Document"><strong>Document</strong></label>
-                <input asp-for="Document" type="file">
+                <input asp-for="Document" type="file" >
+                <span asp-validation-for="Document" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Upload" class="btn btn-primary" />
