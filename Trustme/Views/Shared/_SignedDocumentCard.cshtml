@@ -34,7 +34,7 @@
             Signed with key:
             <strong>@Model.KeyName</strong>
         </div>
-        <a asp-controller="SignedDocuments" asp-action="SignedDocumentDetails">Details</a>
+        <a asp-controller="SignedDocuments" asp-action="SignedDocumentDetails" asp-route-id="@Model.IdSignedDocument">Details</a>
         <div class="form-group">
             Signature:
             <textarea class="form-control" name="Signature">@Model.Signature</textarea>
