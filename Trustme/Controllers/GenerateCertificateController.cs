@@ -141,7 +141,7 @@ namespace Trustme.Controllers
 
                 byte[] privatekey_byte = Encoding.ASCII.GetBytes(privateKey);
 
-                string pathPrivateKey = Path.Combine(pathDir, "privateKey.pem");
+                string pathPrivateKey = Path.Combine(pathDir, "Private_Key.pem");
                 using (FileStream outStream = new FileStream(pathPrivateKey, FileMode.Create, FileAccess.ReadWrite))
                 {
                     outStream.Write(privatekey_byte, 0, privatekey_byte.Length);
