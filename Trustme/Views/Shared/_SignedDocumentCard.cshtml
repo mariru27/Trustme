@@ -23,22 +23,10 @@
             @Model.Name
         </div>
         <div class="form-group">
-            Upload time:
-            @Model.SentTime
-        </div>
-        <div class="form-group">
-            Signed time:
-            @Model.SignedTime
-        </div>
-        <div class="form-group">
             Signed with key:
             <strong>@Model.KeyName</strong>
         </div>
         <a asp-controller="SignedDocuments" asp-action="SignedDocumentDetails" asp-route-id="@Model.IdSignedDocument">Details</a>
-        <div class="form-group">
-            Signature:
-            <textarea class="form-control" name="Signature">@Model.Signature</textarea>
-        </div>
     </div>
 </div>
 <br>
