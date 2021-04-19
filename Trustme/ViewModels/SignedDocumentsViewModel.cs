@@ -11,6 +11,7 @@ namespace Trustme.ViewModels
     {
         public readonly IKeyRepository _KeyRepository;
         public readonly IUserRepository _UserRepository;
+        public SignedDocumentsViewModel() { }
         public SignedDocumentsViewModel(IKeyRepository keyRepository, IUserRepository userRepository)
         {
             _KeyRepository = keyRepository;

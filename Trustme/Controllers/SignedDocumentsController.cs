@@ -29,7 +29,10 @@ namespace Trustme.Controllers
             return RedirectToAction("SignedDocumentsFromUsers");
         }
 
-
+        public IActionResult SignedDocumentDetails(SignedDocumentsViewModel signedDocumentsViewModel)
+        {
+            return View(signedDocumentsViewModel);
+        }
         public IActionResult Download(int id)
         {
             var document = _SignedDocumentRepository.GetSignedDocumentById(id);
