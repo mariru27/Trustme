@@ -43,7 +43,7 @@ namespace Trustme.ViewModels
         public string Username { set; get; }
         public int RoleId { get; set; }
 
-        public Role Role { get; set; }
+        public Role Role = new Role();
 
 
     }

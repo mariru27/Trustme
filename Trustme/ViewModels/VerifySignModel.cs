@@ -9,7 +9,7 @@ namespace Trustme.ViewModels
     {
         [Required]
         public string Username { get; set; }
-        public List<Key> Keys { get; set; }
+        public List<Key> Keys = new List<Key>();
         [Required]
         public string CertificateName { get; set; }
         [Required]
