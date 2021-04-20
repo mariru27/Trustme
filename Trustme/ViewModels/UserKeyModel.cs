@@ -4,7 +4,7 @@ namespace Trustme.ViewModels
 {
     public class UserKeyModel
     {
-        public Key Key = new Key();
-        public User User = new User();
+        public Key Key { get; set; } = new Key();
+        public User User { get; set; } = new User();
     }
 }

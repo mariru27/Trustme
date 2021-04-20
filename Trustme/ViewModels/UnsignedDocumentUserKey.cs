@@ -4,8 +4,8 @@ namespace Trustme.ViewModels
 {
     public class UnsignedDocumentUserKey
     {
-        public User User = new User();
-        public Key Key = new Key();
-        public UnsignedDocument UnsignedDocument = new UnsignedDocument();
+        public User User { get; set; } = new User();
+        public Key Key { get; set; } = new Key();
+        public UnsignedDocument UnsignedDocument { get; set; } = new UnsignedDocument();
     }
 }
