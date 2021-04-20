@@ -52,28 +52,6 @@ namespace Trustme.Service
             _context.SaveChanges();
         }
 
-        public UserKeyModel CreateDefaultUserKeyModel()
-        {
-            User user = new User();
-            user.FirstName = "First name";
-            user.SecondName = "Second name";
-            user.Username = "testusername";
-            user.Mail = "mail@gmail.com";
-            user.Password = "password";
-            user.ConfirmPassword = "password";
-
-            Key key = new Key();
-            key.CertificateName = "certificateName";
-            key.Description = "description";
-            key.KeySize = 100;
-            key.PublicKey = "wdwq";
-
-            UserKeyModel userKeyModel = new UserKeyModel();
-            userKeyModel.Key = key;
-            userKeyModel.User = user;
-
-            return userKeyModel;
-        }
 
         public List<Key> ListAllKeys(User _User)
         {

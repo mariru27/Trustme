@@ -46,6 +46,7 @@ namespace Trustme.Controllers
         {
             //Get all users signedDocuments
             IEnumerable<SignedDocument> signedDocuments = _SignedDocumentRepository.ListAllSignedDocuments(_HttpRequestFunctions.GetUser(HttpContext));
+
             if (signedDocuments.Count() == 0)
             {
                 TempData["DoNotHaveAnySignedDocuments"] = "You do not have any signed documents";

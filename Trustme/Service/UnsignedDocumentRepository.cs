@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Trustme.Data;
-using Trustme.Models;
 using Trustme.IServices;
+using Trustme.Models;
 using Trustme.ViewModels;
 
 namespace Trustme.Service
@@ -12,7 +12,7 @@ namespace Trustme.Service
         private AppContext _context;
         private IKeyRepository _KeyRepository;
         private IUserRepository _UserRepository;
-       
+
 
         public UnsignedDocumentRepository(AppContext context, IKeyRepository keyRepository, IUserRepository userRepository)
         {
@@ -30,11 +30,11 @@ namespace Trustme.Service
             userUnsignedDocument.User = unsignedDocumentUserKey.User;
             userUnsignedDocument.UnsignedDocument = unsignedDocumentUserKey.UnsignedDocument;
             userUnsignedDocument.UnsignedDocumentId = unsignedDocumentUserKey.UnsignedDocument.IdUnsignedDocument;
-            
+
             _context.UserUnsignedDocuments.Add(userUnsignedDocument);
             _context.SaveChanges();
         }
-        
+
         public void DeleteUnsignedDocument(int IdUnsignedDocument)
         {
 
@@ -64,7 +64,7 @@ namespace Trustme.Service
                 u => u.UnsignedDocumentId,
                 ud => ud.IdUnsignedDocument,
                 (u, ud) => new UnsignedDocument(ud)).ToList().Where(a => a.Signed == false);
-
+            unsignedDocuments = unsignedDocuments.OrderByDescending(a => a.SentTime).ToList();
             return unsignedDocuments;
         }
 

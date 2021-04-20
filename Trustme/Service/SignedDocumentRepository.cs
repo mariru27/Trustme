@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Trustme.Data;
 using Trustme.IServices;
 using Trustme.Models;
-using Trustme.Data;
 
 namespace Trustme.Service
 {
@@ -17,7 +17,7 @@ namespace Trustme.Service
         }
         public bool AddSignedDocument(SignedDocument signedDocument, User user)
         {
-            
+
             _context.SignedDocuments.Add(signedDocument);
 
             _context.SaveChanges();
@@ -42,6 +42,7 @@ namespace Trustme.Service
             u => u.SignedDocumentId,
             ud => ud.IdSignedDocument,
             (u, ud) => new SignedDocument(ud)).ToList();
+            signedDocuments = signedDocuments.OrderByDescending(n => n.SignedTime).ToList();
             return signedDocuments;
         }
 
