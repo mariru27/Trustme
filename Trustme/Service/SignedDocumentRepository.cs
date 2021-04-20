@@ -42,8 +42,7 @@ namespace Trustme.Service
             u => u.SignedDocumentId,
             ud => ud.IdSignedDocument,
             (u, ud) => new SignedDocument(ud)).ToList();
-            signedDocuments.OrderByDescending(n => n.SignedTime).ToList();
-            signedDocuments.Reverse().ToList();
+            signedDocuments = signedDocuments.OrderByDescending(n => n.SignedTime).ToList();
             return signedDocuments;
         }
 
