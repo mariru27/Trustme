@@ -40,7 +40,7 @@
                         <strong>Success!</strong> You signed your document.
                     </div>
                     <p class="font-weight-normal">Your signature:</p>
-                    <textarea class="form-control" asp-for="Signature">@Model.Signature</textarea>
+                    <textarea class="form-control" asp-for="Signature" readonly>@Model.Signature</textarea>
 
                     <a class="float-right" asp-controller="SignedDocuments" asp-action="SignedDocumentsFromUsers">Signed Documents</a>
                     <br />
