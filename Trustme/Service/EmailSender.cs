@@ -12,6 +12,7 @@ namespace Trustme.Service
         {
             _Configuration = iConfig;
         }
+
         //public void SendMail(string messageContent, string toUserNameMail)
         public void SendMail()
         {

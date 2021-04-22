@@ -25,12 +25,7 @@ namespace Trustme
         public void ConfigureServices(IServiceCollection services)
         {
 
-            //services.AddScoped<AppContext>();
             services.AddEntityFrameworkSqlServer().AddDbContext<AppContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")).EnableSensitiveDataLogging());
-
-            //services.AddScoped<AppContext>();
-
-
 
             services.AddHttpContextAccessor();
             services.AddScoped<IKeyRepository, KeyRepository>();
@@ -54,9 +49,6 @@ namespace Trustme
             });
             services.AddControllersWithViews();
             services.AddMemoryCache();
-
-
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
