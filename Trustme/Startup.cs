@@ -5,10 +5,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Trustme.IServices;
-using Trustme.Service;
-using AppContext = Trustme.Data.AppContext;
 using Trustme.ITools;
+using Trustme.Service;
 using Trustme.Tools;
+using AppContext = Trustme.Data.AppContext;
 
 namespace Trustme
 {
@@ -17,7 +17,7 @@ namespace Trustme
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-            
+
         }
 
         public IConfiguration Configuration { get; }
@@ -28,7 +28,7 @@ namespace Trustme
             //services.AddScoped<AppContext>();
             services.AddEntityFrameworkSqlServer().AddDbContext<AppContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")).EnableSensitiveDataLogging());
 
-           //services.AddScoped<AppContext>();
+            //services.AddScoped<AppContext>();
 
 
 
@@ -42,6 +42,7 @@ namespace Trustme
             services.AddTransient<ISignedDocumentRepository, SignedDocumentRepository>();
             services.AddTransient<ISign, Sign>();
             services.AddSingleton<ICrypto, Crypto>();
+            services.AddSingleton<IEmailSender, EmailSender>();
 
             services.AddMvc().AddControllersAsServices();
 
