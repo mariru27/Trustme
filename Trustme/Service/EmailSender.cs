@@ -8,6 +8,8 @@ namespace Trustme.Service
         public void SendMail(string messageContent, string toUserName)
         {
             MimeMessage message = new MimeMessage();
+            MailboxAddress from = new MailboxAddress("Admin",
+                                    "timetrustme99@gmail.com");
 
         };
     }
