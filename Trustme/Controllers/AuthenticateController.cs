@@ -94,6 +94,12 @@ namespace Trustme.Controllers
                     //MessageBodyContent = "Access application with this link: " + "link"
                 };
 
+                if (_EmailSender.SendMail(sendMailModel) == false)
+                {
+                    ModelState.AddModelError("", "This email do not exists");
+                }
+
+
                 _UserRepository.AddUser(user);
                 return await LogIn(login);
             }
