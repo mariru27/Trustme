@@ -11,12 +11,18 @@ namespace Trustme.Service
         public EmailSender(IConfiguration iConfig)
         {
             _Configuration = iConfig;
+
         }
 
         //public void SendMail(string messageContent, string toUserNameMail)
         public void SendMail()
         {
+
+            //        var PasswordRequiredLength = _Configuration.GetValue<string>(
+            //"defaultProvider");
+
             MimeMessage message = new MimeMessage();
+
 
             MailboxAddress from = new MailboxAddress("Admin",
                                     "timetrustme99@gmail.com");
@@ -34,10 +40,13 @@ namespace Trustme.Service
 
             //Connect and authenticate with the SMTP server
             SmtpClient client = new SmtpClient();
-            client.Connect("timetrustme99@gmail.com", 587, true);
+            client.Connect("smtp.gmail.com", 465, true);
 
             //email password is stored in my local.json file
-            client.Authenticate("timetrustme99@gmail.com", _Configuration.GetSection("SMTPpassword").Value);
+            client.Authenticate("timetrustme99@gmail.com", "");
+            client.Send(message);
+            client.Disconnect(true);
+            client.Dispose();
         }
     }
 }
