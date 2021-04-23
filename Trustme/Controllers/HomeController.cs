@@ -15,12 +15,6 @@ namespace Trustme.Controllers
             _UserRepository = userRepository;
         }
 
-        public void test()
-        {
-            _EmailSender.SendMail();
-
-        }
-
         public IActionResult Index()
         {
             if (_UserRepository.AnyUser() == false)
