@@ -20,11 +20,13 @@ namespace Trustme.Controllers
         private readonly IRoleRepository _RoleReporitory;
         private readonly IUserRepository _UserRepository;
         private readonly ICrypto _Tool;
-        public AuthenticateController(IRoleRepository roleRepository, IUserRepository userRepository, ICrypto tool)
+        private readonly IEmailSender _EmailSender;
+        public AuthenticateController(IRoleRepository roleRepository, IUserRepository userRepository, ICrypto tool, IEmailSender emailSender)
         {
             _UserRepository = userRepository;
             _RoleReporitory = roleRepository;
             _Tool = tool;
+            _EmailSender = emailSender;
         }
 
         public IActionResult Register()
@@ -81,6 +83,11 @@ namespace Trustme.Controllers
                 user.ConfirmPassword = _Tool.ComputeHash(user.ConfirmPassword, new SHA256CryptoServiceProvider());
                 Role role = _RoleReporitory.GetRoleById(user.RoleId);
                 user.Role = role;
+
+
+                //send confirmation email
+
+
                 _UserRepository.AddUser(user);
                 return await LogIn(login);
             }

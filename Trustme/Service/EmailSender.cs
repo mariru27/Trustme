@@ -47,7 +47,7 @@ namespace Trustme.Service
                 client.Disconnect(true);
                 client.Dispose();
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return false;
             }
