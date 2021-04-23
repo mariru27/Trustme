@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
@@ -86,7 +85,14 @@ namespace Trustme.Controllers
 
 
                 //send confirmation email
-
+                SendMailModel sendMailModel = new SendMailModel
+                {
+                    ToUsername = user.Username,
+                    ToUserMail = user.Mail,
+                    MessageSubject = "Trustme, register",
+                    MessageBodyHtml = "Account created successfully, we will send you notifications when you need to sign documents",
+                    //MessageBodyContent = "Access application with this link: " + "link"
+                };
 
                 _UserRepository.AddUser(user);
                 return await LogIn(login);
