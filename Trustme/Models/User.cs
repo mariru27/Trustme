@@ -40,7 +40,7 @@ namespace Trustme.Models
         [Display(Name = "Confirm Password")]
         public string ConfirmPassword { get; set; }
 
-
+        public string Token { get; set; }
 
         [Display(Name = "Role")]
 
