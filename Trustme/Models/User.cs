@@ -22,7 +22,7 @@ namespace Trustme.Models
 
         [Required]
         [RegularExpression(@"^[^@\s]+@[^@\s]+\.[^@\s]+$", ErrorMessage = "This is not a valid mail")]
-        [Display(Name = "Mail")]
+        [Display(Name = "Email")]
         public string Mail { set; get; }
 
         [Required]
