@@ -2,15 +2,18 @@
 using Microsoft.Extensions.Configuration;
 using MimeKit;
 using Trustme.IServices;
+using Trustme.Models;
 
 namespace Trustme.Service
 {
     public class EmailSender : IEmailSender
     {
         private readonly IConfiguration _Configuration;
-        public EmailSender(IConfiguration iConfig)
+        private readonly NotificationMetadata _NotificationMetadata;
+        public EmailSender(IConfiguration iConfig, NotificationMetadata notificationMetadata)
         {
             _Configuration = iConfig;
+            _NotificationMetadata = notificationMetadata;
 
         }
 
@@ -20,7 +23,7 @@ namespace Trustme.Service
 
             //        var PasswordRequiredLength = _Configuration.GetValue<string>(
             //"defaultProvider");
-
+            var a = _NotificationMetadata.Sender;
             MimeMessage message = new MimeMessage();
 
 

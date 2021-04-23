@@ -40,7 +40,7 @@ namespace Trustme
             services.AddSingleton<ICrypto, Crypto>();
             services.AddSingleton<IEmailSender, EmailSender>();
 
-            //register NotificationMetadata
+            //register NotificationMetadata - form mail sender
             var notificationMetadata =
             Configuration.GetSection("NotificationMetadata").
             Get<NotificationMetadata>();
@@ -49,6 +49,7 @@ namespace Trustme
 
             services.AddMvc().AddControllersAsServices();
 
+            //Cokie
             services.AddAuthentication("CookieAuth").AddCookie("CookieAuth", config =>
             {
                 config.Cookie.Name = "User.cookie";
