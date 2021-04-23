@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Trustme.IServices;
 using Trustme.ITools;
+using Trustme.Models;
 using Trustme.Service;
 using Trustme.Tools;
 using AppContext = Trustme.Data.AppContext;
@@ -38,6 +39,13 @@ namespace Trustme
             services.AddTransient<ISign, Sign>();
             services.AddSingleton<ICrypto, Crypto>();
             services.AddSingleton<IEmailSender, EmailSender>();
+
+            //register NotificationMetadata
+            var notificationMetadata =
+            Configuration.GetSection("NotificationMetadata").
+            Get<NotificationMetadata>();
+            services.AddSingleton(notificationMetadata);
+            services.AddControllers();
 
             services.AddMvc().AddControllersAsServices();
 
