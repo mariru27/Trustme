@@ -23,7 +23,7 @@ namespace Trustme.Service
             MimeMessage message = new MimeMessage();
 
             MailboxAddress from = new MailboxAddress(_NotificationMetadata.FromUsername,
-                                    "timetrustme99@gmail.com");
+                                    _NotificationMetadata.Sender);
             message.From.Add(from);
 
             MailboxAddress to = new MailboxAddress("user",
@@ -38,10 +38,10 @@ namespace Trustme.Service
 
             //Connect and authenticate with the SMTP server
             SmtpClient client = new SmtpClient();
-            client.Connect("smtp.gmail.com", 465, true);
+            client.Connect(_NotificationMetadata.SmtpServer, _NotificationMetadata.Port, true);
 
             //email password is stored in my local.json file
-            client.Authenticate("timetrustme99@gmail.com", "");
+            client.Authenticate(_NotificationMetadata.Sender, _NotificationMetadata.Password);
             client.Send(message);
             client.Disconnect(true);
             client.Dispose();
