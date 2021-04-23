@@ -33,8 +33,9 @@ namespace Trustme.Service
             message.Subject = "This is email test subject";
 
             BodyBuilder bodyBuilder = new BodyBuilder();
-            bodyBuilder.HtmlBody = "<h1>Hello World!</h1>";
-            bodyBuilder.TextBody = "Hello World!";
+            bodyBuilder.HtmlBody = "<h1>Test!</h1>";
+            bodyBuilder.TextBody = "Test!";
+            message.Body = bodyBuilder.ToMessageBody();
 
             //Connect and authenticate with the SMTP server
             SmtpClient client = new SmtpClient();
