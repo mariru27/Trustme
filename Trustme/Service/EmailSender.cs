@@ -21,10 +21,8 @@ namespace Trustme.Service
         public void SendMail()
         {
             MimeMessage message = new MimeMessage();
-            var a = _NotificationMetadata.Sender;
 
-
-            MailboxAddress from = new MailboxAddress("Admin",
+            MailboxAddress from = new MailboxAddress(_NotificationMetadata.FromUsername,
                                     "timetrustme99@gmail.com");
             message.From.Add(from);
 
