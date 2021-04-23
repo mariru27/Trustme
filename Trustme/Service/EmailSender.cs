@@ -1,5 +1,4 @@
 ﻿using MailKit.Net.Smtp;
-using Microsoft.Extensions.Configuration;
 using MimeKit;
 using Trustme.IServices;
 using Trustme.Models;
@@ -8,17 +7,14 @@ namespace Trustme.Service
 {
     public class EmailSender : IEmailSender
     {
-        private readonly IConfiguration _Configuration;
         private readonly NotificationMetadata _NotificationMetadata;
-        public EmailSender(IConfiguration iConfig, NotificationMetadata notificationMetadata)
+        public EmailSender(NotificationMetadata notificationMetadata)
         {
-            _Configuration = iConfig;
             _NotificationMetadata = notificationMetadata;
 
         }
 
-        //public void SendMail(string messageContent, string toUserNameMail)
-        public void SendMail()
+        public void SendMail(string toUsername, string toUserNameMail, string messageBodyHtmml = "", string messageBodyContent, string messageSubject = "Subject")
         {
             MimeMessage message = new MimeMessage();
 
@@ -26,14 +22,14 @@ namespace Trustme.Service
                                     _NotificationMetadata.Sender);
             message.From.Add(from);
 
-            MailboxAddress to = new MailboxAddress("user",
-                                    "marina.rusu.99@gmail.com");
+            MailboxAddress to = new MailboxAddress(toUsername,
+                                    toUserNameMail);
             message.To.Add(to);
 
-            message.Subject = "This is email test subject";
+            message.Subject = messageSubject;
 
             BodyBuilder bodyBuilder = new BodyBuilder();
-            bodyBuilder.HtmlBody = "<h1>Test!</h1>";
+            bodyBuilder.HtmlBody = "<h5>" + messageBodyHtmml + "</h5>";
             bodyBuilder.TextBody = "Test!";
             message.Body = bodyBuilder.ToMessageBody();
 
