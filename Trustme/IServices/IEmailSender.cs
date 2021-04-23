@@ -4,7 +4,7 @@ namespace Trustme.IServices
 {
     public interface IEmailSender
     {
-        public void SendMail(SendMailModel sendMailModel);
+        public bool SendMail(SendMailModel sendMailModel);
 
     }
 }
