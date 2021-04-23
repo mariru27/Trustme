@@ -20,11 +20,8 @@ namespace Trustme.Service
         //public void SendMail(string messageContent, string toUserNameMail)
         public void SendMail()
         {
-
-            //        var PasswordRequiredLength = _Configuration.GetValue<string>(
-            //"defaultProvider");
-            var a = _NotificationMetadata.Sender;
             MimeMessage message = new MimeMessage();
+            var a = _NotificationMetadata.Sender;
 
 
             MailboxAddress from = new MailboxAddress("Admin",

@@ -15,13 +15,12 @@ namespace Trustme
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public IConfiguration Configuration { get; }
+        public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
             Configuration = configuration;
-
         }
 
-        public IConfiguration Configuration { get; }
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
@@ -40,7 +39,7 @@ namespace Trustme
             services.AddSingleton<ICrypto, Crypto>();
             services.AddSingleton<IEmailSender, EmailSender>();
 
-            //register NotificationMetadata - form mail sender
+            //register NotificationMetadata -form mail sender
             var notificationMetadata =
             Configuration.GetSection("NotificationMetadata").
             Get<NotificationMetadata>();
@@ -85,6 +84,7 @@ namespace Trustme
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+
         }
     }
 }
