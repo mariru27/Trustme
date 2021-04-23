@@ -2,7 +2,7 @@
 {
     public interface IEmailSender
     {
-        public void SendMail();
+        public void SendMail(SendMailModel sendMailModel)
 
     }
 }

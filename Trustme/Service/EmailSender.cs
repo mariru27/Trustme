@@ -14,7 +14,7 @@ namespace Trustme.Service
 
         }
 
-        public void SendMail(string toUsername, string toUserNameMail, string messageBodyHtmml = "", string messageBodyContent, string messageSubject = "Subject")
+        public void SendMail(SendMailModel sendMailModel)
         {
             MimeMessage message = new MimeMessage();
 
@@ -22,15 +22,15 @@ namespace Trustme.Service
                                     _NotificationMetadata.Sender);
             message.From.Add(from);
 
-            MailboxAddress to = new MailboxAddress(toUsername,
-                                    toUserNameMail);
+            MailboxAddress to = new MailboxAddress(sendMailModel.ToUsername,
+                                    sendMailModel.ToUserMail);
             message.To.Add(to);
 
-            message.Subject = messageSubject;
+            message.Subject = sendMailModel.MessageSubject;
 
             BodyBuilder bodyBuilder = new BodyBuilder();
-            bodyBuilder.HtmlBody = "<h5>" + messageBodyHtmml + "</h5>";
-            bodyBuilder.TextBody = "Test!";
+            bodyBuilder.HtmlBody = "<h5>" + sendMailModel.MessageBodyHtml + "</h5>";
+            bodyBuilder.TextBody = sendMailModel.MessageBodyContent;
             message.Body = bodyBuilder.ToMessageBody();
 
             //Connect and authenticate with the SMTP server
