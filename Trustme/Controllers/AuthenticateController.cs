@@ -87,15 +87,15 @@ namespace Trustme.Controllers
                 Role role = _RoleReporitory.GetRoleById(user.RoleId);
                 user.Role = role;
 
-
                 //send confirmation email
                 SendMailModel sendMailModel = new SendMailModel
                 {
                     ToUsername = user.Username,
                     ToUserMail = user.Mail,
-                    MessageSubject = "Trustme, register",
-                    MessageBodyHtml = "Account created successfully, we will send you notifications when you need to sign documents",
-                    //MessageBodyContent = "Access application with this link: " + "link"
+                    MessageSubject = "Trustme application",
+                    //MessageBodyHtml = "Account created successfully, we will send you notifications when you need to sign documents",
+                    MessageBodyHtml = "Confirmation account",
+                    MessageBodyContent = "If you created this account click on this link: " + "link"
                 };
 
                 if (_EmailSender.SendMail(sendMailModel) == false)
