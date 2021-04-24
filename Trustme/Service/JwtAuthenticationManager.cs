@@ -1,6 +1,9 @@
 ﻿
 using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 using Trustme.Models;
 
 namespace Trustme.Service
@@ -18,10 +21,16 @@ namespace Trustme.Service
         {
 
             var tockenHandler = new JwtSecurityTokenHandler();
-
             var privateKey = _Configuration.GetValue<string>("PrivateKey");
-            var
+            var tokenKey = Encoding.ASCII.GetBytes(privateKey);
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(new Claim[]
+                {
+                    new Claim(ClaimTypes.Name, user.Username)
+                }),
 
+            }
         }
 
     }
