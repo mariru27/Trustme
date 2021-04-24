@@ -2,7 +2,7 @@
 
 namespace Trustme.IServices
 {
-    interface IJwtAuthenticationManager
+    public interface IJwtAuthenticationManager
     {
         public string GenerateTokenForUser(User user);
 

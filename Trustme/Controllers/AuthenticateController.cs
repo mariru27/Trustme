@@ -21,12 +21,15 @@ namespace Trustme.Controllers
         private readonly IUserRepository _UserRepository;
         private readonly ICrypto _Tool;
         private readonly IEmailSender _EmailSender;
-        public AuthenticateController(IRoleRepository roleRepository, IUserRepository userRepository, ICrypto tool, IEmailSender emailSender)
+        private readonly IJwtAuthenticationManager _JwtAuthenticationManager;
+        public AuthenticateController(IRoleRepository roleRepository, IUserRepository userRepository, ICrypto tool,
+                                      IEmailSender emailSender, IJwtAuthenticationManager jwtAuthenticationManager)
         {
             _UserRepository = userRepository;
             _RoleReporitory = roleRepository;
             _Tool = tool;
             _EmailSender = emailSender;
+            _JwtAuthenticationManager = jwtAuthenticationManager;
         }
 
         public IActionResult Register()
