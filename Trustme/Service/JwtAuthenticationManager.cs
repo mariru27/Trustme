@@ -5,11 +5,12 @@ using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using Trustme.IServices;
 using Trustme.Models;
 
 namespace Trustme.Service
 {
-    public class JwtAuthenticationManager
+    public class JwtAuthenticationManager : IJwtAuthenticationManager
     {
         private readonly IConfiguration _Configuration;
         public JwtAuthenticationManager(IConfiguration configuration)
@@ -18,7 +19,7 @@ namespace Trustme.Service
         }
 
 
-        public string Authenticate(User user)
+        public string GenerateTokenForUser(User user)
         {
 
             var tokenHandler = new JwtSecurityTokenHandler();
