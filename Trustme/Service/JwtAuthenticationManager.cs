@@ -31,7 +31,11 @@ namespace Trustme.Service
                     new Claim(ClaimTypes.Name, user.Username)
                 }),
                 Expires = DateTime.UtcNow.AddDays(30),
-            }
+                SigningCredentials =
+                new SigningCredentials(
+                    new SymmetricSecurityKey(tokenKey),
+                    SecurityAlgorithms.HmacSha256Signature)
+            };
         }
 
     }
