@@ -1,10 +1,13 @@
-﻿namespace Trustme.Service
+﻿using AutoMapper.Configuration;
+
+namespace Trustme.Service
 {
     public class JwtAuthenticationManager
     {
-        public JwtAuthenticationManager()
+        IConfiguration _Configuration;
+        public JwtAuthenticationManager(IConfiguration configuration)
         {
-
+            _Configuration = configuration;
         }
     }
 }
