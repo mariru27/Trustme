@@ -42,6 +42,8 @@ namespace Trustme.Models
 
         public string Token { get; set; }
 
+        public bool VerifiedAccount { get; set; }
+
         [Display(Name = "Role")]
 
         public int RoleId { get; set; }
