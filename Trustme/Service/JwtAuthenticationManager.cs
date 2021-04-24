@@ -21,7 +21,7 @@ namespace Trustme.Service
         public string Authenticate(User user)
         {
 
-            var tockenHandler = new JwtSecurityTokenHandler();
+            var tokenHandler = new JwtSecurityTokenHandler();
             var privateKey = _Configuration.GetValue<string>("PrivateKey");
             var tokenKey = Encoding.ASCII.GetBytes(privateKey);
             var tokenDescriptor = new SecurityTokenDescriptor
@@ -36,6 +36,9 @@ namespace Trustme.Service
                     new SymmetricSecurityKey(tokenKey),
                     SecurityAlgorithms.HmacSha256Signature)
             };
+
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+
         }
 
     }
