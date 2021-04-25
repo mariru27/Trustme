@@ -148,7 +148,11 @@ namespace Trustme.Controllers
             string hashPassword = _Tool.ComputeHash(login.Password, new SHA256CryptoServiceProvider());
             if (user != null && hashPassword == user.Password)
             {
-
+                if (user.VerifiedAccount == false)
+                {
+                    ModelState.AddModelError("", "Confirm your email");
+                    return View();
+                }
                 Role userRole = _RoleReporitory.GetUserRole(user);
 
                 var userClaim = new List<Claim>()
