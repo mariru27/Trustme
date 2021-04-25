@@ -7,6 +7,13 @@
 
 <br />
 
+@if (TempData["CreatedAccount"] != null)
+{
+    <div class="alert alert-success">
+        <p>@TempData["CreatedAccount"]</p>
+    </div>
+}
+
 <div class="card border-secondary mb-3">
     <div class="card-body text-secondary">
         <form asp-action="LogIn">

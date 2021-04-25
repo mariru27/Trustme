@@ -102,7 +102,7 @@ namespace Trustme.Controllers
 
                 _EmailSender.SendMail(sendMailModel);
                 user.Token = token;
-                //_UserRepository.AddUser(user);
+                _UserRepository.AddUser(user);
                 return RedirectToAction("EmailConfirmationMessage");
                 //return await LogIn(login);
 
@@ -117,7 +117,7 @@ namespace Trustme.Controllers
             if (user.Token == token)
             {
                 user.VerifiedAccount = true;
-                TempData["VerifiedAccount"] = "Your account was verified, you cand login!";
+                TempData["CreatedAccount"] = "Your account was created successfully, you can login!";
             }
 
             return RedirectToAction("LogIn");
