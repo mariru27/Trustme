@@ -5,32 +5,27 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Trustme.IServices;
-using Trustme.Service;
-using AppContext = Trustme.Data.AppContext;
 using Trustme.ITools;
+using Trustme.Models;
+using Trustme.Service;
 using Trustme.Tools;
+using AppContext = Trustme.Data.AppContext;
 
 namespace Trustme
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public IConfiguration Configuration { get; }
+        public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
             Configuration = configuration;
-            
         }
 
-        public IConfiguration Configuration { get; }
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
 
-            //services.AddScoped<AppContext>();
             services.AddEntityFrameworkSqlServer().AddDbContext<AppContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")).EnableSensitiveDataLogging());
-
-           //services.AddScoped<AppContext>();
-
-
 
             services.AddHttpContextAccessor();
             services.AddScoped<IKeyRepository, KeyRepository>();
@@ -42,9 +37,19 @@ namespace Trustme
             services.AddTransient<ISignedDocumentRepository, SignedDocumentRepository>();
             services.AddTransient<ISign, Sign>();
             services.AddSingleton<ICrypto, Crypto>();
+            services.AddSingleton<IEmailSender, EmailSender>();
+            services.AddSingleton<IJwtAuthenticationManager, JwtAuthenticationManager>();
+
+            //register NotificationMetadata -form mail sender
+            var notificationMetadata =
+            Configuration.GetSection("NotificationMetadata").
+            Get<NotificationMetadata>();
+            services.AddSingleton(notificationMetadata);
+            services.AddControllers();
 
             services.AddMvc().AddControllersAsServices();
 
+            //Cokie
             services.AddAuthentication("CookieAuth").AddCookie("CookieAuth", config =>
             {
                 config.Cookie.Name = "User.cookie";
@@ -53,9 +58,6 @@ namespace Trustme
             });
             services.AddControllersWithViews();
             services.AddMemoryCache();
-
-
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -83,6 +85,7 @@ namespace Trustme
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+
         }
     }
 }

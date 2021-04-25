@@ -8,10 +8,11 @@ namespace Trustme.Controllers
     public class HomeController : Controller
     {
         private readonly IUserRepository _UserRepository;
-        public HomeController(IUserRepository userRepository)
+        private readonly IEmailSender _EmailSender;
+        public HomeController(IUserRepository userRepository, IEmailSender emailSender)
         {
+            _EmailSender = emailSender;
             _UserRepository = userRepository;
-
         }
 
         public IActionResult Index()

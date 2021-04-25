@@ -6,6 +6,11 @@ namespace Trustme.Models
 
     public class User
     {
+        public User()
+        {
+            VerifiedAccount = false;
+        }
+
         [Key]
         public int UserId { set; get; }
 
@@ -22,7 +27,7 @@ namespace Trustme.Models
 
         [Required]
         [RegularExpression(@"^[^@\s]+@[^@\s]+\.[^@\s]+$", ErrorMessage = "This is not a valid mail")]
-        [Display(Name = "Mail")]
+        [Display(Name = "Email")]
         public string Mail { set; get; }
 
         [Required]
@@ -39,6 +44,11 @@ namespace Trustme.Models
         [Compare("Password", ErrorMessage = "Confirm password doesn't match, type again !")]
         [Display(Name = "Confirm Password")]
         public string ConfirmPassword { get; set; }
+
+        public string Token { get; set; }
+
+        public bool VerifiedAccount { get; set; }
+
         [Display(Name = "Role")]
 
         public int RoleId { get; set; }

@@ -20,11 +20,16 @@ namespace Trustme.Controllers
         private readonly IRoleRepository _RoleReporitory;
         private readonly IUserRepository _UserRepository;
         private readonly ICrypto _Tool;
-        public AuthenticateController(IRoleRepository roleRepository, IUserRepository userRepository, ICrypto tool)
+        private readonly IEmailSender _EmailSender;
+        private readonly IJwtAuthenticationManager _JwtAuthenticationManager;
+        public AuthenticateController(IRoleRepository roleRepository, IUserRepository userRepository, ICrypto tool,
+                                      IEmailSender emailSender, IJwtAuthenticationManager jwtAuthenticationManager)
         {
             _UserRepository = userRepository;
             _RoleReporitory = roleRepository;
             _Tool = tool;
+            _EmailSender = emailSender;
+            _JwtAuthenticationManager = jwtAuthenticationManager;
         }
 
         public IActionResult Register()
@@ -38,8 +43,7 @@ namespace Trustme.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-
-        public async Task<IActionResult> Register(User user)
+        public IActionResult Register(User user)
         {
             if (!ModelState.IsValid)
             {
@@ -81,11 +85,48 @@ namespace Trustme.Controllers
                 user.ConfirmPassword = _Tool.ComputeHash(user.ConfirmPassword, new SHA256CryptoServiceProvider());
                 Role role = _RoleReporitory.GetRoleById(user.RoleId);
                 user.Role = role;
+
+
+                string token = _JwtAuthenticationManager.GenerateTokenForUser(user);
+
+                //send confirmation email
+                SendMailModel sendMailModel = new SendMailModel
+                {
+                    ToUsername = user.Username,
+                    ToUserMail = user.Mail,
+                    MessageSubject = "Trustme application",
+                    MessageBodyHtml = "If you created this account click on this link for confirmation: " + "https://localhost:44318/Authenticate/EmailConfirmation?username=" + user.Username + "&&token=" + token,
+                };
+
+                _EmailSender.SendMail(sendMailModel);
+                user.Token = token;
                 _UserRepository.AddUser(user);
-                return await LogIn(login);
+                return RedirectToAction("EmailConfirmationMessage");
             }
             return View(userResult);
         }
+
+        [HttpGet]
+        public IActionResult EmailConfirmation(string username, string token)
+        {
+            User user = _UserRepository.GetUserbyUsername(username);
+            if (user.Token == token)
+            {
+                user.VerifiedAccount = true;
+                _UserRepository.UpdateUser(user);
+                TempData["CreatedAccount"] = "Your account was created successfully, you can login!";
+            }
+
+            return RedirectToAction("LogIn");
+        }
+
+        [HttpGet]
+        public IActionResult EmailConfirmationMessage()
+        {
+
+            return View();
+        }
+
 
         [HttpGet]
         public IActionResult LogIn()
@@ -103,10 +144,16 @@ namespace Trustme.Controllers
             if (!ModelState.IsValid) { return View(); }
 
 
+
             User user = _UserRepository.GetUserbyUsername(login.Username);
             string hashPassword = _Tool.ComputeHash(login.Password, new SHA256CryptoServiceProvider());
             if (user != null && hashPassword == user.Password)
             {
+                if (user.VerifiedAccount == false)
+                {
+                    ModelState.AddModelError("", "Confirm your email");
+                    return View();
+                }
                 Role userRole = _RoleReporitory.GetUserRole(user);
 
                 var userClaim = new List<Claim>()
@@ -121,7 +168,6 @@ namespace Trustme.Controllers
 
                 await HttpContext.SignInAsync(userPrinciple);
                 ViewData["username"] = user.Username;
-
                 return RedirectToAction("Index", "Home");
             }
             else
@@ -129,7 +175,6 @@ namespace Trustme.Controllers
                 ModelState.AddModelError("", "User or password are incorrect");
             }
             return View();
-
         }
 
         public bool isloggedIn(HttpContext httpcontext)
