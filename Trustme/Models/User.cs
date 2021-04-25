@@ -6,6 +6,11 @@ namespace Trustme.Models
 
     public class User
     {
+        public User()
+        {
+            VerifiedAccount = false;
+        }
+
         [Key]
         public int UserId { set; get; }
 
