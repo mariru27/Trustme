@@ -17,7 +17,6 @@ namespace Trustme.Service
             _Configuration = configuration;
         }
 
-
         public string GenerateTokenForUser(User user)
         {
 
