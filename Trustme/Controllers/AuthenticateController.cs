@@ -101,10 +101,11 @@ namespace Trustme.Controllers
                 };
 
                 _EmailSender.SendMail(sendMailModel);
+                user.Token = token;
+                _UserRepository.AddUser(user);
 
-
-                //_UserRepository.AddUser(user);
                 //return await LogIn(login);
+
             }
             return View(userResult);
         }
