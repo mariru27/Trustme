@@ -43,7 +43,6 @@ namespace Trustme.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-
         public async Task<IActionResult> Register(User user)
         {
             if (!ModelState.IsValid)
@@ -109,6 +108,13 @@ namespace Trustme.Controllers
             }
             return View(userResult);
         }
+
+        [HttpGet]
+        public IActionResult EmailConfirmation(string token)
+        {
+            return RedirectToAction("LogIn");
+        }
+
 
         [HttpGet]
         public IActionResult LogIn()
