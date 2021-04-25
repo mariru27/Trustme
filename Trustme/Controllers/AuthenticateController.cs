@@ -103,7 +103,7 @@ namespace Trustme.Controllers
                 _EmailSender.SendMail(sendMailModel);
                 user.Token = token;
                 _UserRepository.AddUser(user);
-
+                return RedirectToAction("EmailConfirmationMessage");
                 //return await LogIn(login);
 
             }
@@ -117,6 +117,12 @@ namespace Trustme.Controllers
             return RedirectToAction("LogIn");
         }
 
+        [HttpGet]
+        public IActionResult EmailConfirmationMessage()
+        {
+
+            return View();
+        }
 
 
         [HttpGet]
