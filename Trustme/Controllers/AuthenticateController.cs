@@ -97,12 +97,12 @@ namespace Trustme.Controllers
                     MessageSubject = "Trustme application",
                     //MessageBodyHtml = "Account created successfully, we will send you notifications when you need to sign documents",
                     //MessageBodyHtml = "Confirmation account",
-                    MessageBodyHtml = "If you created this account click on this link for confirmation: " + "https://localhost:44318/Authenticate/EmailConfirmation?token=" + token,
+                    MessageBodyHtml = "If you created this account click on this link for confirmation: " + "https://localhost:44318/Authenticate/EmailConfirmation?username=" + user.Username + "&&token=" + token,
                 };
 
                 _EmailSender.SendMail(sendMailModel);
                 user.Token = token;
-                _UserRepository.AddUser(user);
+                //_UserRepository.AddUser(user);
                 return RedirectToAction("EmailConfirmationMessage");
                 //return await LogIn(login);
 
@@ -111,8 +111,14 @@ namespace Trustme.Controllers
         }
 
         [HttpGet]
-        public IActionResult EmailConfirmation(string token)
+        public IActionResult EmailConfirmation(string username, string token)
         {
+            User user = _UserRepository.GetUserbyUsername(username);
+            if (user.Token == token)
+            {
+                user.VerifiedAccount = true;
+                TempData["VerifiedAccount"] = "Your account was verified, you cand login!";
+            }
 
             return RedirectToAction("LogIn");
         }
