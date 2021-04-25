@@ -113,6 +113,7 @@ namespace Trustme.Controllers
             if (user.Token == token)
             {
                 user.VerifiedAccount = true;
+                _UserRepository.UpdateUser(user);
                 TempData["CreatedAccount"] = "Your account was created successfully, you can login!";
             }
 
