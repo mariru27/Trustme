@@ -95,8 +95,6 @@ namespace Trustme.Controllers
                     ToUsername = user.Username,
                     ToUserMail = user.Mail,
                     MessageSubject = "Trustme application",
-                    //MessageBodyHtml = "Account created successfully, we will send you notifications when you need to sign documents",
-                    //MessageBodyHtml = "Confirmation account",
                     MessageBodyHtml = "If you created this account click on this link for confirmation: " + "https://localhost:44318/Authenticate/EmailConfirmation?username=" + user.Username + "&&token=" + token,
                 };
 
@@ -104,8 +102,6 @@ namespace Trustme.Controllers
                 user.Token = token;
                 _UserRepository.AddUser(user);
                 return RedirectToAction("EmailConfirmationMessage");
-                //return await LogIn(login);
-
             }
             return View(userResult);
         }
@@ -147,10 +143,12 @@ namespace Trustme.Controllers
             if (!ModelState.IsValid) { return View(); }
 
 
+
             User user = _UserRepository.GetUserbyUsername(login.Username);
             string hashPassword = _Tool.ComputeHash(login.Password, new SHA256CryptoServiceProvider());
             if (user != null && hashPassword == user.Password)
             {
+
                 Role userRole = _RoleReporitory.GetUserRole(user);
 
                 var userClaim = new List<Claim>()

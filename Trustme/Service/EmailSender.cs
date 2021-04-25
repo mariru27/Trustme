@@ -33,7 +33,7 @@ namespace Trustme.Service
                 message.Subject = sendMailModel.MessageSubject;
 
                 BodyBuilder bodyBuilder = new BodyBuilder();
-                bodyBuilder.HtmlBody = "<h4>" + sendMailModel.MessageBodyHtml + "</h4>";
+                bodyBuilder.HtmlBody = "<p>" + sendMailModel.MessageBodyHtml + "</p>";
                 bodyBuilder.TextBody = sendMailModel.MessageBodyContent;
                 message.Body = bodyBuilder.ToMessageBody();
 
