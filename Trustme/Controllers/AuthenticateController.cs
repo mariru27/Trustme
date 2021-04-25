@@ -43,7 +43,7 @@ namespace Trustme.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register(User user)
+        public IActionResult Register(User user)
         {
             if (!ModelState.IsValid)
             {
