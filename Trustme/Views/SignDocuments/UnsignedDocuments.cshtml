@@ -18,17 +18,20 @@
 
 <br />
 
-    @if (TempData["DoNotHaveAnyUnsignedDocuments"] != null)
+
+
+
+@if (TempData["DoNotHaveAnyUnsignedDocuments"] != null)
+{
+    <p class="alert alert-warning" id="successMessage">@TempData["DoNotHaveAnyUnsignedDocuments"]</p>
+}
+
+
+
+@{
+    foreach (var unsignedDocuments in Model)
     {
-        <p class="alert alert-warning" id="successMessage">@TempData["DoNotHaveAnyUnsignedDocuments"]</p>
+
+        <partial name="_UnsignedDocumentCard" model="unsignedDocuments" view-data="ViewData" />
     }
-
-
-
-    @{
-        foreach (var unsignedDocuments in Model)
-        {
-
-            <partial name="_UnsignedDocumentCard" model="unsignedDocuments" view-data="ViewData" />
-        }
-    }
+}
