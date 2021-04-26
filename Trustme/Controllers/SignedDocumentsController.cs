@@ -29,6 +29,13 @@ namespace Trustme.Controllers
             return RedirectToAction("SignedDocumentsFromUsers");
         }
 
+        [HttpGet]
+        public IActionResult Search(string Username)
+        {
+
+            return View("UnsignedDocuments");
+        }
+
         public IActionResult SignedDocumentDetails(int id)
         {
             SignedDocument signedDocument = _SignedDocumentRepository.GetSignedDocumentById(id);
