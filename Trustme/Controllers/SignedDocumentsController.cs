@@ -32,8 +32,28 @@ namespace Trustme.Controllers
         [HttpGet]
         public IActionResult Search(string SignedByUsername, string SentFromUsername)
         {
+            if (SignedByUsername != null && SentFromUsername != null)
+            {
+                var signedDocuments = _SignedDocumentRepository.Search_ListAllSignedDocumentsSentFromUsername_SignedByUsername
+                                      (_HttpRequestFunctions.GetUser(HttpContext), SentFromUsername, SignedByUsername);
 
-            return View("UnsignedDocuments");
+                if (signedDocuments.Count() == 0)
+                {
+                    TempData["DoNotHaveAnySignedDocuments"] = "You do not have any signed documents";
+                }
+                List<SignedDocumentsViewModel> signedDocumentsViewModels = new List<SignedDocumentsViewModel>();
+
+                //Cast SignedDocument to SignedDocumentsViewModel
+                foreach (var doc in signedDocuments)
+                {
+                    SignedDocumentsViewModel signedDocumentsViewModel = new SignedDocumentsViewModel(doc);
+                    signedDocumentsViewModel.KeyName = _KeyRepository.GetKeyById(doc.KeyId).CertificateName;
+                    signedDocumentsViewModels.Add(signedDocumentsViewModel);
+
+                }
+                return View("SignedDocumentsFromUsers", signedDocumentsViewModels);
+            }
+            return View("SignedDocumentsFromUsers");
         }
 
         public IActionResult SignedDocumentDetails(int id)
