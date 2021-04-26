@@ -45,6 +45,20 @@ namespace Trustme.Service
             signedDocuments = signedDocuments.OrderByDescending(n => n.SignedTime).ToList();
             return signedDocuments;
         }
+        public IEnumerable<SignedDocument> Search_ListAllSignedDocumentsSignedByUsername(User user, string Username)
+        {
+            IEnumerable<SignedDocument> signedDocuments = _context.UserSignedDocuments.Where(u => u.UserId == user.UserId).Join(
+            _context.SignedDocuments,
+            u => u.SignedDocumentId,
+            ud => ud.IdSignedDocument,
+            (u, ud) => new SignedDocument(ud)).ToList();
+
+            signedDocuments = signedDocuments.Where(a => a.SignedByUsername == Username).ToList();
+            if (signedDocuments == null)
+                return null;
+            signedDocuments = signedDocuments.OrderByDescending(n => n.SignedTime).ToList();
+            return signedDocuments;
+        }
 
         public void DeleteSignedDocument(int id)
         {
