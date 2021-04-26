@@ -30,7 +30,7 @@ namespace Trustme.Controllers
         }
 
         [HttpGet]
-        public IActionResult Search(string Username)
+        public IActionResult Search(string SignedByUsername, string SentFromUsername)
         {
 
             return View("UnsignedDocuments");
