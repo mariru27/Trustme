@@ -7,6 +7,14 @@
 }
 <h4 class="display-4">Signed documents</h4>
 
+<form asp-action="Search" method="get">
+    <div class="input-group">
+        <input name="Username" type="search" class="form-control rounded" placeholder="Username" aria-label="Search"
+               aria-describedby="search-addon" />
+        <button type="button" class="btn btn-outline-primary">search</button>
+    </div>
+</form>
+
 <br />
 
 @if (TempData["DoNotHaveAnySignedDocuments"] != null)
