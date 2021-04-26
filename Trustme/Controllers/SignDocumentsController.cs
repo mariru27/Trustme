@@ -32,10 +32,11 @@ namespace Trustme.Controllers
             _UserRepository = userRepository;
         }
 
+        [HttpGet]
         public IActionResult Search(string Username)
         {
             var unsignedDocuments = _UnsignedDocumentRepository.Search_ListAllUnsignedDocumentsDocumentsByUsername(_HttpRequestFunctions.GetUser(HttpContext), Username);
-            return View(unsignedDocuments);
+            return View("UnsignedDocuments", unsignedDocuments);
         }
         public IActionResult UnsignedDocuments()
         {
