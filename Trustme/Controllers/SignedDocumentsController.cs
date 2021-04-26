@@ -52,13 +52,26 @@ namespace Trustme.Controllers
         [HttpGet]
         public IActionResult Search(string SignedByUsername, string SentFromUsername)
         {
+            User user = _HttpRequestFunctions.GetUser(HttpContext);
             if (SignedByUsername != null && SentFromUsername != null)
             {
                 var signedDocuments = _SignedDocumentRepository.Search_ListAllSignedDocumentsSentFromUsername_SignedByUsername
-                                      (_HttpRequestFunctions.GetUser(HttpContext), SentFromUsername, SignedByUsername);
-
+                                      (user, SentFromUsername, SignedByUsername);
+                List<SignedDocumentsViewModel> signedDocumentsViewModels = Cast_SignedDocumentToSignedDocumentsViewModel(signedDocuments);
+                return View("SignedDocumentsFromUsers", signedDocumentsViewModels);
 
             }
+            else
+            {
+                if (SignedByUsername != null)
+                {
+                    var signedDocuments = _SignedDocumentRepository.Search_ListAllSignedDocumentsSignedByUsername(user, SignedByUsername);
+                    List<SignedDocumentsViewModel> signedDocumentsViewModels = Cast_SignedDocumentToSignedDocumentsViewModel(signedDocuments);
+                    return View("SignedDocumentsFromUsers", signedDocumentsViewModels);
+                }
+            }
+
+
 
 
 
