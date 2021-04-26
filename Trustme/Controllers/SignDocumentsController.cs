@@ -31,6 +31,11 @@ namespace Trustme.Controllers
             _SignedDocumentRepository = signedDocumentRepository;
             _UserRepository = userRepository;
         }
+
+        public IActionResult Search(string UnsignedDocument)
+        {
+            return View();
+        }
         public IActionResult UnsignedDocuments()
         {
 
