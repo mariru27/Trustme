@@ -29,6 +29,26 @@ namespace Trustme.Controllers
             return RedirectToAction("SignedDocumentsFromUsers");
         }
 
+        public List<SignedDocumentsViewModel> Cast_SignedDocumentToSignedDocumentsViewModel(IEnumerable<SignedDocument> signedDocuments)
+        {
+            if (signedDocuments.Count() == 0)
+            {
+                TempData["DoNotHaveAnySignedDocuments"] = "You do not have any signed documents";
+            }
+            List<SignedDocumentsViewModel> signedDocumentsViewModels = new List<SignedDocumentsViewModel>();
+
+            //Cast SignedDocument to SignedDocumentsViewModel
+            foreach (var doc in signedDocuments)
+            {
+                SignedDocumentsViewModel signedDocumentsViewModel = new SignedDocumentsViewModel(doc);
+                signedDocumentsViewModel.KeyName = _KeyRepository.GetKeyById(doc.KeyId).CertificateName;
+                signedDocumentsViewModels.Add(signedDocumentsViewModel);
+
+            }
+
+            return signedDocumentsViewModels;
+        }
+
         [HttpGet]
         public IActionResult Search(string SignedByUsername, string SentFromUsername)
         {
@@ -37,22 +57,12 @@ namespace Trustme.Controllers
                 var signedDocuments = _SignedDocumentRepository.Search_ListAllSignedDocumentsSentFromUsername_SignedByUsername
                                       (_HttpRequestFunctions.GetUser(HttpContext), SentFromUsername, SignedByUsername);
 
-                if (signedDocuments.Count() == 0)
-                {
-                    TempData["DoNotHaveAnySignedDocuments"] = "You do not have any signed documents";
-                }
-                List<SignedDocumentsViewModel> signedDocumentsViewModels = new List<SignedDocumentsViewModel>();
 
-                //Cast SignedDocument to SignedDocumentsViewModel
-                foreach (var doc in signedDocuments)
-                {
-                    SignedDocumentsViewModel signedDocumentsViewModel = new SignedDocumentsViewModel(doc);
-                    signedDocumentsViewModel.KeyName = _KeyRepository.GetKeyById(doc.KeyId).CertificateName;
-                    signedDocumentsViewModels.Add(signedDocumentsViewModel);
-
-                }
-                return View("SignedDocumentsFromUsers", signedDocumentsViewModels);
             }
+
+
+
+
             return View("SignedDocumentsFromUsers");
         }
 
