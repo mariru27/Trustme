@@ -84,20 +84,8 @@ namespace Trustme.Controllers
             //Get all users signedDocuments
             IEnumerable<SignedDocument> signedDocuments = _SignedDocumentRepository.ListAllSignedDocuments(_HttpRequestFunctions.GetUser(HttpContext));
 
-            if (signedDocuments.Count() == 0)
-            {
-                TempData["DoNotHaveAnySignedDocuments"] = "You do not have any signed documents";
-            }
-            List<SignedDocumentsViewModel> signedDocumentsViewModels = new List<SignedDocumentsViewModel>();
+            List<SignedDocumentsViewModel> signedDocumentsViewModels = Cast_SignedDocumentToSignedDocumentsViewModel(signedDocuments);
 
-            //Cast SignedDocument to SignedDocumentsViewModel
-            foreach (var doc in signedDocuments)
-            {
-                SignedDocumentsViewModel signedDocumentsViewModel = new SignedDocumentsViewModel(doc);
-                signedDocumentsViewModel.KeyName = _KeyRepository.GetKeyById(doc.KeyId).CertificateName;
-                signedDocumentsViewModels.Add(signedDocumentsViewModel);
-
-            }
             return View(signedDocumentsViewModels);
 
         }
