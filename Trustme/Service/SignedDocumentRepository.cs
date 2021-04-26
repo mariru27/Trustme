@@ -52,14 +52,13 @@ namespace Trustme.Service
             u => u.SignedDocumentId,
             ud => ud.IdSignedDocument,
             (u, ud) => new SignedDocument(ud)).ToList();
-
             signedDocuments = signedDocuments.Where(a => a.SignedByUsername == Username).ToList();
+
             if (signedDocuments == null)
                 return null;
             signedDocuments = signedDocuments.OrderByDescending(n => n.SignedTime).ToList();
             return signedDocuments;
         }
-
 
         public IEnumerable<SignedDocument> Search_ListAllSignedDocumentsSentFromUsername(User user, string Username)
         {
@@ -68,11 +67,26 @@ namespace Trustme.Service
             u => u.SignedDocumentId,
             ud => ud.IdSignedDocument,
             (u, ud) => new SignedDocument(ud)).ToList();
-
             signedDocuments = signedDocuments.Where(a => a.SentFromUsername == Username).ToList();
+
             if (signedDocuments == null)
                 return null;
             signedDocuments = signedDocuments.OrderByDescending(n => n.SignedTime).ToList();
+            return signedDocuments;
+        }
+        public IEnumerable<SignedDocument> Search_ListAllSignedDocumentsSentFromUsername_SignedByUsername(User user, string SentFromUsername, string SignedByUsername)
+        {
+            IEnumerable<SignedDocument> signedDocuments = _context.UserSignedDocuments.Where(u => u.UserId == user.UserId).Join(
+            _context.SignedDocuments,
+            u => u.SignedDocumentId,
+            ud => ud.IdSignedDocument,
+            (u, ud) => new SignedDocument(ud)).ToList();
+            signedDocuments = signedDocuments.Where(a => a.SentFromUsername == SentFromUsername && a.SignedByUsername == SignedByUsername).ToList();
+
+            if (signedDocuments == null)
+                return null;
+            signedDocuments = signedDocuments.OrderByDescending(n => n.SignedTime).ToList();
+
             return signedDocuments;
         }
         public void DeleteSignedDocument(int id)
