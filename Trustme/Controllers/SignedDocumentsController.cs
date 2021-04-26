@@ -69,14 +69,15 @@ namespace Trustme.Controllers
                     List<SignedDocumentsViewModel> signedDocumentsViewModels = Cast_SignedDocumentToSignedDocumentsViewModel(signedDocuments);
                     return View("SignedDocumentsFromUsers", signedDocumentsViewModels);
                 }
+
+                if (SentFromUsername != null)
+                {
+                    var signedDocuments = _SignedDocumentRepository.Search_ListAllSignedDocumentsSentFromUsername(user, SentFromUsername);
+                    List<SignedDocumentsViewModel> signedDocumentsViewModels = Cast_SignedDocumentToSignedDocumentsViewModel(signedDocuments);
+                    return View("SignedDocumentsFromUsers", signedDocumentsViewModels);
+                }
             }
-
-
-
-
-
-
-            return View("SignedDocumentsFromUsers");
+            return RedirectToAction("SignedDocumentsFromUsers");
         }
 
         public IActionResult SignedDocumentDetails(int id)
