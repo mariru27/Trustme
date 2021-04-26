@@ -32,7 +32,7 @@ namespace Trustme.Controllers
             _UserRepository = userRepository;
         }
 
-        public IActionResult Search(string UnsignedDocument)
+        public IActionResult Search(string Username)
         {
             return View();
         }
