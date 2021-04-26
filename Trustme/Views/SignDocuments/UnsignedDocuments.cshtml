@@ -18,6 +18,10 @@
 
 <br />
 
+@if (TempData["SearchResult"] != null)
+{
+    <p class="alert alert-warning" id="successMessage">@TempData["SearchResult"]</p>
+}
 
 
 

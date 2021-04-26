@@ -36,9 +36,9 @@ namespace Trustme.Controllers
         public IActionResult Search(string Username)
         {
             var unsignedDocuments = _UnsignedDocumentRepository.Search_ListAllUnsignedDocumentsDocumentsByUsername(_HttpRequestFunctions.GetUser(HttpContext), Username);
-            if (unsignedDocuments == null)
+            if (unsignedDocuments.Any() == false)
             {
-                TempData["You"] = "You do not have documents uploaded by username " + Username;
+                TempData["SearchResult"] = "You do not have documents uploaded by username " + Username;
             }
             return View("UnsignedDocuments", unsignedDocuments);
         }
