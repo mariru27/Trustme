@@ -9,7 +9,9 @@
 
 <form asp-action="Search" method="get">
     <div class="input-group">
-        <input name="Username" type="search" class="form-control rounded" placeholder="Username" aria-label="Search"
+        <input name="SignedByUsername" type="search" class="form-control rounded" placeholder="Signed by username" aria-label="Search"
+               aria-describedby="search-addon" />
+        <input name="SentFromUsername" type="search" class="form-control rounded" placeholder="Sent from username" aria-label="Search"
                aria-describedby="search-addon" />
         <button type="button" class="btn btn-outline-primary">search</button>
     </div>
