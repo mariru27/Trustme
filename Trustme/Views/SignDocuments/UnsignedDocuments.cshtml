@@ -7,13 +7,30 @@
 
 <h4 class="display-4">Unsigned Documents</h4>
 
+
+<form asp-action="Search" method="get">
+    <div class="input-group">
+        <input name="Username" type="search" class="form-control rounded" placeholder="Username" aria-label="Search"
+               aria-describedby="search-addon" />
+        <button type="button" class="btn btn-outline-primary">search</button>
+    </div>
+</form>
+
 <br />
+
+@if (TempData["SearchResult"] != null)
+{
+    <p class="alert alert-warning" id="successMessage">@TempData["SearchResult"]</p>
+}
+
 
 
 @if (TempData["DoNotHaveAnyUnsignedDocuments"] != null)
 {
     <p class="alert alert-warning" id="successMessage">@TempData["DoNotHaveAnyUnsignedDocuments"]</p>
 }
+
+
 
 @{
     foreach (var unsignedDocuments in Model)

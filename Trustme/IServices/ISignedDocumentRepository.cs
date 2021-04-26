@@ -9,6 +9,8 @@ namespace Trustme.IServices
         public IEnumerable<SignedDocument> ListAllSignedDocuments(User user);
         public SignedDocument GetSignedDocumentById(int IdSignedDocument);
         public void DeleteSignedDocument(int IdSignedDocument);
-
+        public IEnumerable<SignedDocument> Search_ListAllSignedDocumentsSentFromUsername(User user, string Username);
+        public IEnumerable<SignedDocument> Search_ListAllSignedDocumentsSignedByUsername(User user, string Username);
+        public IEnumerable<SignedDocument> Search_ListAllSignedDocumentsSentFromUsername_SignedByUsername(User user, string SentFromUsername, string SignedByUsername);
     }
 }

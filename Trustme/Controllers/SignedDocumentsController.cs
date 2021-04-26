@@ -29,6 +29,57 @@ namespace Trustme.Controllers
             return RedirectToAction("SignedDocumentsFromUsers");
         }
 
+        public List<SignedDocumentsViewModel> Cast_SignedDocumentToSignedDocumentsViewModel(IEnumerable<SignedDocument> signedDocuments)
+        {
+            if (signedDocuments.Count() == 0)
+            {
+                TempData["DoNotHaveAnySignedDocuments"] = "You do not have any signed documents";
+            }
+            List<SignedDocumentsViewModel> signedDocumentsViewModels = new List<SignedDocumentsViewModel>();
+
+            //Cast SignedDocument to SignedDocumentsViewModel
+            foreach (var doc in signedDocuments)
+            {
+                SignedDocumentsViewModel signedDocumentsViewModel = new SignedDocumentsViewModel(doc);
+                signedDocumentsViewModel.KeyName = _KeyRepository.GetKeyById(doc.KeyId).CertificateName;
+                signedDocumentsViewModels.Add(signedDocumentsViewModel);
+
+            }
+
+            return signedDocumentsViewModels;
+        }
+
+        [HttpGet]
+        public IActionResult Search(string SignedByUsername, string SentFromUsername)
+        {
+            User user = _HttpRequestFunctions.GetUser(HttpContext);
+            if (SignedByUsername != null && SentFromUsername != null)
+            {
+                var signedDocuments = _SignedDocumentRepository.Search_ListAllSignedDocumentsSentFromUsername_SignedByUsername
+                                      (user, SentFromUsername, SignedByUsername);
+                List<SignedDocumentsViewModel> signedDocumentsViewModels = Cast_SignedDocumentToSignedDocumentsViewModel(signedDocuments);
+                return View("SignedDocumentsFromUsers", signedDocumentsViewModels);
+
+            }
+            else
+            {
+                if (SignedByUsername != null)
+                {
+                    var signedDocuments = _SignedDocumentRepository.Search_ListAllSignedDocumentsSignedByUsername(user, SignedByUsername);
+                    List<SignedDocumentsViewModel> signedDocumentsViewModels = Cast_SignedDocumentToSignedDocumentsViewModel(signedDocuments);
+                    return View("SignedDocumentsFromUsers", signedDocumentsViewModels);
+                }
+
+                if (SentFromUsername != null)
+                {
+                    var signedDocuments = _SignedDocumentRepository.Search_ListAllSignedDocumentsSentFromUsername(user, SentFromUsername);
+                    List<SignedDocumentsViewModel> signedDocumentsViewModels = Cast_SignedDocumentToSignedDocumentsViewModel(signedDocuments);
+                    return View("SignedDocumentsFromUsers", signedDocumentsViewModels);
+                }
+            }
+            return RedirectToAction("SignedDocumentsFromUsers");
+        }
+
         public IActionResult SignedDocumentDetails(int id)
         {
             SignedDocument signedDocument = _SignedDocumentRepository.GetSignedDocumentById(id);
@@ -47,20 +98,8 @@ namespace Trustme.Controllers
             //Get all users signedDocuments
             IEnumerable<SignedDocument> signedDocuments = _SignedDocumentRepository.ListAllSignedDocuments(_HttpRequestFunctions.GetUser(HttpContext));
 
-            if (signedDocuments.Count() == 0)
-            {
-                TempData["DoNotHaveAnySignedDocuments"] = "You do not have any signed documents";
-            }
-            List<SignedDocumentsViewModel> signedDocumentsViewModels = new List<SignedDocumentsViewModel>();
+            List<SignedDocumentsViewModel> signedDocumentsViewModels = Cast_SignedDocumentToSignedDocumentsViewModel(signedDocuments);
 
-            //Cast SignedDocument to SignedDocumentsViewModel
-            foreach (var doc in signedDocuments)
-            {
-                SignedDocumentsViewModel signedDocumentsViewModel = new SignedDocumentsViewModel(doc);
-                signedDocumentsViewModel.KeyName = _KeyRepository.GetKeyById(doc.KeyId).CertificateName;
-                signedDocumentsViewModels.Add(signedDocumentsViewModel);
-
-            }
             return View(signedDocumentsViewModels);
 
         }
