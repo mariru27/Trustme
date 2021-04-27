@@ -8,11 +8,11 @@
         $("#DeleteModal").modal("show");
     }
     function DeleteDocument() {
-        var KeyId = $("#IdUnsignedDocument").val();
+        var IdUnsignedDocument = $("#IdUnsignedDocument").val();
         $.ajax({
             type: "GET",
             url: "@Url.Action("DeleteDocument")",
-            data: { id: KeyId },
+            data: { id: IdUnsignedDocument },
             dataType: "text",
             success: function (result) {
                 $("#DeleteModal").modal("hide");
