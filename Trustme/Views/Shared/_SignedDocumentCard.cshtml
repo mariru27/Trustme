@@ -6,7 +6,7 @@
         <a class="float-left" asp-controller="SignedDocuments" asp-action="Download" asp-route-id="@Model.IdSignedDocument">
             Download
         </a>
-        <button type="button" class="btn btn-primary float-right" onclick="ConfirmDelete(@Model.IdSignedDocument, '@Model.Name')">Delete</button>
+        <button type="button" class="btn btn-outline-danger float-right" onclick="ConfirmDelete(@Model.IdSignedDocument, '@Model.Name')">Delete</button>
     </div>
     <div class="card-body">
         <div class="form-group">
