@@ -6,6 +6,20 @@
         document.getElementById("Name").innerHTML = Name;
         $("#DeleteModal").modal("show");
     }
+    function DeleteDocument() {
+        var IdSignedDocument = $("#IdSignedDocument").val();
+        $.ajax({
+            type: "GET",
+            url: "@Url.Action("DeleteDocument")",
+            data: { id: IdSignedDocument },
+            dataType: "text",
+            success: function (result) {
+                $("#DeleteModal").modal("hide");
+                location.reload();
+            }
+        })
+
+    }
 </script>
 
 <div class="card border-secondary mb-3">
@@ -54,5 +68,4 @@
             </div>
         </div>
     </div>
-
 </div>
