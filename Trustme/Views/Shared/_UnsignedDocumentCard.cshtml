@@ -10,7 +10,7 @@
     function DeleteDocument() {
         var KeyId = $("#IdUnsignedDocument").val();
         $.ajax({
-            type: "POST",
+            type: "GET",
             url: "@Url.Action("DeleteDocument")",
             data: { id: KeyId },
             dataType: "text",
