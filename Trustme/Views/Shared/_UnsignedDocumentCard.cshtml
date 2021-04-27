@@ -4,7 +4,7 @@
 <script>
     function ConfirmDelete(IdUnsignedDocument,  Name) {
         $("#IdUnsignedDocument").val(IdUnsignedDocument);
-        document.getElementById("Name").innerHTML = CertificateName  ;
+        document.getElementById("Name").innerHTML = Name  ;
         $("#DeleteModal").modal("show");
 
         function DeleteDocument() {
@@ -31,9 +31,11 @@
             <a class="float-left" asp-controller="SignDocuments" asp-action="Download" asp-route-id="@Model.IdUnsignedDocument">
                 Download
             </a>
-            <a class="float-right" onclick="ConfirmDelete(@Model.IdUnsignedDocument, @Model.Name)" asp-controller="SignDocuments" asp-action="">
+            @*<a class="float-right" onclick="ConfirmDelete(@Model.IdUnsignedDocument, @Model.Name)" asp-controller="SignDocuments" asp-action="">
                 Delete
-            </a>
+            </a>*@
+            <button type="button" class="btn btn-primary float-right" onclick="ConfirmDelete(@Model.IdUnsignedDocument, @Model.Name)">Delete</button>
+
         </div>
         <div class="card-body">
             <div class="form-group">
