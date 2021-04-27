@@ -101,7 +101,7 @@ namespace Trustme.Controllers
                 _EmailSender.SendMail(sendMailModel);
                 user.Token = token;
                 _UserRepository.AddUser(user);
-                return RedirectToAction("EmailConfirmationMessage");
+                return RedirectToAction("EmailConfirmationMessage", new { Username = user.Username });
             }
             return View(userResult);
         }
