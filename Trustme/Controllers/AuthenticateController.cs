@@ -41,6 +41,24 @@ namespace Trustme.Controllers
             return View(rolesUserViewModel);
         }
 
+        private User SendEmail(User user)
+        {
+            string token = _JwtAuthenticationManager.GenerateTokenForUser(user);
+
+            //send confirmation email
+            SendMailModel sendMailModel = new SendMailModel
+            {
+                ToUsername = user.Username,
+                ToUserMail = user.Mail,
+                MessageSubject = "Trustme application",
+                MessageBodyHtml = "If you created this account click on this link for confirmation: " + "https://localhost:44318/Authenticate/EmailConfirmation?username=" + user.Username + "&&token=" + token,
+            };
+
+            _EmailSender.SendMail(sendMailModel);
+            user.Token = token;
+            return user;
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Register(User user)
@@ -86,7 +104,7 @@ namespace Trustme.Controllers
                 Role role = _RoleReporitory.GetRoleById(user.RoleId);
                 user.Role = role;
 
-
+                user = SendEmail(user);
 
                 _UserRepository.AddUser(user);
                 return RedirectToAction("EmailConfirmationMessage", new { Username = user.Username });
