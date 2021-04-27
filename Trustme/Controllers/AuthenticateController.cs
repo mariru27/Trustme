@@ -127,6 +127,12 @@ namespace Trustme.Controllers
             return View(verifyUserModel);
         }
 
+        [HttpPost]
+        public void ResendEmail(string Username)
+        {
+
+        }
+
 
         [HttpGet]
         public IActionResult LogIn()
