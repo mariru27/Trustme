@@ -123,7 +123,8 @@ namespace Trustme.Controllers
         [HttpGet]
         public IActionResult EmailConfirmationMessage(string Username)
         {
-            return View(Username);
+            VerifyUserModel verifyUserModel = new VerifyUserModel { Username = Username };
+            return View(verifyUserModel);
         }
 
 
