@@ -1,5 +1,15 @@
 ﻿@model SignedDocumentsViewModel
 
+<script>
+    function ConfirmDelete(IdSignedDocument, Name) {
+        $("#IdSignedDocument").val(IdSignedDocument);
+        document.getElementById("Name").innerHTML = Name;
+        $("#DeleteModal").modal("show");
+    }
+
+
+</script>
+
 <div class="card border-secondary mb-3">
     <div class="card-header text-secondary">
         <a class="float-left" asp-controller="SignedDocuments" asp-action="Download" asp-route-id="@Model.IdSignedDocument">
