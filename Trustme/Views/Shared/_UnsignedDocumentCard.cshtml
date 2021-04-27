@@ -1,4 +1,4 @@
-﻿@model UnsignedDocument 
+﻿@model UnsignedDocument
 
 
 <form asp-action="Sign" method="get">
@@ -8,9 +8,10 @@
             <a class="float-left" asp-controller="SignDocuments" asp-action="Download" asp-route-id="@Model.IdUnsignedDocument">
                 Download
             </a>
-            <a class="float-right" asp-controller="SignDocuments" asp-action="DeleteDocument" asp-route-id="@Model.IdUnsignedDocument">
+            @*<a class="float-right" onclick="ConfirmDelete(@Model.IdUnsignedDocument, @Model.Name)" asp-controller="SignDocuments" asp-action="">
                 Delete
-            </a>
+            </a>*@
+            <button type="button" class="btn btn-outline-danger float-right" onclick="ConfirmDelete(@Model.IdUnsignedDocument, '@Model.Name')">Delete</button>
         </div>
         <div class="card-body">
             <div class="form-group">
@@ -35,3 +36,4 @@
     <br>
 
 </form>
+
