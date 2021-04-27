@@ -87,19 +87,7 @@ namespace Trustme.Controllers
                 user.Role = role;
 
 
-                string token = _JwtAuthenticationManager.GenerateTokenForUser(user);
 
-                //send confirmation email
-                SendMailModel sendMailModel = new SendMailModel
-                {
-                    ToUsername = user.Username,
-                    ToUserMail = user.Mail,
-                    MessageSubject = "Trustme application",
-                    MessageBodyHtml = "If you created this account click on this link for confirmation: " + "https://localhost:44318/Authenticate/EmailConfirmation?username=" + user.Username + "&&token=" + token,
-                };
-
-                _EmailSender.SendMail(sendMailModel);
-                user.Token = token;
                 _UserRepository.AddUser(user);
                 return RedirectToAction("EmailConfirmationMessage", new { Username = user.Username });
             }
