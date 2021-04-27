@@ -2,13 +2,13 @@
 
 
 <script>
-    function ConfirmDelete(IdUnsignedDocument,  Name) {
+    function ConfirmDelete(IdUnsignedDocument, Name) {
         $("#IdUnsignedDocument").val(IdUnsignedDocument);
-        document.getElementById("Name").innerHTML = Name  ;
+        document.getElementById("Name").innerHTML = Name;
         $("#DeleteModal").modal("show");
-
-        function DeleteDocument() {
-            var KeyId = $("#IdUnsignedDocument").val();
+    }
+    function DeleteDocument() {
+        var KeyId = $("#IdUnsignedDocument").val();
         $.ajax({
             type: "POST",
             url: "@Url.Action("DeleteDocument")",
@@ -19,7 +19,7 @@
                 location.reload();
             }
         })
-    }
+    
     }
 
 </script>
@@ -34,7 +34,7 @@
             @*<a class="float-right" onclick="ConfirmDelete(@Model.IdUnsignedDocument, @Model.Name)" asp-controller="SignDocuments" asp-action="">
                 Delete
             </a>*@
-            <button type="button" class="btn btn-primary float-right" onclick="ConfirmDelete(@Model.IdUnsignedDocument, @Model.Name)">Delete</button>
+            <button type="button" class="btn btn-primary float-right" onclick="ConfirmDelete(@Model.IdUnsignedDocument, '@Model.Name')">Delete</button>
 
         </div>
         <div class="card-body">
