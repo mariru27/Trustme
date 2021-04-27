@@ -1,5 +1,14 @@
-﻿@model UnsignedDocument 
+﻿@model UnsignedDocument
 
+
+<script>
+    function ConfirmDelete(IdUnsignedDocument,  Name) {
+        $("#IdUnsignedDocument").val(IdUnsignedDocument);
+        document.getElementById("Name").innerHTML = CertificateName  ;
+        $("#DeleteModal").modal("show");
+    }
+
+</script>
 
 <form asp-action="Sign" method="get">
     <input type="hidden" name="IdUnsignedDocument" value=@Model.IdUnsignedDocument id="IdUnsignedDocument" />
@@ -35,3 +44,5 @@
     <br>
 
 </form>
+
+
