@@ -6,5 +6,9 @@
     <div class="card-body text-secondary">
         <h5 class="card-title">We sent you a email confirmation account.</h5>
         <p>To activate your account, you need to confirm your email!</p>
+        <form asp-action="ResendEmail">
+            <input type="hidden" name="Username" value="@Model.Username" />
+            <input type="submit" value="Resend Email"/>
+        </form>
     </div>
 </div>
