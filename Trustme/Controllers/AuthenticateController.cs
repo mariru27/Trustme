@@ -134,11 +134,12 @@ namespace Trustme.Controllers
         }
 
         [HttpPost]
-        public void ResendEmail(string Username)
+        public IActionResult ResendEmail(string Username)
         {
             User user = _UserRepository.GetUserbyUsername(Username);
             user = SendEmail(user);
             _UserRepository.UpdateUser(user);
+            return RedirectToAction("EmailConfirmationMessage", new { Username = Username });
         }
 
 
