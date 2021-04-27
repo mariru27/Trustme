@@ -4,8 +4,31 @@
 }
 <partial name="_Sign-Unsign_Nav-bar" />
 
-
 <h4 class="display-4">Unsigned Documents</h4>
+
+
+<script>
+    function ConfirmDelete(IdUnsignedDocument, Name) {
+        $("#IdUnsignedDocument").val(IdUnsignedDocument);
+        document.getElementById("Name").innerHTML = Name;
+        $("#DeleteModal").modal("show");
+    }
+    function DeleteDocument() {
+        var IdUnsignedDocument = $("#IdUnsignedDocument").val();
+        $.ajax({
+            type: "GET",
+            url: "@Url.Action("DeleteDocument")",
+            data: { id: IdUnsignedDocument },
+            dataType: "text",
+            success: function (result) {
+                $("#DeleteModal").modal("hide");
+                location.reload();
+            }
+        })
+
+    }
+
+</script>
 
 
 <form asp-action="Search" method="get">
@@ -39,3 +62,24 @@
         <partial name="_UnsignedDocumentCard" model="unsignedDocuments" view-data="ViewData" />
     }
 }
+
+
+<div id="DeleteModal" class="modal" tabindex="-1" role="dialog">
+    <input type="hidden" id="IdUnsignedDocument" />
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <p style="color:#e80c0f"><strong>Danger:</strong>Document can not be recovered after you confirm delete action!</p>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete unsigned document : <strong><span id="Name"></span></strong> ?</p>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <button type="submit" class="btn btn-primary" onclick="DeleteDocument()">Yes</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+            </div>
+        </div>
+    </div>
+
+</div>
