@@ -121,10 +121,9 @@ namespace Trustme.Controllers
         }
 
         [HttpGet]
-        public IActionResult EmailConfirmationMessage()
+        public IActionResult EmailConfirmationMessage(string Username)
         {
-
-            return View();
+            return View(Username);
         }
 
 
