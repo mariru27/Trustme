@@ -1,26 +1,5 @@
 ﻿@model SignedDocumentsViewModel
 
-<script>
-    function ConfirmDelete(IdSignedDocument, Name) {
-        $("#IdSignedDocument").val(IdSignedDocument);
-        document.getElementById("Name").innerHTML = Name;
-        $("#DeleteModal").modal("show");
-    }
-    function DeleteDocument() {
-        var IdSignedDocument = $("#IdSignedDocument").val();
-        $.ajax({
-            type: "GET",
-            url: "@Url.Action("DeleteDocument")",
-            data: { id: IdSignedDocument },
-            dataType: "text",
-            success: function (result) {
-                $("#DeleteModal").modal("hide");
-                location.reload();
-            }
-        })
-
-    }
-</script>
 
 <div class="card border-secondary mb-3">
     <div class="card-header text-secondary">
@@ -50,22 +29,3 @@
     </div>
 </div>
 <br>
-
-<div id="DeleteModal" class="modal" tabindex="-1" role="dialog">
-    <input type="hidden" id="IdSignedDocument" />
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <p style="color:#e80c0f"><strong>Danger:</strong>Signature and document can not be recovered after you confirm delete action!</p>
-            </div>
-            <div class="modal-body">
-                <p>Are you sure you want to delete signed document : <strong><span id="Name"></span></strong> ?</p>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                <button type="submit" class="btn btn-primary" onclick="DeleteDocument()">Yes</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-            </div>
-        </div>
-    </div>
-</div>
