@@ -9,60 +9,69 @@
         </button>
         <div class="float-right">
             <ul class="navbar-nav flex-grow-1">
-                    @{
-                        if (Model.UserName == null || Model.UserRole != "Admin")
-                        {
+                @{
+                    if (Model.UserName == null || Model.UserRole != "Admin")
+                    {
 
-                            <li class="nav-item">
-                                @if (TempData["Verify"] != null)
-                                {
-                                    <a class="nav-link text-dark" style="background-color: #eae6f2;" asp-controller="VerifySignature" asp-action="VerifyUser">Verify</a>
-                                }
-                                else
-                                {
-                                    <a class="nav-link text-dark" asp-controller="VerifySignature" asp-action="VerifyUser">Verify</a>
-                                }
-                            </li>
-                        }
-                        if (Model.UserName != null && Model.UserRole == "Admin")
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Administrator" asp-action="Users">Users</a>
-                            </li>
-                        }
-                        if (Model.UserName != null && Model.UserRole != "Admin")
-                        {
-                            <li class="nav-item">
+                        <li class="nav-item">
+                            @if (TempData["Verify"] != null)
+                            {
+                                <a class="nav-link text-dark" style="background-color: #eae6f2;" asp-controller="VerifySignature" asp-action="VerifyUser">Verify</a>
+                            }
+                            else
+                            {
+                                <a class="nav-link text-dark" asp-controller="VerifySignature" asp-action="VerifyUser">Verify</a>
+                            }
+                        </li>
+                    }
+                    if (Model.UserName != null && Model.UserRole == "Admin")
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Administrator" asp-action="Users">Users</a>
+                        </li>
+                    }
+                    if (Model.UserName != null && Model.UserRole != "Admin")
+                    {
+
+                        <li class="nav-item">
+                            @if (TempData["Upload"] != null)
+                            {
                                 <a class="nav-link text-dark" style="background-color: #eae6f2;" asp-controller="Upload" asp-action="UploadUser">Upload</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="SignDocuments" asp-action="UnsignedDocuments">Documents</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="GenerateCertificate" asp-action="Generate">Generate Certificate</a>
-                            </li>
 
-                        }
+                            }
+                            else
+                            {
+                                <a class="nav-link text-dark" asp-controller="Upload" asp-action="UploadUser">Upload</a>
+                            }
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="SignDocuments" asp-action="UnsignedDocuments">Documents</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="GenerateCertificate" asp-action="Generate">Generate Certificate</a>
+                        </li>
 
                     }
-                    @{
-                        if (Model.UserName != null)
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Profile" asp-action="UserProfile">Profile</a>
-                            </li>
-                        }
-                        else
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Authenticate" asp-action="LogIn">Login</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Authenticate" asp-action="Register">Register</a>
-                            </li>
-                        }
+
+                }
+                @{
+                    if (Model.UserName != null)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Profile" asp-action="UserProfile">Profile</a>
+                        </li>
                     }
-                </ul>
+                    else
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Authenticate" asp-action="LogIn">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Authenticate" asp-action="Register">Register</a>
+                        </li>
+                    }
+                }
+            </ul>
         </div>
     </div>
 </nav>
