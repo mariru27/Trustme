@@ -45,7 +45,15 @@
                             }
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="SignDocuments" asp-action="UnsignedDocuments">Documents</a>
+                            @if (TempData["Documents"] != null)
+                            {
+                                <a class="nav-link text-dark" style="background-color: #eae6f2;" asp-area="" asp-controller="SignDocuments" asp-action="UnsignedDocuments">Documents</a>
+
+                            }
+                            else
+                            {
+                                <a class="nav-link text-dark" asp-area="" asp-controller="SignDocuments" asp-action="UnsignedDocuments">Documents</a>
+                            }
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="GenerateCertificate" asp-action="Generate">Generate Certificate</a>
