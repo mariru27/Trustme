@@ -4,11 +4,11 @@
         @{
             if (TempData["UActiveTab"] != null)
             {
-                <a class="nav-link active" asp-controller="SignDocuments" asp-action="UnsignedDocuments" data-toggle="tab">Unsigned</a>
+                <a class="nav-link active" asp-controller="SignDocuments" asp-action="UnsignedDocuments" >Unsigned</a>
             }
             else
             {
-                <a class="nav-link" asp-controller="SignDocuments" asp-action="UnsignedDocuments" data-toggle="tab">Unsigned</a>
+                <a class="nav-link" asp-controller="SignDocuments" asp-action="UnsignedDocuments" >Unsigned</a>
             }
         }
     </li>
@@ -16,12 +16,12 @@
         @{
             if (TempData["SActiveTab"] != null)
             {
-                <a class="nav-link active" asp-controller="SignedDocuments" asp-action="SignedDocumentsFromUsers" data-toggle="tab">Signed</a>
+                <a class="nav-link active" asp-controller="SignedDocuments" asp-action="SignedDocumentsFromUsers" >Signed</a>
 
             }
             else
             {
-                <a class="nav-link" asp-controller="SignedDocuments" asp-action="SignedDocumentsFromUsers" data-toggle="tab">Signed</a>
+                <a class="nav-link" asp-controller="SignedDocuments" asp-action="SignedDocumentsFromUsers" >Signed</a>
             }
 
         }
