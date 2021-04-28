@@ -1,19 +1,11 @@
-﻿@*<ul class="nav nav-tabs">
+﻿<div class="bs-example">
+    <ul class="nav nav-tabs">
         <li class="nav-item">
-            <a class="nav-link active" asp-controller="SignDocuments" asp-action="UnsignedDocuments" data-toggle="pill">Unsigned</a>
+            <a class="nav-link active" asp-controller="SignDocuments" asp-action="UnsignedDocuments" >Unsigned</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link active" asp-controller="SignedDocuments" asp-action="SignedDocumentsFromUsers" data-toggle="pill">Signed</a>
+            <a class="nav-link" asp-controller="SignedDocuments" asp-action="SignedDocumentsFromUsers" >Signed</a>
         </li>
 
-    </ul>*@
-
-
-<ul class="nav nav-tabs">
-    <li class="nav-item">
-        <a class="nav-link active" asp-controller="SignDocuments" asp-action="UnsignedDocuments" onclick="activeTab(event)">Unsigned</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link active" asp-controller="SignedDocuments" asp-action="SignedDocumentsFromUsers" onclick="activeTab(event)">Signed</a>
-    </li>
-</ul>
+    </ul>
+</div>
