@@ -1,5 +1,10 @@
 ﻿@model IEnumerable<SignedDocumentsViewModel>
 
+@{ 
+    ViewData["Title"] = "Signed Documents";
+    TempData["SActiveTab"] = true;
+}
+
 <partial name="_Sign-Unsign_Nav-bar" />
 
 @{
