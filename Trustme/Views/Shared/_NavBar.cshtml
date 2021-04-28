@@ -27,7 +27,7 @@
                     if (Model.UserName != null && Model.UserRole == "Admin")
                     {
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Administrator" asp-action="Users">Users</a>
+                            <a class="nav-link text-dark" asp-controller="Administrator" asp-action="Users">Users</a>
                         </li>
                     }
                     if (Model.UserName != null && Model.UserRole != "Admin")
@@ -37,7 +37,6 @@
                             @if (TempData["Upload"] != null)
                             {
                                 <a class="nav-link text-dark" style="background-color: #eae6f2;" asp-controller="Upload" asp-action="UploadUser">Upload</a>
-
                             }
                             else
                             {
@@ -52,14 +51,20 @@
                             }
                             else
                             {
-                                <a class="nav-link text-dark" asp-area="" asp-controller="SignDocuments" asp-action="UnsignedDocuments">Documents</a>
+                                <a class="nav-link text-dark" asp-controller="SignDocuments" asp-action="UnsignedDocuments">Documents</a>
                             }
                         </li>
-
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="GenerateCertificate" asp-action="Generate">Generate Certificate</a>
-                        </li>
+                            @if (TempData["Generate"] != null)
+                            {
+                                <a class="nav-link text-dark" style="background-color: #eae6f2;" asp-controller="GenerateCertificate" asp-action="Generate">Generate Certificate</a>
 
+                            }
+                            else
+                            {
+                                <a class="nav-link text-dark" asp-controller="GenerateCertificate" asp-action="Generate">Generate Certificate</a>
+                            }
+                        </li>
                     }
 
                 }
