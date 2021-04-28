@@ -79,7 +79,7 @@
                             }
                             else
                             {
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Profile" asp-action="UserProfile">Profile</a>
+                                <a class="nav-link text-dark" asp-controller="Profile" asp-action="UserProfile">Profile</a>
                             }
                         </li>
 
@@ -87,8 +87,17 @@
                     else
                     {
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Authenticate" asp-action="LogIn">Login</a>
+                            @if (TempData["Login"] != null)
+                            {
+                                <a class="nav-link text-dark" style="background-color: #eae6f2;" asp-controller="Authenticate" asp-action="LogIn">Login</a>
+
+                            }
+                            else
+                            {
+                                <a class="nav-link text-dark" asp-controller="Authenticate" asp-action="LogIn">Login</a>
+                            }
                         </li>
+
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Authenticate" asp-action="Register">Register</a>
                         </li>
