@@ -1,25 +1,11 @@
-﻿<link rel="stylesheet" type="text/css" href="~/css/test.css" />
+﻿
 
-<script>
-    $(document).on('click', 'ul li', function () {
-        $(this).addClass('active').siblings('li').removeClass('active')
-    })
-</script>
-
-
-
-<ul >
-    <li class="active" >
-        <a  asp-controller="SignDocuments" asp-action="UnsignedDocuments" data-toggle="tab">Unsigned</a>
+<ul class="nav nav-tabs">
+    <li class="nav-item active">
+        <a class="nav-link active" asp-controller="SignDocuments" asp-action="UnsignedDocuments" data-toggle="tab">Unsigned</a>
     </li>
-    <li >
-        <a  asp-controller="SignedDocuments" asp-action="SignedDocumentsFromUsers" data-toggle="tab">Signed</a>
-    </li>
-    <li >
-        <a asp-controller="SignedDocuments" asp-action="SignedDocumentsFromUsers" data-toggle="tab">test</a>
+    <li class="nav-item">
+        <a class="nav-link" asp-controller="SignedDocuments" asp-action="SignedDocumentsFromUsers" data-toggle="tab">Signed</a>
     </li>
 </ul>
-
-
-
 
