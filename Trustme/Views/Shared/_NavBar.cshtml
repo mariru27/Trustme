@@ -26,8 +26,17 @@
                     }
                     if (Model.UserName != null && Model.UserRole == "Admin")
                     {
+
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Administrator" asp-action="Users">Users</a>
+                            @if (TempData["Admin"] != null)
+                            {
+                                <a class="nav-link text-dark" style="background-color: #eae6f2;" asp-controller="Administrator" asp-action="Users">Users</a>
+
+                            }
+                            else
+                            {
+                                <a class="nav-link text-dark" style="background-color: #eae6f2;" asp-controller="Administrator" asp-action="Users">Users</a>
+                            }
                         </li>
                     }
                     if (Model.UserName != null && Model.UserRole != "Admin")
@@ -106,7 +115,7 @@
                             }
                             else
                             {
-                                <a class="nav-link text-dark"  asp-controller="Authenticate" asp-action="Register">Register</a>
+                                <a class="nav-link text-dark" asp-controller="Authenticate" asp-action="Register">Register</a>
                             }
                         </li>
                     }
