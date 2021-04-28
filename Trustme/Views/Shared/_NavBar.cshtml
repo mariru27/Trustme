@@ -72,8 +72,17 @@
                     if (Model.UserName != null)
                     {
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Profile" asp-action="UserProfile">Profile</a>
+                            @if (TempData["Profile"] != null)
+                            {
+                                <a class="nav-link text-dark" style="background-color: #eae6f2;" asp-controller="Profile" asp-action="UserProfile">Profile</a>
+
+                            }
+                            else
+                            {
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Profile" asp-action="UserProfile">Profile</a>
+                            }
                         </li>
+
                     }
                     else
                     {
