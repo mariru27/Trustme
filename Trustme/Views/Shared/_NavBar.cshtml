@@ -7,11 +7,10 @@
                 aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+        <div class="float-right">
             <ul class="navbar-nav flex-grow-1">
 
 
-                <ul class="nav navbar-nav ml-auto">
                     @{
                         if (Model.UserName == null || Model.UserRole != "Admin")
                         {
@@ -58,7 +57,6 @@
                         }
                     }
                 </ul>
-            </ul>
         </div>
     </div>
 </nav>
