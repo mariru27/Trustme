@@ -35,6 +35,7 @@
             var userRole = HttpContextAccessor.HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role)?.Value;
 
         }
+        <partial name="_NavBar" />
 
     </header>
     <div class="container">
