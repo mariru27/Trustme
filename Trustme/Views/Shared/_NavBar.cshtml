@@ -13,19 +13,19 @@
 
                 <ul class="nav navbar-nav ml-auto">
                     @{
-                        if (username == null || userRole != "Admin")
+                        if (Model.UserName == null || Model.UserRole != "Admin")
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="VerifySignature" asp-action="VerifyUser">Verify</a>
                             </li>
                         }
-                        if (username != null && userRole == "Admin")
+                        if (Model.UserName != null && Model.UserRole == "Admin")
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Administrator" asp-action="Users">Users</a>
                             </li>
                         }
-                        if (username != null && userRole != "Admin")
+                        if (Model.UserName != null && Model.UserRole != "Admin")
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" style=" background-color: #eae6f2; " asp-area="" asp-controller="Upload" asp-action="UploadUser">Upload</a>
@@ -41,7 +41,7 @@
 
                     }
                     @{
-                        if (username != null)
+                        if (Model.UserName != null)
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Profile" asp-action="UserProfile">Profile</a>
