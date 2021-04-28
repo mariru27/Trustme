@@ -1,0 +1,15 @@
+﻿ul li a {
+    position: relative;
+    display: block;
+    padding: 10px 20px;
+    text-decoration: none;
+    text-transform: uppercase;
+    color: aquamarine;
+    font-weight: bold;
+}
+
+ul li.active a {
+    background: #808080;
+    color: #fff;
+}
+

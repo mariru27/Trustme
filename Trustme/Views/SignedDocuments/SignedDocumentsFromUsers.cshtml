@@ -1,11 +1,14 @@
 ﻿@model IEnumerable<SignedDocumentsViewModel>
 
+@{ 
+    ViewData["Title"] = "Signed Documents";
+    TempData["SActiveTab"] = "active";
+    TempData["Documents"] = "active";
+}
+
 <partial name="_Sign-Unsign_Nav-bar" />
 
-@{
-    ViewData["Title"] = "Signed Documents";
-}
-<h4 class="display-4">Signed documents</h4>
+<br />
 
 <script>
     function ConfirmDelete(IdSignedDocument, Name) {
@@ -29,9 +32,10 @@
     }
 </script>
 
+
 <form asp-action="Search" method="get">
     <div class="input-group">
-        <input name="SignedByUsername" type="search" class="form-control rounded" placeholder="Signed by username" aria-label="Search"
+        <input name="SignedByUsername" type="search" class="form-control rounded" style="margin: 0 3px;" placeholder="Signed by username" aria-label="Search"
                aria-describedby="search-addon" />
         <input name="SentFromUsername" type="search" class="form-control rounded" placeholder="Sent from username" aria-label="Search"
                aria-describedby="search-addon" />
