@@ -31,7 +31,7 @@ namespace Trustme.Models
         public byte[] Document { get; set; }
         public string KeyPreference { get; set; }
         public string ContentType { get; set; }
-
+        public bool Seen { get; set; }
         public bool Signed { get; set; }
         public int KeyId { get; set; }
         public Key Key { get; set; }
