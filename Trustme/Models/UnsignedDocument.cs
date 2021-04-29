@@ -9,7 +9,7 @@ namespace Trustme.Models
         {
             this.Signed = false;
             this.SentTime = DateTime.Now;
-            this.Seen = true;
+            this.Seen = false;
         }
         public UnsignedDocument(UnsignedDocument unsignedDocument)
         {
