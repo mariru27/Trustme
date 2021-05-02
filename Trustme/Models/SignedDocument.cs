@@ -52,6 +52,7 @@ namespace Trustme.Models
         public string SentFromUsername { get; set; }
         public string ContentType { get; set; }
         public string SignedByUsername { get; set; }
+        public bool Delivered { get; set; }
         public bool Seen { get; set; }
         public byte[] Document { get; set; }
         public string Signature { get; set; }
