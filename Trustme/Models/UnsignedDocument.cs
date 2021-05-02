@@ -10,6 +10,7 @@ namespace Trustme.Models
             this.Signed = false;
             this.SentTime = DateTime.Now;
             this.Seen = false;
+            this.Delivered = false;
         }
         public UnsignedDocument(UnsignedDocument unsignedDocument)
         {
@@ -24,6 +25,7 @@ namespace Trustme.Models
             this.SentTime = unsignedDocument.SentTime;
             this.ContentType = unsignedDocument.ContentType;
             this.Seen = unsignedDocument.Seen;
+            this.Delivered = unsignedDocument.Delivered;
         }
 
         [Key]
