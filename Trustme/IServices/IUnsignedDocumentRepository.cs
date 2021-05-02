@@ -17,6 +17,6 @@ namespace Trustme.IServices
         public IEnumerable<UnsignedDocument> Search_ListAllUnsignedDocumentsDocumentsByUsername(User user, string UserName);
         public void MakeSeen(User user);
         public int CountDelivered(User user);
-
+        public void MakeDelivered(User user);
     }
 }
