@@ -15,6 +15,7 @@ namespace Trustme.IServices
         public UnsignedDocument MakeDocumentSigned(UnsignedDocument unsignedDocument);
         public void DeleteUnsignedDocument(int IdUnsignedDocument);
         public IEnumerable<UnsignedDocument> Search_ListAllUnsignedDocumentsDocumentsByUsername(User user, string UserName);
+        public void MakeSeen(User user);
 
     }
 }

@@ -102,5 +102,20 @@ namespace Trustme.Service
             _context.SaveChanges();
             return unsignedDocument;
         }
+
+        public void MakeSeen(User user)
+        {
+            IEnumerable<UnsignedDocument> unsignedDocuments = _context.UserUnsignedDocuments.Where(u => u.UserId == user.UserId).Join(
+            _context.UnsignedDocuments,
+            u => u.UnsignedDocumentId,
+            ud => ud.IdUnsignedDocument,
+            (u, ud) => new UnsignedDocument(ud)).ToList().Where(a => a.Signed == false).ToList().Where(u => u.Seen == false);
+
+            foreach (var u in unsignedDocuments)
+            {
+                u.Seen = true;
+                _context.Update(u);
+            }
+        }
     }
 }
