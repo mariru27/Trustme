@@ -117,5 +117,13 @@ namespace Trustme.Service
                 _context.Update(u);
             }
         }
+        public void AnyDelivered(User user)
+        {
+            IEnumerable<UnsignedDocument> unsignedDocuments = _context.UserUnsignedDocuments.Where(u => u.UserId == user.UserId).Join(
+_context.UnsignedDocuments,
+u => u.UnsignedDocumentId,
+ud => ud.IdUnsignedDocument,
+(u, ud) => new UnsignedDocument(ud)).ToList().Where(a => a.Signed == false).ToList().Where(u => u.Seen == false);
+        }
     }
 }
