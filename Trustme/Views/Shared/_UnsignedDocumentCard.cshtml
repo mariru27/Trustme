@@ -3,7 +3,7 @@
 
 <form asp-action="Sign" method="get">
     <input type="hidden" name="IdUnsignedDocument" value=@Model.IdUnsignedDocument id="IdUnsignedDocument" />
-    @if(Model.Delivered == true)
+    @if(Model.Delivered == false)
     {
         @:<div class="card border-success mb-3">
 
