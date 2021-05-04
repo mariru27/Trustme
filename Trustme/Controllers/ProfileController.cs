@@ -52,7 +52,6 @@ namespace Trustme.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult EditCertificate(Key key)
         {
-
             User currentUser = _HttpRequestFunctions.GetUser(HttpContext);
             Key keyFromDB = _KeyRepository.GetKey(currentUser.UserId, key.KeyId);
 
