@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.Linq;
+using System.Security.Claims;
 using Trustme.IServices;
 using Trustme.Models;
 
@@ -9,10 +12,20 @@ namespace Trustme.Controllers
     {
         private readonly IUserRepository _UserRepository;
         private readonly IEmailSender _EmailSender;
-        public HomeController(IUserRepository userRepository, IEmailSender emailSender)
+        private readonly IUnsignedDocumentRepository _UnsignedDocumentRepository;
+
+        public HomeController(IUserRepository userRepository, IEmailSender emailSender, IUnsignedDocumentRepository unsignedDocumentRepository)
         {
             _EmailSender = emailSender;
             _UserRepository = userRepository;
+            _UnsignedDocumentRepository = unsignedDocumentRepository;
+            var username = HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+            if (username != null)
+            {
+                User user = _UserRepository.GetUserbyUsername(username);
+                int countDelivered = _UnsignedDocumentRepository.CountDelivered(user);
+                HttpContext.Session.SetInt32("countDelivered", countDelivered);
+            }
         }
 
         public IActionResult Index()
@@ -25,7 +38,6 @@ namespace Trustme.Controllers
                 }
                 return RedirectToAction("LogIn", "Authenticate");
             }
-
             return View();
         }
 
