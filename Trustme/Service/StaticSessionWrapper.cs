@@ -5,7 +5,7 @@ namespace Trustme.Service
     public class StaticSessionWrapper
     {
         public int DeliveredNumberUnsignedDocuments;
-        private static HttpSessionState Session => HttpContext.Session;
+        private static HttpSessionState Session => HttpContext.;
 
         public StaticSessionWrapper()
         {
