@@ -51,10 +51,12 @@ namespace Trustme.Controllers
             if (countDelivered != 0)
             {
                 TempData["NrDelivered"] = countDelivered;
+                _UnsignedDocumentRepository.MakeDelivered(user);
             }
 
             if (unsignedDocuments.Count() == 0)
                 TempData["DoNotHaveAnyUnsignedDocuments"] = "You do not have any documents to sign. You can upload one if you already generated a key";
+
             return View(unsignedDocuments);
         }
 
