@@ -51,7 +51,7 @@ namespace Trustme.Controllers
             if (countDelivered != 0)
             {
                 TempData["NrDelivered"] = countDelivered;
-                _UnsignedDocumentRepository.MakeDelivered(user);
+                //_UnsignedDocumentRepository.MakeDelivered(user);
             }
 
             if (unsignedDocuments.Count() == 0)
