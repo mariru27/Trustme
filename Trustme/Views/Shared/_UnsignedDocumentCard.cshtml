@@ -3,7 +3,14 @@
 
 <form asp-action="Sign" method="get">
     <input type="hidden" name="IdUnsignedDocument" value=@Model.IdUnsignedDocument id="IdUnsignedDocument" />
-    <div class="card border-secondary mb-3">
+    @if(Model.Delivered == true)
+    {
+        @:<div class="card border-success mb-3">
+
+    }else
+    {
+        @:<div class="card border-secondary mb-3">
+    }
         <div class="card-header text-secondary">
             <a class="float-left" asp-controller="SignDocuments" asp-action="Download" asp-route-id="@Model.IdUnsignedDocument">
                 Download
@@ -23,7 +30,6 @@
                 Document Upload time:
                 @Model.SentTime
             </div>
-
             <p class="card-text">Key you need to sign with: <strong>@Model.KeyPreference</strong> </p>
             <div class="form-group">
                 <input type="submit" value="Sign" class="btn btn-primary" />
@@ -31,6 +37,5 @@
         </div>
     </div>
     <br>
-
 </form>
 
