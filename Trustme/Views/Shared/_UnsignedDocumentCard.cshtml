@@ -1,41 +1,55 @@
 ﻿@model UnsignedDocument
 
 
+
+
+
 <form asp-action="Sign" method="get">
     <input type="hidden" name="IdUnsignedDocument" value=@Model.IdUnsignedDocument id="IdUnsignedDocument" />
-    @if(Model.Delivered == false)
+    @if (Model.Delivered == false)
     {
         @:<div class="card border-success mb-3">
 
-    }else
-    {
-        @:<div class="card border-secondary mb-3">
-    }
-        <div class="card-header text-secondary">
-            <a class="float-left" asp-controller="SignDocuments" asp-action="Download" asp-route-id="@Model.IdUnsignedDocument">
-                Download
-            </a>
-            <button type="button" class="btn btn-outline-danger float-right" onclick="ConfirmDelete(@Model.IdUnsignedDocument, '@Model.Name')">Delete</button>
+
+        }
+        else
+        {
+            @:<div class="card border-secondary mb-3">
+            }
+    <div class="card-header text-secondary">
+        <a class="float-left" asp-controller="SignDocuments" asp-action="Download" asp-route-id="@Model.IdUnsignedDocument">
+            Download
+        </a>
+        <button type="button" class="btn btn-outline-danger float-right" onclick="ConfirmDelete(@Model.IdUnsignedDocument, '@Model.Name')">Delete</button>
+    </div>
+    <div class="card-body">
+        <div class="form-group">
+            Sent from username:
+            @Model.SentFromUsername
         </div>
-        <div class="card-body">
-            <div class="form-group">
-                Sent from username:
-                @Model.SentFromUsername
+        <div class="form-group">
+            File Name:
+            @Model.Name
+        </div>
+        <div class="form-group">
+            Document Upload time:
+            @Model.SentTime
+        </div>
+        @if (Model.Delivered == false)
+        {
+
+            <div class="form-group float-lg-right">
+                <img src="~/images/New.png" alt="new" width="100" height="70">
             </div>
-            <div class="form-group">
-                File Name:
-                @Model.Name
-            </div>
-            <div class="form-group">
-                Document Upload time:
-                @Model.SentTime
-            </div>
-            <p class="card-text">Key you need to sign with: <strong>@Model.KeyPreference</strong> </p>
-            <div class="form-group">
-                <input type="submit" value="Sign" class="btn btn-primary" />
-            </div>
+
+        }
+        <p class="card-text">Key you need to sign with: <strong>@Model.KeyPreference</strong> </p>
+
+        <div class="form-group">
+            <input type="submit" value="Sign" class="btn btn-primary" />
         </div>
     </div>
-    <br>
+</div>
+<br>
 </form>
 
