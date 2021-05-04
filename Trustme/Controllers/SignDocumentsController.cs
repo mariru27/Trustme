@@ -46,8 +46,8 @@ namespace Trustme.Controllers
         {
             User user = _HttpRequestFunctions.GetUser(HttpContext);
             IEnumerable<UnsignedDocument> unsignedDocuments = _UnsignedDocumentRepository.ListAllUsignedDocumentsByUser(user);
-            int countDelivered = _UnsignedDocumentRepository.CountDelivered(user);
-            HttpContext.Session.SetInt32("countDelivered", countDelivered);
+            //int countDelivered = _UnsignedDocumentRepository.CountDelivered(user);
+            //HttpContext.Session.SetInt32("countDelivered", countDelivered);
             //TempData["NrDelivered"] = countDelivered;
             //_UnsignedDocumentRepository.MakeDelivered(user);
             if (unsignedDocuments.Count() == 0)
