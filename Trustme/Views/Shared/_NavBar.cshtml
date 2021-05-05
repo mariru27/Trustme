@@ -68,7 +68,7 @@
                             }
                             else
                             {
-                                if (TempData["NrDelivered"] != null)
+                                if (TempData["NrDelivered"] != null && (int)TempData["NrDelivered"] != 0)
                                 {
                                     <span class="badge badge-pill badge-primary" style="float:right;margin-bottom:-10px;">@TempData["NrDelivered"]</span> 
                                 }
