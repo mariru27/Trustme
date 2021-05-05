@@ -60,7 +60,7 @@ namespace Trustme.Service
         public IEnumerable<UnsignedDocument> ListAllUsignedDocumentsByUser(User user)
         {
 
-            IEnumerable<UnsignedDocument> unsignedDocuments = _context.UserUnsignedDocuments.Where(u => u.UserId == user.UserId).Join(
+            IEnumerable<UnsignedDocument> unsignedDocuments = _context.UserUnsignedDocuments.AsNoTracking().Where(u => u.UserId == user.UserId).Join(
                 _context.UnsignedDocuments,
                 u => u.UnsignedDocumentId,
                 ud => ud.IdUnsignedDocument,
@@ -106,7 +106,7 @@ namespace Trustme.Service
 
         public void MakeSeen(User user)
         {
-            IEnumerable<UnsignedDocument> unsignedDocuments = _context.UserUnsignedDocuments.Where(u => u.UserId == user.UserId).Join(
+            IEnumerable<UnsignedDocument> unsignedDocuments = _context.UserUnsignedDocuments.AsNoTracking().Where(u => u.UserId == user.UserId).Join(
             _context.UnsignedDocuments,
             u => u.UnsignedDocumentId,
             ud => ud.IdUnsignedDocument,
@@ -130,7 +130,7 @@ namespace Trustme.Service
 
         public void MakeDelivered(User user)
         {
-            IEnumerable<UnsignedDocument> unsignedDocuments = _context.UserUnsignedDocuments.Where(u => u.UserId == user.UserId).Join(
+            IEnumerable<UnsignedDocument> unsignedDocuments = _context.UserUnsignedDocuments.AsNoTracking().Where(u => u.UserId == user.UserId).Join(
             _context.UnsignedDocuments,
             u => u.UnsignedDocumentId,
             ud => ud.IdUnsignedDocument,
