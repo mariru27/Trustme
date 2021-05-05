@@ -141,6 +141,7 @@ namespace Trustme.Service
                 u.Delivered = true;
                 _context.Update(u);
             }
+            _context.SaveChanges();
         }
 
 
