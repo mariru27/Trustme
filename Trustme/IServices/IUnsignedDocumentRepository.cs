@@ -18,5 +18,6 @@ namespace Trustme.IServices
         public void MakeSeen(User user);
         public int CountDelivered(User user);
         public void MakeDelivered(User user);
+        public int CountSeen(User user);
     }
 }
