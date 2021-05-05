@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Linq;
 using Trustme.Data;
 using Trustme.IServices;
@@ -119,7 +120,7 @@ namespace Trustme.Service
         }
         public int CountDelivered(User user)
         {
-            IEnumerable<UnsignedDocument> unsignedDocuments = _context.UserUnsignedDocuments.Where(u => u.UserId == user.UserId).Join(
+            IEnumerable<UnsignedDocument> unsignedDocuments = _context.UserUnsignedDocuments.AsNoTracking().Where(u => u.UserId == user.UserId).Join(
             _context.UnsignedDocuments,
             u => u.UnsignedDocumentId,
             ud => ud.IdUnsignedDocument,

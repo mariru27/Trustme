@@ -49,7 +49,7 @@ namespace Trustme.Controllers
             //int countDelivered = _UnsignedDocumentRepository.CountDelivered(user);
             //HttpContext.Session.SetInt32("countDelivered", countDelivered);
             //TempData["NrDelivered"] = countDelivered;
-            //_UnsignedDocumentRepository.MakeDelivered(user);
+            _UnsignedDocumentRepository.MakeDelivered(user);
             if (unsignedDocuments.Count() == 0)
                 TempData["DoNotHaveAnyUnsignedDocuments"] = "You do not have any documents to sign. You can upload one if you already generated a key";
 

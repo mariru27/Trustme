@@ -24,7 +24,8 @@
 
             @using System.Security.Claims;
             @using Trustme.IServices;
-            @using Microsoft.AspNetCore.Http;
+
+
 
             @inject IKeyRepository _KeyRepository
             @inject IHttpRequestFunctions _IHttpRequestFunctions;
@@ -36,12 +37,12 @@
             var username = HttpContextAccessor.HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
             var userRole = HttpContextAccessor.HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role)?.Value;
             UserRoleUserName userRoleUserName = new UserRoleUserName { UserName = username, UserRole = userRole };
-            if(username != null)
+            if (username != null)
             {
                 TempData["NrDelivered"] = _UnsignedDocumentRepository.CountDelivered(_UserRepository.GetUserbyUsername(username));
             }
         }
-        <partial name="_NavBar" model="userRoleUserName"/>
+        <partial name="_NavBar" model="userRoleUserName" />
 
     </header>
     <div class="container">
