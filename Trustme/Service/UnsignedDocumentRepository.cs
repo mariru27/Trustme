@@ -119,16 +119,6 @@ namespace Trustme.Service
             }
             _context.SaveChanges();
         }
-        public int CountDelivered(User user)
-        {
-            IEnumerable<UnsignedDocument> unsignedDocuments = _context.UserUnsignedDocuments.AsNoTracking().Where(u => u.UserId == user.UserId).Join(
-            _context.UnsignedDocuments,
-            u => u.UnsignedDocumentId,
-            ud => ud.IdUnsignedDocument,
-            (u, ud) => new UnsignedDocument(ud)).ToList().Where(a => a.Signed == false).ToList().Where(u => u.Delivered == false);
-            return unsignedDocuments.Count();
-        }
-
         public int CountSeen(User user)
         {
             IEnumerable<UnsignedDocument> unsignedDocuments = _context.UserUnsignedDocuments.AsNoTracking().Where(u => u.UserId == user.UserId).Join(
@@ -138,22 +128,6 @@ namespace Trustme.Service
             (u, ud) => new UnsignedDocument(ud)).ToList().Where(a => a.Signed == false).ToList().Where(u => u.Seen == false);
             return unsignedDocuments.Count();
         }
-        public void MakeDelivered(User user)
-        {
-            IEnumerable<UnsignedDocument> unsignedDocuments = _context.UserUnsignedDocuments.AsNoTracking().Where(u => u.UserId == user.UserId).Join(
-            _context.UnsignedDocuments,
-            u => u.UnsignedDocumentId,
-            ud => ud.IdUnsignedDocument,
-            (u, ud) => new UnsignedDocument(ud)).ToList().Where(a => a.Signed == false).ToList().Where(u => u.Delivered == false);
-
-            foreach (var u in unsignedDocuments)
-            {
-                u.Delivered = true;
-                _context.Update(u);
-            }
-            _context.SaveChanges();
-        }
-
 
     }
 }

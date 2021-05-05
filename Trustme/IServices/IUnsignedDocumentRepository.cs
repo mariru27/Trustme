@@ -16,8 +16,6 @@ namespace Trustme.IServices
         public void DeleteUnsignedDocument(int IdUnsignedDocument);
         public IEnumerable<UnsignedDocument> Search_ListAllUnsignedDocumentsDocumentsByUsername(User user, string UserName);
         public void MakeSeen(User user);
-        public int CountDelivered(User user);
-        public void MakeDelivered(User user);
         public int CountSeen(User user);
     }
 }
