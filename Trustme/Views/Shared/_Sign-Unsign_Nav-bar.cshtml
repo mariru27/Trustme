@@ -1,13 +1,37 @@
-﻿
+﻿@{
+
+    @using System.Security.Claims;
+    @using Trustme.IServices;
+
+
+
+    @inject IKeyRepository _KeyRepository
+    @inject IHttpRequestFunctions _IHttpRequestFunctions;
+    @inject IUnsignedDocumentRepository _UnsignedDocumentRepository;
+    @inject IUserRepository _UserRepository;
+    @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+
+    var username = HttpContextAccessor.HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+    var userRole = HttpContextAccessor.HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role)?.Value;
+    UserRoleUserName userRoleUserName = new UserRoleUserName { UserName = username, UserRole = userRole };
+    var NrSeen = 0;
+    if (username != null)
+    {
+        NrSeen = _UnsignedDocumentRepository.CountSeen(_UserRepository.GetUserbyUsername(username));
+    }
+}
 <ul class="nav nav-tabs">
     <li class="nav-item">
         @{
             if (TempData["UActiveTab"] != null)
             {
+
                 <a class="nav-link active" asp-controller="SignDocuments" asp-action="UnsignedDocuments">Unsigned</a>
             }
             else
             {
+
                 <a class="nav-link" asp-controller="SignDocuments" asp-action="UnsignedDocuments">Unsigned</a>
             }
         }
