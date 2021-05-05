@@ -39,7 +39,7 @@
             UserRoleUserName userRoleUserName = new UserRoleUserName { UserName = username, UserRole = userRole };
             if (username != null)
             {
-                TempData["NrDelivered"] = _UnsignedDocumentRepository.CountDelivered(_UserRepository.GetUserbyUsername(username));
+                TempData["NrSeen"] = _UnsignedDocumentRepository.CountDelivered(_UserRepository.GetUserbyUsername(username));
             }
         }
         <partial name="_NavBar" model="userRoleUserName" />
