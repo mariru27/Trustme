@@ -8,14 +8,17 @@
     <input type="hidden" name="IdUnsignedDocument" value=@Model.IdUnsignedDocument id="IdUnsignedDocument" />
     @if (Model.Delivered == false)
     {
-        @:<div class="card border-success mb-3">
+        @:<div class="card border-success mb-3" style="border-width:3px">
 
 
-     }
-    else
-    {
-        @:<div class="card border-secondary mb-3">
-    }
+
+
+        }
+        else
+        {
+            @:<div class="card border-secondary mb-3">
+
+            }
     <div class="card-header text-secondary">
         <a class="float-left" asp-controller="SignDocuments" asp-action="Download" asp-route-id="@Model.IdUnsignedDocument">
             Download
