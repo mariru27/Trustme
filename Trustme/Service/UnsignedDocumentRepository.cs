@@ -117,6 +117,7 @@ namespace Trustme.Service
                 u.Seen = true;
                 _context.Update(u);
             }
+            _context.SaveChanges();
         }
         public int CountDelivered(User user)
         {
