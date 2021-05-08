@@ -31,7 +31,9 @@
             @inject IHttpRequestFunctions _IHttpRequestFunctions;
             @inject IUnsignedDocumentRepository _UnsignedDocumentRepository;
             @inject IUserRepository _UserRepository;
+            @inject ISignedDocumentRepository _SignedDocumentRepository;
             @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
 
 
             var username = HttpContextAccessor.HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
