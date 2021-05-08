@@ -117,6 +117,16 @@ namespace Trustme.Service
             _context.SaveChanges();
         }
 
+        public int CountSeen(User user)
+        {
+            IEnumerable<SignedDocument> signedDocuments = _context.UserSignedDocuments.Where(u => u.UserId == user.UserId).Join(
+            _context.SignedDocuments,
+            u => u.SignedDocumentId,
+            ud => ud.IdSignedDocument,
+            (u, ud) => new SignedDocument(ud)).ToList();
+            signedDocuments = signedDocuments.OrderByDescending(n => n.SignedTime).ToList().Where(s => s.Seen == false);
+            return signedDocuments.Count();
+        }
 
     }
 }
