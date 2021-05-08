@@ -102,6 +102,7 @@ namespace Trustme.Controllers
 
             List<SignedDocumentsViewModel> signedDocumentsViewModels = Cast_SignedDocumentToSignedDocumentsViewModel(signedDocuments);
 
+            _SignedDocumentRepository.MakeSeen(user);
 
             return View(signedDocumentsViewModels);
 
