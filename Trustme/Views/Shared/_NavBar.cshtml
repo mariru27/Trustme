@@ -71,7 +71,12 @@
                                 if(TempData["UnsignedNrUnseen"] != null && TempData["SignedNrUnseen"] != null)
                                 {
                                     sum = (int)TempData["UnsignedNrUnseen"] + (int)TempData["SignedUnseen"];
+                                }else
+                                {
+                                    if (TempData["UnsignedNrUnseen"] != null)
+                                        sum = (int)TempData["UnsignedNrUnseen"];
                                 }
+
                                 //if (TempData["NrSeen"] != null || (int)TempData["NrSeen"] != 0)
                                 //if (TempData["NrSeen"] != null && (int)TempData["NrSeen"] != 0)
                                 @*{
