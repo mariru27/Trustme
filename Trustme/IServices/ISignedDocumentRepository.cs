@@ -12,5 +12,8 @@ namespace Trustme.IServices
         public IEnumerable<SignedDocument> Search_ListAllSignedDocumentsSentFromUsername(User user, string Username);
         public IEnumerable<SignedDocument> Search_ListAllSignedDocumentsSignedByUsername(User user, string Username);
         public IEnumerable<SignedDocument> Search_ListAllSignedDocumentsSentFromUsername_SignedByUsername(User user, string SentFromUsername, string SignedByUsername);
+        public void MakeSeen(User user);
+        public int CountSeen(User user);
+
     }
 }

@@ -28,12 +28,11 @@ namespace Trustme.ViewModels
             this.Name = signedDocument.Name;
             this.SignedTime = signedDocument.SignedTime;
             this.SentTime = signedDocument.SentTime;
-
-
+            this.Seen = signedDocument.Seen;
         }
         public int IdSignedDocument { get; set; }
         public string Name { get; set; }
-
+        public bool Seen { get; set; }
         public string SignedByUsername { get; set; }
         public string SentFromUsername { get; set; }
         public string Signature { get; set; }

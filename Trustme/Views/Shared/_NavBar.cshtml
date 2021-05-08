@@ -43,7 +43,7 @@
                             }
                             else
                             {
-                                <a class="nav-link text-dark"  asp-controller="Administrator" asp-action="Users">Users</a>
+                                <a class="nav-link text-dark" asp-controller="Administrator" asp-action="Users">Users</a>
                             }
                         </li>
                     }
@@ -64,11 +64,26 @@
                             @if (TempData["Documents"] != null)
                             {
                                 <a class="nav-link text-dark" style="background-color: #eae6f2;" asp-area="" asp-controller="SignDocuments" asp-action="UnsignedDocuments">Documents</a>
-
                             }
                             else
                             {
-                                <a class="nav-link text-dark" asp-controller="SignDocuments" asp-action="UnsignedDocuments">Documents</a>
+                                int sum = 0;
+                                if(TempData["UnsignedNrUnseen"] != null && TempData["SignedNrUnseen"] != null)
+                                {
+                                    sum = (int)TempData["UnsignedNrUnseen"] + (int)TempData["SignedNrUnseen"];
+                                }else
+                                {
+                                    if (TempData["UnsignedNrUnseen"] != null)
+                                        sum = (int)TempData["UnsignedNrUnseen"];
+                                    if (TempData["SignedNrUnseen"] != null)
+                                        sum = (int)TempData["SignedNrUnseen"];
+                                }
+
+                                if (sum != 0)
+                                {
+                                    <span class="badge badge-pill badge-primary" style="float:right;margin-bottom:-10px;">@sum</span> 
+                                }
+                                    <a class="nav-link text-dark" asp-controller="SignDocuments" asp-action="UnsignedDocuments">Documents</a>
                             }
                         </li>
                         <li class="nav-item">

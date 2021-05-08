@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using Trustme.IServices;
 using Trustme.Models;
@@ -8,10 +9,9 @@ namespace Trustme.Controllers
     public class HomeController : Controller
     {
         private readonly IUserRepository _UserRepository;
-        private readonly IEmailSender _EmailSender;
-        public HomeController(IUserRepository userRepository, IEmailSender emailSender)
+
+        public HomeController(IUserRepository userRepository)
         {
-            _EmailSender = emailSender;
             _UserRepository = userRepository;
         }
 
@@ -25,7 +25,6 @@ namespace Trustme.Controllers
                 }
                 return RedirectToAction("LogIn", "Authenticate");
             }
-
             return View();
         }
 

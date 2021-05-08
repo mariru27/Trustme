@@ -1,14 +1,45 @@
-﻿
+﻿@{
+
+    @using System.Security.Claims;
+    @using Trustme.IServices;
+
+
+
+
+    @inject IUnsignedDocumentRepository _UnsignedDocumentRepository;
+    @inject IUserRepository _UserRepository;
+    @inject ISignedDocumentRepository _SignedDocumentRepository;
+    @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+
+    var username = HttpContextAccessor.HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+    var userRole = HttpContextAccessor.HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role)?.Value;
+    UserRoleUserName userRoleUserName = new UserRoleUserName { UserName = username, UserRole = userRole };
+    var UnsignedNrUnseen = 0;
+    var SignedNrUnseen = 0;
+
+    if (username != null)
+    {
+        User user = _UserRepository.GetUserbyUsername(username);
+        UnsignedNrUnseen = _UnsignedDocumentRepository.CountSeen(user);
+        SignedNrUnseen = _SignedDocumentRepository.CountSeen(user);
+    }
+}
 <ul class="nav nav-tabs">
     <li class="nav-item">
         @{
             if (TempData["UActiveTab"] != null)
             {
-                <a class="nav-link active" asp-controller="SignDocuments" asp-action="UnsignedDocuments" >Unsigned</a>
+
+                <a class="nav-link active" asp-controller="SignDocuments" asp-action="UnsignedDocuments">Unsigned</a>
             }
             else
             {
-                <a class="nav-link" asp-controller="SignDocuments" asp-action="UnsignedDocuments" >Unsigned</a>
+                if (UnsignedNrUnseen != 0)
+                {
+                    <span class="badge badge-pill badge-primary" style="float:right;margin-bottom:-10px;">@UnsignedNrUnseen</span>
+                }
+                <a class="nav-link" asp-controller="SignDocuments" asp-action="UnsignedDocuments">Unsigned</a>
             }
         }
     </li>
@@ -16,14 +47,17 @@
         @{
             if (TempData["SActiveTab"] != null)
             {
-                <a class="nav-link active" asp-controller="SignedDocuments" asp-action="SignedDocumentsFromUsers" >Signed</a>
+                <a class="nav-link active" asp-controller="SignedDocuments" asp-action="SignedDocumentsFromUsers">Signed</a>
 
             }
             else
             {
-                <a class="nav-link" asp-controller="SignedDocuments" asp-action="SignedDocumentsFromUsers" >Signed</a>
+                if (SignedNrUnseen != 0)
+                {
+                    <span class="badge badge-pill badge-primary" style="float:right;margin-bottom:-10px;">@SignedNrUnseen</span>
+                }
+                <a class="nav-link" asp-controller="SignedDocuments" asp-action="SignedDocumentsFromUsers">Signed</a>
             }
-
         }
     </li>
 </ul>
