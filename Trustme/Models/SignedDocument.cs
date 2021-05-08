@@ -44,7 +44,7 @@ namespace Trustme.Models
             this.SentTime = unsignedDocument.SentTime;
             this.SignedTime = DateTime.Now;
             this.ContentType = unsignedDocument.ContentType;
-            this.Seen = unsignedDocument.Seen;
+            this.Seen = false;
             this.Delivered = unsignedDocument.Delivered;
         }
 
