@@ -1,25 +1,4 @@
-﻿@{
-
-    @using System.Security.Claims;
-    @using Trustme.IServices;
-
-
-
-
-    @inject IUnsignedDocumentRepository _UnsignedDocumentRepository;
-    @inject IUserRepository _UserRepository;
-    @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
-
-
-    var username = HttpContextAccessor.HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
-    var userRole = HttpContextAccessor.HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role)?.Value;
-    UserRoleUserName userRoleUserName = new UserRoleUserName { UserName = username, UserRole = userRole };
-    var NrSeen = 0;
-    if (username != null)
-    {
-        NrSeen = _UnsignedDocumentRepository.CountSeen(_UserRepository.GetUserbyUsername(username));
-    }
-}
+﻿
 <ul class="nav nav-tabs">
     <li class="nav-item">
         @{
@@ -30,9 +9,9 @@
             }
             else
             {
-                if (NrSeen != 0)
+                if (TempData["UnsignedNrUnseen"] != null && (int)TempData["UnsignedNrUnseen"] != 0)
                 {
-                    <span class="badge badge-pill badge-primary" style="float:right;margin-bottom:-10px;">@NrSeen</span>
+                    <span class="badge badge-pill badge-primary" style="float:right;margin-bottom:-10px;">@TempData["UnsignedNrUnseen"]</span>
                 }
                 <a class="nav-link" asp-controller="SignDocuments" asp-action="UnsignedDocuments">Unsigned</a>
             }
