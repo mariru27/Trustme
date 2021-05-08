@@ -42,8 +42,8 @@
             if (username != null)
             {
                 User user = _UserRepository.GetUserbyUsername(username);
-                TempData["UnsignedNrSeen"] = _UnsignedDocumentRepository.CountSeen(user);
-                TempData["SignedNrSeen"] = _SignedDocumentRepository.CountSeen(user);
+                TempData["UnsignedNrUnseen"] = _UnsignedDocumentRepository.CountSeen(user);
+                TempData["SignedNrUnseen"] = _SignedDocumentRepository.CountSeen(user);
             }
         }
         <partial name="_NavBar" model="userRoleUserName" />
