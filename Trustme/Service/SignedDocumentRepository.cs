@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Linq;
 using Trustme.Data;
 using Trustme.IServices;
@@ -37,7 +38,7 @@ namespace Trustme.Service
 
         public IEnumerable<SignedDocument> ListAllSignedDocuments(User user)
         {
-            IEnumerable<SignedDocument> signedDocuments = _context.UserSignedDocuments.Where(u => u.UserId == user.UserId).Join(
+            IEnumerable<SignedDocument> signedDocuments = _context.UserSignedDocuments.AsNoTracking().Where(u => u.UserId == user.UserId).Join(
             _context.SignedDocuments,
             u => u.SignedDocumentId,
             ud => ud.IdSignedDocument,
@@ -102,7 +103,7 @@ namespace Trustme.Service
 
         public void MakeSeen(User user)
         {
-            IEnumerable<SignedDocument> signedDocuments = _context.UserSignedDocuments.Where(u => u.UserId == user.UserId).Join(
+            IEnumerable<SignedDocument> signedDocuments = _context.UserSignedDocuments.AsNoTracking().Where(u => u.UserId == user.UserId).Join(
             _context.SignedDocuments,
             u => u.SignedDocumentId,
             ud => ud.IdSignedDocument,
@@ -119,7 +120,7 @@ namespace Trustme.Service
 
         public int CountSeen(User user)
         {
-            IEnumerable<SignedDocument> signedDocuments = _context.UserSignedDocuments.Where(u => u.UserId == user.UserId).Join(
+            IEnumerable<SignedDocument> signedDocuments = _context.UserSignedDocuments.AsNoTracking().Where(u => u.UserId == user.UserId).Join(
             _context.SignedDocuments,
             u => u.SignedDocumentId,
             ud => ud.IdSignedDocument,
