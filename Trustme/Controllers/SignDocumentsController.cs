@@ -110,21 +110,24 @@ namespace Trustme.Controllers
             }
             string signature = _Sign.SignDocument(signModel);
 
+            //Get user
+            User user = _HttpRequestFunctions.GetUser(HttpContext);
 
             //Store in database(for another user) SignedDocument
-            SignedDocument signedDocument = new SignedDocument(unsignedDocument, signature, _HttpRequestFunctions.GetUser(HttpContext).Username);
+            SignedDocument signedDocument = new SignedDocument(unsignedDocument, signature, user.Username);
             _SignedDocumentRepository.AddSignedDocument(signedDocument, _UserRepository.GetUserbyUsername(unsignedDocument.SentFromUsername));
 
             //store in db signed document for current user
             if (signedDocument.SentFromUsername != signedDocument.SignedByUsername)
             {
-                SignedDocument signedDocumentCurrentUser = new SignedDocument(unsignedDocument, signature, _HttpRequestFunctions.GetUser(HttpContext).Username);
-                _SignedDocumentRepository.AddSignedDocument(signedDocumentCurrentUser, _UserRepository.GetUserbyUsername(_HttpRequestFunctions.GetUser(HttpContext).Username));
+                SignedDocument signedDocumentCurrentUser = new SignedDocument(unsignedDocument, signature, user.Username);
+                _SignedDocumentRepository.AddSignedDocument(signedDocumentCurrentUser, user);
             }
 
             //Add document in current user history
             _UnsignedDocumentRepository.MakeDocumentSigned(unsignedDocument);
             keysUnsignedDocumentViewModelPass.Signature = signature;
+
 
             return View(keysUnsignedDocumentViewModelPass);
         }
