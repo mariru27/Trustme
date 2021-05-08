@@ -1,4 +1,30 @@
-﻿
+﻿@{
+
+    @using System.Security.Claims;
+    @using Trustme.IServices;
+
+
+
+
+    @inject IUnsignedDocumentRepository _UnsignedDocumentRepository;
+    @inject IUserRepository _UserRepository;
+    @inject ISignedDocumentRepository _SignedDocumentRepository;
+    @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+
+    var username = HttpContextAccessor.HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+    var userRole = HttpContextAccessor.HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role)?.Value;
+    UserRoleUserName userRoleUserName = new UserRoleUserName { UserName = username, UserRole = userRole };
+    var UnsignedNrUnseen = 0;
+    var SignedNrUnseen = 0;
+
+    if (username != null)
+    {
+        User user = _UserRepository.GetUserbyUsername(username);
+        UnsignedNrUnseen = _UnsignedDocumentRepository.CountSeen(user);
+        SignedNrUnseen = _SignedDocumentRepository.CountSeen(user);
+    }
+}
 <ul class="nav nav-tabs">
     <li class="nav-item">
         @{
