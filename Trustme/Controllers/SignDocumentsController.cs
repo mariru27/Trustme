@@ -128,7 +128,7 @@ namespace Trustme.Controllers
             _UnsignedDocumentRepository.MakeDocumentSigned(unsignedDocument);
             keysUnsignedDocumentViewModelPass.Signature = signature;
 
-            return View(keysUnsignedDocumentViewModelPass);
+            return RedirectToAction("SignedDocumentsFromUsers", "SignedDocuments");
         }
 
 
