@@ -42,7 +42,7 @@
             if (username != null)
             {
                 User user = _UserRepository.GetUserbyUsername(username);
-                TempData["NrSeen"] = _UnsignedDocumentRepository.CountSeen(user);
+                TempData["UnsignedNrSeen"] = _UnsignedDocumentRepository.CountSeen(user);
                 TempData["SignedNrSeen"] = _SignedDocumentRepository.CountSeen(user);
             }
         }
