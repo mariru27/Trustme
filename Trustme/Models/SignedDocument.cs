@@ -11,7 +11,6 @@ namespace Trustme.Models
         {
             this.SignedTime = DateTime.Now;
             this.Seen = false;
-            this.Delivered = false;
         }
         public SignedDocument(SignedDocument signedDocument)
         {
@@ -28,7 +27,6 @@ namespace Trustme.Models
             this.SignedTime = DateTime.Now;
             this.ContentType = signedDocument.ContentType;
             this.Seen = signedDocument.Seen;
-            this.Delivered = signedDocument.Delivered;
 
         }
 
@@ -45,7 +43,6 @@ namespace Trustme.Models
             this.SignedTime = DateTime.Now;
             this.ContentType = unsignedDocument.ContentType;
             this.Seen = false;
-            this.Delivered = unsignedDocument.Delivered;
         }
 
         [Key]
@@ -54,7 +51,6 @@ namespace Trustme.Models
         public string SentFromUsername { get; set; }
         public string ContentType { get; set; }
         public string SignedByUsername { get; set; }
-        public bool Delivered { get; set; }
         public bool Seen { get; set; }
         public byte[] Document { get; set; }
         public string Signature { get; set; }
