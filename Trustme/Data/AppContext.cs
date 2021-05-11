@@ -35,6 +35,8 @@ namespace Trustme.Data
             modelBuilder.Entity<UserUnsignedDocument>().ToTable("UserUnsignedDocument");
             modelBuilder.Entity<SignedDocument>().ToTable("SignedDocument");
             modelBuilder.Entity<UnsignedDocument>().ToTable("UnsignedDocument");
+            modelBuilder.Entity<PendingRequest>().ToTable("PendingRequest");
+            modelBuilder.Entity<AcceptedPending>().ToTable("AcceptedPending");
         }
 
     }
