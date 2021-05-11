@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Trustme.Data;
 
 namespace Trustme.Migrations
 {
     [DbContext(typeof(Data.AppContext))]
-    partial class AppContextModelSnapshot : ModelSnapshot
+    [Migration("20210511104721_Peding_Accept")]
+    partial class Peding_Accept
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
