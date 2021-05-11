@@ -1,11 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace Trustme.Models
 {
-    public class PendingUsers
+    public class PendingRequest
     {
+        [Key]
+        public int IdPedingUsers { get; set; }
+        public string Username { get; set; }
+        public DateTime TimePendingRequest { get; set; }
+        public int UserId { get; set; }
+        public User User { get; set; }
     }
 }
