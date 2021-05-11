@@ -22,7 +22,8 @@ namespace Trustme.Data
 
         public DbSet<SignedDocument> SignedDocuments { set; get; }
         public DbSet<UnsignedDocument> UnsignedDocuments { set; get; }
-        public DbSet<PendingRequest> PendingRequests { set; get; }
+        public DbSet<PendingRequest> PendingRequest { set; get; }
+        public DbSet<AcceptedPending> AcceptedPending { set; get; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<UserKey>().HasMany(e => e.Keys).WithOne(e => e.UserKey).OnDelete(DeleteBehavior.ClientCascade);
