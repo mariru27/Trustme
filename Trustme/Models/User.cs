@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using Trustme.ViewModels;
 
 namespace Trustme.Models
@@ -54,6 +55,7 @@ namespace Trustme.Models
         public int RoleId { get; set; }
 
         public Role Role { get; set; }
+        public ICollection<PendingRequest> PendingRequests { get; set; }
 
         public void Update(EditUserModel user)
         {
