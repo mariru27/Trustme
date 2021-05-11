@@ -9,5 +9,6 @@ namespace Trustme.Models
         public int IdAcceptedPending { get; set; }
         public string Username { get; set; }
         public DateTime TimeAcceptedPending { get; set; }
+        public User User { get; set; }
     }
 }
