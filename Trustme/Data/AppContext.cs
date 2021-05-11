@@ -11,7 +11,7 @@ namespace Trustme.Data
 
         }
 
-        public DbSet<User> User {set; get;}
+        public DbSet<User> User { set; get; }
         public DbSet<Key> Key { set; get; }
 
         public DbSet<Role> Role { set; get; }
@@ -22,6 +22,7 @@ namespace Trustme.Data
 
         public DbSet<SignedDocument> SignedDocuments { set; get; }
         public DbSet<UnsignedDocument> UnsignedDocuments { set; get; }
+        public DbSet<PendingRequest> PendingRequests { set; get; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<UserKey>().HasMany(e => e.Keys).WithOne(e => e.UserKey).OnDelete(DeleteBehavior.ClientCascade);
