@@ -20,16 +20,16 @@ namespace Trustme.Service
             return _context.User.Where(a => a.UserId == user.UserId).Join(_context.Pendings,
                 u => u.UserId,
                 p => p.User.UserId,
-                (u, p) => new Pending { TimePendingRequest = p.TimePendingRequest, User = p.User, Username = p.Username })
+                (u, p) => new Pending { TimePendingRequest = p.TimePendingRequest, User = p.User, UsernameWhoSentPending = p.UsernameWhoSentPending })
                 .ToList();
         }
 
         //public void UserAcceptsPendingFromUsername(User user, string username)
         //{
-        //    var pendings = _context.User.Where(a => a.UserId == user.UserId).Join(_context.PendingRequest,
+        //    var pendings = _context.User.Where(a => a.UserId == user.UserId).Join(_context.Pendings,
         //    u => u.UserId,
         //    p => p.User.UserId,
-        //    (u, p) => new PendingRequest { TimePendingRequest = p.TimePendingRequest, User = p.User, Username = p.Username })
+        //    (u, p) => new Pending { TimePendingRequest = p.TimePendingRequest, User = p.User, Username = p.Username })
         //    .ToList();
 
 
