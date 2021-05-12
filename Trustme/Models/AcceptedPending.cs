@@ -5,6 +5,10 @@ namespace Trustme.Models
 {
     public class AcceptedPending
     {
+        public AcceptedPending()
+        {
+            TimeAcceptedPending = DateTime.Now;
+        }
         [Key]
         public int IdAcceptedPending { get; set; }
         public string Username { get; set; }
