@@ -7,5 +7,6 @@ namespace Trustme.IServices
     {
         public IEnumerable<Pending> ListAllPendingRequests(User user);
         public void UserAcceptsPendingFromUsername(User user, string username);
+        public bool CheckAcceptedPendingFromUsername(User user, string username);
     }
 }
