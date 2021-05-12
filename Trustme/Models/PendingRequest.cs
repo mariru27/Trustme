@@ -5,6 +5,11 @@ namespace Trustme.Models
 {
     public class PendingRequest
     {
+        public PendingRequest()
+        {
+            TimePendingRequest = DateTime.Now;
+        }
+
         [Key]
         public int IdPedingUsers { get; set; }
         public string Username { get; set; }
