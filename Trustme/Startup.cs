@@ -40,6 +40,7 @@ namespace Trustme
             services.AddSingleton<ICrypto, Crypto>();
             services.AddSingleton<IEmailSender, EmailSender>();
             services.AddSingleton<IJwtAuthenticationManager, JwtAuthenticationManager>();
+            services.AddTransient<IPendingRepository, PendingRepository>();
 
             //register NotificationMetadata -form mail sender
             var notificationMetadata =

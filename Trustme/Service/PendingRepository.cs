@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Trustme.Data;
-using Trustme.Models
+using Trustme.Models;
 
 
 
@@ -17,7 +17,7 @@ namespace Trustme.Service
 
         public IEnumerable<PendingRequest> ListAllPedingRequests(User user)
         {
-            _context.User.Where(a => a.UserId == user.UserId).Join(_context.PendingRequest,
+            return _context.User.Where(a => a.UserId == user.UserId).Join(_context.PendingRequest,
                 u => u.UserId,
                 p => p.User.UserId,
                 (u, p) => new PendingRequest { TimePendingRequest = p.TimePendingRequest, User = p.User, Username = p.Username })
