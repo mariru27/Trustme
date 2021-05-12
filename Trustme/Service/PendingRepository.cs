@@ -1,11 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Trustme.Data;
+
 
 namespace Trustme.Service
 {
-    public class Pending
+    public class PendingRepository
     {
+        private AppContext _context;
+        public PendingRepository(AppContext appContext)
+        {
+            _context = appContext;
+        }
     }
 }
