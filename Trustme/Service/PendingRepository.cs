@@ -24,15 +24,23 @@ namespace Trustme.Service
                 .ToList();
         }
 
-        //public void UserAcceptsPendingFromUsername(User user, string username)
-        //{
-        //    var pendings = _context.User.Where(a => a.UserId == user.UserId).Join(_context.Pendings,
-        //    u => u.UserId,
-        //    p => p.User.UserId,
-        //    (u, p) => new Pending { TimePendingRequest = p.TimePendingRequest, User = p.User, Username = p.Username })
-        //    .ToList();
+        public void UserAcceptsPendingFromUsername(User user, string username)
+        {
+            var pending = _context.User.Where(a => a.UserId == user.UserId).Join(_context.Pendings,
+            u => u.UserId,
+            p => p.User.UserId,
+            (u, p) => new Pending { TimePendingRequest = p.TimePendingRequest, User = p.User, UsernameWhoSentPending = p.UsernameWhoSentPending })
+            .ToList().Where(u => u.UsernameWhoSentPending == username).SingleOrDefault();
 
+            if (pending != null)
+            {
+                //User accept pending from username
+                pending.Accepted = true;
 
-        //}
+                //update and save changes
+                //_context.Update(pending);
+                //_context.SaveChanges();
+            }
+        }
     }
 }
