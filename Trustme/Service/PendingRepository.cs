@@ -24,7 +24,7 @@ namespace Trustme.Service
                 .ToList();
         }
 
-        public void UserAcceptsPendingFromUsername(User user, string username)
+        public void MarkUserAcceptPendingFromUsername(User user, string username)
         {
             var pending = _context.User.Where(a => a.UserId == user.UserId).Join(_context.Pendings,
             u => u.UserId,

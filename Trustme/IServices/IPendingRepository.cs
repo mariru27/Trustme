@@ -6,7 +6,7 @@ namespace Trustme.IServices
     public interface IPendingRepository
     {
         public IEnumerable<Pending> ListAllPendingRequests(User user);
-        public void UserAcceptsPendingFromUsername(User user, string username);
+        public void MarkUserAcceptPendingFromUsername(User user, string username);
         public bool CheckAcceptedPendingFromUsername(User user, string username);
     }
 }
