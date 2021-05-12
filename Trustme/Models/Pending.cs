@@ -7,7 +7,7 @@ namespace Trustme.Models
     {
         public Pending()
         {
-            TimePendingRequest = DateTime.Now;
+            TimeSentPendingRequest = DateTime.Now;
             Accepted = false;
         }
 
@@ -15,7 +15,8 @@ namespace Trustme.Models
         public int IdPedingUsers { get; set; }
         public string UsernameWhoSentPending { get; set; }
         public bool Accepted { get; set; }
-        public DateTime TimePendingRequest { get; set; }
+        public DateTime TimeSentPendingRequest { get; set; }
+        public DateTime TimeAcceptedPendingRequest { get; set; }
         public User User { get; set; }
     }
 }
