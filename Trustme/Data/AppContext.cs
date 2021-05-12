@@ -22,12 +22,11 @@ namespace Trustme.Data
 
         public DbSet<SignedDocument> SignedDocuments { set; get; }
         public DbSet<UnsignedDocument> UnsignedDocuments { set; get; }
-        public DbSet<Pending> PendingRequest { set; get; }
+        public DbSet<Pending> Pendings { set; get; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<UserKey>().HasMany(e => e.Keys).WithOne(e => e.UserKey).OnDelete(DeleteBehavior.ClientCascade);
-            modelBuilder.Entity<User>().HasMany(u => u.PendingRequests).WithOne(u => u.User).OnDelete(DeleteBehavior.ClientCascade);
-            modelBuilder.Entity<User>().HasMany(u => u.AcceptedPendings).WithOne(u => u.User).OnDelete(DeleteBehavior.ClientCascade);
+            modelBuilder.Entity<User>().HasMany(u => u.Pendings).WithOne(u => u.User).OnDelete(DeleteBehavior.ClientCascade);
 
             modelBuilder.Entity<User>().ToTable("User");
             modelBuilder.Entity<Key>().ToTable("Key");

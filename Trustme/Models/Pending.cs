@@ -3,9 +3,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Trustme.Models
 {
-    public class PendingRequest
+    public class Pending
     {
-        public PendingRequest()
+        public Pending()
         {
             TimePendingRequest = DateTime.Now;
         }

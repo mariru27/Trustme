@@ -55,9 +55,7 @@ namespace Trustme.Models
         public int RoleId { get; set; }
 
         public Role Role { get; set; }
-        public ICollection<PendingRequest> PendingRequests { get; set; }
-        public ICollection<AcceptedPending> AcceptedPendings { get; set; }
-
+        public ICollection<Pending> Pendings { get; set; }
         public void Update(EditUserModel user)
         {
             Username = user.Username;
