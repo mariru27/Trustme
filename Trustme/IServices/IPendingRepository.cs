@@ -5,6 +5,6 @@ namespace Trustme.IServices
 {
     public interface IPendingRepository
     {
-        public IEnumerable<PendingRequest> ListAllPedingRequests(User user);
+        public IEnumerable<PendingRequest> ListAllPendingRequests(User user);
     }
 }

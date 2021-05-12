@@ -15,7 +15,7 @@ namespace Trustme.Service
             _context = appContext;
         }
 
-        public IEnumerable<PendingRequest> ListAllPedingRequests(User user)
+        public IEnumerable<PendingRequest> ListAllPendingRequests(User user)
         {
             return _context.User.Where(a => a.UserId == user.UserId).Join(_context.PendingRequest,
                 u => u.UserId,
@@ -23,5 +23,16 @@ namespace Trustme.Service
                 (u, p) => new PendingRequest { TimePendingRequest = p.TimePendingRequest, User = p.User, Username = p.Username })
                 .ToList();
         }
+
+        //public void UserAcceptsPendingFromUsername(User user, string username)
+        //{
+        //    var pendings = _context.User.Where(a => a.UserId == user.UserId).Join(_context.PendingRequest,
+        //    u => u.UserId,
+        //    p => p.User.UserId,
+        //    (u, p) => new PendingRequest { TimePendingRequest = p.TimePendingRequest, User = p.User, Username = p.Username })
+        //    .ToList();
+
+
+        //}
     }
 }

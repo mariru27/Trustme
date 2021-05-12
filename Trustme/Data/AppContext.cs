@@ -22,7 +22,7 @@ namespace Trustme.Data
 
         public DbSet<SignedDocument> SignedDocuments { set; get; }
         public DbSet<UnsignedDocument> UnsignedDocuments { set; get; }
-        public DbSet<PendingRequest> PendingRequest { set; get; }
+        public DbSet<Pending> PendingRequest { set; get; }
         public DbSet<AcceptedPending> AcceptedPending { set; get; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -37,7 +37,7 @@ namespace Trustme.Data
             modelBuilder.Entity<UserUnsignedDocument>().ToTable("UserUnsignedDocument");
             modelBuilder.Entity<SignedDocument>().ToTable("SignedDocument");
             modelBuilder.Entity<UnsignedDocument>().ToTable("UnsignedDocument");
-            modelBuilder.Entity<PendingRequest>().ToTable("PendingRequest");
+            modelBuilder.Entity<Pending>().ToTable("Pending");
             modelBuilder.Entity<AcceptedPending>().ToTable("AcceptedPending");
         }
 
