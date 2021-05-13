@@ -109,6 +109,11 @@ namespace Trustme.Controllers
                     UnsignedDocument = unsignedDocument,
                     User = _UserRepository.GetUserbyUsername(uploadDocumentModel.Username)
                 };
+
+                //check if pending was accepted
+                var pendingAccepted = _PendingRepository.CheckAcceptedPendingFromUsername(_HttpRequestFunctions.GetUser(HttpContext),
+                              uploadDocumentModel.Username);
+
                 _UnsignedDocumentRepository.AddUnsignedDocument(unsignedDocumentUserKey);
                 TempData["SuccessUpload"] = "Uploaded Successfully!";
             }
