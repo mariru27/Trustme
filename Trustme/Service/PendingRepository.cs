@@ -52,5 +52,15 @@ namespace Trustme.Service
             (u, p) => new Pending { TimeSentPendingRequest = p.TimeSentPendingRequest, User = p.User, UsernameWhoSentPending = p.UsernameWhoSentPending })
             .ToList().Where(u => u.UsernameWhoSentPending == username).Any();
         }
+
+        public void AddPendingRequest(User user, string UsernameWhoSentPending)
+        {
+            var peding = new Pending
+            {
+                User = user,
+                UsernameWhoSentPending = UsernameWhoSentPending
+            };
+            _context.Pendings.Add(peding);
+        }
     }
 }
