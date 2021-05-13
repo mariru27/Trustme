@@ -14,13 +14,15 @@ namespace Trustme.Controllers
         private readonly IUnsignedDocumentRepository _UnsignedDocumentRepository;
         private readonly IHttpRequestFunctions _HttpRequestFunctions;
         private readonly IKeyRepository _KeyRepository;
+        private readonly IPendingRepository _PendingRepository;
 
-        public UploadController(IKeyRepository keyRepository, IUserRepository userRepository, IUnsignedDocumentRepository unsignedDocumentRepository, IHttpRequestFunctions httpRequestFunctions)
+        public UploadController(IKeyRepository keyRepository, IUserRepository userRepository, IUnsignedDocumentRepository unsignedDocumentRepository, IHttpRequestFunctions httpRequestFunctions, IPendingRepository pendingRepository)
         {
             _UserRepository = userRepository;
             _UnsignedDocumentRepository = unsignedDocumentRepository;
             _HttpRequestFunctions = httpRequestFunctions;
             _KeyRepository = keyRepository;
+            _PendingRepository = pendingRepository;
         }
 
         [HttpGet]
@@ -64,6 +66,8 @@ namespace Trustme.Controllers
                     ModelState.AddModelError("", "User do not have any certificate! User need to generate a certificate!");
                     return View();
                 }
+                //send pending
+
                 return RedirectToAction("UploadDocument", new { Username = verifyUserModel.Username });
             }
         }
