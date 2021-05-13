@@ -67,7 +67,7 @@ namespace Trustme.Controllers
                     return View();
                 }
                 //send pending
-
+                _PendingRepository.AddPendingRequest(user, _HttpRequestFunctions.GetUser(HttpContext).Username);
                 return RedirectToAction("UploadDocument", new { Username = verifyUserModel.Username });
             }
         }
