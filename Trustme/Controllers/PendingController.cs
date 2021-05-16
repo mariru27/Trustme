@@ -12,6 +12,7 @@ namespace Trustme.Controllers
         public PendingController(IHttpRequestFunctions httpRequestFunctions, IPendingRepository pendingRepository)
         {
             _HttpRequestFunctions = httpRequestFunctions;
+            _PendingRepository = pendingRepository;
         }
 
         [HttpGet]
