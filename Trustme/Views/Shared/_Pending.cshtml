@@ -1,23 +1,23 @@
 ﻿@model Pending
 
-<form asp-action="Sign" method="get">
-    <input type="hidden" name="IdUnsignedDocument" value=@Model.IdPedingUsers id="IdUnsignedDocument" />
-   
-    <div class="card border-secondary mb-3">
-            
-    <div class="card-header text-secondary">
-        test
-    </div>
-    <div class="card-body">
-        <div class="form-group">
-            Username who sent pending
-            @Model.UsernameWhoSentPending
-        </div>
+<br />
 
-        <div class="form-group">
-            <input type="submit" value="Sign" class="btn btn-primary" />
+<form asp-action="Pending" method="post">
+    <input type="hidden" name="IdPedingUsers" value=@Model.IdPedingUsers id="IdUnsignedDocument" />
+    <div class="card border-secondary mb-3">
+        <div class="card-body">
+            <div class="form-group">
+                Username <strong>@Model.UsernameWhoSentPending</strong> wants to sent you documents to sign
+            </div>
+            <div class="form-group">
+                Time pending request was sent:
+                @Model.TimeSentPendingRequest
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Allow" class="btn btn-primary" />
+                <a asp-action="#" class="btn btn-danger">Block</a>
+            </div>
         </div>
-    </div>
 </div>
 <br>
 </form>
