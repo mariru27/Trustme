@@ -55,13 +55,23 @@ namespace Trustme.Service
 
         public void AddPendingRequest(User user, string UsernameWhoSentPending)
         {
-            var peding = new Pending
+            //verify if user is already added
+            bool userAdded = _context.User.Where(a => a.UserId == user.UserId).Join(_context.Pendings,
+            u => u.UserId,
+            p => p.User.UserId,
+            (u, p) => new Pending { TimeSentPendingRequest = p.TimeSentPendingRequest, User = p.User, UsernameWhoSentPending = p.UsernameWhoSentPending, IdPedingUsers = p.IdPedingUsers })
+            .ToList().Where(u => u.UsernameWhoSentPending == UsernameWhoSentPending).Any();
+
+            if (userAdded == false)
             {
-                User = user,
-                UsernameWhoSentPending = UsernameWhoSentPending
-            };
-            _context.Pendings.Add(peding);
-            _context.SaveChanges();
+                var peding = new Pending
+                {
+                    User = user,
+                    UsernameWhoSentPending = UsernameWhoSentPending
+                };
+                _context.Pendings.Add(peding);
+                _context.SaveChanges();
+            }
         }
 
         public void Block(User user, int IdPedingUsers)
