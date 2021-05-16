@@ -1,9 +1,6 @@
 ﻿@model UnsignedDocument
 
 
-
-
-
 <form asp-action="Sign" method="get">
     <input type="hidden" name="IdUnsignedDocument" value=@Model.IdUnsignedDocument id="IdUnsignedDocument" />
     @if (Model.Seen == false)
