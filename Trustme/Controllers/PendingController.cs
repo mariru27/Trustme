@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using Trustme.IServices;
 using Trustme.Models;
 
@@ -17,7 +18,8 @@ namespace Trustme.Controllers
         public IActionResult PendingList()
         {
             User currentUser = _HttpRequestFunctions.GetUser(HttpContext);
-            return View();
+            IEnumerable<Pending> pendingRequests = _PendingRepository.ListAllPendingRequests(currentUser);
+            return View(pendingRequests);
         }
     }
 }
