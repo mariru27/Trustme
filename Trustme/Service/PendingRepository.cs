@@ -63,5 +63,18 @@ namespace Trustme.Service
             _context.Pendings.Add(peding);
             _context.SaveChanges();
         }
+
+        public void Block(User user, int IdPedingUsers)
+        {
+            var pending = _context.User.Where(a => a.UserId == user.UserId).Join(_context.Pendings,
+            u => u.UserId,
+            p => p.User.UserId,
+            (u, p) => new Pending { TimeSentPendingRequest = p.TimeSentPendingRequest, User = p.User, UsernameWhoSentPending = p.UsernameWhoSentPending })
+            .ToList().Where(u => u.IdPedingUsers == IdPedingUsers).SingleOrDefault();
+            pending.Blocked = true;
+
+            _context.Update(pending);
+            _context.SaveChanges();
+        }
     }
 }
