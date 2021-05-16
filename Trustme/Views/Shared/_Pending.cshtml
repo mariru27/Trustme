@@ -1,0 +1,24 @@
+﻿@model Pending
+
+<form asp-action="Sign" method="get">
+    <input type="hidden" name="IdUnsignedDocument" value=@Model.IdPedingUsers id="IdUnsignedDocument" />
+   
+    <div class="card border-secondary mb-3">
+            
+    <div class="card-header text-secondary">
+        test
+    </div>
+    <div class="card-body">
+        <div class="form-group">
+            Username who sent pending
+            @Model.UsernameWhoSentPending
+        </div>
+
+        <div class="form-group">
+            <input type="submit" value="Sign" class="btn btn-primary" />
+        </div>
+    </div>
+</div>
+<br>
+</form>
+
