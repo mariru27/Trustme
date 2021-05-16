@@ -26,7 +26,9 @@ namespace Trustme.Controllers
         [HttpPost]
         public IActionResult PendingList(int IdPedingUsers)
         {
+            User currentUser = _HttpRequestFunctions.GetUser(HttpContext);
 
+            return View();
         }
     }
 }
