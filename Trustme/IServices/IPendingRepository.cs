@@ -10,6 +10,7 @@ namespace Trustme.IServices
         public bool CheckAcceptedPendingFromUsername(User user, string username);
         public void AddPendingRequest(User user, string UsernameWhoSentPending);
         public void Block(User user, int IdPedingUsers);
+        public Pending GetPending(User user, string username);
 
     }
 }
