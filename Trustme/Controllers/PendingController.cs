@@ -30,7 +30,7 @@ namespace Trustme.Controllers
             Pending pending = _PendingRepository.GetPending(currentUser, IdPedingUsers);
 
             _PendingRepository.MarkUserAcceptPendingFromUsername(currentUser, pending.UsernameWhoSentPending);
-            return View();
+            return RedirectToAction("PendingList");
         }
     }
 }
