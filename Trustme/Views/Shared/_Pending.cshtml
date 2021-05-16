@@ -2,8 +2,8 @@
 
 <br />
 
-<form asp-action="Pending" method="post">
-    <input type="hidden" name="IdPedingUsers" value=@Model.IdPedingUsers id="IdUnsignedDocument" />
+<form asp-action="AllowUserSendDocuments" method="get">
+    <input type="hidden" name="IdPedingUsers" value=@Model.IdPedingUsers id="IdPedingUsers" />
     <div class="card border-secondary mb-3">
         <div class="card-body">
             <div class="form-group">
