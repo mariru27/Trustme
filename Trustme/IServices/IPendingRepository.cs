@@ -11,6 +11,7 @@ namespace Trustme.IServices
         public void AddPendingRequest(User user, string UsernameWhoSentPending);
         public void Block(User user, int IdPedingUsers);
         public Pending GetPending(User user, string username);
+        public Pending GetPending(User user, int IdPending);
 
     }
 }
