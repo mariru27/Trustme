@@ -76,5 +76,14 @@ namespace Trustme.Service
             _context.Update(pending);
             _context.SaveChanges();
         }
+
+        public Pending GetPending(User user, string username)
+        {
+            return _context.User.Where(a => a.UserId == user.UserId).Join(_context.Pendings,
+           u => u.UserId,
+           p => p.User.UserId,
+           (u, p) => new Pending { TimeSentPendingRequest = p.TimeSentPendingRequest, User = p.User, UsernameWhoSentPending = p.UsernameWhoSentPending })
+           .ToList().Where(u => u.UsernameWhoSentPending == username).SingleOrDefault();
+        }
     }
 }

@@ -27,7 +27,6 @@ namespace Trustme.Controllers
         public IActionResult AllowUserSendDocuments(int IdPedingUsers)
         {
             User currentUser = _HttpRequestFunctions.GetUser(HttpContext);
-
             return View();
         }
     }
