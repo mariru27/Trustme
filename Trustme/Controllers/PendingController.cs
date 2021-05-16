@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Trustme.IServices;
+using Trustme.Models;
 
 namespace Trustme.Controllers
 {
@@ -15,7 +16,7 @@ namespace Trustme.Controllers
         [HttpGet]
         public IActionResult PendingList()
         {
-
+            User currentUser = _HttpRequestFunctions.GetUser(HttpContext);
             return View();
         }
     }
