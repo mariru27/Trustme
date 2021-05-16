@@ -1,13 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Trustme.IServices;
 
 namespace Trustme.Controllers
 {
     public class PendingController : Controller
     {
+        private readonly IHttpRequestFunctions _HttpRequestFunctions;
+        public PendingController(IHttpRequestFunctions httpRequestFunctions)
+        {
+            _HttpRequestFunctions = httpRequestFunctions;
+        }
         public IActionResult Index()
         {
             return View();
