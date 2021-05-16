@@ -9,6 +9,7 @@ namespace Trustme.IServices
         public void MarkUserAcceptPendingFromUsername(User user, string username);
         public bool CheckAcceptedPendingFromUsername(User user, string username);
         public void AddPendingRequest(User user, string UsernameWhoSentPending);
+        public void Block(User user, int IdPedingUsers);
 
     }
 }
