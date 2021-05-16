@@ -22,5 +22,11 @@ namespace Trustme.Controllers
             IEnumerable<Pending> pendingRequests = _PendingRepository.ListAllPendingRequests(currentUser);
             return View(pendingRequests);
         }
+
+        [HttpPost]
+        public IActionResult PendingList(int IdPedingUsers)
+        {
+
+        }
     }
 }
