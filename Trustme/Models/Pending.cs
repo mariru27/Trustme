@@ -9,6 +9,7 @@ namespace Trustme.Models
         {
             TimeSentPendingRequest = DateTime.Now;
             Accepted = false;
+            Blocked = false;
         }
 
         [Key]
