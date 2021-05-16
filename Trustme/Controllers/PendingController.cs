@@ -6,12 +6,16 @@ namespace Trustme.Controllers
     public class PendingController : Controller
     {
         private readonly IHttpRequestFunctions _HttpRequestFunctions;
-        public PendingController(IHttpRequestFunctions httpRequestFunctions)
+        private readonly IPendingRepository _PendingRepository;
+        public PendingController(IHttpRequestFunctions httpRequestFunctions, IPendingRepository pendingRepository)
         {
             _HttpRequestFunctions = httpRequestFunctions;
         }
-        public IActionResult Index()
+
+        [HttpGet]
+        public IActionResult PendingList()
         {
+
             return View();
         }
     }
