@@ -83,6 +83,7 @@ namespace Trustme.Service
                 allAcceptedUnsignedDocument = allAcceptedUnsignedDocument.Union(acceptedUnsignedDocuments);
             }
 
+            //set all documents, show = true
             foreach (var doc in allAcceptedUnsignedDocument)
             {
                 doc.Show = true;
@@ -136,7 +137,7 @@ namespace Trustme.Service
             _context.UnsignedDocuments,
             u => u.UnsignedDocumentId,
             ud => ud.IdUnsignedDocument,
-            (u, ud) => new UnsignedDocument(ud)).ToList().Where(a => a.Signed == false).ToList().Where(u => u.Seen == false);
+            (u, ud) => new UnsignedDocument(ud)).ToList().Where(a => a.Signed == false && a.Seen == false && a.Show == true).ToList();
 
             foreach (var u in unsignedDocuments)
             {
