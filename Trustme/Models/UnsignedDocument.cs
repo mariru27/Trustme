@@ -1,9 +1,10 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Trustme.Models
 {
-    public class UnsignedDocument
+    public class UnsignedDocument : IEquatable<UnsignedDocument>
     {
         public UnsignedDocument()
         {
@@ -42,5 +43,11 @@ namespace Trustme.Models
         public Key Key { get; set; }
         public DateTime SentTime { get; set; }
 
+        public bool Equals([AllowNull] UnsignedDocument other)
+        {
+            if (IdUnsignedDocument == other.IdUnsignedDocument)
+                return true;
+            return false;
+        }
     }
 }

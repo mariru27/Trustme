@@ -57,6 +57,7 @@ namespace Trustme.Service
                 ).Where(a => a.Name == unsignedDocumentName).SingleOrDefault();
             return unsignedDocument;
         }
+
         public IEnumerable<UnsignedDocument> ListAllUsignedDocumentsByUser(User user)
         {
             //get all accepted users, pending requests
@@ -76,9 +77,12 @@ namespace Trustme.Service
                     _context.UnsignedDocuments,
                     u => u.UnsignedDocumentId,
                     ud => ud.IdUnsignedDocument,
-                    (u, ud) => new UnsignedDocument(ud)).ToList().Where(a => a.Signed == true && a.SentFromUsername == peding.UsernameWhoSentPending).ToList();
-                allAcceptedUnsignedDocument ??= Enumerable.Empty<UnsignedDocument>().Concat(acceptedUnsignedDocuments ?? Enumerable.Empty<UnsignedDocument>());
+                    (u, ud) => new UnsignedDocument(ud)).ToList().Where(a => a.Signed == false && a.SentFromUsername == peding.UsernameWhoSentPending).ToList();
+                //allAcceptedUnsignedDocument ??= Enumerable.Empty<UnsignedDocument>().Concat(acceptedUnsignedDocuments ?? Enumerable.Empty<UnsignedDocument>());
+                allAcceptedUnsignedDocument = allAcceptedUnsignedDocument.Union(acceptedUnsignedDocuments);
             }
+
+
             return allAcceptedUnsignedDocument;
         }
 
@@ -128,11 +132,11 @@ namespace Trustme.Service
             ud => ud.IdUnsignedDocument,
             (u, ud) => new UnsignedDocument(ud)).ToList().Where(a => a.Signed == false).ToList().Where(u => u.Seen == false);
 
-            foreach (var u in unsignedDocuments)
-            {
-                u.Seen = true;
-                _context.Update(u);
-            }
+            //foreach (var u in unsignedDocuments)
+            //{
+            //    u.Seen = true;
+            //    _context.Update(u);
+            //}
             _context.SaveChanges();
         }
         public int CountSeen(User user)
