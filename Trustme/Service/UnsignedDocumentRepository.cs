@@ -11,14 +11,15 @@ namespace Trustme.Service
     public class UnsignedDocumentRepository : IUnsignedDocumentRepository
     {
         private AppContext _context;
-        private IKeyRepository _KeyRepository;
-        private IUserRepository _UserRepository;
+        private readonly IKeyRepository _KeyRepository;
+        private readonly IUserRepository _UserRepository;
+        private readonly IPendingRepository _PendingRepository;
 
-
-        public UnsignedDocumentRepository(AppContext context, IKeyRepository keyRepository, IUserRepository userRepository)
+        public UnsignedDocumentRepository(AppContext context, IPendingRepository pendingRepository, IKeyRepository keyRepository, IUserRepository userRepository)
         {
             _KeyRepository = keyRepository;
             _UserRepository = userRepository;
+            _PendingRepository = pendingRepository;
             _context = context;
         }
         public void AddUnsignedDocument(UnsignedDocumentUserKey unsignedDocumentUserKey)
@@ -125,17 +126,18 @@ namespace Trustme.Service
 
         public void MakeSeen(User user)
         {
+
             IEnumerable<UnsignedDocument> unsignedDocuments = _context.UserUnsignedDocuments.AsNoTracking().Where(u => u.UserId == user.UserId).Join(
             _context.UnsignedDocuments,
             u => u.UnsignedDocumentId,
             ud => ud.IdUnsignedDocument,
             (u, ud) => new UnsignedDocument(ud)).ToList().Where(a => a.Signed == false).ToList().Where(u => u.Seen == false);
 
-            //foreach (var u in unsignedDocuments)
-            //{
-            //    u.Seen = true;
-            //    _context.Update(u);
-            //}
+            foreach (var u in unsignedDocuments)
+            {
+                u.Seen = true;
+                _context.Update(u);
+            }
             _context.SaveChanges();
         }
         public int CountSeen(User user)
