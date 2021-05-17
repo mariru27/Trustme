@@ -96,7 +96,7 @@ namespace Trustme.Service
                     u => u.UnsignedDocumentId,
                     ud => ud.IdUnsignedDocument,
                     (u, ud) => new UnsignedDocument(ud)).ToList().Where(a => a.Signed == true && a.SentFromUsername == peding.UsernameWhoSentPending).ToList();
-                allAcceptedUnsignedDocument = allAcceptedUnsignedDocument.Concat(allAcceptedUnsignedDocument);
+                allAcceptedUnsignedDocument ??= Enumerable.Empty<UnsignedDocument>().Concat(acceptedUnsignedDocuments ?? Enumerable.Empty<UnsignedDocument>());
             }
             return unsignedDocuments;
         }
