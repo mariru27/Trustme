@@ -64,7 +64,7 @@ namespace Trustme.Service
                 u => u.UserId,
                 p => p.User.UserId,
                 (u, p) => new Pending { TimeSentPendingRequest = p.TimeSentPendingRequest, User = p.User, UsernameWhoSentPending = p.UsernameWhoSentPending, IdPedingUsers = p.IdPedingUsers })
-                .ToList().Where(a => a.Accepted);
+                .ToList().Where(a => a.Accepted == true);
 
 
             //get unsigned documents just from accepted users(panding)
@@ -72,7 +72,7 @@ namespace Trustme.Service
             foreach (var peding in pendingRequsts)
             {
 
-                IEnumerable<UnsignedDocument> acceptedUnsignedDocuments = unsignedDocuments = _context.UserUnsignedDocuments.Where(u => u.UserId == user.UserId).Join(
+                IEnumerable<UnsignedDocument> acceptedUnsignedDocuments = _context.UserUnsignedDocuments.Where(u => u.UserId == user.UserId).Join(
                     _context.UnsignedDocuments,
                     u => u.UnsignedDocumentId,
                     ud => ud.IdUnsignedDocument,
