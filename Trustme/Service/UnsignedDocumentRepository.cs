@@ -83,6 +83,12 @@ namespace Trustme.Service
                 allAcceptedUnsignedDocument = allAcceptedUnsignedDocument.Union(acceptedUnsignedDocuments);
             }
 
+            foreach (var doc in allAcceptedUnsignedDocument)
+            {
+                doc.Show = true;
+                _context.Update(doc);
+                _context.SaveChanges();
+            }
             return allAcceptedUnsignedDocument.OrderByDescending(a => a.SentTime).ToList();
         }
 
@@ -126,7 +132,6 @@ namespace Trustme.Service
 
         public void MakeSeen(User user)
         {
-
             IEnumerable<UnsignedDocument> unsignedDocuments = _context.UserUnsignedDocuments.AsNoTracking().Where(u => u.UserId == user.UserId).Join(
             _context.UnsignedDocuments,
             u => u.UnsignedDocumentId,
