@@ -64,7 +64,7 @@ namespace Trustme.Service
                 u => u.UserId,
                 p => p.User.UserId,
                 (u, p) => new Pending { TimeSentPendingRequest = p.TimeSentPendingRequest, User = p.User, UsernameWhoSentPending = p.UsernameWhoSentPending, IdPedingUsers = p.IdPedingUsers })
-                .ToList().Where(a => a.Accepted == true);
+                .ToList();
 
 
             //get unsigned documents just from accepted users(panding)
