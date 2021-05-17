@@ -82,8 +82,7 @@ namespace Trustme.Service
                 allAcceptedUnsignedDocument = allAcceptedUnsignedDocument.Union(acceptedUnsignedDocuments);
             }
 
-
-            return allAcceptedUnsignedDocument;
+            return allAcceptedUnsignedDocument.OrderByDescending(a => a.SentTime).ToList();
         }
 
 
