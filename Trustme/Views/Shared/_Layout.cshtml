@@ -45,6 +45,7 @@
                 User user = _UserRepository.GetUserbyUsername(username);
                 TempData["UnsignedNrUnseen"] = _UnsignedDocumentRepository.CountSeen(user);
                 TempData["SignedNrUnseen"] = _SignedDocumentRepository.CountSeen(user);
+                TempData["PendingNrUnseen"] = _PendingRepository.CountUnseenPendings(user);
             }
         }
         <partial name="_NavBar" model="userRoleUserName" />
