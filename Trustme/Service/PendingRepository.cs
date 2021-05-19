@@ -29,6 +29,17 @@ namespace Trustme.Service
             return ListAllPendingRequests(user).Count();
         }
 
+        public void MarkSeen(User user)
+        {
+            IEnumerable<Pending> pendings = ListAllPendingRequests(user);
+            foreach (var p in pendings)
+            {
+                p.Seen = true;
+                _context.Pendings.Update(p);
+                _context.SaveChanges();
+            }
+        }
+
         public void MarkUserAcceptPendingFromUsername(User user, string username)
         {
             var pending = _context.User.Where(a => a.UserId == user.UserId).Join(_context.Pendings,
