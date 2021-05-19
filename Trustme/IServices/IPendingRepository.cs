@@ -14,6 +14,7 @@ namespace Trustme.IServices
         public Pending GetPending(User user, int IdPending);
         public bool CheckBockedPendingFromUsername(User user, string username);
         public int CountPendings(User user);
+        public void MarkSeen(User user);
 
     }
 }
