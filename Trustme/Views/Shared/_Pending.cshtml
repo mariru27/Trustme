@@ -7,13 +7,14 @@
     @if (Model.Seen == false)
     {
         @:<div class="card border-success mb-3" style="border-width:3px">
-        }
-        else
-        {
-            @:<div class="card border-secondary mb-3">
-            }        <div class="card-body">
+    }
+    else
+    {
+        @:<div class="card border-secondary mb-3">
+    }
+    <div class="card-body">
     <div class="form-group">
-        User <strong>@Model.UsernameWhoSentPending</strong> wants to send you documents to sign
+         User <strong>@Model.UsernameWhoSentPending</strong> wants to send you documents to sign
     </div>
     @if (Model.Seen == false)
     {
