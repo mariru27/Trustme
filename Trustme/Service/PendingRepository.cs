@@ -24,6 +24,11 @@ namespace Trustme.Service
                 .ToList().Where(a => a.Accepted == false && a.Blocked == false).ToList();
         }
 
+        public int CountPendings(User user)
+        {
+            return ListAllPendingRequests(user).Count();
+        }
+
         public void MarkUserAcceptPendingFromUsername(User user, string username)
         {
             var pending = _context.User.Where(a => a.UserId == user.UserId).Join(_context.Pendings,
