@@ -84,12 +84,12 @@ namespace Trustme.Service
             }
 
             //set all documents, show = true
-            foreach (var doc in allAcceptedUnsignedDocument)
-            {
-                doc.Show = true;
-                _context.Update(doc);
-                _context.SaveChanges();
-            }
+            //foreach (var doc in allAcceptedUnsignedDocument)
+            //{
+            //    doc.Show = true;
+            //    _context.Update(doc);
+            //    _context.SaveChanges();
+            //}
             return allAcceptedUnsignedDocument.OrderByDescending(a => a.SentTime).ToList();
         }
 
