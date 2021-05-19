@@ -5,16 +5,26 @@
 
 }
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
 <script type="text/javascript">
 
-function textCounter(field, countfield, maxlimit)
-{
+    function textCounter(field, countfield, maxlimit) {
 
-if (field.value.length > maxlimit)
-   field.value = field.value.substring(0, maxlimit);
-else
-   countfield.value = maxlimit - field.value.length;
-}
+        if (field.value.length > maxlimit)
+            field.value = field.value.substring(0, maxlimit);
+        else
+            countfield.value = maxlimit - field.value.length;
+    }
+
+    function countChar(val) {
+        var len = val.value.length;
+        if (len >= 500) {
+            val.value = val.value.substring(0, 500);
+        } else {
+            $('.numbersofChart').text(500 - len);
+        }
+    };
 
 </script>
 
@@ -34,7 +44,7 @@ else
     <div class="alert alert-warning" role="alert">
         <p>You can not have more than <strong>three certificates</strong>, update to <strong>pro</strong> to have unlimited!</p>
     </div>
- }
+}
 
 <div class="card border-secondary mb-3">
     <div class="card-body text-secondary">
@@ -57,6 +67,13 @@ else
             <div class="form-group">
                 <label asp-for="Description" class="control-label">Description</label>
                 <textarea class="form-control" asp-for="Description" rows="3"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Description" class="control-label">Description</label>
+
+                <div class="numbersofChart"></div>
+                <textarea id="TextBox2" class="form-control" asp-for="Description" rows="3" onkeyup="countChar(this)"></textarea>
             </div>
             <div class="form-group">
                 <input type="submit" value="Generate" class="btn btn-primary" />
