@@ -20,6 +20,7 @@ namespace Trustme.Controllers
         {
             User currentUser = _HttpRequestFunctions.GetUser(HttpContext);
             IEnumerable<Pending> pendingRequests = _PendingRepository.ListAllPendingRequests(currentUser);
+            _PendingRepository.MarkSeen(currentUser);
             return View(pendingRequests);
         }
 
