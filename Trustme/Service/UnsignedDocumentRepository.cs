@@ -163,6 +163,14 @@ namespace Trustme.Service
 
             return allAcceptedUnsignedDocument.Count();
         }
-
+        private Pending GetPedingsAcceptedUsers(User user)
+        {
+            //get all accepted users, pending requests
+            return = _context.User.AsNoTracking().Where(a => a.UserId == user.UserId).Join(_context.Pendings,
+                u => u.UserId,
+                p => p.User.UserId,
+                (u, p) => new Pending { TimeSentPendingRequest = p.TimeSentPendingRequest, User = p.User, UsernameWhoSentPending = p.UsernameWhoSentPending, IdPedingUsers = p.IdPedingUsers, TimeAcceptedPendingRequest = p.TimeAcceptedPendingRequest, Accepted = p.Accepted, Blocked = p.Blocked })
+                .ToList().Where(a => a.Accepted == true).ToList();
+        }
     }
 }
