@@ -11,14 +11,15 @@ namespace Trustme.Service
     public class UnsignedDocumentRepository : IUnsignedDocumentRepository
     {
         private AppContext _context;
-        private IKeyRepository _KeyRepository;
-        private IUserRepository _UserRepository;
+        private readonly IKeyRepository _KeyRepository;
+        private readonly IUserRepository _UserRepository;
+        private readonly IPendingRepository _PendingRepository;
 
-
-        public UnsignedDocumentRepository(AppContext context, IKeyRepository keyRepository, IUserRepository userRepository)
+        public UnsignedDocumentRepository(AppContext context, IPendingRepository pendingRepository, IKeyRepository keyRepository, IUserRepository userRepository)
         {
             _KeyRepository = keyRepository;
             _UserRepository = userRepository;
+            _PendingRepository = pendingRepository;
             _context = context;
         }
         public void AddUnsignedDocument(UnsignedDocumentUserKey unsignedDocumentUserKey)
@@ -57,21 +58,25 @@ namespace Trustme.Service
                 ).Where(a => a.Name == unsignedDocumentName).SingleOrDefault();
             return unsignedDocument;
         }
+
         public IEnumerable<UnsignedDocument> ListAllUsignedDocumentsByUser(User user)
         {
+            //get all accepted users, pending requests
+            var pendingRequsts = GetPedingsAcceptedByUser(user);
 
-            IEnumerable<UnsignedDocument> unsignedDocuments = _context.UserUnsignedDocuments.AsNoTracking().Where(u => u.UserId == user.UserId).Join(
-                _context.UnsignedDocuments,
-                u => u.UnsignedDocumentId,
-                ud => ud.IdUnsignedDocument,
-                (u, ud) => new UnsignedDocument(ud)).ToList().Where(a => a.Signed == false);
-            unsignedDocuments = unsignedDocuments.OrderByDescending(a => a.SentTime).ToList();
-            return unsignedDocuments;
+
+            //get unsigned documents just from accepted users(panding)
+            IEnumerable<UnsignedDocument> allAcceptedUnsignedDocument = GetUnsignedDocumentsForAccepedUsers(user, pendingRequsts);
+
+
+            return allAcceptedUnsignedDocument;
         }
+
 
         public IEnumerable<UnsignedDocument> ListAllSignedDocumentsByUser(User user)
         {
 
+            //get all unsigned documents
             IEnumerable<UnsignedDocument> unsignedDocuments = _context.UserUnsignedDocuments.Where(u => u.UserId == user.UserId).Join(
                 _context.UnsignedDocuments,
                 u => u.UnsignedDocumentId,
@@ -106,11 +111,8 @@ namespace Trustme.Service
 
         public void MakeSeen(User user)
         {
-            IEnumerable<UnsignedDocument> unsignedDocuments = _context.UserUnsignedDocuments.AsNoTracking().Where(u => u.UserId == user.UserId).Join(
-            _context.UnsignedDocuments,
-            u => u.UnsignedDocumentId,
-            ud => ud.IdUnsignedDocument,
-            (u, ud) => new UnsignedDocument(ud)).ToList().Where(a => a.Signed == false).ToList().Where(u => u.Seen == false);
+            //make seen 
+            IEnumerable<UnsignedDocument> unsignedDocuments = ListAllUsignedDocumentsByUser(user).Where(a => a.Seen == false);
 
             foreach (var u in unsignedDocuments)
             {
@@ -121,13 +123,41 @@ namespace Trustme.Service
         }
         public int CountSeen(User user)
         {
-            IEnumerable<UnsignedDocument> unsignedDocuments = _context.UserUnsignedDocuments.AsNoTracking().Where(u => u.UserId == user.UserId).Join(
-            _context.UnsignedDocuments,
-            u => u.UnsignedDocumentId,
-            ud => ud.IdUnsignedDocument,
-            (u, ud) => new UnsignedDocument(ud)).ToList().Where(a => a.Signed == false).ToList().Where(u => u.Seen == false);
-            return unsignedDocuments.Count();
+            //get all accepted users, pending requests
+            var pendingRequsts = GetPedingsAcceptedByUser(user);
+
+            //get unsigned documents just from accepted users(panding)
+            IEnumerable<UnsignedDocument> allAcceptedUnsignedDocument = GetUnsignedDocumentsForAccepedUsers(user, pendingRequsts).Where(a => a.Seen == false);
+
+            return allAcceptedUnsignedDocument.Count();
+        }
+        private IEnumerable<Pending> GetPedingsAcceptedByUser(User user)
+        {
+            //get all accepted users, pending requests
+            return _context.User.AsNoTracking().Where(a => a.UserId == user.UserId).Join(_context.Pendings,
+                u => u.UserId,
+                p => p.User.UserId,
+                (u, p) => new Pending { TimeSentPendingRequest = p.TimeSentPendingRequest, User = p.User, UsernameWhoSentPending = p.UsernameWhoSentPending, IdPedingUsers = p.IdPedingUsers, TimeAcceptedPendingRequest = p.TimeAcceptedPendingRequest, Accepted = p.Accepted, Blocked = p.Blocked })
+                .ToList().Where(a => a.Accepted == true).ToList();
         }
 
+        private IEnumerable<UnsignedDocument> GetUnsignedDocumentsForAccepedUsers(User user, IEnumerable<Pending> pendingRequsts)
+        {
+            //get unsigned documents just from accepted users(panding), ordered 
+            IEnumerable<UnsignedDocument> allAcceptedUnsignedDocument = Enumerable.Empty<UnsignedDocument>();
+            foreach (var peding in pendingRequsts)
+            {
+
+                IEnumerable<UnsignedDocument> acceptedUnsignedDocuments = _context.UserUnsignedDocuments.AsNoTracking().Where(u => u.UserId == user.UserId).Join(
+                    _context.UnsignedDocuments,
+                    u => u.UnsignedDocumentId,
+                    ud => ud.IdUnsignedDocument,
+                    (u, ud) => new UnsignedDocument(ud)).ToList().Where(a => a.Signed == false && a.SentFromUsername == peding.UsernameWhoSentPending).ToList();
+                allAcceptedUnsignedDocument = allAcceptedUnsignedDocument.Union(acceptedUnsignedDocuments);
+            }
+
+            allAcceptedUnsignedDocument = allAcceptedUnsignedDocument.OrderByDescending(a => a.SentTime).ToList();
+            return allAcceptedUnsignedDocument;
+        }
     }
 }

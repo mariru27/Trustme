@@ -1,0 +1,25 @@
+﻿@model IEnumerable<Pending>
+@{
+    ViewData["Title"] = "Pending List";
+    TempData["PActiveTab"] = "active";
+    TempData["Documents"] = "active";
+
+}
+
+<partial name="_Tabs" />
+
+
+@{
+    if (Model.Count() == 0)
+    {
+        <br />
+        <p class="alert alert-warning" id="successMessage">You do not have any pending requests</p>
+    }
+
+    foreach (var pending in Model)
+    {
+
+        <partial name="_Pending" model="pending" view-data="ViewData" />
+    }
+}
+

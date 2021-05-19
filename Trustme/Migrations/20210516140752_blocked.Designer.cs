@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Trustme.Data;
 
 namespace Trustme.Migrations
 {
     [DbContext(typeof(Data.AppContext))]
-    partial class AppContextModelSnapshot : ModelSnapshot
+    [Migration("20210516140752_blocked")]
+    partial class blocked
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -60,9 +62,6 @@ namespace Trustme.Migrations
                         .HasColumnType("bit");
 
                     b.Property<bool>("Blocked")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Seen")
                         .HasColumnType("bit");
 
                     b.Property<DateTime>("TimeAcceptedPendingRequest")

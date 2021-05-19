@@ -32,6 +32,7 @@
             @inject IUnsignedDocumentRepository _UnsignedDocumentRepository;
             @inject IUserRepository _UserRepository;
             @inject ISignedDocumentRepository _SignedDocumentRepository;
+            @inject IPendingRepository _PendingRepository;
             @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 
 
@@ -44,6 +45,7 @@
                 User user = _UserRepository.GetUserbyUsername(username);
                 TempData["UnsignedNrUnseen"] = _UnsignedDocumentRepository.CountSeen(user);
                 TempData["SignedNrUnseen"] = _SignedDocumentRepository.CountSeen(user);
+                TempData["PendingNrUnseen"] = _PendingRepository.CountUnseenPendings(user);
             }
         }
         <partial name="_NavBar" model="userRoleUserName" />

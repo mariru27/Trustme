@@ -3,21 +3,46 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Trustme.Data;
 
 namespace Trustme.Migrations
 {
     [DbContext(typeof(Data.AppContext))]
-    partial class AppContextModelSnapshot : ModelSnapshot
+    [Migration("20210511104721_Peding_Accept")]
+    partial class Peding_Accept
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "3.1.9")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("Trustme.Models.AcceptedPending", b =>
+                {
+                    b.Property<int>("IdAcceptedPending")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("TimeAcceptedPending")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Username")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("IdAcceptedPending");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AcceptedPending");
+                });
 
             modelBuilder.Entity("Trustme.Models.Key", b =>
                 {
@@ -49,39 +74,27 @@ namespace Trustme.Migrations
                     b.ToTable("Key");
                 });
 
-            modelBuilder.Entity("Trustme.Models.Pending", b =>
+            modelBuilder.Entity("Trustme.Models.PendingRequest", b =>
                 {
                     b.Property<int>("IdPedingUsers")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<bool>("Accepted")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Blocked")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Seen")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime>("TimeAcceptedPendingRequest")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("TimeSentPendingRequest")
+                    b.Property<DateTime>("TimePendingRequest")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("UserId")
                         .HasColumnType("int");
 
-                    b.Property<string>("UsernameWhoSentPending")
+                    b.Property<string>("Username")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("IdPedingUsers");
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Pending");
+                    b.ToTable("PendingRequest");
                 });
 
             modelBuilder.Entity("Trustme.Models.Role", b =>
@@ -176,9 +189,6 @@ namespace Trustme.Migrations
 
                     b.Property<DateTime>("SentTime")
                         .HasColumnType("datetime2");
-
-                    b.Property<bool>("Show")
-                        .HasColumnType("bit");
 
                     b.Property<bool>("Signed")
                         .HasColumnType("bit");
@@ -298,6 +308,14 @@ namespace Trustme.Migrations
                     b.ToTable("UserUnsignedDocument");
                 });
 
+            modelBuilder.Entity("Trustme.Models.AcceptedPending", b =>
+                {
+                    b.HasOne("Trustme.Models.User", "User")
+                        .WithMany("AcceptedPendings")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.ClientCascade);
+                });
+
             modelBuilder.Entity("Trustme.Models.Key", b =>
                 {
                     b.HasOne("Trustme.Models.UserKey", "UserKey")
@@ -306,10 +324,10 @@ namespace Trustme.Migrations
                         .OnDelete(DeleteBehavior.ClientCascade);
                 });
 
-            modelBuilder.Entity("Trustme.Models.Pending", b =>
+            modelBuilder.Entity("Trustme.Models.PendingRequest", b =>
                 {
                     b.HasOne("Trustme.Models.User", "User")
-                        .WithMany("Pendings")
+                        .WithMany("PendingRequests")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.ClientCascade);
                 });

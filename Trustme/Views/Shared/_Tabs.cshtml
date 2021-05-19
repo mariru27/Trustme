@@ -9,6 +9,7 @@
     @inject IUnsignedDocumentRepository _UnsignedDocumentRepository;
     @inject IUserRepository _UserRepository;
     @inject ISignedDocumentRepository _SignedDocumentRepository;
+    @inject IPendingRepository _PendingRepository;
     @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 
 
@@ -17,12 +18,14 @@
     UserRoleUserName userRoleUserName = new UserRoleUserName { UserName = username, UserRole = userRole };
     var UnsignedNrUnseen = 0;
     var SignedNrUnseen = 0;
+    var PendingdNrUnseen = 0;
 
     if (username != null)
     {
         User user = _UserRepository.GetUserbyUsername(username);
         UnsignedNrUnseen = _UnsignedDocumentRepository.CountSeen(user);
         SignedNrUnseen = _SignedDocumentRepository.CountSeen(user);
+        PendingdNrUnseen = _PendingRepository.CountUnseenPendings(user);
     }
 }
 <ul class="nav nav-tabs">
@@ -30,7 +33,6 @@
         @{
             if (TempData["UActiveTab"] != null)
             {
-
                 <a class="nav-link active" asp-controller="SignDocuments" asp-action="UnsignedDocuments">Unsigned</a>
             }
             else
@@ -48,7 +50,6 @@
             if (TempData["SActiveTab"] != null)
             {
                 <a class="nav-link active" asp-controller="SignedDocuments" asp-action="SignedDocumentsFromUsers">Signed</a>
-
             }
             else
             {
@@ -57,6 +58,22 @@
                     <span class="badge badge-pill badge-primary" style="float:right;margin-bottom:-10px;">@SignedNrUnseen</span>
                 }
                 <a class="nav-link" asp-controller="SignedDocuments" asp-action="SignedDocumentsFromUsers">Signed</a>
+            }
+        }
+    </li>
+    <li class="nav-item">
+        @{
+            if (TempData["PActiveTab"] != null)
+            {
+                <a class="nav-link active" asp-controller="Pending" asp-action="PendingList">Pending</a>
+            }
+            else
+            {
+                if (PendingdNrUnseen != 0)
+                {
+                    <span class="badge badge-pill badge-primary" style="float:right;margin-bottom:-10px;">@PendingdNrUnseen</span>
+                }
+                <a class="nav-link" asp-controller="Pending" asp-action="PendingList">Pending</a>
             }
         }
     </li>

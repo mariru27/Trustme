@@ -68,17 +68,8 @@
                             else
                             {
                                 int sum = 0;
-                                if(TempData["UnsignedNrUnseen"] != null && TempData["SignedNrUnseen"] != null)
-                                {
-                                    sum = (int)TempData["UnsignedNrUnseen"] + (int)TempData["SignedNrUnseen"];
-                                }else
-                                {
-                                    if (TempData["UnsignedNrUnseen"] != null)
-                                        sum = (int)TempData["UnsignedNrUnseen"];
-                                    if (TempData["SignedNrUnseen"] != null)
-                                        sum = (int)TempData["SignedNrUnseen"];
-                                }
-
+                                sum = (int)TempData["UnsignedNrUnseen"] + (int)TempData["SignedNrUnseen"];
+                                sum += (int)TempData["PendingNrUnseen"];
                                 if (sum != 0)
                                 {
                                     <span class="badge badge-pill badge-primary" style="float:right;margin-bottom:-10px;">@sum</span> 

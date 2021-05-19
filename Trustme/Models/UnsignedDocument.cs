@@ -1,15 +1,17 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Trustme.Models
 {
-    public class UnsignedDocument
+    public class UnsignedDocument : IEquatable<UnsignedDocument>
     {
         public UnsignedDocument()
         {
             this.Signed = false;
             this.SentTime = DateTime.Now;
             this.Seen = false;
+            this.Show = false;
         }
         public UnsignedDocument(UnsignedDocument unsignedDocument)
         {
@@ -24,6 +26,7 @@ namespace Trustme.Models
             this.SentTime = unsignedDocument.SentTime;
             this.ContentType = unsignedDocument.ContentType;
             this.Seen = unsignedDocument.Seen;
+            this.Show = unsignedDocument.Show;
         }
 
         [Key]
@@ -34,10 +37,17 @@ namespace Trustme.Models
         public string KeyPreference { get; set; }
         public string ContentType { get; set; }
         public bool Seen { get; set; }
+        public bool Show { get; set; }
         public bool Signed { get; set; }
         public int KeyId { get; set; }
         public Key Key { get; set; }
         public DateTime SentTime { get; set; }
 
+        public bool Equals([AllowNull] UnsignedDocument other)
+        {
+            if (IdUnsignedDocument == other.IdUnsignedDocument)
+                return true;
+            return false;
+        }
     }
 }
