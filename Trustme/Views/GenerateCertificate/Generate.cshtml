@@ -15,9 +15,15 @@
         } else {
             $('.numbersofChart').text(100 - len);
         }
+        color = len < 50 ? 'green' : 'red';
+        $('.numbersofChart').css({
+            'color': color
+        });
     };
 
 </script>
+
+
 
 <h4 class="display-4">Generate certificates</h4>
 
@@ -57,13 +63,8 @@
             </select>
             <div class="form-group">
                 <label asp-for="Description" class="control-label">Description</label>
-                <textarea class="form-control" asp-for="Description" rows="3"></textarea>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="Description" class="control-label">Description</label>
                 <div class="numbersofChart float-right">100</div>
-                <textarea id="TextBox2" class="form-control" asp-for="Description" rows="3" onkeyup="countChar(this)"></textarea>
+                <textarea class="form-control" asp-for="Description" rows="3" onkeyup="countChar(this)"></textarea>
             </div>
             <div class="form-group">
                 <input type="submit" value="Generate" class="btn btn-primary" />
