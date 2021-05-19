@@ -83,20 +83,12 @@ namespace Trustme.Service
                 allAcceptedUnsignedDocument = allAcceptedUnsignedDocument.Union(acceptedUnsignedDocuments);
             }
 
-            //set all documents, show = true
-            //foreach (var doc in allAcceptedUnsignedDocument)
-            //{
-            //    doc.Show = true;
-            //    _context.Update(doc);
-            //    _context.SaveChanges();
-            //}
             return allAcceptedUnsignedDocument.OrderByDescending(a => a.SentTime).ToList();
         }
 
 
         public IEnumerable<UnsignedDocument> ListAllSignedDocumentsByUser(User user)
         {
-
 
             //get all unsigned documents
             IEnumerable<UnsignedDocument> unsignedDocuments = _context.UserUnsignedDocuments.Where(u => u.UserId == user.UserId).Join(
@@ -148,8 +140,30 @@ namespace Trustme.Service
         }
         public int CountSeen(User user)
         {
-            IEnumerable<UnsignedDocument> allUnsignedDocuments = ListAllUsignedDocumentsByUser(user);
-            return allUnsignedDocuments.Count();
+            //get all accepted users, pending requests
+            var pendingRequsts = _context.User.AsNoTracking().Where(a => a.UserId == user.UserId).Join(_context.Pendings,
+                u => u.UserId,
+                p => p.User.UserId,
+                (u, p) => new Pending { TimeSentPendingRequest = p.TimeSentPendingRequest, User = p.User, UsernameWhoSentPending = p.UsernameWhoSentPending, IdPedingUsers = p.IdPedingUsers, TimeAcceptedPendingRequest = p.TimeAcceptedPendingRequest, Accepted = p.Accepted, Blocked = p.Blocked })
+                .ToList().Where(a => a.Accepted == true).ToList();
+
+
+            //get unsigned documents just from accepted users(panding)
+            IEnumerable<UnsignedDocument> allAcceptedUnsignedDocument = Enumerable.Empty<UnsignedDocument>();
+            foreach (var peding in pendingRequsts)
+            {
+
+                IEnumerable<UnsignedDocument> acceptedUnsignedDocuments = _context.UserUnsignedDocuments.AsNoTracking().Where(u => u.UserId == user.UserId).Join(
+                    _context.UnsignedDocuments,
+                    u => u.UnsignedDocumentId,
+                    ud => ud.IdUnsignedDocument,
+                    (u, ud) => new UnsignedDocument(ud)).ToList().Where(a => a.Signed == false && a.SentFromUsername == peding.UsernameWhoSentPending && a.Seen == false).ToList();
+                allAcceptedUnsignedDocument = allAcceptedUnsignedDocument.Union(acceptedUnsignedDocuments);
+            }
+
+            allAcceptedUnsignedDocument = allAcceptedUnsignedDocument.OrderByDescending(a => a.SentTime).ToList();
+
+            return allAcceptedUnsignedDocument.Count();
         }
 
     }
