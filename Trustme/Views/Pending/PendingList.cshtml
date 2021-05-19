@@ -1,6 +1,9 @@
 ﻿@model IEnumerable<Pending>
 @{
     ViewData["Title"] = "Pending List";
+    TempData["PActiveTab"] = "active";
+    TempData["Documents"] = "active";
+
 }
 
 <partial name="_Tabs" />
