@@ -62,11 +62,7 @@ namespace Trustme.Service
         public IEnumerable<UnsignedDocument> ListAllUsignedDocumentsByUser(User user)
         {
             //get all accepted users, pending requests
-            var pendingRequsts = _context.User.AsNoTracking().Where(a => a.UserId == user.UserId).Join(_context.Pendings,
-                u => u.UserId,
-                p => p.User.UserId,
-                (u, p) => new Pending { TimeSentPendingRequest = p.TimeSentPendingRequest, User = p.User, UsernameWhoSentPending = p.UsernameWhoSentPending, IdPedingUsers = p.IdPedingUsers, TimeAcceptedPendingRequest = p.TimeAcceptedPendingRequest, Accepted = p.Accepted, Blocked = p.Blocked })
-                .ToList().Where(a => a.Accepted == true).ToList();
+            var pendingRequsts = GetPedingsAcceptedByUser(user);
 
 
             //get unsigned documents just from accepted users(panding)
@@ -139,12 +135,7 @@ namespace Trustme.Service
         public int CountSeen(User user)
         {
             //get all accepted users, pending requests
-            var pendingRequsts = _context.User.AsNoTracking().Where(a => a.UserId == user.UserId).Join(_context.Pendings,
-                u => u.UserId,
-                p => p.User.UserId,
-                (u, p) => new Pending { TimeSentPendingRequest = p.TimeSentPendingRequest, User = p.User, UsernameWhoSentPending = p.UsernameWhoSentPending, IdPedingUsers = p.IdPedingUsers, TimeAcceptedPendingRequest = p.TimeAcceptedPendingRequest, Accepted = p.Accepted, Blocked = p.Blocked })
-                .ToList().Where(a => a.Accepted == true).ToList();
-
+            var pendingRequsts = GetPedingsAcceptedByUser(user);
 
             //get unsigned documents just from accepted users(panding)
             IEnumerable<UnsignedDocument> allAcceptedUnsignedDocument = Enumerable.Empty<UnsignedDocument>();
