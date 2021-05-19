@@ -38,8 +38,9 @@
 
             </div>
             <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <textarea class="form-control" asp-for="Description" rows="3" value="@Model.Description"></textarea>
+                <label asp-for="Description" class="control-label">Description</label>
+                <div class="numbersofChart float-right" style="color:green">100</div>
+                <textarea class="form-control" asp-for="Description"  value="@Model.Description" rows="3" onkeyup="countChar(this)"></textarea>
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
