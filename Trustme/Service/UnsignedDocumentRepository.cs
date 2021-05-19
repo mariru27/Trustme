@@ -163,5 +163,23 @@ namespace Trustme.Service
                 (u, p) => new Pending { TimeSentPendingRequest = p.TimeSentPendingRequest, User = p.User, UsernameWhoSentPending = p.UsernameWhoSentPending, IdPedingUsers = p.IdPedingUsers, TimeAcceptedPendingRequest = p.TimeAcceptedPendingRequest, Accepted = p.Accepted, Blocked = p.Blocked })
                 .ToList().Where(a => a.Accepted == true).ToList();
         }
+
+        private IEnumerable<UnsignedDocument> GetUnsignedDocumentsForAccepedUsers(User user, IEnumerable<Pending> pendingRequsts)
+        {
+            IEnumerable<UnsignedDocument> allAcceptedUnsignedDocument = Enumerable.Empty<UnsignedDocument>();
+            foreach (var peding in pendingRequsts)
+            {
+
+                IEnumerable<UnsignedDocument> acceptedUnsignedDocuments = _context.UserUnsignedDocuments.AsNoTracking().Where(u => u.UserId == user.UserId).Join(
+                    _context.UnsignedDocuments,
+                    u => u.UnsignedDocumentId,
+                    ud => ud.IdUnsignedDocument,
+                    (u, ud) => new UnsignedDocument(ud)).ToList().Where(a => a.Signed == false && a.SentFromUsername == peding.UsernameWhoSentPending && a.Seen == false).ToList();
+                allAcceptedUnsignedDocument = allAcceptedUnsignedDocument.Union(acceptedUnsignedDocuments);
+            }
+
+            allAcceptedUnsignedDocument = allAcceptedUnsignedDocument.OrderByDescending(a => a.SentTime).ToList();
+            return allAcceptedUnsignedDocument;
+        }
     }
 }
