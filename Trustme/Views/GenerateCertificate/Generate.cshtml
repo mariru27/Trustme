@@ -8,21 +8,12 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
 <script type="text/javascript">
-
-    function textCounter(field, countfield, maxlimit) {
-
-        if (field.value.length > maxlimit)
-            field.value = field.value.substring(0, maxlimit);
-        else
-            countfield.value = maxlimit - field.value.length;
-    }
-
     function countChar(val) {
         var len = val.value.length;
-        if (len >= 500) {
-            val.value = val.value.substring(0, 500);
+        if (len >= 100) {
+            val.value = val.value.substring(0, 100);
         } else {
-            $('.numbersofChart').text(500 - len);
+            $('.numbersofChart').text(100 - len);
         }
     };
 
@@ -71,8 +62,7 @@
 
             <div class="form-group">
                 <label asp-for="Description" class="control-label">Description</label>
-
-                <div class="numbersofChart"></div>
+                <div class="numbersofChart float-right">100</div>
                 <textarea id="TextBox2" class="form-control" asp-for="Description" rows="3" onkeyup="countChar(this)"></textarea>
             </div>
             <div class="form-group">
