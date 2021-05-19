@@ -21,7 +21,7 @@ namespace Trustme.Service
                 u => u.UserId,
                 p => p.User.UserId,
                 (u, p) => new Pending { TimeSentPendingRequest = p.TimeSentPendingRequest, User = p.User, UsernameWhoSentPending = p.UsernameWhoSentPending, IdPedingUsers = p.IdPedingUsers, TimeAcceptedPendingRequest = p.TimeAcceptedPendingRequest, Accepted = p.Accepted, Blocked = p.Blocked })
-                .ToList();
+                .ToList().Where(a => a.Accepted == false && a.Blocked == false).ToList();
         }
 
         public void MarkUserAcceptPendingFromUsername(User user, string username)
