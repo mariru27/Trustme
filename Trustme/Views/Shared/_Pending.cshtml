@@ -4,20 +4,34 @@
 
 <form asp-action="AllowUserSendDocuments" method="get">
     <input type="hidden" name="IdPedingUsers" value=@Model.IdPedingUsers id="IdPedingUsers" />
-    <div class="card border-secondary mb-3">
-        <div class="card-body">
-            <div class="form-group">
-                User <strong>@Model.UsernameWhoSentPending</strong> wants to send you documents to sign
-            </div>
-            <div class="form-group">
-                Time pending request was sent:
-                @Model.TimeSentPendingRequest
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Allow" class="btn btn-primary" />
-                <a asp-controller="Pending" asp-action="BlockUserSendDocuments" class="btn btn-danger" asp-route-IdPedingUsers="@Model.IdPedingUsers">Block</a>
-            </div>
+    @if (Model.Seen == false)
+    {
+        @:<div class="card border-success mb-3" style="border-width:3px">
+        }
+        else
+        {
+            @:<div class="card border-secondary mb-3">
+            }        <div class="card-body">
+    <div class="form-group">
+        User <strong>@Model.UsernameWhoSentPending</strong> wants to send you documents to sign
+    </div>
+    @if (Model.Seen == false)
+    {
+
+        <div class="form-group float-lg-right">
+            <img src="~/images/New.png" alt="new" width="100" height="70">
         </div>
+
+    }
+    <div class="form-group">
+        Time pending request was sent:
+        @Model.TimeSentPendingRequest
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Allow" class="btn btn-primary" />
+        <a asp-controller="Pending" asp-action="BlockUserSendDocuments" class="btn btn-danger" asp-route-IdPedingUsers="@Model.IdPedingUsers">Block</a>
+    </div>
+</div>
 </div>
 <br>
 </form>
