@@ -20,13 +20,13 @@ namespace Trustme.Service
             return _context.User.Where(a => a.UserId == user.UserId).Join(_context.Pendings,
                 u => u.UserId,
                 p => p.User.UserId,
-                (u, p) => new Pending { TimeSentPendingRequest = p.TimeSentPendingRequest, User = p.User, UsernameWhoSentPending = p.UsernameWhoSentPending, IdPedingUsers = p.IdPedingUsers, TimeAcceptedPendingRequest = p.TimeAcceptedPendingRequest, Accepted = p.Accepted, Blocked = p.Blocked })
+                (u, p) => new Pending { TimeSentPendingRequest = p.TimeSentPendingRequest, User = p.User, UsernameWhoSentPending = p.UsernameWhoSentPending, IdPedingUsers = p.IdPedingUsers, TimeAcceptedPendingRequest = p.TimeAcceptedPendingRequest, Accepted = p.Accepted, Blocked = p.Blocked, Seen = p.Seen })
                 .ToList().Where(a => a.Accepted == false && a.Blocked == false).ToList();
         }
 
-        public int CountPendings(User user)
+        public int CountUnseenPendings(User user)
         {
-            return ListAllPendingRequests(user).Count();
+            return ListAllPendingRequests(user).Where(a => a.Seen == false).Count();
         }
 
         public void MarkSeen(User user)
