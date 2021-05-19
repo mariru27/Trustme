@@ -5,6 +5,19 @@
 
 }
 
+<script type="text/javascript">
+
+function textCounter(field, countfield, maxlimit)
+{
+
+if (field.value.length > maxlimit)
+   field.value = field.value.substring(0, maxlimit);
+else
+   countfield.value = maxlimit - field.value.length;
+}
+
+</script>
+
 <h4 class="display-4">Generate certificates</h4>
 
 <br />
