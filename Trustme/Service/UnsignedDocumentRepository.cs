@@ -114,12 +114,6 @@ namespace Trustme.Service
             //make seen 
             IEnumerable<UnsignedDocument> unsignedDocuments = ListAllUsignedDocumentsByUser(user).Where(a => a.Seen == false);
 
-            //IEnumerable<UnsignedDocument> unsignedDocuments = _context.UserUnsignedDocuments.AsNoTracking().Where(u => u.UserId == user.UserId).Join(
-            //_context.UnsignedDocuments,
-            //u => u.UnsignedDocumentId,
-            //ud => ud.IdUnsignedDocument,
-            //(u, ud) => new UnsignedDocument(ud)).ToList().Where(a => a.Signed == false && a.Seen == false).ToList();
-
             foreach (var u in unsignedDocuments)
             {
                 u.Seen = true;
