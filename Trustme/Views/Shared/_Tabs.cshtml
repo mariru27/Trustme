@@ -18,12 +18,14 @@
     UserRoleUserName userRoleUserName = new UserRoleUserName { UserName = username, UserRole = userRole };
     var UnsignedNrUnseen = 0;
     var SignedNrUnseen = 0;
+    var PendingdNrUnseen = 0;
 
     if (username != null)
     {
         User user = _UserRepository.GetUserbyUsername(username);
         UnsignedNrUnseen = _UnsignedDocumentRepository.CountSeen(user);
         SignedNrUnseen = _SignedDocumentRepository.CountSeen(user);
+        PendingdNrUnseen = _PendingRepository.CountUnseenPendings(user);
     }
 }
 <ul class="nav nav-tabs">
