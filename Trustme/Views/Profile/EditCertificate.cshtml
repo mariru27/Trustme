@@ -4,9 +4,22 @@
     TempData["Profile"] = "active";
 }
 
+<script type="text/javascript">
+    function countChar(val) {
+        var len = val.value.length;
+        if (len >= 100) {
+            val.value = val.value.substring(0, 100);
+        } else {
+            $('.numbersofChart').text(100 - len);
+        }
+        color = len < 50 ? 'green' : 'red';
+        $('.numbersofChart').css({
+            'color': color
+        });
+    };
+</script>
 
 <h4 class="display-4">Edit certificate</h4>
-
 
 <hr />
 <div class="card border-secondary mb-3">
@@ -25,8 +38,9 @@
 
             </div>
             <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <textarea class="form-control" asp-for="Description" rows="3" value="@Model.Description"></textarea>
+                <label asp-for="Description" class="control-label">Description</label>
+                <div class="numbersofChart float-right" style="color:green">100</div>
+                <textarea class="form-control" asp-for="Description"  value="@Model.Description" rows="3" onkeyup="countChar(this)"></textarea>
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
