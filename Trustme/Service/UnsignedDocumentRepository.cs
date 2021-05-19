@@ -66,18 +66,10 @@ namespace Trustme.Service
 
 
             //get unsigned documents just from accepted users(panding)
-            IEnumerable<UnsignedDocument> allAcceptedUnsignedDocument = Enumerable.Empty<UnsignedDocument>();
-            foreach (var peding in pendingRequsts)
-            {
-                IEnumerable<UnsignedDocument> acceptedUnsignedDocuments = _context.UserUnsignedDocuments.AsNoTracking().Where(u => u.UserId == user.UserId).Join(
-                    _context.UnsignedDocuments,
-                    u => u.UnsignedDocumentId,
-                    ud => ud.IdUnsignedDocument,
-                    (u, ud) => new UnsignedDocument(ud)).ToList().Where(a => a.Signed == false && a.SentFromUsername == peding.UsernameWhoSentPending).ToList();
-                allAcceptedUnsignedDocument = allAcceptedUnsignedDocument.Union(acceptedUnsignedDocuments);
-            }
+            IEnumerable<UnsignedDocument> allAcceptedUnsignedDocument = GetUnsignedDocumentsForAccepedUsers(user, pendingRequsts);
 
-            return allAcceptedUnsignedDocument.OrderByDescending(a => a.SentTime).ToList();
+
+            return allAcceptedUnsignedDocument;
         }
 
 
@@ -154,6 +146,7 @@ namespace Trustme.Service
 
         private IEnumerable<UnsignedDocument> GetUnsignedDocumentsForAccepedUsers(User user, IEnumerable<Pending> pendingRequsts)
         {
+            //get unsigned documents just from accepted users(panding), ordered 
             IEnumerable<UnsignedDocument> allAcceptedUnsignedDocument = Enumerable.Empty<UnsignedDocument>();
             foreach (var peding in pendingRequsts)
             {
