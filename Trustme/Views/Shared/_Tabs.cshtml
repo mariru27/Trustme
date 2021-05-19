@@ -33,7 +33,6 @@
         @{
             if (TempData["UActiveTab"] != null)
             {
-
                 <a class="nav-link active" asp-controller="SignDocuments" asp-action="UnsignedDocuments">Unsigned</a>
             }
             else
@@ -63,7 +62,20 @@
         }
     </li>
     <li class="nav-item">
-        <a class="nav-link" asp-controller="Pending" asp-action="PendingList">Pending</a>
+        @{
+            if (TempData["PActiveTab"] != null)
+            {
+                <a class="nav-link active" asp-controller="Pending" asp-action="PendingList">Pending</a>
+            }
+            else
+            {
+                if (PendingdNrUnseen != 0)
+                {
+                    <span class="badge badge-pill badge-primary" style="float:right;margin-bottom:-10px;">@PendingdNrUnseen</span>
+                }
+                <a class="nav-link" asp-controller="Pending" asp-action="PendingList">Pending</a>
+            }
+        }
     </li>
 </ul>
 
