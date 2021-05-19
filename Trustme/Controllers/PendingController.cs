@@ -39,10 +39,13 @@ namespace Trustme.Controllers
         [HttpGet]
         public IActionResult BlockUserSendDocuments(int IdPedingUsers)
         {
-            User currentUser = _HttpRequestFunctions.GetUser(HttpContext);
-            Pending pending = _PendingRepository.GetPending(currentUser, IdPedingUsers);
+            if (IdPedingUsers != 0)
+            {
+                User currentUser = _HttpRequestFunctions.GetUser(HttpContext);
+                Pending pending = _PendingRepository.GetPending(currentUser, IdPedingUsers);
 
-            _PendingRepository.Block(currentUser, pending.IdPedingUsers);
+                _PendingRepository.Block(currentUser, pending.IdPedingUsers);
+            }
             return RedirectToAction("PendingList");
         }
     }
