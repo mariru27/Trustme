@@ -15,14 +15,17 @@ namespace Trustme.Controllers
         private readonly IHttpRequestFunctions _HttpRequestFunctions;
         private readonly IKeyRepository _KeyRepository;
         private readonly IPendingRepository _PendingRepository;
+        private readonly IEmailSender _EmailSender;
 
-        public UploadController(IKeyRepository keyRepository, IUserRepository userRepository, IUnsignedDocumentRepository unsignedDocumentRepository, IHttpRequestFunctions httpRequestFunctions, IPendingRepository pendingRepository)
+
+        public UploadController(IKeyRepository keyRepository, IEmailSender emailSender, IUserRepository userRepository, IUnsignedDocumentRepository unsignedDocumentRepository, IHttpRequestFunctions httpRequestFunctions, IPendingRepository pendingRepository)
         {
             _UserRepository = userRepository;
             _UnsignedDocumentRepository = unsignedDocumentRepository;
             _HttpRequestFunctions = httpRequestFunctions;
             _KeyRepository = keyRepository;
             _PendingRepository = pendingRepository;
+            _EmailSender = emailSender;
         }
 
         [HttpGet]
