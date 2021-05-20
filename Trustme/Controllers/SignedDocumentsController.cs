@@ -15,13 +15,11 @@ namespace Trustme.Controllers
         private readonly IHttpRequestFunctions _HttpRequestFunctions;
         private readonly ISignedDocumentRepository _SignedDocumentRepository;
         private readonly IKeyRepository _KeyRepository;
-        private readonly IEmailSender _EmailSender;
         public SignedDocumentsController(IEmailSender emailSender, IKeyRepository keyRepository, ISignedDocumentRepository signedDocumentRepository, IHttpRequestFunctions httpRequestFunctions)
         {
             _HttpRequestFunctions = httpRequestFunctions;
             _SignedDocumentRepository = signedDocumentRepository;
             _KeyRepository = keyRepository;
-            _EmailSender = emailSender;
         }
 
         [HttpGet]

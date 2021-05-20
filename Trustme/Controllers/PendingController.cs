@@ -9,10 +9,12 @@ namespace Trustme.Controllers
     {
         private readonly IHttpRequestFunctions _HttpRequestFunctions;
         private readonly IPendingRepository _PendingRepository;
-        public PendingController(IHttpRequestFunctions httpRequestFunctions, IPendingRepository pendingRepository)
+        private readonly IEmailSender _EmailSender;
+        public PendingController(IHttpRequestFunctions httpRequestFunctions, IEmailSender emailSender, IPendingRepository pendingRepository)
         {
             _HttpRequestFunctions = httpRequestFunctions;
             _PendingRepository = pendingRepository;
+            _EmailSender = emailSender;
         }
 
         [HttpGet]
