@@ -130,7 +130,18 @@ namespace Trustme.Controllers
             _UnsignedDocumentRepository.MakeDocumentSigned(unsignedDocument);
             keysUnsignedDocumentViewModelPass.Signature = signature;
 
+            User userWhoSentDocument = _UserRepository.GetUserbyUsername(unsignedDocument.SentFromUsername);
 
+            //send email notification
+            SendMailModel sendMailModel = new SendMailModel
+            {
+                ToUsername = userWhoSentDocument.Username,
+                ToUserMail = userWhoSentDocument.Mail,
+                MessageSubject = "New signed document",
+                MessageBodyHtml = "Username " + user.Username + "<a href=\"https://localhost:44318/SignedDocuments/SignedDocumentsFromUsers\"> signed</a> for you an document!",
+            };
+
+            _EmailSender.SendMail(sendMailModel);
 
             return RedirectToAction("SignedDocumentsFromUsers", "SignedDocuments");
         }
