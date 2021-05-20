@@ -69,8 +69,7 @@ namespace Trustme.Controllers
                     ModelState.AddModelError("", "User do not have any certificate! User need to generate a certificate!");
                     return View();
                 }
-                //send pending
-                _PendingRepository.AddPendingRequest(user, _HttpRequestFunctions.GetUser(HttpContext).Username);
+
                 return RedirectToAction("UploadDocument", new { Username = verifyUserModel.Username });
             }
         }
@@ -113,10 +112,6 @@ namespace Trustme.Controllers
                     User = _UserRepository.GetUserbyUsername(uploadDocumentModel.Username)
                 };
 
-                //check if pending was accepted
-                var pendingAccepted = _PendingRepository.CheckAcceptedPendingFromUsername(_HttpRequestFunctions.GetUser(HttpContext),
-                              uploadDocumentModel.Username);
-
                 _UnsignedDocumentRepository.AddUnsignedDocument(unsignedDocumentUserKey);
 
 
@@ -127,9 +122,18 @@ namespace Trustme.Controllers
                 {
                     ToUsername = userUploaded.Username,
                     ToUserMail = userUploaded.Mail,
-                    MessageSubject = "New signed document",
+                    MessageSubject = "New documents to sign",
                     MessageBodyHtml = "User " + unsignedDocument.SentFromUsername + "<a href=\"https://localhost:44318/SignDocuments/UnsignedDocuments\" > sent </ a > you a document to sign!",
                 };
+
+                if (_PendingRepository.CheckAcceptedPendingFromUsername(_HttpRequestFunctions.GetUser(HttpContext),
+                              uploadDocumentModel.Username) == false)
+                {
+                    sendMailModel.MessageBodyHtml = "User " + unsignedDocument.SentFromUsername + " sent you a document to  , press < a href =\"https://localhost:44318/Pending/PendingList\" > allow </ a> , to see documents!";
+                }
+
+                //send pending
+                _PendingRepository.AddPendingRequest(userUploaded, _HttpRequestFunctions.GetUser(HttpContext).Username);
 
                 _EmailSender.SendMail(sendMailModel);
                 TempData["SuccessUpload"] = "Uploaded Successfully!";
