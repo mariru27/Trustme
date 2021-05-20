@@ -118,6 +118,20 @@ namespace Trustme.Controllers
                               uploadDocumentModel.Username);
 
                 _UnsignedDocumentRepository.AddUnsignedDocument(unsignedDocumentUserKey);
+
+
+                User userUploaded = _UserRepository.GetUserbyUsername(uploadDocumentModel.Username);
+
+                //send email notification
+                SendMailModel sendMailModel = new SendMailModel
+                {
+                    ToUsername = userUploaded.Username,
+                    ToUserMail = userUploaded.Mail,
+                    MessageSubject = "New signed document",
+                    MessageBodyHtml = "User " + unsignedDocument.SentFromUsername + "<a href=\"https://localhost:44318/SignDocuments/UnsignedDocuments\" > sent </ a > you a document to sign!",
+                };
+
+                _EmailSender.SendMail(sendMailModel);
                 TempData["SuccessUpload"] = "Uploaded Successfully!";
             }
             else

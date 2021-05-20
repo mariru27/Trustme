@@ -138,7 +138,7 @@ namespace Trustme.Controllers
                 ToUsername = userWhoSentDocument.Username,
                 ToUserMail = userWhoSentDocument.Mail,
                 MessageSubject = "New signed document",
-                MessageBodyHtml = "Username " + user.Username + "<a href=\"https://localhost:44318/SignedDocuments/SignedDocumentsFromUsers\"> signed</a> for you an document!",
+                MessageBodyHtml = "User " + user.Username + "<a href=\"https://localhost:44318/SignedDocuments/SignedDocumentsFromUsers\"> signed</a> for you a document!",
             };
 
             _EmailSender.SendMail(sendMailModel);
