@@ -22,11 +22,13 @@ namespace Trustme.Controllers
         private readonly ISign _Sign;
         private readonly IUserRepository _UserRepository;
         private readonly ISignedDocumentRepository _SignedDocumentRepository;
-        public SignDocumentsController(IUserRepository userRepository, ISignedDocumentRepository signedDocumentRepository, IKeyRepository keyRepository, IHttpRequestFunctions httpRequestFunctions, IUnsignedDocumentRepository unsignedDocumentRepository, ISign sign)
+        private readonly IEmailSender _EmailSender;
+        public SignDocumentsController(IUserRepository userRepository, IEmailSender emailSender, ISignedDocumentRepository signedDocumentRepository, IKeyRepository keyRepository, IHttpRequestFunctions httpRequestFunctions, IUnsignedDocumentRepository unsignedDocumentRepository, ISign sign)
         {
             _KeyRepository = keyRepository;
             _HttpRequestFunctions = httpRequestFunctions;
             _Sign = sign;
+            _EmailSender = emailSender;
             _UnsignedDocumentRepository = unsignedDocumentRepository;
             _SignedDocumentRepository = signedDocumentRepository;
             _UserRepository = userRepository;
@@ -127,6 +129,8 @@ namespace Trustme.Controllers
             //Add document in current user history
             _UnsignedDocumentRepository.MakeDocumentSigned(unsignedDocument);
             keysUnsignedDocumentViewModelPass.Signature = signature;
+
+
 
             return RedirectToAction("SignedDocumentsFromUsers", "SignedDocuments");
         }
