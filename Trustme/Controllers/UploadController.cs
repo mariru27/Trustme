@@ -123,13 +123,13 @@ namespace Trustme.Controllers
                     ToUsername = userUploaded.Username,
                     ToUserMail = userUploaded.Mail,
                     MessageSubject = "New documents to sign",
-                    MessageBodyHtml = "User " + unsignedDocument.SentFromUsername + "<a href=\"https://localhost:44318/SignDocuments/UnsignedDocuments\" > sent </ a > you a document to sign!",
+                    MessageBodyHtml = "User " + unsignedDocument.SentFromUsername + "<a href=\"https://localhost:44318/SignDocuments/UnsignedDocuments\"> sent </a> you a document to sign!",
                 };
 
                 if (_PendingRepository.CheckAcceptedPendingFromUsername(_HttpRequestFunctions.GetUser(HttpContext),
                               uploadDocumentModel.Username) == false)
                 {
-                    sendMailModel.MessageBodyHtml = "User " + unsignedDocument.SentFromUsername + " sent you a document to  , press < a href =\"https://localhost:44318/Pending/PendingList\" > allow </ a> , to see documents!";
+                    sendMailModel.MessageBodyHtml = "User " + unsignedDocument.SentFromUsername + " sent you a document to  , press <a href =\"https://localhost:44318/Pending/PendingList\"> allow </a> , to see documents!";
                 }
 
                 //send pending
