@@ -50,7 +50,21 @@ namespace Trustme.Service
             .ToList().Where(u => u.UsernameWhoSentPending == username).SingleOrDefault();
 
 
+            var local = _context.Set<Pending>()
+            .Local
+            .FirstOrDefault(entry => entry.IdPedingUsers.Equals(pending.IdPedingUsers));
 
+            // check if local is not null 
+            if (local != null)
+            {
+                // detach
+                _context.Entry(local).State = EntityState.Detached;
+            }
+            // set Modified flag in your entry
+            _context.Entry(pending).State = EntityState.Modified;
+
+            // save 
+            _context.SaveChanges();
 
             if (pending != null)
             {
