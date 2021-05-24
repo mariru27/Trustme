@@ -117,37 +117,47 @@ namespace Trustme.Controllers
 
                 //get users
                 User userUploadDocument = _HttpRequestFunctions.GetUser(HttpContext);
-                User userReciveDocument = _UserRepository.GetUserbyUsername(uploadDocumentModel.Username);
+                User userReceiveDocument = _UserRepository.GetUserbyUsername(uploadDocumentModel.Username);
 
                 //send pending
-                _PendingRepository.AddPendingRequest(userReciveDocument, userUploadDocument.Username);
+                _PendingRepository.AddPendingRequest(userReceiveDocument, userUploadDocument.Username);
 
-                //send email notification 
-                //------------------------------------------------------------------------------------------------------------
-                SendMailModel sendMailModel = new SendMailModel
+                //if the same user upload and receive, mark accepted and don't send email notifications
+                if (userUploadDocument.Username == userReceiveDocument.Username)
                 {
-                    ToUsername = userReciveDocument.Username,
-                    ToUserMail = userReciveDocument.Mail,
-                    MessageSubject = "New documents to sign",
-                    MessageBodyHtml = "User " + unsignedDocument.SentFromUsername + "<a href=\"https://localhost:44318/SignDocuments/UnsignedDocuments\"> sent </a> you a document to sign!",
-                };
-
-
-                //send this email notification just if user was already accepted
-                if (_PendingRepository.CheckAcceptedPendingFromUsername(userReciveDocument,
-                              userUploadDocument.Username) == false)
-                {
-                    sendMailModel.MessageBodyHtml = "User " + unsignedDocument.SentFromUsername + " sent you a document to  , press <a href =\"https://localhost:44318/Pending/PendingList\"> allow </a> , to see documents!";
+                    _PendingRepository.MarkUserAcceptPendingFromUsername(userUploadDocument, userReceiveDocument.Username);
                 }
-
-                //send email just if user is not blocked
-                if (_PendingRepository.CheckBockedPendingFromUsername(userReciveDocument,
-                              userUploadDocument.Username) == false)
+                else
                 {
-                    _EmailSender.SendMail(sendMailModel);
-                }
-                //------------------------------------------------------------------------------------------------------------
 
+
+                    //send email notification 
+                    //------------------------------------------------------------------------------------------------------------
+                    SendMailModel sendMailModel = new SendMailModel
+                    {
+                        ToUsername = userReceiveDocument.Username,
+                        ToUserMail = userReceiveDocument.Mail,
+                        MessageSubject = "New documents to sign",
+                        MessageBodyHtml = "User " + unsignedDocument.SentFromUsername + "<a href=\"https://localhost:44318/SignDocuments/UnsignedDocuments\"> sent </a> you a document to sign!",
+                    };
+
+
+                    //send this email notification just if user was already accepted
+                    if (_PendingRepository.CheckAcceptedPendingFromUsername(userReceiveDocument,
+                                  userUploadDocument.Username) == false)
+                    {
+                        sendMailModel.MessageBodyHtml = "User " + unsignedDocument.SentFromUsername + " sent you a document to  , press <a href =\"https://localhost:44318/Pending/PendingList\"> allow </a> , to see documents!";
+                    }
+
+                    //send email just if user is not blocked
+                    if (_PendingRepository.CheckBockedPendingFromUsername(userReceiveDocument,
+                                  userUploadDocument.Username) == false)
+                    {
+                        _EmailSender.SendMail(sendMailModel);
+                    }
+                    //------------------------------------------------------------------------------------------------------------
+
+                }
 
                 TempData["SuccessUpload"] = "Uploaded Successfully!";
             }
