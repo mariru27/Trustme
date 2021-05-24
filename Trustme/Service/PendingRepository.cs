@@ -70,11 +70,12 @@ namespace Trustme.Service
 
         public bool CheckAcceptedPendingFromUsername(User user, string username)
         {
-            return _context.User.Where(a => a.UserId == user.UserId).Join(_context.Pendings,
+            var result = _context.User.Where(a => a.UserId == user.UserId).Join(_context.Pendings,
             u => u.UserId,
             p => p.User.UserId,
             (u, p) => new Pending { TimeSentPendingRequest = p.TimeSentPendingRequest, User = p.User, UsernameWhoSentPending = p.UsernameWhoSentPending, IdPedingUsers = p.IdPedingUsers, TimeAcceptedPendingRequest = p.TimeAcceptedPendingRequest, Accepted = p.Accepted, Blocked = p.Blocked })
-            .ToList().Where(u => u.UsernameWhoSentPending == username && u.Accepted == true).Any();
+            .ToList();
+            return result.Any();
         }
 
         public void AddPendingRequest(User user, string UsernameWhoSentPending)

@@ -126,16 +126,23 @@ namespace Trustme.Controllers
                     MessageBodyHtml = "User " + unsignedDocument.SentFromUsername + "<a href=\"https://localhost:44318/SignDocuments/UnsignedDocuments\"> sent </a> you a document to sign!",
                 };
 
-                if (_PendingRepository.CheckAcceptedPendingFromUsername(_HttpRequestFunctions.GetUser(HttpContext),
-                              uploadDocumentModel.Username) == false)
+                User userUploadDocument = _HttpRequestFunctions.GetUser(HttpContext);
+                User userReciveDocument = _UserRepository.GetUserbyUsername(uploadDocumentModel.Username);
+
+                if (_PendingRepository.CheckAcceptedPendingFromUsername(userReciveDocument,
+                              userUploadDocument.Username) == false)
                 {
                     sendMailModel.MessageBodyHtml = "User " + unsignedDocument.SentFromUsername + " sent you a document to  , press <a href =\"https://localhost:44318/Pending/PendingList\"> allow </a> , to see documents!";
                 }
 
                 //send pending
-                _PendingRepository.AddPendingRequest(userUploaded, _HttpRequestFunctions.GetUser(HttpContext).Username);
+                _PendingRepository.AddPendingRequest(userUploaded, userUploadDocument.Username);
 
-                _EmailSender.SendMail(sendMailModel);
+                if (_PendingRepository.CheckBockedPendingFromUsername(userReciveDocument,
+                              userUploadDocument.Username) == false)
+                {
+                    _EmailSender.SendMail(sendMailModel);
+                }
                 TempData["SuccessUpload"] = "Uploaded Successfully!";
             }
             else
