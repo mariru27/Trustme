@@ -114,8 +114,7 @@ namespace Trustme.Controllers
                 TempData["ValidSignature"] = "Signature is valid!";
 
 
-
-            return View(verifySignModel);
+            return RedirectToAction("VerifySign", new { Username = verifySignatureModel.Username });
         }
 
 

@@ -76,14 +76,10 @@ namespace Trustme.Controllers
         [HttpPost]
         public IActionResult UploadDocument(UploadDocumentModel uploadDocumentModel)
         {
-            UploadDocumentModel uploadDocument = new UploadDocumentModel
-            {
-                Keys = _KeyRepository.ListAllKeys(_UserRepository.GetUserbyUsername(uploadDocumentModel.Username)),
-                Username = uploadDocumentModel.Username
-            };
+
             if (!ModelState.IsValid)
             {
-                return View(uploadDocument);
+                return RedirectToAction("UploadDocument", new { Username = uploadDocumentModel.Username });
             }
             UnsignedDocument unsignedDocument = new UnsignedDocument
             {
@@ -165,7 +161,8 @@ namespace Trustme.Controllers
             {
                 ModelState.AddModelError("", "User do not extist!");
             }
-            return View(uploadDocument);
+
+            return RedirectToAction("UploadDocument", new { Username = uploadDocumentModel.Username });
         }
     }
 }
