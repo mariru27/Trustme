@@ -165,7 +165,8 @@ namespace Trustme.Controllers
             {
                 ModelState.AddModelError("", "User do not extist!");
             }
-            return View(uploadDocument);
+
+            return RedirectToAction("UploadDocument", new { Username = uploadDocument.Username });
         }
     }
 }
