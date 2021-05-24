@@ -15,14 +15,17 @@ namespace Trustme.Controllers
         private readonly IHttpRequestFunctions _HttpRequestFunctions;
         private readonly IKeyRepository _KeyRepository;
         private readonly IPendingRepository _PendingRepository;
+        private readonly IEmailSender _EmailSender;
 
-        public UploadController(IKeyRepository keyRepository, IUserRepository userRepository, IUnsignedDocumentRepository unsignedDocumentRepository, IHttpRequestFunctions httpRequestFunctions, IPendingRepository pendingRepository)
+
+        public UploadController(IKeyRepository keyRepository, IEmailSender emailSender, IUserRepository userRepository, IUnsignedDocumentRepository unsignedDocumentRepository, IHttpRequestFunctions httpRequestFunctions, IPendingRepository pendingRepository)
         {
             _UserRepository = userRepository;
             _UnsignedDocumentRepository = unsignedDocumentRepository;
             _HttpRequestFunctions = httpRequestFunctions;
             _KeyRepository = keyRepository;
             _PendingRepository = pendingRepository;
+            _EmailSender = emailSender;
         }
 
         [HttpGet]
@@ -66,8 +69,7 @@ namespace Trustme.Controllers
                     ModelState.AddModelError("", "User do not have any certificate! User need to generate a certificate!");
                     return View();
                 }
-                //send pending
-                _PendingRepository.AddPendingRequest(user, _HttpRequestFunctions.GetUser(HttpContext).Username);
+
                 return RedirectToAction("UploadDocument", new { Username = verifyUserModel.Username });
             }
         }
@@ -110,11 +112,53 @@ namespace Trustme.Controllers
                     User = _UserRepository.GetUserbyUsername(uploadDocumentModel.Username)
                 };
 
-                //check if pending was accepted
-                var pendingAccepted = _PendingRepository.CheckAcceptedPendingFromUsername(_HttpRequestFunctions.GetUser(HttpContext),
-                              uploadDocumentModel.Username);
-
                 _UnsignedDocumentRepository.AddUnsignedDocument(unsignedDocumentUserKey);
+
+
+                //get users
+                User userUploadDocument = _HttpRequestFunctions.GetUser(HttpContext);
+                User userReceiveDocument = _UserRepository.GetUserbyUsername(uploadDocumentModel.Username);
+
+                //send pending
+                _PendingRepository.AddPendingRequest(userReceiveDocument, userUploadDocument.Username);
+
+                //if the same user upload and receive, mark accepted and don't send email notifications
+                if (userUploadDocument.Username == userReceiveDocument.Username)
+                {
+                    _PendingRepository.MarkUserAcceptPendingFromUsername(userUploadDocument, userReceiveDocument.Username);
+                }
+                else
+                {
+
+
+                    //send email notification 
+                    //------------------------------------------------------------------------------------------------------------
+                    SendMailModel sendMailModel = new SendMailModel
+                    {
+                        ToUsername = userReceiveDocument.Username,
+                        ToUserMail = userReceiveDocument.Mail,
+                        MessageSubject = "New documents to sign",
+                        MessageBodyHtml = "User " + unsignedDocument.SentFromUsername + "<a href=\"https://localhost:44318/SignDocuments/UnsignedDocuments\"> sent </a> you a document to sign!",
+                    };
+
+
+                    //send this email notification just if user was already accepted
+                    if (_PendingRepository.CheckAcceptedPendingFromUsername(userReceiveDocument,
+                                  userUploadDocument.Username) == false)
+                    {
+                        sendMailModel.MessageBodyHtml = "User " + unsignedDocument.SentFromUsername + " sent you a document to  , press <a href =\"https://localhost:44318/Pending/PendingList\"> allow </a> , to see documents!";
+                    }
+
+                    //send email just if user is not blocked
+                    if (_PendingRepository.CheckBockedPendingFromUsername(userReceiveDocument,
+                                  userUploadDocument.Username) == false)
+                    {
+                        _EmailSender.SendMail(sendMailModel);
+                    }
+                    //------------------------------------------------------------------------------------------------------------
+
+                }
+
                 TempData["SuccessUpload"] = "Uploaded Successfully!";
             }
             else
