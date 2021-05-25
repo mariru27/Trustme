@@ -10,7 +10,7 @@
         @:<div class="card border-secondary mb-3">
     }
     <div class="card-header text-secondary">
-    <a class="float-left" asp-controller="SignedDocuments" asp-action="Download" asp-route-id="@Model.IdSignedDocument">
+    <a class="btn btn-outline-primary float-left" asp-controller="SignedDocuments" asp-action="Download" asp-route-id="@Model.IdSignedDocument">
         Download
     </a>
     <button type="button" class="btn btn-outline-danger float-right" onclick="ConfirmDelete(@Model.IdSignedDocument, '@Model.Name')">Delete</button>
