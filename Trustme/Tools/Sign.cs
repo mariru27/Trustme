@@ -67,45 +67,52 @@ namespace Trustme.Tools
                 signModel.validKey = false;
                 return signModel;
             }
-            AsymmetricCipherKeyPair keyPair = (AsymmetricCipherKeyPair)o;
-            AsymmetricKeyParameter privatekeyy = keyPair.Private;
+            try
+            {
+                AsymmetricCipherKeyPair keyPair = (AsymmetricCipherKeyPair)o;
+                AsymmetricKeyParameter privatekeyy = keyPair.Private;
 
-            //just for test
-            //-------begin--test------------------------------------------------------
-            string testmessage = "this is a test message";
-            byte[] testmessagetyte = Encoding.ASCII.GetBytes(testmessage);
+                //just for test
+                //-------begin--test------------------------------------------------------
+                string testmessage = "this is a test message";
+                byte[] testmessagetyte = Encoding.ASCII.GetBytes(testmessage);
 
-            var currentKey = _KeyRepository.GetKey(_HttpRequestFunctions.GetUserId(httpContext), certificates);
+                var currentKey = _KeyRepository.GetKey(_HttpRequestFunctions.GetUserId(httpContext), certificates);
 
-            //phrase public key
-            var readerPublickey = new StringReader(currentKey.PublicKey);
-            var pemPublicKey = new PemReader(readerPublickey);
+                //phrase public key
+                var readerPublickey = new StringReader(currentKey.PublicKey);
+                var pemPublicKey = new PemReader(readerPublickey);
 
-            var publickey = (Org.BouncyCastle.Crypto.AsymmetricKeyParameter)pemPublicKey.ReadObject();
+                var publickey = (Org.BouncyCastle.Crypto.AsymmetricKeyParameter)pemPublicKey.ReadObject();
 
-            reader.Close();
+                reader.Close();
 
-            ISigner signtest = SignerUtilities.GetSigner(PkcsObjectIdentifiers.Sha256WithRsaEncryption.Id);
-            signtest.Init(true, privatekeyy);
-            signtest.BlockUpdate(testmessagetyte, 0, testmessagetyte.Length);
-            var signaturetest = signtest.GenerateSignature();
-            string signatureteststring = Convert.ToBase64String(signaturetest);
+                ISigner signtest = SignerUtilities.GetSigner(PkcsObjectIdentifiers.Sha256WithRsaEncryption.Id);
+                signtest.Init(true, privatekeyy);
+                signtest.BlockUpdate(testmessagetyte, 0, testmessagetyte.Length);
+                var signaturetest = signtest.GenerateSignature();
+                string signatureteststring = Convert.ToBase64String(signaturetest);
 
-            signtest.Init(false, publickey);
-            signtest.BlockUpdate(testmessagetyte, 0, testmessagetyte.Length);
+                signtest.Init(false, publickey);
+                signtest.BlockUpdate(testmessagetyte, 0, testmessagetyte.Length);
 
-            byte[] signaturetestbyte = Convert.FromBase64String(signatureteststring);
+                byte[] signaturetestbyte = Convert.FromBase64String(signatureteststring);
 
-            var verifytest = signtest.VerifySignature(signaturetestbyte);
-            //------end--test-----------------------------------------------------------------
+                var verifytest = signtest.VerifySignature(signaturetestbyte);
+                //------end--test-----------------------------------------------------------------
 
-            signModel.fileBytesdoc = fileBytesdoc;
-            signModel.keypath = keypath;
-            signModel.privatekeyy = privatekeyy;
-            signModel.reader = reader;
-            signModel.verifytest = verifytest;
+                signModel.fileBytesdoc = fileBytesdoc;
+                signModel.keypath = keypath;
+                signModel.privatekeyy = privatekeyy;
+                signModel.reader = reader;
+                signModel.verifytest = verifytest;
 
 
+            }
+            catch (Exception)
+            {
+
+            }
 
             return signModel;
         }
