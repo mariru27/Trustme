@@ -146,6 +146,17 @@ namespace Trustme.Controllers
             return RedirectToAction("SignedDocumentsFromUsers", "SignedDocuments");
         }
 
+        private IEnumerable<UnsignedDocumentView> UnsignedDocument_CastTo_UnsignedDocumentView(IEnumerable<UnsignedDocument> unsignedDocuments)
+        {
+            List<UnsignedDocumentView> unsignedDocumentViews = new List<UnsignedDocumentView>();
+            foreach (var u in unsignedDocuments)
+            {
+                UnsignedDocumentView unsignedDocumentView = new UnsignedDocumentView(u);
+                unsignedDocumentViews.Add(unsignedDocumentView);
+            }
+
+            return unsignedDocumentViews;
+        }
 
     }
 }
