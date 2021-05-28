@@ -45,10 +45,11 @@ namespace Trustme.Service
         public void DeleteKey(UserKeyModel _UserKeyModel)
         {
             //create UserKey model
-            UserKey _UserKey = new UserKey();
-            _UserKey = this.GetUserKeyById(_UserKeyModel.Key.KeyId);
+            //UserKey _UserKey = new UserKey();
+            //_UserKey = this.GetUserKeyById(_UserKeyModel.Key.KeyId);
 
-            _context.UserKey.Remove(_UserKey);
+            //_context.UserKey.Remove(_UserKey);
+            _context.Key.Remove(GetKeyById(_UserKeyModel.Key.KeyId));
             _context.SaveChanges();
         }
 

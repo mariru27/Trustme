@@ -109,7 +109,7 @@ namespace Trustme.Tools
 
 
             }
-            catch (Exception)
+            catch (Exception e)
             {
 
             }
