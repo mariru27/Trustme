@@ -1,9 +1,9 @@
 ﻿@model UserRoleUserName
- 
+
 <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
     <div class="container">
 
-         <a class="navbar-brand"  asp-controller="Home" asp-action="Index"><img src="~/images/logo_navbar.jpg" alt="logo" width="70" height="50"></a>
+        <a class="navbar-brand" asp-controller="Home" asp-action="Index"><img src="~/images/logo_navbar.jpg" alt="logo" width="70" height="50"></a>
 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                 aria-expanded="false" aria-label="Toggle navigation">
@@ -12,35 +12,17 @@
         <div class="float-right">
             <ul class="navbar-nav flex-grow-1">
                 @{
-                    if (Model.UserName == null || Model.UserRole != "Admin")
-                    {
+                    <li class="nav-item">
+                        @if (TempData["Generate"] != null)
+                        {
+                            <a class="nav-link text-dark" style="background-color: #eae6f2;" asp-controller="GenerateCertificate" asp-action="Generate">Generate Certificate</a>
 
-                        <li class="nav-item">
-                            @if (TempData["Verify"] != null)
-                            {
-                                <a class="nav-link text-dark" style="background-color: #eae6f2;" asp-controller="VerifySignature" asp-action="VerifyUser">Verify</a>
-                            }
-                            else
-                            {
-                                <a class="nav-link text-dark" asp-controller="VerifySignature" asp-action="VerifyUser">Verify</a>
-                            }
-                        </li>
-                    }
-                    if (Model.UserName != null && Model.UserRole == "Admin")
-                    {
-
-                        <li class="nav-item">
-                            @if (TempData["Admin"] != null)
-                            {
-                                <a class="nav-link text-dark" style="background-color: #eae6f2;" asp-controller="Administrator" asp-action="Users">Users</a>
-
-                            }
-                            else
-                            {
-                                <a class="nav-link text-dark" asp-controller="Administrator" asp-action="Users">Users</a>
-                            }
-                        </li>
-                    }
+                        }
+                        else
+                        {
+                            <a class="nav-link text-dark" asp-controller="GenerateCertificate" asp-action="Generate">Generate Certificate</a>
+                        }
+                    </li>
                     if (Model.UserName != null && Model.UserRole != "Admin")
                     {
 
@@ -71,18 +53,38 @@
                                 <a class="nav-link text-dark" asp-controller="SignDocuments" asp-action="UnsignedDocuments">Documents</a>
                             }
                         </li>
+
+                    }
+                    if (Model.UserName == null || Model.UserRole != "Admin")
+                    {
+
                         <li class="nav-item">
-                            @if (TempData["Generate"] != null)
+                            @if (TempData["Verify"] != null)
                             {
-                                <a class="nav-link text-dark" style="background-color: #eae6f2;" asp-controller="GenerateCertificate" asp-action="Generate">Generate Certificate</a>
+                                <a class="nav-link text-dark" style="background-color: #eae6f2;" asp-controller="VerifySignature" asp-action="VerifyUser">Verify</a>
+                            }
+                            else
+                            {
+                                <a class="nav-link text-dark" asp-controller="VerifySignature" asp-action="VerifyUser">Verify</a>
+                            }
+                        </li>
+                    }
+                    if (Model.UserName != null && Model.UserRole == "Admin")
+                    {
+
+                        <li class="nav-item">
+                            @if (TempData["Admin"] != null)
+                            {
+                                <a class="nav-link text-dark" style="background-color: #eae6f2;" asp-controller="Administrator" asp-action="Users">Users</a>
 
                             }
                             else
                             {
-                                <a class="nav-link text-dark" asp-controller="GenerateCertificate" asp-action="Generate">Generate Certificate</a>
+                                <a class="nav-link text-dark" asp-controller="Administrator" asp-action="Users">Users</a>
                             }
                         </li>
                     }
+
 
                 }
                 @{
