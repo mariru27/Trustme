@@ -12,20 +12,20 @@
         <div class="float-right">
             <ul class="navbar-nav flex-grow-1">
                 @{
-                    <li class="nav-item">
-                        @if (TempData["Generate"] != null)
-                        {
-                            <a class="nav-link text-dark" style="background-color: #eae6f2;" asp-controller="GenerateCertificate" asp-action="Generate">Generate Certificate</a>
 
-                        }
-                        else
-                        {
-                            <a class="nav-link text-dark" asp-controller="GenerateCertificate" asp-action="Generate">Generate Certificate</a>
-                        }
-                    </li>
                     if (Model.UserName != null && Model.UserRole != "Admin")
                     {
+                        <li class="nav-item">
+                            @if (TempData["Generate"] != null)
+                            {
+                                <a class="nav-link text-dark" style="background-color: #eae6f2;" asp-controller="GenerateCertificate" asp-action="Generate">Generate Certificate</a>
 
+                            }
+                            else
+                            {
+                                <a class="nav-link text-dark" asp-controller="GenerateCertificate" asp-action="Generate">Generate Certificate</a>
+                            }
+                        </li>
                         <li class="nav-item">
                             @if (TempData["Upload"] != null)
                             {
