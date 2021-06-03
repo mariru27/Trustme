@@ -159,7 +159,7 @@ namespace Trustme.Controllers
             }
             else
             {
-                TempData["UserNotExists"] = "User do not extist!";
+                ModelState.AddModelError("", "User do not extist!");
 
             }
 
