@@ -160,6 +160,7 @@ namespace Trustme.Controllers
             else
             {
                 ModelState.AddModelError("", "User do not extist!");
+
             }
 
             return RedirectToAction("UploadDocument", new { Username = uploadDocumentModel.Username });

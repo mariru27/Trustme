@@ -36,11 +36,21 @@
                 <label asp-for="Signature" class="control-label">User signature:</label>
                 <textarea class="form-control" asp-for="Signature" rows="3"></textarea>
                 <span asp-validation-for="Signature" class="text-danger"></span>
+                @if (TempData["CorruptedSignature"] != null)
+                {
+                    <p class="text-danger" id="successMessage">@TempData["CorruptedSignature"]</p>
+
+                }
             </div>
             <div class="form-group">
                 <label asp-for="Document">Document:</label>
                 <input asp-for="Document" type="file" class="form-control-file" />
                 <span asp-validation-for="Document" class="text-danger"></span>
+                @if (TempData["InvalidSignature"] != null)
+                {
+                    <p class="text-danger" id="successMessage">@TempData["InvalidSignature"]</p>
+
+                }
             </div>
 
             <div class="form-group">

@@ -103,13 +103,13 @@ namespace Trustme.Controllers
             }
             catch (Exception)
             {
-                ModelState.AddModelError("", "Signature was corrupted!");
+                TempData["CorruptedSignature"] = "Signature was corrupted!";
                 return View(verifySignModel);
             };
 
             byte[] signaturebyte = Convert.FromBase64String(verifySignModel.Signature);
             if (sign.VerifySignature(signaturebyte) == false)
-                ModelState.AddModelError("", "Invalid signature or document!");
+                TempData["InvalidSignature"] = "Invalid signature or document!";
             else
                 TempData["ValidSignature"] = "Signature is valid!";
 
