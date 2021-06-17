@@ -49,8 +49,16 @@ namespace Trustme.Service
             //_UserKey = this.GetUserKeyById(_UserKeyModel.Key.KeyId);
 
             //_context.UserKey.Remove(_UserKey);
-            _context.Key.Remove(GetKeyById(_UserKeyModel.Key.KeyId));
-            _context.SaveChanges();
+            try
+            {
+
+                _context.Key.Remove(GetKeyById(_UserKeyModel.Key.KeyId));
+                _context.SaveChanges();
+            }
+            catch (System.Exception e)
+            {
+
+            }
         }
 
 
