@@ -112,7 +112,12 @@ namespace Trustme.Service
                     User = user,
                     UsernameWhoSentPending = UsernameWhoSentPending
                 };
+                //add peding
                 _context.Pendings.Add(peding);
+
+                //add pending to user
+                user.Pendings.Add(peding);
+                _context.User.Update(user);
                 _context.SaveChanges();
             }
 
