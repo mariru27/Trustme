@@ -52,7 +52,9 @@ namespace Trustme.Migrations
             modelBuilder.Entity("Trustme.Models.Pending", b =>
                 {
                     b.Property<int>("IdPedingUsers")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<bool>("Accepted")
                         .HasColumnType("bit");
@@ -69,10 +71,15 @@ namespace Trustme.Migrations
                     b.Property<DateTime>("TimeSentPendingRequest")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
                     b.Property<string>("UsernameWhoSentPending")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("IdPedingUsers");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Pending");
                 });
@@ -303,9 +310,8 @@ namespace Trustme.Migrations
                 {
                     b.HasOne("Trustme.Models.User", "User")
                         .WithMany("Pendings")
-                        .HasForeignKey("IdPedingUsers")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.ClientCascade);
                 });
 
             modelBuilder.Entity("Trustme.Models.SignedDocument", b =>

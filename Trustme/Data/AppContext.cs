@@ -26,7 +26,8 @@ namespace Trustme.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<UserKey>().HasMany(e => e.Keys).WithOne(e => e.UserKey).OnDelete(DeleteBehavior.ClientCascade);
-            modelBuilder.Entity<User>().HasMany(u => u.Pendings).WithOne(u => u.User).HasForeignKey(a => a.IdPedingUsers).OnDelete(DeleteBehavior.ClientCascade);
+            //modelBuilder.Entity<User>().HasMany(u => u.Pendings).WithOne(u => u.User).OnDelete(DeleteBehavior.ClientCascade);
+            modelBuilder.Entity<Pending>().HasOne(u => u.User).WithMany(u => u.Pendings).OnDelete(DeleteBehavior.ClientCascade);
 
 
             modelBuilder.Entity<User>().ToTable("User");
