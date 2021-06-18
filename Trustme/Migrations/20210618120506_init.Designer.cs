@@ -10,7 +10,7 @@ using Trustme.Data;
 namespace Trustme.Migrations
 {
     [DbContext(typeof(Data.AppContext))]
-    [Migration("20210618114126_init")]
+    [Migration("20210618120506_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -73,7 +73,7 @@ namespace Trustme.Migrations
                     b.Property<DateTime>("TimeSentPendingRequest")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("UserId")
+                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.Property<string>("UsernameWhoSentPending")
@@ -313,7 +313,8 @@ namespace Trustme.Migrations
                     b.HasOne("Trustme.Models.User", "User")
                         .WithMany("Pendings")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.ClientCascade);
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Trustme.Models.SignedDocument", b =>

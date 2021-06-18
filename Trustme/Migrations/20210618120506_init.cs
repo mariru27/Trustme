@@ -59,7 +59,7 @@ namespace Trustme.Migrations
                     Seen = table.Column<bool>(nullable: false),
                     TimeSentPendingRequest = table.Column<DateTime>(nullable: false),
                     TimeAcceptedPendingRequest = table.Column<DateTime>(nullable: false),
-                    UserId = table.Column<int>(nullable: true)
+                    UserId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {

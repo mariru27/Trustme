@@ -20,6 +20,7 @@ namespace Trustme.Models
         public bool Seen { get; set; }
         public DateTime TimeSentPendingRequest { get; set; }
         public DateTime TimeAcceptedPendingRequest { get; set; }
+        public int UserId { get; set; }
         public User User { get; set; }
     }
 }
