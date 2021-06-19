@@ -29,6 +29,8 @@ namespace Trustme.Service
         public void DeleteUser(User _User)
         {
             _context.UserKey.RemoveRange(_context.UserKey.Where(x => x.UserId == _User.UserId));
+            _context.UserUnsignedDocuments.RemoveRange(_context.UserUnsignedDocuments.Where(x => x.UserId == _User.UserId));
+            _context.UserSignedDocuments.RemoveRange(_context.UserSignedDocuments.Where(x => x.UserId == _User.UserId));
             _context.User.Remove(_User);
             _context.SaveChanges();
         }
