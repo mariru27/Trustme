@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Trustme.Data;
 using Trustme.IServices;
 using Trustme.Models;
 
@@ -10,8 +11,8 @@ namespace Trustme.Service
 {
     public class PendingRepository : IPendingRepository
     {
-        private Data.AppContext _context;
-        public PendingRepository(Data.AppContext appContext)
+        private TMDbContext _context;
+        public PendingRepository(TMDbContext appContext)
         {
             _context = appContext;
         }

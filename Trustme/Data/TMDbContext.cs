@@ -4,9 +4,9 @@ using Trustme.Models;
 
 namespace Trustme.Data
 {
-    public class AppContext : DbContext
+    public class TMDbContext : DbContext
     {
-        public AppContext(DbContextOptions<AppContext> options) : base(options)
+        public TMDbContext(DbContextOptions<TMDbContext> options) : base(options)
         {
 
         }

@@ -5,12 +5,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
+using Trustme.Data;
 using Trustme.IServices;
 using Trustme.ITools;
 using Trustme.Models;
 using Trustme.Service;
 using Trustme.Tools;
-using AppContext = Trustme.Data.AppContext;
 
 namespace Trustme
 {
@@ -26,7 +26,7 @@ namespace Trustme
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddEntityFrameworkSqlServer().AddDbContext<AppContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")).EnableSensitiveDataLogging());
+            services.AddEntityFrameworkSqlServer().AddDbContext<TMDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")).EnableSensitiveDataLogging());
 
             services.AddHttpContextAccessor();
             services.AddScoped<IKeyRepository, KeyRepository>();

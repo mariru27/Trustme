@@ -8,9 +8,9 @@ namespace Trustme.Service
 {
     public class UserRepository : IUserRepository
     {
-        private AppContext _context;
+        private TMDbContext _context;
 
-        public UserRepository(AppContext context)
+        public UserRepository(TMDbContext context)
         {
             _context = context;
         }

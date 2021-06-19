@@ -10,9 +10,9 @@ namespace Trustme.Service
 {
     public class KeyRepository : IKeyRepository
     {
-        private AppContext _context;
+        private TMDbContext _context;
 
-        public KeyRepository(AppContext context)
+        public KeyRepository(TMDbContext context)
         {
             _context = context;
         }

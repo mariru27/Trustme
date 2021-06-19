@@ -9,7 +9,7 @@ using Trustme.Data;
 
 namespace Trustme.Migrations
 {
-    [DbContext(typeof(Data.AppContext))]
+    [DbContext(typeof(TMDbContext))]
     [Migration("20210618120506_init")]
     partial class init
     {

@@ -8,8 +8,8 @@ using Trustme.Data;
 
 namespace Trustme.Migrations
 {
-    [DbContext(typeof(Data.AppContext))]
-    partial class AppContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(TMDbContext))]
+    partial class TMDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {

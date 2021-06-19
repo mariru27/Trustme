@@ -6,7 +6,7 @@ namespace Trustme.Data
 
     public class InitDB
     {
-        public static void InitDb(AppContext context)
+        public static void InitDb(TMDbContext context)
         {
 
 

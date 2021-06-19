@@ -10,12 +10,12 @@ namespace Trustme.Service
 {
     public class UnsignedDocumentRepository : IUnsignedDocumentRepository
     {
-        private AppContext _context;
+        private TMDbContext _context;
         private readonly IKeyRepository _KeyRepository;
         private readonly IUserRepository _UserRepository;
         private readonly IPendingRepository _PendingRepository;
 
-        public UnsignedDocumentRepository(AppContext context, IPendingRepository pendingRepository, IKeyRepository keyRepository, IUserRepository userRepository)
+        public UnsignedDocumentRepository(TMDbContext context, IPendingRepository pendingRepository, IKeyRepository keyRepository, IUserRepository userRepository)
         {
             _KeyRepository = keyRepository;
             _UserRepository = userRepository;
