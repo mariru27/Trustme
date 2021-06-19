@@ -51,7 +51,8 @@ namespace Trustme.Service
             //_context.UserKey.Remove(_UserKey);
             try
             {
-
+                _context.SignedDocuments.RemoveRange(_context.SignedDocuments.Where(x => x.KeyId == _UserKeyModel.Key.KeyId));
+                _context.UnsignedDocuments.RemoveRange(_context.UnsignedDocuments.Where(x => x.KeyId == _UserKeyModel.Key.KeyId));
                 _context.Key.Remove(GetKeyById(_UserKeyModel.Key.KeyId));
                 _context.SaveChanges();
             }
