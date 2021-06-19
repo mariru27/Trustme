@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Trustme.Models
 {
@@ -28,6 +29,9 @@ namespace Trustme.Models
         [Required]
         public int KeySize { set; get; }
         public UserKey UserKey { set; get; }
+
+        public ICollection<SignedDocument> SignedDocuments { get; set; }
+        public ICollection<UnsignedDocument> UnsignedDocuments { get; set; }
 
     }
 }

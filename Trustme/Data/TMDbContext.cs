@@ -25,9 +25,22 @@ namespace Trustme.Data
         public DbSet<Pending> Pendings { set; get; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<UserKey>().HasMany(e => e.Keys).WithOne(e => e.UserKey).OnDelete(DeleteBehavior.ClientCascade);
-            //modelBuilder.Entity<User>().HasMany(u => u.Pendings).WithOne(u => u.User).OnDelete(DeleteBehavior.ClientCascade);
-            modelBuilder.Entity<Pending>().HasOne(u => u.User).WithMany(u => u.Pendings).OnDelete(DeleteBehavior.ClientCascade);
+            modelBuilder.Entity<User>().HasMany(e => e.UserSignedDocuments).WithOne(e => e.User).OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<User>().HasMany(e => e.UserKeys).WithOne(e => e.User).OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<User>().HasMany(e => e.UserUnsignedDocuments).WithOne(e => e.User).OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<User>().HasMany(e => e.Pendings).WithOne(e => e.User).OnDelete(DeleteBehavior.NoAction);
+
+
+            modelBuilder.Entity<SignedDocument>().HasOne(e => e.Key).WithMany(e => e.SignedDocuments).OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<UnsignedDocument>().HasOne(e => e.Key).WithMany(e => e.UnsignedDocuments).OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<UserKey>().HasMany(e => e.Keys).WithOne(e => e.UserKey).OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<Pending>().HasOne(u => u.User).WithMany(u => u.Pendings).OnDelete(DeleteBehavior.Cascade);
+
+
+            modelBuilder.Entity<Key>().HasMany(u => u.SignedDocuments).WithOne(u => u.Key).OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<Key>().HasMany(u => u.UnsignedDocuments).WithOne(u => u.Key).OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<Key>().HasOne(u => u.UserKey).WithMany(u => u.Keys).OnDelete(DeleteBehavior.NoAction);
 
 
             modelBuilder.Entity<User>().ToTable("User");
