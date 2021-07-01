@@ -88,6 +88,32 @@ In file appsettings.json you need to complete some fields (they are noted with p
 
   
 
- 
+ ## Roles
+  
+  I have three roles:
+  
+  * User free
+  * User pro
+  * Administrator
+  
+  The difference between user pro and free is that user free can generate just three certificates and user pro can generate unlimited number.
+  
+ ### Administrator
+  
+  This role is more different than others, because this can not be created from application, this need to be created from database. Administrator can edit user information and delete users.
+  
+  ![image](https://user-images.githubusercontent.com/46792157/124174066-909b5700-dab4-11eb-944c-c087a29ee71f.png)
+
+  
+ ### User profile
+  
+  Talking about enityies, users have their profile, from there they can see info about their certificates, modify name (certificate) and description, or delete it.
+  
+  ![image](https://user-images.githubusercontent.com/46792157/124172463-8d9f6700-dab2-11eb-8e8c-49d61dd5ee72.png)
+
+  
+  
+
+
   
 
