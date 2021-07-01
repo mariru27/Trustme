@@ -28,6 +28,11 @@ In file appsettings.json you need to complete some fields (they are noted with p
   "PrivateKey": "complete_private_key",  
   ```
   
+  ## Technology
+ 
+  I used back-end framework ASP.NET CORE 3.1 (MVC), for front-end I used some javascript (just for pop-up), sql server database 2016. I used bootsrap (is a CSS framework) and html.
+  
+  
   ## Application main actions
   
   ![image](https://user-images.githubusercontent.com/46792157/124161796-81151180-daa6-11eb-85d6-97cee4eb66cf.png)
