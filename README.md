@@ -7,7 +7,7 @@
   </a>
 
     
-License name - Generator of cryptographic certificates for signing documents. 
+Generator of cryptographic certificates for signing documents. 
 
 
 
