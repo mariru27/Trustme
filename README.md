@@ -8,6 +8,7 @@
 
     
 Generator of cryptographic certificates for signing documents. 
+Here you can see a demo (in romanian) ---> https://drive.google.com/file/d/1krjzHhJHSYDJBrg1pDYDhvHwFY9H_oph/view?fbclid=IwAR3amCebgrxOqtJj8ovZ6zi3C-eqCoi-JNgZc2jTBwy79eFFHMlPlrtfRxs
 
 
 
@@ -50,7 +51,7 @@ In file appsettings.json you need to complete some fields (they are noted with p
   
   ![image](https://user-images.githubusercontent.com/46792157/124163103-e9b0be00-daa7-11eb-816a-a7bd9f77fc82.png)
 
-  I used bouncy castle library for generating keys and certificate, and also for signing documents and for verifying it.
+  I used bouncy castle library for generating keys and certificates, and also for signing documents and for verifying it.
   
 ### Upload document
   
@@ -61,12 +62,12 @@ In file appsettings.json you need to complete some fields (they are noted with p
   
 ### Unsigned documents
 
-  If the user upload for the first time a document for another user, this will need to allow that user to upload documents for him, after this, in unsigned document page he will see all documents sent by that user.
+  If the user upload for the first time a document for another user, this will need to allow that user to upload documents for him, after this in unsigned document page he will see all documents sent by that user.
   
   ![image](https://user-images.githubusercontent.com/46792157/124164819-cf77df80-daa9-11eb-824b-b8f96d4b8421.png)
 
   
-  In Usigned documents page user will have all documents that he need to sign. You can difference old by news documents by "new" label and green border.
+  In Unsigned documents page user will have all documents that he need to sign. You can difference old by news documents by "new" label and green border.
   
   ![image](https://user-images.githubusercontent.com/46792157/124164968-f7ffd980-daa9-11eb-8272-99087f6147bb.png)
 
@@ -112,7 +113,7 @@ In file appsettings.json you need to complete some fields (they are noted with p
   
  ### User profile
   
-  Talking about enityies, users have their profile, from there they can see info about their certificates, modify name (certificate) and description, or delete it.
+  Talking about entities, users have their profile, from there they can see info about their certificates, modify name (certificate) and description, or delete it.
   
   ![image](https://user-images.githubusercontent.com/46792157/124172463-8d9f6700-dab2-11eb-8e8c-49d61dd5ee72.png)
 
