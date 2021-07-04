@@ -7,12 +7,9 @@
   </a>
 
     
-<h4>Generator of cryptographic certificates for signing documents.<h4> 
+Generator of cryptographic certificates for signing documents.
   
-  
-<i>Here you can see a demo (in romanian) <i> ---> https://drive.google.com/file/d/1krjzHhJHSYDJBrg1pDYDhvHwFY9H_oph/view?fbclid=IwAR3amCebgrxOqtJj8ovZ6zi3C-eqCoi-JNgZc2jTBwy79eFFHMlPlrtfRxs
-
-
+ _Here you can see a **demo** (in romanian)_  ---> https://drive.google.com/file/d/1krjzHhJHSYDJBrg1pDYDhvHwFY9H_oph/view?fbclid=IwAR3amCebgrxOqtJj8ovZ6zi3C-eqCoi-JNgZc2jTBwy79eFFHMlPlrtfRxs
 
 ## Setup
 If you want to run this application on your computer you need to do some things first.
