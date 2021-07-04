@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Trustme.Data;
 using Trustme.IServices;
 using Trustme.Models;
 
@@ -10,8 +11,8 @@ namespace Trustme.Service
 {
     public class PendingRepository : IPendingRepository
     {
-        private Data.AppContext _context;
-        public PendingRepository(Data.AppContext appContext)
+        private TMDbContext _context;
+        public PendingRepository(TMDbContext appContext)
         {
             _context = appContext;
         }
@@ -21,7 +22,7 @@ namespace Trustme.Service
             return _context.User.Where(a => a.UserId == user.UserId).Join(_context.Pendings,
                 u => u.UserId,
                 p => p.User.UserId,
-                (u, p) => new Pending { TimeSentPendingRequest = p.TimeSentPendingRequest, User = p.User, UsernameWhoSentPending = p.UsernameWhoSentPending, IdPedingUsers = p.IdPedingUsers, TimeAcceptedPendingRequest = p.TimeAcceptedPendingRequest, Accepted = p.Accepted, Blocked = p.Blocked, Seen = p.Seen })
+                (u, p) => new Pending { TimeSentPendingRequest = p.TimeSentPendingRequest, User = p.User, UsernameWhoSentPending = p.UsernameWhoSentPending, IdPedingUsers = p.IdPedingUsers, TimeAcceptedPendingRequest = p.TimeAcceptedPendingRequest, Accepted = p.Accepted, Blocked = p.Blocked, Seen = p.Seen, UserId = p.User.UserId })
                 .ToList().Where(a => a.Accepted == false && a.Blocked == false).ToList();
         }
 
@@ -46,7 +47,7 @@ namespace Trustme.Service
             var pending = _context.User.AsNoTracking().Where(a => a.UserId == user.UserId).Join(_context.Pendings,
             u => u.UserId,
             p => p.User.UserId,
-            (u, p) => new Pending { TimeSentPendingRequest = p.TimeSentPendingRequest, User = p.User, UsernameWhoSentPending = p.UsernameWhoSentPending, IdPedingUsers = p.IdPedingUsers, TimeAcceptedPendingRequest = p.TimeAcceptedPendingRequest, Accepted = p.Accepted, Blocked = p.Blocked })
+            (u, p) => new Pending { TimeSentPendingRequest = p.TimeSentPendingRequest, User = p.User, UsernameWhoSentPending = p.UsernameWhoSentPending, IdPedingUsers = p.IdPedingUsers, TimeAcceptedPendingRequest = p.TimeAcceptedPendingRequest, Accepted = p.Accepted, Blocked = p.Blocked, UserId = p.User.UserId })
             .ToList().Where(u => u.UsernameWhoSentPending == username).SingleOrDefault();
 
 
@@ -82,7 +83,7 @@ namespace Trustme.Service
             return _context.User.Where(a => a.UserId == user.UserId).Join(_context.Pendings,
             u => u.UserId,
             p => p.User.UserId,
-            (u, p) => new Pending { TimeSentPendingRequest = p.TimeSentPendingRequest, User = p.User, UsernameWhoSentPending = p.UsernameWhoSentPending, IdPedingUsers = p.IdPedingUsers, TimeAcceptedPendingRequest = p.TimeAcceptedPendingRequest, Accepted = p.Accepted, Blocked = p.Blocked })
+            (u, p) => new Pending { TimeSentPendingRequest = p.TimeSentPendingRequest, User = p.User, UsernameWhoSentPending = p.UsernameWhoSentPending, IdPedingUsers = p.IdPedingUsers, TimeAcceptedPendingRequest = p.TimeAcceptedPendingRequest, Accepted = p.Accepted, Blocked = p.Blocked, UserId = p.User.UserId })
             .ToList().Where(u => u.UsernameWhoSentPending == username && u.Blocked == true).Any();
         }
 
@@ -91,7 +92,7 @@ namespace Trustme.Service
             var result = _context.User.Where(a => a.UserId == user.UserId).Join(_context.Pendings,
             u => u.UserId,
             p => p.User.UserId,
-            (u, p) => new Pending { TimeSentPendingRequest = p.TimeSentPendingRequest, User = p.User, UsernameWhoSentPending = p.UsernameWhoSentPending, IdPedingUsers = p.IdPedingUsers, TimeAcceptedPendingRequest = p.TimeAcceptedPendingRequest, Accepted = p.Accepted, Blocked = p.Blocked })
+            (u, p) => new Pending { TimeSentPendingRequest = p.TimeSentPendingRequest, User = p.User, UsernameWhoSentPending = p.UsernameWhoSentPending, IdPedingUsers = p.IdPedingUsers, TimeAcceptedPendingRequest = p.TimeAcceptedPendingRequest, Accepted = p.Accepted, Blocked = p.Blocked, UserId = p.User.UserId })
             .ToList();
             return result.Any();
         }
@@ -102,7 +103,7 @@ namespace Trustme.Service
             bool userAdded = _context.User.AsNoTracking().Where(a => a.UserId == user.UserId).Join(_context.Pendings,
             u => u.UserId,
             p => p.User.UserId,
-            (u, p) => new Pending { TimeSentPendingRequest = p.TimeSentPendingRequest, User = p.User, UsernameWhoSentPending = p.UsernameWhoSentPending, IdPedingUsers = p.IdPedingUsers, TimeAcceptedPendingRequest = p.TimeAcceptedPendingRequest, Accepted = p.Accepted, Blocked = p.Blocked })
+            (u, p) => new Pending { TimeSentPendingRequest = p.TimeSentPendingRequest, User = p.User, UsernameWhoSentPending = p.UsernameWhoSentPending, IdPedingUsers = p.IdPedingUsers, TimeAcceptedPendingRequest = p.TimeAcceptedPendingRequest, Accepted = p.Accepted, Blocked = p.Blocked, UserId = p.User.UserId })
             .ToList().Where(u => u.UsernameWhoSentPending == UsernameWhoSentPending).Any();
 
             if (userAdded == false)
@@ -112,7 +113,12 @@ namespace Trustme.Service
                     User = user,
                     UsernameWhoSentPending = UsernameWhoSentPending
                 };
+                //add peding
                 _context.Pendings.Add(peding);
+
+                //add pending to user
+                user.Pendings.Add(peding);
+                _context.User.Update(user);
                 _context.SaveChanges();
             }
 
@@ -123,7 +129,7 @@ namespace Trustme.Service
             var pending = _context.User.Where(a => a.UserId == user.UserId).Join(_context.Pendings,
             u => u.UserId,
             p => p.User.UserId,
-            (u, p) => new Pending { TimeSentPendingRequest = p.TimeSentPendingRequest, User = p.User, UsernameWhoSentPending = p.UsernameWhoSentPending, IdPedingUsers = p.IdPedingUsers, TimeAcceptedPendingRequest = p.TimeAcceptedPendingRequest, Accepted = p.Accepted, Blocked = p.Blocked })
+            (u, p) => new Pending { TimeSentPendingRequest = p.TimeSentPendingRequest, User = p.User, UsernameWhoSentPending = p.UsernameWhoSentPending, IdPedingUsers = p.IdPedingUsers, TimeAcceptedPendingRequest = p.TimeAcceptedPendingRequest, Accepted = p.Accepted, Blocked = p.Blocked, UserId = p.User.UserId })
             .ToList().Where(u => u.IdPedingUsers == IdPedingUsers).SingleOrDefault();
             pending.Blocked = true;
 
@@ -136,7 +142,7 @@ namespace Trustme.Service
             return _context.User.Where(a => a.UserId == user.UserId).Join(_context.Pendings,
            u => u.UserId,
            p => p.User.UserId,
-           (u, p) => new Pending { TimeSentPendingRequest = p.TimeSentPendingRequest, User = p.User, UsernameWhoSentPending = p.UsernameWhoSentPending, IdPedingUsers = p.IdPedingUsers, TimeAcceptedPendingRequest = p.TimeAcceptedPendingRequest, Accepted = p.Accepted, Blocked = p.Blocked })
+           (u, p) => new Pending { TimeSentPendingRequest = p.TimeSentPendingRequest, User = p.User, UsernameWhoSentPending = p.UsernameWhoSentPending, IdPedingUsers = p.IdPedingUsers, TimeAcceptedPendingRequest = p.TimeAcceptedPendingRequest, Accepted = p.Accepted, Blocked = p.Blocked, UserId = p.User.UserId })
            .ToList().Where(u => u.UsernameWhoSentPending == username).SingleOrDefault();
         }
 
@@ -145,7 +151,7 @@ namespace Trustme.Service
             return _context.User.Where(a => a.UserId == user.UserId).Join(_context.Pendings,
            u => u.UserId,
            p => p.User.UserId,
-           (u, p) => new Pending { TimeSentPendingRequest = p.TimeSentPendingRequest, User = p.User, UsernameWhoSentPending = p.UsernameWhoSentPending, IdPedingUsers = p.IdPedingUsers, TimeAcceptedPendingRequest = p.TimeAcceptedPendingRequest, Accepted = p.Accepted, Blocked = p.Blocked })
+           (u, p) => new Pending { TimeSentPendingRequest = p.TimeSentPendingRequest, User = p.User, UsernameWhoSentPending = p.UsernameWhoSentPending, IdPedingUsers = p.IdPedingUsers, TimeAcceptedPendingRequest = p.TimeAcceptedPendingRequest, Accepted = p.Accepted, Blocked = p.Blocked, UserId = p.User.UserId })
            .ToList().Where(u => u.IdPedingUsers == IdPending).SingleOrDefault();
         }
     }

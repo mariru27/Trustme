@@ -9,9 +9,9 @@ namespace Trustme.Service
 {
     public class SignedDocumentRepository : ISignedDocumentRepository
     {
-        private AppContext _context;
+        private TMDbContext _context;
         private IHttpRequestFunctions _HttpRequestFunctions;
-        public SignedDocumentRepository(AppContext appContext, IHttpRequestFunctions httpRequestFunctions)
+        public SignedDocumentRepository(TMDbContext appContext, IHttpRequestFunctions httpRequestFunctions)
         {
             _context = appContext;
             _HttpRequestFunctions = httpRequestFunctions;

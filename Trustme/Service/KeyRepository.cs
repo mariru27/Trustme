@@ -10,9 +10,9 @@ namespace Trustme.Service
 {
     public class KeyRepository : IKeyRepository
     {
-        private AppContext _context;
+        private TMDbContext _context;
 
-        public KeyRepository(AppContext context)
+        public KeyRepository(TMDbContext context)
         {
             _context = context;
         }
@@ -49,8 +49,17 @@ namespace Trustme.Service
             //_UserKey = this.GetUserKeyById(_UserKeyModel.Key.KeyId);
 
             //_context.UserKey.Remove(_UserKey);
-            _context.Key.Remove(GetKeyById(_UserKeyModel.Key.KeyId));
-            _context.SaveChanges();
+            try
+            {
+                _context.SignedDocuments.RemoveRange(_context.SignedDocuments.Where(x => x.KeyId == _UserKeyModel.Key.KeyId));
+                _context.UnsignedDocuments.RemoveRange(_context.UnsignedDocuments.Where(x => x.KeyId == _UserKeyModel.Key.KeyId));
+                _context.Key.Remove(GetKeyById(_UserKeyModel.Key.KeyId));
+                _context.SaveChanges();
+            }
+            catch (System.Exception e)
+            {
+
+            }
         }
 
 

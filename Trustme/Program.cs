@@ -18,7 +18,7 @@ namespace Trustme
                 var services = scope.ServiceProvider;
                 try
                 {
-                    var context = services.GetRequiredService<Data.AppContext>();
+                    var context = services.GetRequiredService<TMDbContext>();
                     InitDB.InitDb(context);
                     
                 }

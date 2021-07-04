@@ -8,8 +8,8 @@ namespace Trustme.Service
 {
     public class RoleRepository : IRoleRepository
     {
-        private AppContext _context;
-        public RoleRepository(AppContext context)
+        private TMDbContext _context;
+        public RoleRepository(TMDbContext context)
         {
             _context = context;
         }

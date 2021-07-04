@@ -30,8 +30,10 @@ namespace Trustme.Migrations
                     SecondName = table.Column<string>(nullable: false),
                     Mail = table.Column<string>(nullable: false),
                     Username = table.Column<string>(nullable: false),
-                    Password = table.Column<string>(maxLength: 20, nullable: false),
+                    Password = table.Column<string>(nullable: false),
                     ConfirmPassword = table.Column<string>(nullable: false),
+                    Token = table.Column<string>(nullable: true),
+                    VerifiedAccount = table.Column<bool>(nullable: false),
                     RoleId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -43,6 +45,31 @@ namespace Trustme.Migrations
                         principalTable: "Role",
                         principalColumn: "IdRole",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Pending",
+                columns: table => new
+                {
+                    IdPedingUsers = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UsernameWhoSentPending = table.Column<string>(nullable: true),
+                    Accepted = table.Column<bool>(nullable: false),
+                    Blocked = table.Column<bool>(nullable: false),
+                    Seen = table.Column<bool>(nullable: false),
+                    TimeSentPendingRequest = table.Column<DateTime>(nullable: false),
+                    TimeAcceptedPendingRequest = table.Column<DateTime>(nullable: false),
+                    UserId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Pending", x => x.IdPedingUsers);
+                    table.ForeignKey(
+                        name: "FK_Pending_User_UserId",
+                        column: x => x.UserId,
+                        principalTable: "User",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -97,6 +124,7 @@ namespace Trustme.Migrations
                     SentFromUsername = table.Column<string>(nullable: true),
                     ContentType = table.Column<string>(nullable: true),
                     SignedByUsername = table.Column<string>(nullable: true),
+                    Seen = table.Column<bool>(nullable: false),
                     Document = table.Column<byte[]>(nullable: true),
                     Signature = table.Column<string>(nullable: true),
                     Comment = table.Column<string>(nullable: true),
@@ -126,6 +154,8 @@ namespace Trustme.Migrations
                     Document = table.Column<byte[]>(nullable: true),
                     KeyPreference = table.Column<string>(nullable: true),
                     ContentType = table.Column<string>(nullable: true),
+                    Seen = table.Column<bool>(nullable: false),
+                    Show = table.Column<bool>(nullable: false),
                     Signed = table.Column<bool>(nullable: false),
                     KeyId = table.Column<int>(nullable: false),
                     SentTime = table.Column<DateTime>(nullable: false)
@@ -199,6 +229,11 @@ namespace Trustme.Migrations
                 column: "UserKeyIdUserKey");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Pending_UserId",
+                table: "Pending",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_SignedDocument_KeyId",
                 table: "SignedDocument",
                 column: "KeyId");
@@ -241,6 +276,9 @@ namespace Trustme.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Pending");
+
             migrationBuilder.DropTable(
                 name: "UserSignedDocument");
 

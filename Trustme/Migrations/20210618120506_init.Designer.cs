@@ -9,9 +9,9 @@ using Trustme.Data;
 
 namespace Trustme.Migrations
 {
-    [DbContext(typeof(Data.AppContext))]
-    [Migration("20210508113305_deleteDelivered")]
-    partial class deleteDelivered
+    [DbContext(typeof(TMDbContext))]
+    [Migration("20210618120506_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -49,6 +49,41 @@ namespace Trustme.Migrations
                     b.HasIndex("UserKeyIdUserKey");
 
                     b.ToTable("Key");
+                });
+
+            modelBuilder.Entity("Trustme.Models.Pending", b =>
+                {
+                    b.Property<int>("IdPedingUsers")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("Accepted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Blocked")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Seen")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("TimeAcceptedPendingRequest")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("TimeSentPendingRequest")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UsernameWhoSentPending")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("IdPedingUsers");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Pending");
                 });
 
             modelBuilder.Entity("Trustme.Models.Role", b =>
@@ -143,6 +178,9 @@ namespace Trustme.Migrations
 
                     b.Property<DateTime>("SentTime")
                         .HasColumnType("datetime2");
+
+                    b.Property<bool>("Show")
+                        .HasColumnType("bit");
 
                     b.Property<bool>("Signed")
                         .HasColumnType("bit");
@@ -268,6 +306,15 @@ namespace Trustme.Migrations
                         .WithMany("Keys")
                         .HasForeignKey("UserKeyIdUserKey")
                         .OnDelete(DeleteBehavior.ClientCascade);
+                });
+
+            modelBuilder.Entity("Trustme.Models.Pending", b =>
+                {
+                    b.HasOne("Trustme.Models.User", "User")
+                        .WithMany("Pendings")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Trustme.Models.SignedDocument", b =>
