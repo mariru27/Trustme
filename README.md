@@ -86,7 +86,7 @@ In file appsettings.json you need to complete some fields (they are noted with p
   ![image](https://user-images.githubusercontent.com/46792157/124170751-79f30100-dab0-11eb-98c4-9e9c22f49842.png)
 
  ### Verify signature
-  Like I sayd in previous, verify signature is a optional action.
+  Like I said in previous, verify signature is a optional action.
   For this you need to go to verify page, complete first step, choose a user that signed somethig, next you need to upload document and paste signature in the correct field (the single one also :DD).
   
   ![image](https://user-images.githubusercontent.com/46792157/124171569-698f5600-dab1-11eb-9e82-8fac881f2b58.png)
